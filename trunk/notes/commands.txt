@@ -1,0 +1,6 @@
+sudo svn add
+sudo svn mkdir 
+sudo svn ci -m "..."
+#make svn support ssl 
+sudo apt-get install subversion libapache2-svn apache2
+
