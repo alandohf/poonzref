@@ -3,4 +3,8 @@ sudo svn mkdir
 sudo svn ci -m "..."
 #make svn support ssl 
 sudo apt-get install subversion libapache2-svn apache2
-
+sudo apt-get install  flashplugin-installer
+sudo apt-get install openjdk-6-jre openjdk-6-jdk openjdk-6-demo openjdk-6-doc openjdk-6-jre-lib
+wget http://dl_dir.qq.com/linuxqq/linuxqq_v1.0.2-beta1_i386.deb
+sudo dpkg --force-architecture -i linuxqq_v1.0.2-beta1_i386.deb
+xmodmap modify key mapping 
