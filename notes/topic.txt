@@ -1,0 +1,6 @@
+c min max 
+c array copy 
+c dynamic array 
+shell find exec files 
+c eof ctrl -d 
+
