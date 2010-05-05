@@ -3,4 +3,14 @@ c array copy
 c dynamic array 
 shell find exec files 
 c eof ctrl -d 
+c array and pointer equation " = " problem !
+C语言问题合集 http://219.140.168.60/c/view.php?tid=244&cid=55
+vector <int>addr; 
+http://codeblog.kello.se/2009/01/07/getting-code-formatting-with-syntax-highlighting-to-work-on-blogger/
+hightlight 
+http://www.wmtips.com/tools/html-encoder/
+http://heisencoder.net/2009/01/adding-syntax-highlighting-to-blogger.html
+http://yacoding.blogspot.com/
 
+http://www.accessify.com/tools-and-wizards/developer-tools/quick-escape/default.php
+http://stackoverflow.com/
