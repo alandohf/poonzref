@@ -1,6 +1,4 @@
-/*
- * =====================================================================================
- *
+/* * ===================================================================================== *
  *       Filename:  file1.c
  *
  *    Description:  
@@ -19,19 +17,24 @@
 #include <stdlib.h>
 int putw(int i,FILE *fp);
 int getw(FILE *fp);
+int filecp();
 
 int main()
 { 
- FILE *fp;
  int i;
- scanf("%d",&i);
- fp=fopen("/home/pzw/fopen.txt","wb+"); 
+ FILE *fp;
+ fp=fopen("/tmp/fopen.txt","at"); 
+// rewind(fp);
+//  scanf("%d",&i);
+//  putc(i,fp);
+ while ( scanf("%d",&i)  == 1)
+{ 
+// rewind(fp);
  putc(i,fp);
-// i=getc(fp);
- printf("%d",i);
+}
  fclose(fp);
+// filecp(); 
  return 0;
- 
 }
 
 int  putw(int i,FILE *fp)
@@ -52,3 +55,18 @@ int getw(FILE *fp)
  s[1]=getc(fp);
  return i;
 } 
+int filecp(){
+     int ch;
+     FILE *input, *output;
+     input = fopen( "/tmp/tmp.c", "r" );
+     output = fopen( "/tmp/tmpCopy.c", "w" );
+     ch = getc( input );
+     while( ch != EOF ) {
+       putc( ch, output );
+       ch = getc( input );
+     }
+     fclose( input );
+     fclose( output );
+     return 0;
+}
+
