@@ -23,7 +23,7 @@
       FILE *input;
 
 
-      input = fopen("stuff", "rt");
+      input = fopen("/tmp/stuff.txt", "w");
         ch = getc(input);
         while (ch != EOF)
         {
