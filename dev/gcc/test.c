@@ -1,24 +1,67 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "test.h"
 
 int t1();
 int t2(int *arr);
 int t3();
+int t_struct();
+int t_struct2 ();
 
-int 
-main()
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  main
+ *  Description:  
+ * =====================================================================================
+ */
+	int
+main ( int argc, char *argv[] )
 {
-//t1();
-//int a[10]  = { 10, 55, 9, 4, 234, 20, 30, 40, 22, 34 };
-//int a[3]  = { 40, 22, 34 };
-//printf("the smallest one :%d\n",t2(a));
-t3();
-return 0;
-}
+	//t1();
+	//int a[10]  = { 10, 55, 9, 4, 234, 20, 30, 40, 22, 34 };
+	//int a[3]  = { 40, 22, 34 };
+	//printf("the smallest one :%d\n",t2(a));
+	//t3();
+	t_struct();
+	return 0;
+}				/* ----------  end of function main  ---------- */
 
 
-int t1(){
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  t_struct2
+ *  Description:  
+ * =====================================================================================
+ */
+int	
+t_struct2 ()
+{
+
+    struct Flags TapeInfo;
+
+    TapeInfo.Online  = 1;
+    TapeInfo.Mounted = 0;
+	return 0; 
+}		/* -----  end of function t_struct2  ----- */
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  t_struct
+ *  Description:  
+ * =====================================================================================
+ */
+int	
+t_struct ()
+{
+	ST_MIN m ;
+	m.m_num=0;
+	return m.m_num;
+//	return 0;
+}		/* -----  end of function t_struct  ----- */
+
+int t1()
+{
 int i ;
 i = 0 ;
 char mystr[]="aaabbb";
