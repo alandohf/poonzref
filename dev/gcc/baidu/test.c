@@ -17,22 +17,25 @@
  */
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 //char* strrev(char** s);
 char* strrev(char* s);
+char *itoa(int);
 
 int 
 main()
 {
     //long int a=0,b=0,c=0,d=0,e=0,dao=0,len=0;
 //    long int z=0;
-char *z;	
+int z;	
 //    printf("%d",(int) strlen("123423"));
     printf("Qing shu ru yi ge 5 wei shu:");
-    scanf("%s", z);
-    printf("zhe ge shu shi: %s\n", z);
-    printf("%d wei shu\n",(int) strlen(z));
-//    printf("zhe ge shu fan guo lai shi %s\n",strrev(z));
+    scanf("%d", &z);
+    printf("zhe ge shu shi: %d\n", z);
+    char* buffer = itoa(z);
+    printf("%d wei shu\n",(int) strlen(buffer));
+    printf("zhe ge shu fan guo lai shi %s\n",strrev(buffer));
     return 0;
 /*  
     if (z>=10000 && z<=99999)
@@ -131,18 +134,46 @@ char* strrev(char** s)
 */
 char* strrev(char *s)
 {
-//	  int i, j;
-//	  char *t ;
-//	      strcpy(t,s);
-//    printf("zhe ge shu shi: %s\n", t);
-//	        for(i = 0 , j = strlen(s) - 1 ; j >= 0 ; i++, j--){}
-//			     *(s + i) = *(t + j);
-		  return s;
+	  int i, j;
+	  char *t = malloc(sizeof(char)*strlen(s));
+	      strcpy(t,s);
+    	  printf(" shi: %s\n", t);
+	        for(i = 0 , j = strlen(s) - 1 ; j >= 0 ; i++, j--)
+			     *(s + i) = *(t + j);
+	return s;
 }
+
+#define INT_DIGITS 19		/*  enough for 64 bit integer */
+
+char *itoa(i)
+     int i;
+{
+  /*  Room for INT_DIGITS digits, - and '\0' */
+  static char buf[INT_DIGITS + 2];
+  char *p = buf + INT_DIGITS + 1;	/*  points to terminating '\0' */
+  if (i >= 0) {
+    do {
+      *--p = '0' + (i % 10);
+      i /= 10;
+    } while (i != 0);
+    return p;
+  }
+  else {			/*  i < 0 */
+    do {
+      *--p = '0' - (i % 10);
+      i /= 10;
+    } while (i != 0);
+    *--p = '-';
+  }
+  return p;
+}
+
+
 /*
 int t_main()
 {
    ret_str("born2c0de");
    return 0;
 }
+ *
 */
