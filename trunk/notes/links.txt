@@ -1,3 +1,9 @@
 Chapter�9.�Subversion Complete Reference
 http://ubc.fay.ar.us/pub/subversion/Book/ch09.html
 http://augustcouncil.com/~tgibson/tutorial/ptr.html
+http://www.cppreference.com/wiki/c/io/getc
+http://www.developerweb.net/forum/archive/index.php/f-58.html
+http://www.cplusplus.com/reference/clibrary/cstdio/putc/
+https://www.securecoding.cert.org/confluence/display/seccode/CERT+C+Secure+Coding+Standard
+
+http://www.thinkage.ca/english/gcos/expl/index/c_lib.html

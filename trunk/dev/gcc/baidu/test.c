@@ -22,10 +22,17 @@
 //char* strrev(char** s);
 char* strrev(char* s);
 char *itoa(int);
+int t_printf( );
+int 	
+t_opr_addr ();
 
 int 
 main()
 {
+
+//t_printf( );
+t_opr_addr ();
+	/*  
     //long int a=0,b=0,c=0,d=0,e=0,dao=0,len=0;
 //    long int z=0;
 int z;	
@@ -37,7 +44,6 @@ int z;
     printf("%d wei shu\n",(int) strlen(buffer));
     printf("zhe ge shu fan guo lai shi %s\n",strrev(buffer));
     return 0;
-/*  
     if (z>=10000 && z<=99999)
     printf("%d wei shu\n",len=5);
 //    len = 5;
@@ -177,3 +183,36 @@ int t_main()
 }
  *
 */
+
+#include	<stdlib.h>
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  main
+ *  Description:  
+ * =====================================================================================
+ */
+	int
+t_printf( )
+{
+	printf("%*.*d \n", -10, -10, 20);
+	printf("%*.*d \n", 5, 5, 20);
+	printf("%*.*d \n", -5, 5, 20);
+	printf("%*.*d \n", 5, -5, 20);
+
+	return EXIT_SUCCESS;
+}				/* ----------  end of function main  ---------- */
+
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  t_opr_addr
+ *  Description:  
+ * =====================================================================================
+ */
+int 	
+t_opr_addr ( )
+{
+	int *pa=NULL, *pb;
+	pb=&pa;
+	return 0;
+}		/* -----  end of function t_opr_addr  ----- */
