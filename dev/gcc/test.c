@@ -8,6 +8,7 @@ int t2(int *arr);
 int t3();
 int t_struct();
 int t_struct2 ();
+int t_ptr1 ();
 
 
 /* 
@@ -24,10 +25,37 @@ main ( int argc, char *argv[] )
 	//int a[3]  = { 40, 22, 34 };
 	//printf("the smallest one :%d\n",t2(a));
 	//t3();
-	t_struct();
+//	t_struct();
+	t_ptr1 ();
 	return 0;
 }				/* ----------  end of function main  ---------- */
 
+/* 
+ * ===  FUNCTION  ======================================================================
+ *         Name:  t_ptr1
+ *  Description:  
+ * =====================================================================================
+ */
+int	
+t_ptr1 ()
+{
+	int p[6] = {0,1,2,3,4,5};
+//	int* q = malloc(sizeof(int)*6);
+        int* q = p;
+//	printf("%d\n",(++*p));
+	printf("%d\n",(*++q));
+	printf("%d\n",(*++q));
+// 	http://topic.csdn.net/t/20010824/21/255240.html
+/* 我又看了看书，明白了  
+ *   我一直把p当成了char   *,实际上p是char   []  
+ *     两者之间还是有很大区别的  
+ *       char   *可以作为lvalue，char[]就不行  
+ *         p作为rvalue时可以implicit转换为char   *;  
+ *           hehe */
+//	printf("%d\n",(*p++));
+//	printf("%d\n",(*++p));
+	return 0;
+}		/* -----  end of function t_ptr1  ----- */
 
 /* 
  * ===  FUNCTION  ======================================================================
