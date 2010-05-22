@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "test.h"
+#include "bubbleSort.h"
 
 int t1();
 int t2(int *arr);
@@ -9,7 +10,8 @@ int t3();
 int t_struct();
 int t_struct2 ();
 int t_ptr1 ();
-
+int count_distinct();
+int t_self_incr();
 
 /* 
  * ===  FUNCTION  ======================================================================
@@ -26,7 +28,12 @@ main ( int argc, char *argv[] )
 	//printf("the smallest one :%d\n",t2(a));
 	//t3();
 //	t_struct();
-	t_ptr1 ();
+//	t_ptr1 ();
+//	count_distinct();
+//int array[10] = {10,9,8,7,6,5,4,3,2,1};
+//    bubbleSort( array, 10);
+//    printArray( array, 10);
+t_self_incr();
 	return 0;
 }				/* ----------  end of function main  ---------- */
 
@@ -160,3 +167,31 @@ memcpy (same_age,age,sizeof age) ;
   return 0;
 }
 
+int count_distinct(){
+   int size = 7;
+//   int array[size] = {0,0,0,1,2,3,3};
+   int array[7] = {0,0,0,1,2,3,3};
+//http://stackoverflow.com/questions/698739/why-am-i-not-getting-a-compile-error-when-declaring-a-c-array-with-variable-size
+   int unique = 1; //incase we have only one element; it is unique!
+   for(int i = 0; i < size -1 /* since we don't want to compare last element with junk*/; i++)
+    {
+     if(array[i]==array[i+1])
+       continue;
+     else
+       unique++;
+    }
+  printf("The number of unique elements is %d\n",unique);
+  return 0;
+}
+ 
+
+int t_self_incr(){
+	for(int i = 0 ; i < 10 ; ++i)	
+		printf("%d ",++i);
+		printf("\n");
+	for(int i = 0 ; i < 10 ; ++i)	
+		printf("%d ",i++);
+		printf("\n");
+	return 0;
+
+}
