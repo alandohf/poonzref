@@ -36,10 +36,17 @@ int bubbleSort(int a[], int array_size)
 	return 0;
 }
 
-int    printArray( int array[], int array_size){
+int    I_printArray( int array[], int array_size){
 	for (int i = 0 ; i < array_size ; i++)
 		printf("%d ",array[i]);
 //		printf("%c ",array[i]);
+		printf("\n");
+		return 0;
+
+}
+int    C_printArray( char array[], int array_size){
+	for (int i = 0 ; i < array_size ; i++)
+		printf("%c ",array[i]);
 		printf("\n");
 		return 0;
 
