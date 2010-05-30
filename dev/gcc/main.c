@@ -8,6 +8,28 @@ int
 main()
 {
 
+ 
+  ptr_array();
+  return 0;
+/* addr_comp();
+  return 0;
+ */
+/* int i , j , k= 9;
+    i = j;
+    j = 0 ;
+    printf("%d,%d,%d\n",i,j,k);
+  return 0;
+ */
+/* //05/29/2010 07:34:52 AM (EDT)  
+syscall();
+  return 0;
+*/
+/*  
+long int i = 11111;
+printf("%d\n",i);
+printf("%ld\n",sizeof(int));
+printf("%d\n",2147483647);
+*/
 /*  
  * // test display();
   display_options();
@@ -31,5 +53,4 @@ int array[10] = {10,9,8,7,6,5,4,3,2,1};
     I_printArray( array1, 15);
     C_printArray( array2, 15);
 */ 
-  return 0;
 }

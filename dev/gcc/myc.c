@@ -17,6 +17,7 @@
  */
 
 #include	<stdio.h>
+#include	<stdlib.h>
 
 int bubbleSort(int a[], int array_size)
 {
@@ -52,3 +53,37 @@ int    C_printArray( char array[], int array_size){
 
 }
 
+int     syscall(){
+    char file[20];
+    printf("input file name:");
+    scanf("%s", file);
+    char cmd[40];
+    sprintf(cmd, "mkdir %s", file);
+    system(cmd);
+    return 0;
+}
+
+
+void addr_comp(){
+int a[10],*p1,*p2;
+p1=a;
+p2=&a[5];
+    printf("p1-p2:%ld\n",p1-p2);
+}
+/* 
+ * an instance of array of pointers;
+ */
+int ptr_array()
+{
+ int a[12]={1,2,3, \
+            4,5,6,\
+            7,8,9,\
+            10,11,12},\
+      *p[4], i;
+ 
+ for(i=0;i<4;i++)
+   p[i]=&a[i*3];
+   printf("%d\n",p[3][2]);
+ return 0;
+} 
+ 

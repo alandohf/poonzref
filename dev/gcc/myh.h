@@ -26,3 +26,6 @@ typedef  char C_TwoElementArray[charArraySize];
 int 	bubbleSort(int a[], int array_size);
 int     I_printArray( int array[], int array_size);
 int     C_printArray( char array[], int array_size);
+int     syscall();
+int     addr_comp();
+int 	ptr_array();
