@@ -29,3 +29,7 @@ int     C_printArray( char array[], int array_size);
 int     syscall();
 int     addr_comp();
 int 	ptr_array();
+long int mypow10(int);
+long int t_math_pow(int , int);
+long int t_solution();
+

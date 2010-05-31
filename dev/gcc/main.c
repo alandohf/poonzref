@@ -8,9 +8,19 @@ int
 main()
 {
 
- 
-  ptr_array();
+//printf("i1 = %ld\n",mypow10(10));
+long res = 0 ;
+for(int i = 1; i < 10; i++){
+printf("i%d = %ld\n",i,t_math_pow(1,i));
+     res+=t_math_pow(1,i);
+}
+printf("res = %ld\n",res);
+//printf("i1 = %ld\n",t_solution());
   return 0;
+ 
+/*   ptr_array();
+  return 0;
+ */
 /* addr_comp();
   return 0;
  */
@@ -24,12 +34,21 @@ main()
 syscall();
   return 0;
 */
-/*  
-long int i = 11111;
-printf("%d\n",i);
-printf("%ld\n",sizeof(int));
-printf("%d\n",2147483647);
-*/
+
+/* long int i = 4294967290;
+printf("i1 = %ld\n",i);
+printf("i1 = %ld\n",i*2);
+printf("i1 = %ld\n",i*2*2);
+	i /= 2;
+printf("i2 = %ld\n",i);
+printf("i3 = %ld\n",sizeof(int));
+printf("i3 = %ld\n",sizeof(long int));
+
+printf("i4 = %d\n",2147483647);
+printf("i4 = %ld\n",9223372036854775807);
+  return 0;
+ */
+
 /*  
  * // test display();
   display_options();

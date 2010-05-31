@@ -18,6 +18,7 @@
 
 #include	<stdio.h>
 #include	<stdlib.h>
+#include	<math.h>
 
 int bubbleSort(int a[], int array_size)
 {
@@ -87,3 +88,32 @@ int ptr_array()
  return 0;
 } 
  
+long int mypow10(int n){
+	long int pow = 10;	
+ 	if(n <= 0 ) 
+		pow = 1;
+	else 
+		while(--n)	
+		pow=10*pow;
+
+	return pow;
+}
+
+long int t_math_pow(int inum,int ibit ){
+	long int lresult = 0;
+        for (int i = 0 ; i < ibit ; i++)
+	lresult  += mypow10(i);
+	return inum*lresult;
+}
+
+long int t_solution(){
+int num = 1, count = 5 ;
+long e = num;
+long result = 1;
+for(int i = 1; i < count; i++) {
+  result = result + result * 10 + num;
+	
+
+}
+	return result ;
+}
