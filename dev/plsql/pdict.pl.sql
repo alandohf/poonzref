@@ -6,6 +6,9 @@ select table_name,comments
 from dictionary
 where  table_name like  '%'||upper(v_table_name)||'%';
 BEGIN
+
+
+
 for c_rec in c1
 loop
 dbms_output.put_line(trim(c_rec.table_name)||' | '||c_rec.comments);
