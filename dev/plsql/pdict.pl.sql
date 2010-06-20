@@ -5,7 +5,7 @@ v_comments varchar2(4000);
 cursor c1 is
 select table_name,comments
 from dictionary
-where  table_name like  '%'||upper(v_table_name)||'%';
+where  table_name like  '%'||upper(v_table_name)||'%' order by 1;
 BEGIN
 for c_rec in c1
 loop
