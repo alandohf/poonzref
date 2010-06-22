@@ -62,3 +62,24 @@ SELECT job_id,
 ;
 /
 
+
+
+lus 中使用绑定变量：
+variable x number;
+exec :x := 123;
+SELECT fname, lname, pcode FROM cust WHERE id =:x; 
+
+system@xe> var name varchar2(100);
+system@xe> 
+system@xe>  exec :name := 'PROCEDURE';
+
+PL/SQL procedure successfully completed.
+
+system@xe>  select count(0) from all_source where type = :name;
+      3720
+
+1 row selected.
+
+
+
+
