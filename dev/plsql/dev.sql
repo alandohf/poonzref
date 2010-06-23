@@ -167,3 +167,76 @@ WHERE empid=:b100;
 
 
 
+
+
+& |  && 
+
+pzw@xe> select &num1 from dual;
+Enter value for num1: 1
+old   1: select &num1 from dual
+new   1: select 1 from dual
+	 1
+
+pzw@xe> /
+Enter value for num1: 2
+old   1: select &num1 from dual
+new   1: select 2 from dual
+	 2
+
+
+pzw@xe> select &&num2 from dual;
+Enter value for num2: 111
+old   1: select &&num2 from dual
+new   1: select 111 from dual
+       111
+
+1 row selected.
+
+pzw@xe> /
+old   1: select &&num2 from dual
+new   1: select 111 from dual
+       111
+
+1 row selected.
+
+pzw@xe> define
+DEFINE _DATE	       = "23-JUN-10" (CHAR)
+DEFINE _CONNECT_IDENTIFIER = "XE" (CHAR)
+DEFINE _USER	       = "PZW" (CHAR)
+DEFINE _PRIVILEGE      = "" (CHAR)
+DEFINE _SQLPLUS_RELEASE = "1002000100" (CHAR)
+DEFINE _EDITOR	       = "vi" (CHAR)
+DEFINE _O_VERSION      = "Oracle Database 10g Express Edition Release 10.2.0.1.0 - Production" (CHAR)
+DEFINE _O_RELEASE      = "1002000100" (CHAR)
+DEFINE Y	       = "pzw@xe" (CHAR)
+DEFINE NUM	       = "3333" (CHAR)
+DEFINE NUM2	       = "111" (CHAR)
+
+----------------------------------------
+lvl1/
+lvl1/b.sql
+lvl1/a.sql
+
+[/home/pzw ]cat lvl1/a.sql
+@@b.sql
+
+[/home/pzw ]cat lvl1/b.sql
+select 11112122 from dual;
+
+
+pzw@xe> @lvl1/a
+  11112122
+------------------------------------------
+
+/etc/oratab
+
+
+
+[/home/pzw ]cat  $ORACLE_HOME/config/scripts/startdb.sql
+connect / as sysdba
+startup
+exit
+
+
+
+
