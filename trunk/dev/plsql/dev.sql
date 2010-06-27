@@ -27,7 +27,9 @@ select sysrun('/bin/ls -alt') from dual;
 select owner||'.'||table_name from all_tables where owner = 'HR'
 
 select TABLE_OWNER, count(0) from DBA_SYNONYMS group by TABLE_OWNER order by 1;
-
+/**
+-----------------------usage : exec crsyn('syn_nam','tab_nam');---------------
+i**/
 create or replace procedure crsyn
 (  v_syno_nam in varchar2 
  , v_table_nam in varchar2
@@ -50,8 +52,21 @@ v_sql := ' create public  SYNONYM '||v_syno_name||' for '||v_table_name ;
 execute immediate v_sql;
 end crsyn;
 /
+/**
+--test :  
+pzw@xe> exec crsyn('T_NUMBER','pzw.T_NUMBER');
 
+PL/SQL procedure successfully completed.
 
+pzw@xe> !log 1
+
+system@xe> desc T_NUMBER
+ Name					   Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ NUM1						    NUMBER(5,-2)
+
+**/
+--------------------------------------
 SELECT job_id,
                 sum(decode(DEPARTMENT_ID,10,SALARY)) DEPT10,
                 sum(decode(DEPARTMENT_ID,20,SALARY)) DEPT20,
@@ -236,6 +251,49 @@ pzw@xe> @lvl1/a
 connect / as sysdba
 startup
 exit
+
+
+
+
+ALTER SESSION 
+   SET NLS_DATE_FORMAT = 'YYYY MM DD HH24:MI:SS';
+
+
+Oracle Database uses the new default date format:
+
+SELECT TO_CHAR(SYSDATE) Today
+   FROM DUAL; 
+
+TODAY 
+------------------- 
+2001 04 12 12:30:38
+
+
+declare
+v_isnull integer := 0 ;
+v_field varchar2(30)  ;
+cursor c1 is
+select CNAME from col
+where  tname = upper('r_date')  order by 1; 
+cursor c2 is select * from r_date ; 
+
+begin
+for crec in c2
+loop
+for c_rec in c1
+loop
+--dbms_output.put_line(c_rec.cname);
+v_field := c_rec.cname;
+if crec.v_field is null then 
+ v_isnull  := v_isnull + 1;
+end if;
+end loop;
+dbms_output.put_line(v_isnull);
+end loop;
+
+end;
+/
+
 
 
 
