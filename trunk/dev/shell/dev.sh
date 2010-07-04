@@ -342,4 +342,13 @@ configure script.
 
 http://127.0.0.1:8080/apex/f?p=4550:11:4144274454178825::NO:::
 
+sudo touch /etc/default/locale
+sudo echo LANG="en_US.UTF-8" > /etc/default/locale
+sudo echo LANGUAGE="en_US:en" >> /etc/default/locale
+
+
+[/home/pzw ]cat  /etc/default/locale
+LANG="en_US.UTF-8"
+
+
 
