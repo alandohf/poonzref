@@ -297,4 +297,131 @@ end;
 
 
 
+ 
+drop table t_candidates_sum purge;
+create table t_candidates_sum
+(
+code	number
+,school	varchar2(128)
+,plans	number
+,candidates number
+,limits	   number
+);
+
+drop table t_prikey purge;
+create table t_prikey
+(
+rn	number
+,constraint pk_rn primary key(rn)
+);
+
+ 
+insert into t_prikey
+select 1 from dual;
+
+insert into t_prikey
+select 2 from dual;
+
+insert into t_prikey
+select 2 from dual;
+
+
+ERROR at line 1:
+ORA-00001: unique constraint (PZW.PK_RN) violated
+
+
+t_num_pid
+
+select a.*
+,row_number()over( partition by substr(a||b||c||d||e||f ,1,length(a||b||c||d||e||f)-2) order by sid ) pid
+from t_num_pid a 
+order by sid
+;
+
+
+
+select a.*
+,sid - row_number()over( partition by substr(a||b||c||d||e||f ,1,length(a||b||c||d||e||f)-2) order by sid ) pid
+from t_num_pid a
+order by sid
+;
+
+   
+
+select a.*
+,sid - row_number()over( partition by substr(a||b||c||d||e||f ,1,length(a||b||c||d||e||f)-2) order by sid ) pid
+,case when length(a||b||c||d||e||f)-2 = 0 then null 
+	else sid - row_number()over( partition by substr(a||b||c||d||e||f ,1,length(a||b||c||d||e||f)-2) order by sid ) 
+	end pid
+from t_num_pid a
+order by sid
+;
+
+
+select a.a,a.b,a.c,a.d,a.e,a.f,a.sid
+--,sid - row_number()over( partition by substr(a||b||c||d||e||f ,1,length(a||b||c||d||e||f)-2) order by sid ) pid
+,case when length(a||b||c||d||e||f)-2 = 0 then null 
+        else sid - row_number()over( partition by substr(a||b||c||d||e||f ,1,length(a||b||c||d||e||f)-2) order by sid ) 
+        end pid
+from t_num_pid a
+order by sid
+;
+
+
+alter table t_num_pid add ( comments varchar2(32) );
+alter table t_num_pid drop ( comments  );
+
+Table altered.
+
+
+
+shutdown immediate;  
+startup mount;  
+alter system  enable restricted session;  
+alter system set JOB_QUEUE_PROCESSES=0;  
+alter system set AQ_TM_PROCESSES=0;  
+alter database open;  
+alter database character set internal_use GB2312;  
+shutdown immediate;  
+startup;  
+
+
+
+
+shutdown immediate;
+startup mount;
+alter system enable restricted session ;
+alter database open ;
+alter database character set internal_use ZHS16GBK ;
+shutdown immediate;
+startup ;
+
+
+
+ALTER TABLE chicken ADD CONSTRAINT chickenREFegg
+    FOREIGN KEY (eID) REFERENCES egg(eID)
+    INITIALLY DEFERRED DEFERRABLE;
+ALTER TABLE egg ADD CONSTRAINT eggREFchicken
+    FOREIGN KEY (cID) REFERENCES chicken(cID)
+    INITIALLY DEFERRED DEFERRABLE;
+
+
+ALTER TABLE egg DROP CONSTRAINT eggREFchicken;
+ALTER TABLE chicken DROP CONSTRAINT chickenREFegg;
+DROP TABLE egg;
+DROP TABLE chicken;
+
+
+show errors trigger <trigger_name>;
+
+select trigger_name from user_triggers;
+
+For more details on a particular trigger:
+
+select trigger_type, triggering_event, table_name, referencing_names, trigger_body
+from user_triggers
+where trigger_name = '<trigger_name>';
+
+alter trigger <trigger_name> {disable|enable}; 
+
 
