@@ -425,3 +425,19 @@ where trigger_name = '<trigger_name>';
 alter trigger <trigger_name> {disable|enable}; 
 
 
+create or replace trigger <TRIGGER_NAME>
+  before insert or update
+on <table_name>
+  for each row
+declare
+  <VARIABLE DECLARATIONS>
+begin
+    <CODE>
+exception
+    <EXCEPTION HANDLERS>
+end <TRIGGER_NAME>;
+/
+
+
+
+

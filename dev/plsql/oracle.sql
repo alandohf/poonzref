@@ -23,4 +23,35 @@ ORA-01702: a view is not appropriate here
 Table analyzed.
 
 
+----auto increment
+
+create table my_test (
+id number
+,my_test_data varchar2(255)
+);
+
+
+create sequence test_seq
+start with 1
+increment by 1
+nomaxvalue; 
+
+create trigger test_trigger
+before insert on my_test
+for each row
+begin
+select test_seq.nextval into :new.id from dual;
+end;
+/
+
+
+ insert into my_test values(test_seq.nextval, 'voila!');
+commit;
+
+drop table my_test purge;
+drop sequence test_seq ;
+drop trigger test_trigger;
+
+----auto increment  end 
+
 
