@@ -440,4 +440,30 @@ end <TRIGGER_NAME>;
 
 
 
+SELECT dbtimezone FROM dual;
+
+ALTER database SET TIME_ZONE = '-05:00';
+
+SELECT entry, to_char(entry_date, 'MM/DD/YY HH:MI AM') FROM dates WHERE entry=5;
+This database is in US Eastern time but we want to display the time in US Central.
+
+SELECT entry, to_char(new_time(entry_date, 'EST', 'CST'), 'MM/DD/YY HH:MI AM') FROM dates WHERE entry=5;
+
+SELECT entry, to_char(new_time(entry_date, 'EST', 'PST'), 'MM/DD/YY HH:MI AM') FROM dates WHERE entry=5;
+
+SELECT to_char(new_time(sysdate, 'EST', 'PST'), 'MM/DD/YY HH:MI AM') FROM dual ;
+
+ALTER session SET TIME_ZONE = '+08:00';
+
+alter session set time_zone='+04:00';
+
+select dbtimezone,sessiontimezone from dual;
+
+
+select CURRENT_TIMESTAMP from dual;
+
+
+ select SYSTIMESTAMP from dual;
+
+
 
