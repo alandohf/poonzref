@@ -239,4 +239,62 @@ mysql> SELECT @a;
 
 
 
+Define foreign key
+
+Drop table Books;
+Drop table Authors;
+Drop table AuthorBook;
+
+
+CREATE TABLE Books (
+   BookID SMALLINT NOT NULL PRIMARY KEY,
+   BookTitle VARCHAR(60) NOT NULL,
+   Copyright YEAR NOT NULL
+)
+ENGINE=INNODB;
+
+INSERT INTO Books VALUES (1, 'Letters', 1934),
+                         (2, 'Ohio', 1919),
+                         (3, 'Angels', 1966),
+                         (4, 'Speaks', 1932),
+                         (5, 'Man', 1996),
+                         (6, 'A', 1980),
+                         (7, 'Card', 1992),
+                         (8, 'The', 1993);
+
+CREATE TABLE Authors (
+   AuthID SMALLINT NOT NULL PRIMARY KEY,
+   AuthFN VARCHAR(20),
+   AuthMN VARCHAR(20),
+   AuthLN VARCHAR(20)
+)
+ENGINE=INNODB;
+
+INSERT INTO Authors VALUES (1, 'Henry', 'S.', 'Thompson'),
+                           (2, 'Jack', 'Carol', 'Oates'),
+                           (3, 'Red', NULL, 'Elk'),
+                           (4, 'White', 'Maria', 'Rilke'),
+                           (5, 'Anne', 'Kennedy', 'Toole'),
+                           (6, 'Jane', 'G.', 'Neihardt'),
+                           (7, 'Jane', NULL, 'Yin'),
+                           (8, 'Alan', NULL, 'Wang');
+
+CREATE TABLE AuthorBook (
+   AuthID SMALLINT NOT NULL,
+   BookID SMALLINT NOT NULL,
+   PRIMARY KEY (AuthID, BookID),
+   FOREIGN KEY (AuthID) REFERENCES Authors (AuthID),
+   FOREIGN KEY (BookID) REFERENCES Books (BookID)
+)
+ENGINE=INNODB;
+
+INSERT INTO AuthorBook VALUES (1, 8), 
+                              (2, 7), 
+                              (3, 6), 
+                              (4, 5),
+                              (5, 4), 
+                              (6, 2), 
+                              (8, 1);
+
+http://www.java2s.com/Code/SQL/Key/Defineforeignkey.htm
 
