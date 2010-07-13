@@ -465,5 +465,131 @@ select CURRENT_TIMESTAMP from dual;
 
  select SYSTIMESTAMP from dual;
 
+--
+pzw>  exec execute immediate ' select 1 from dual ';
+
+PL/SQL procedure successfully completed.
+
+--
+
+ exec execute immediate ' create table t_exec as select 1 a from dual ';
+
+create or replace procedure selectx
+(  v_field_nam in varchar2
+)
+is 
+begin
+ execute immediate 'select '''|| v_field_nam ||''' from dual ';
+end selectx;
+/
+
+pzw> ;
+  1* select &a from r_date where rownum<10
+pzw> /
+Enter value for a: dt
+old   1: select &a from r_date where rownum<10
+new   1: select dt from r_date where rownum<10
+20791227
+20791226
+20791225
+20791224
+20791223
+20791222
+20791221
+20791220
+20791219
+
+9 rows selected.
+
+drop table t_mytable purge;
+create table t_mytable
+(
+ c1	number
+,c2	number
+);
+
+insert into t_mytable 
+select 1 , 2 from dual;
+commit;
+
+insert into t_mytable 
+select 3 , 4 from dual;
+commit;
+
+pzw> select c&num from t_mytable;
+Enter value for num: 1
+old   1: select c&num from t_mytable
+new   1: select c1 from t_mytable
+	 1
+	 3
+
+2 rows selected.
+
+pzw> select c&num from t_mytable;
+Enter value for num: 2
+old   1: select c&num from t_mytable
+new   1: select c2 from t_mytable
+	 2
+	 4
+
+2 rows selected.
 
 
+
+表一 表名:期初
+数量    单价    金额
+ 10      20      200
+
+
+日期   入库数量 入库单价 入库金额 出库数量 出库单价 出库金额 结存数量 结存单价 结存金额 
+                                                                10       20       200
+2010-1-1  20        18      360                                  30      18.67     560
+2010-1-2                             5        18.67     93.33     25      18.67   466.67
+2010-1-5  30        17      510                                  55      17.76   976.67
+2010-1-8                             5         17.76     88.79    50      17.76   887.88
+2010-1-20  10       21      210                                  60      18.30   1097.88
+2010-1-20                            20         18.30    365.96   40      18.30   731.92
+
+
+
+select IIf(IsNull(a.日期),b.日期) 日期
+,sum(a.数量) 入库数量
+,sum(a.单价) 入库单价
+,sum(a.金额) 入库金额
+--
+,sum(b.数量) 出库数量
+,结存单价     出库单价
+,sum(b.数量)*结存单价  出库金额
+--
+,sum(IIf(IsNull(c.数量),0)  + IIf(IsNull(a.数量),0) - IIf(IsNull(b.数量),0) ) 结存数量 
+,结存金额/结存数量 结存单价 
+,sum(IIf(IsNull(c.数量),0)*c.单价  + IIf(IsNull(a.数量),0)*IIf(IsNull(a.单价),0) - IIf(IsNull(b.数量),0)*IIf(IsNull(b.单价),0) ) 结存金额
+
+from 入库 a
+full join 出库 b on a.日期 = b.日期
+full join 期初 c on a.日期 = c.数量
+;
+
+
+
+
+Declare
+      Exception_a  exception;
+      Exception_b  exception;
+   Begin
+       Begin
+           Raise  exception_a;
+       Exception 
+          When exception_b then
+              Dbms_output.put_line('this is b');
+          When exception_a then
+             Raise exception_b;
+           Dbms_output.put_line('this is a');
+        End;
+     Exception
+       When others then
+       Dbms_output.put_line('this is another a');
+End; 
+
+
+ 
