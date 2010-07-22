@@ -592,4 +592,91 @@ Declare
 End; 
 
 
+
+
+
+
+
+--
+drop table students4 purge;
+drop type stu4;
+create   type stu4 as object
+(
+ name varchar2(20),
+ sex varchar2(2),
+ birthday date,
+ note varchar2(300),
+ member function get_age return number)
+;
+/
+类型已创建。
+
+ create type body stu4 as
+ member function get_age return number 
+ is 
+ v_months number;
+ begin
+ select floor(months_between(sysdate,birthday)/12) into v_months
+ from dual;
+ return v_months;
+ end;
+ end;
+ /
+
+主体已创建。
+
+create table students4(
+sid number(4)
+,student stu4);
+
+表已创建。
+
+insert into students4 values
+(1
+,stu4('王晓雪'
+	,'女'
+	,sysdate
+	,'my note')
+);
+commit;
+
+insert into students4 
+select 1 , stu4('a','b',sysdate,'c') from dual;
+
+commit;
+
+已创建 1 行。
+
+ select s.student.name,s.student.birthday,s.student.get_age()from students4 s; 
+
+
+
+ select 
+ students4.student.name
+,students4.student.birthday
+,students4.student.get_age()
+from students4 ; 
  
+
+
+1	a	1
+2	b	2
+3	c	3
+4	d	4
+
+
+1	b	a	1
+2	c	b	2
+3	d	c	3
+
+select datediff(dd,a.addtime,b.addtime)
+from 
+(select row_number() over (order by addtime) as id,addtime from 某表 where addtime<>(select max(addtime) from 某表)
+) a,
+(select row_number() over (order by addtime) as id,addtime from 某表 where addtime<>(select min(addtime) from 某表)
+) b
+where a.id=b.id 
+
+http://zhidao.baidu.com/question/166997973.html?fr=uc_ma_push&fl=red
+
+
