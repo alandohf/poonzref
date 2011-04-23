@@ -1,0 +1,3 @@
+#s1 : db2 prep sqc.sqc
+#s2 : gcc -I"D:/Databases/IBM/SQLLIB/include" sqc.c -L"D:/Databases/IBM/SQLLIB/lib" -l"db2api"
+#s3 : ./a.exe
