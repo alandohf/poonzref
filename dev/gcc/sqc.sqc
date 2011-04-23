@@ -1,0 +1,105 @@
+       #include <stdio.h>                                                  //1
+       #include <stdlib.h>
+       #include <string.h>
+       #include <sqlenv.h>
+       #include <sqlutil.h>                                               
+
+      EXEC SQL BEGIN DECLARE SECTION;                                      //2
+        short id;
+        char name[10];
+        short dept;
+        double salary;
+        char hostVarStmtDyn[50];
+      EXEC SQL END DECLARE SECTION;                                        
+
+      int main()                                                           
+       { 
+         int rc = 0;                                                       //3
+         EXEC SQL INCLUDE SQLCA;                                           //4
+
+         /* 连接到数据库 */
+         printf("\n Connecting to database...");
+         EXEC SQL CONNECT TO "sample";                                    // 5
+         if (SQLCODE  <0)                                                  //6
+         {
+            printf("\nConnect Error:  SQLCODE = d%\n",SQLCODE);
+            goto connect_reset;
+         }
+         else
+         {
+            printf("\n Connected to database.\n");
+         }
+         
+         /* 使用静态 SQL 来执行 SQL 语句（查询）；将单一结果行的值复制到主变量 */
+EXEC SQL SELECT id, name, dept, salary
+                 INTO :id, :name, :dept, :salary
+                 FROM staff WHERE id = 310;
+         if (SQLCODE  <0)                                                //  6 
+         {
+            printf("Select Error:  SQLCODE = %d\n",SQLCODE);
+         }
+         else
+         {
+            /* 将主变量值打印到标准输出 */
+            printf("\n Executing a static SQL query statement, searching for\n the id value equal to 310\n");
+            printf("\n ID   Name        DEPT       Salary\n");
+            printf("%d   %s %d       %f\n",id,name,dept,salary);
+         }
+         
+         strcpy(hostVarStmtDyn, "UPDATE staff  SET salary = salary + 1000 WHERE dept = 66");
+         /* 使用主变量和动态 SQL 来执行 SQL 语句（操作）*/
+EXEC SQL PREPARE StmtDyn FROM :hostVarStmtDyn;
+         if (SQLCODE  <0)                                                 // 6
+         {
+            printf("Prepare Error:  SQLCODE = %d\n",SQLCODE);
+         }
+         else
+         {
+            EXEC SQL EXECUTE StmtDyn USING :dept;                         // 8
+         }
+         if (SQLCODE  <0)                                                 // 6
+         {
+            printf("Execute Error: SQLCODE = %d\n",SQLCODE);
+         }
+     
+         /* 使用静态 SQL 和游标来读取已更新的行 */
+         EXEC SQL DECLARE posCur1 CURSOR FOR 
+            SELECT id, name, dept, salary 
+            FROM staff WHERE id = 310;
+         if (SQLCODE  <0)                                                 //6
+         {
+            printf("Declare Error: SQLCODE = %d\n",SQLCODE);
+         }
+         EXEC SQL OPEN posCur1;
+         EXEC SQL FETCH posCur1 INTO :id, :name, :dept, :salary ;        // 9
+         if (SQLCODE  <0)                                                // 6
+         {
+            printf("Fetch Error:  SQLCODE = %d\n",SQLCODE);
+         }
+         else
+         {
+            printf(" Executing an dynamic SQL statement, updating the \n salary value for the id equal to 310\n");
+            printf("\n ID   Name        DEPT       Salary\n");
+            printf("%d   %s %d       %f\n",id,name,dept,salary);
+         }
+         
+         EXEC SQL CLOSE posCur1;
+         
+         /* 落实事务 */
+         printf("\n  Commit the transaction.\n");
+         EXEC SQL COMMIT;                                                 //10
+         if (SQLCODE  <0)                                                 //6
+         {
+            printf("Error:  SQLCODE =  SQLCODE = d%\n",SQLCODE);
+         }
+         
+         /* 与数据库断开连接 */
+         connect_reset :
+            EXEC SQL CONNECT RESET;                                       //11
+            if (SQLCODE  <0)                                             // 6
+            {
+               printf("Connection Error:  SQLCODE = %d",SQLCODE);
+            }
+         return 0;
+        } /* 结束 main */
+//     有关样本程序
