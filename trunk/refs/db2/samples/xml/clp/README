@@ -1,0 +1,204 @@
+******************************************************************************
+* Licensed Materials - Property of IBM
+*
+* Governed under the terms of the International
+* License Agreement for Non-Warranted Sample Code.
+*
+* © COPYRIGHT International Business Machines Corp. 2007
+* All Rights Reserved.
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+******************************************************************************
+*
+*             README for Command Line Processor XML Samples
+*
+* The "<install_path>/sqllib/samples/xml/clp" directory on Unix and
+* "<install_path>\sqllib\samples\xml\clp" directory on Windows
+* contains this README file.
+*             where <install_path> is the location of DB2 9 on your
+*             hard drive.
+* The default location for <install_path> is
+*             C:\Program Files\IBM on Windows,
+*             $HOME on Unix.
+*
+* This README describes how to run CLP XML sample code for DB2 9. The
+* DB2 9 sample code for CLP XML is located in the following directory:
+*       <install_path>\sqllib\samples\xml\clp for Windows and
+*       <install_path>/sqllib/samples/xml/clp for Unix
+*
+* It is recommended that you copy the sample files from this directory
+* to a working directory prior to building  the sample programs.
+* The sample program directories are typically read-only on most
+* platforms and some samples produce output files that require write
+* perimssions on the directory.
+*
+* WARNING:
+* 1. Some of these samples may change your database or database manager
+*    configuration. Execute the samples against a test database
+*    only, such as SAMPLE database.
+* 2. XML data can only be stored in single-partition databases defined with
+*    the UTF-8 code set.  Note that using XML features prevents future use of
+*    the Database Partitioning Feature available with DB2 Enterprise Server
+*    Edition for Linux, Unix, and Windows.
+*
+******************************************************************************
+*
+*        Prepare your DB2 sample development environment for Windows/Unix
+*
+* 1) Copy the files in <install_path>\sqllib\samples\xml\clp\* for Windows
+*    and $HOME/sqllib/samples/xml/clp/* for Unix to a working directory
+*    and ensure that directory has write permission.
+*
+* 2) On Windows platform, all samples should be run and built in DB2
+*    Command Window.
+*    The DB2 command window is needed to execute the db2 specific commands.
+*    You can follow the step below to open DB2 command window.
+*      From the Start Menu click Start --> Programs --> IBM DB2 -->
+*      <DB2 copy name> --> Command Line Tools --> Command Window.
+*
+* 3) Start the database manager with the following command:
+*      db2start
+*
+* 4) Create the sample database with the following command:
+*      db2sampl -xml
+*
+* 5) Connect to the sample database with the following command:
+*      db2 connect to sample
+*
+* 6) To build stored procedures and User defined functions,
+*    ensure that you have write permission on the
+*    <install_path>\sqllib\function directory on Windows and
+*    <install_path>/sqllib/function directory on Unix.
+*
+* 7) Change directory (CD) to the directory containing the files
+*    copied in step 1.
+*
+******************************************************************************
+*
+*                     *** Executing CLP Samples ***
+*
+* Use following command to execute CLP samples:
+*   db2 -vf <filename> -t
+*           <filename> -- Name of the Command Line Processor file (including
+*                         the extension).
+*
+* NOTE :
+*
+*    1. Some of the samples might need one or more data files at runtime.
+*       some of the samples may also need setup script to be run before
+*       running the sample.See the specific sample descriptions in
+*       "File Descriptions" section for more details.
+*
+*    2. Refer to the "File Descriptions" section in this README for
+*       information  on specific samples and any special considerations
+*       relevant for each. The HEADER sections of these samples also provide
+*       further details on each sample.
+*
+******************************************************************************
+*
+*              Common file Descriptions
+* 
+* The following are the common files for Command Line Processor samples.
+* For more information on these files, refer to the program source files.
+*
+*******************************************************************************
+*
+* Common files
+*
+* README               - this file
+*
+******************************************************************************
+*
+*                    sample descriptions
+*
+* The following are the Command Line Processor sample files included with DB2.
+* For more information on these files, refer to program source files.
+*
+******************************************************************************
+*
+*       COMMAND LINE PROCESSOR XML Sample File Descriptions
+*
+* xmlschema.db2        - How to register an XML schema to a database.
+*                        How to use this registered schema to validate an XML
+*                        value before inserting into a table.
+*                        PREREQUISITE: copy product.xsd, order.xsd,
+*                        customer.xsd, header.xsd Schema files, order.xml XML
+*                        document from xml/data directory to working
+*                        directory
+*
+* xmltotable.db2       - How to insert the data from XML document to a
+*                        relational table using XML Constructor function and
+*                        SQL/XML functions.
+*
+* reltoxmldoc.db2      - How to create XML object from data stored in
+*                        relational tables using various SQL/XML Constructor
+*                        functions. The XML object is created using stored
+*                        procedure.
+*                        PREREQUISITE: This sample uses a stored procedure.
+*                        Stored procedure should be registered before running
+*                        the sample. Follow the step given in the header of
+*                        the sammple for more details.Run the cleanup.db2
+*                        and setupscript.db2 scripts before running this
+*                        simple.Run the cleanupscript.db2 script to cleanup
+*                        the database objects after running the sample.
+*                        These scripts can be found in xml/data directory.
+*
+* reltoxmltype.db2     - How to create XML object from data stored in
+*                        relational tables using various SQL/XML Constructor
+*                        functions.
+*                        PREREQUISITE: Run the script setupscript.db2 before
+*                        running this simple. Run the cleanupscript.db2 script
+*                        to cleanup the database objects after running the
+*                        sample. These scripts can be found in xml/data
+*                        directory.
+*
+* xmldecomposition.db2 - How to decompose data stored in a XML file and
+*                        insert those into tables.
+*                        PREREQUISITE: run the script setupfordecomposition.db2
+*                        before running the sample. Run the script
+*                        cleanupfordecomposition.db2 after running the sample
+*                        to cleanup the object created for the samples. These
+*                        scripts can be found in xml/data directory. This
+*                        sample require bookdetail.xml, bookdetail.xsd files
+*                        at run time. Copy these files to your working
+*                        directory before running the sample. These file can
+*                        be found in xml/data directory.
+*
+* lobstoxml.db2        - How to move LOB data into an XML column using
+*                        IMPORT and EXPORT commands.
+*                        PREREQUISITE: create a directory lobdatadir in
+*                        present working directory to store the data files
+*                        created during the execution of the sample.
+*
+* impexpxml.db2        - How to move table data of XML datatype using IMPORT
+*                        and EXPORT commands.
+*                        PREREQUISITE: copy xmldata.del in present working
+*                        directory. xmldata.del can be found in xml/data
+*                        directory create a directory xmldatadir in present
+*                        working directory and copy the file xmlfiles.001.xml
+*                        to this directory.
+*
+* xmldb2batch.db2      - How to perform 'db2batch' with XML datatype
+*                        PREREQUISITE: Make sure that xmldb2batch_in.sql file
+*                        is there in working directory. This file can be found
+*                        in xml/clp directory.
+*
+* xmldb2look.db2       - How to perform 'db2look' for XML datatype.
+*
+* xmlrunstats.db2      - How to perform runstats on a table having XML
+*                        columns.
+*
+* simple_xmlproc.db2   - How to use XML type parameters in stored procedures.
+*
+* xmlindex.db2         - How to create index on an XML column.
+*
+* xmlconst.db2         - How to put constraints on an XML column.
+*                        NOTE : This sample demonstrate the how to enforce the
+*                        constraints on an XML value. There are some statement
+*                        in the samples which are expected to fail because of
+*                        constraint violation so The sql error SQL803N,
+*                        SQL20305N and SQL20306N are expected.
+*
+******************************************************************************

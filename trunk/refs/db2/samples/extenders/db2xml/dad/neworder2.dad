@@ -1,0 +1,138 @@
+<?xml version="1.0"?> 
+<!DOCTYPE DAD SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/dad.dtd"> 
+<DAD>
+  <dtdid>neworder.dtd</dtdid> 
+  <validation>NO</validation> 
+  <Xcollection> 
+ <prolog>?xml version="1.0"?</prolog> 
+ <doctype>!DOCTYPE Order SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/neworder.dtd"</doctype> 
+  <root_node> 
+  <element_node name="Order"> 
+    <RDB_node> 
+      <table name="order_tab" key="order_key1 order_key2 order_key3"/> 
+      <table name="part_tab" key="part_key1 part_key2"/> 
+      <table name="ship_tab" key="date"/>
+      <condition>order_tab.order_key1=part_tab.o_key1 AND 
+                 order_tab.order_key2=part_tab.o_key2 AND 
+                 order_tab.order_key3=part_tab.o_key3 AND 
+                 part_tab.part_key1=ship_tab.p_key1 AND 
+                 part_tab.part_key2=ship_tab.p_key2</condition>
+    </RDB_node> 
+    <attribute_node name="Key1"> 
+      <RDB_node> 
+        <table name="order_tab"/> 
+        <column name="order_key1" type="integer"/> 
+      </RDB_node> 
+    </attribute_node> 
+    <attribute_node name="Key3">
+      <RDB_node> 
+        <table name="order_tab"/> 
+        <column name="order_key3" type="integer"/> 
+      </RDB_node> 
+    </attribute_node> 
+    <element_node name="Key2">
+      <text_node>
+        <RDB_node> 
+          <table name="order_tab"/> 
+          <column name="order_key2" type="integer"/> 
+        </RDB_node> 
+      </text_node>
+    </element_node> 
+    <element_node name="Customer">
+      <element_node name="Name">
+        <text_node>
+          <RDB_node>
+            <table name="order_tab"/>
+            <column name="customer_name" type="varchar(16)"/>
+          </RDB_node>
+        </text_node>
+      </element_node>
+      <element_node name="Email">
+        <text_node>
+          <RDB_node>
+            <table name="order_tab"/> 
+            <column name="customer_email" type="varchar(16)"/> 
+          </RDB_node> 
+        </text_node> 
+      </element_node> 
+    </element_node> 
+    <element_node name="Part">
+      <attribute_node name="Color">
+        <RDB_node>
+          <table name="part_tab"/>
+          <column name="color" type="char(6)"/>
+        </RDB_node>
+      </attribute_node>
+      <element_node name="Key1">
+        <text_node>
+          <RDB_node>
+            <table name="part_tab"/>
+            <column name="part_key1" type="integer"/>
+          </RDB_node>
+        </text_node>
+      </element_node>
+      <element_node name="Key2">
+        <text_node>
+          <RDB_node>
+            <table name="part_tab"/>
+            <column name="part_key2" type="integer"/>
+          </RDB_node>
+        </text_node>
+      </element_node>
+      <element_node name="ExtendedPrice"> 
+        <text_node> 
+          <RDB_node> 
+            <table name="part_tab"/> 
+            <column name="price" type="decimal(10,2)"/>  
+            <condition>price &gt; 2500.00</condition> 
+          </RDB_node> 
+        </text_node>  
+      </element_node> 
+      <element_node name="Tax">  
+       <text_node> 
+          <RDB_node> 
+            <table name="part_tab"/> 
+            <column name="tax" type="real"/>  
+          </RDB_node> 
+       </text_node>  
+     </element_node> 
+       <element_node name="Quantity"> 
+        <text_node> 
+          <RDB_node> 
+            <table name="part_tab"/> 
+            <column name="qty" type="integer"/> 
+          </RDB_node>  
+        </text_node> 
+      </element_node>
+      <element_node name="Shipment" multi_occurrence="YES">
+        <element_node name="ShipDate"> 
+          <text_node> 
+            <RDB_node>
+              <table name="ship_tab"/>  
+              <column name="date" type="date"/>  
+              <condition>date &gt; '1966-01-01'</condition> 
+            </RDB_node> 
+          </text_node>  
+        </element_node> 
+        <element_node name="ShipMode">  
+          <text_node> 
+            <RDB_node>
+              <table name="ship_tab"/> 
+              <column name="mode" type="char(6)"/>  
+            </RDB_node> 
+          </text_node>
+        </element_node>
+        <element_node name="Comment">  
+          <text_node> 
+            <RDB_node>
+              <table name="ship_tab"/> 
+              <column name="comment" type="varchar(128)"/>  
+            </RDB_node> 
+          </text_node>
+        </element_node> 
+      </element_node>  <!-- end of element Shipment --> 
+    </element_node>  <!-- end of element Part --> 
+  </element_node>  <!-- end of element Order --> 
+</root_node> 
+</Xcollection>
+</DAD>

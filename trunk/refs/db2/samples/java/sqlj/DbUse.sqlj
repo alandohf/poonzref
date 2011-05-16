@@ -1,0 +1,161 @@
+//***************************************************************************
+// Licensed Materials - Property of IBM
+//
+// Governed under the terms of the International
+// License Agreement for Non-Warranted Sample Code.
+//
+// (C) COPYRIGHT International Business Machines Corp. 1997 - 2002
+// All Rights Reserved.
+//
+// US Government Users Restricted Rights - Use, duplication or
+// disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+//***************************************************************************
+//
+// SOURCE FILE NAME: DbUse.sqlj
+//
+// SAMPLE: How to use a database
+//
+// SQL Statements USED:
+//         CREATE TABLE
+//         DROP TABLE
+//         DELETE
+//         COMMIT
+//         ROLLBACK
+//
+// Classes used from Util.sqlj are:
+//         Db
+//
+// OUTPUT FILE: DbUse.out (available in the online documentation)
+// Output will vary depending on the JDBC driver connectivity used.
+//***************************************************************************
+//
+// For more information on the sample programs, see the README file.
+//
+// For information on developing SQLJ applications, see the Application
+// Development Guide.
+//
+// For information on using SQL statements, see the SQL Reference.
+//
+// For the latest information on programming, compiling, and running DB2
+// applications, visit the DB2 application development website at
+//     http://www.software.ibm.com/data/db2/udb/ad
+//**************************************************************************/
+
+import java.sql.*;
+import sqlj.runtime.*;
+import sqlj.runtime.ref.*;
+
+class DbUse
+{
+  public static void main(String argv[])
+  {
+    try
+    {
+      Db db = new Db(argv);
+
+      System.out.println();
+      System.out.println("THIS SAMPLE SHOWS HOW TO USE A DATABASE.");
+
+      // connect to the 'sample' database
+      db.getDefaultContext();
+
+      StaticStmtInvoke();
+      StaticStmtInvokeWithHostVars();
+
+      // disconnect from the 'sample' database
+      db.disconnect();
+    }
+    catch (Exception e)
+    {
+      System.out.println(e);
+    }
+  } // main
+
+  static void StaticStmtInvoke()
+  {
+    try
+    {
+      System.out.println();
+      System.out.println(
+        "----------------------------------------------------------\n" +
+        "USE THE SQL STATEMENTS:\n" +
+        "  CREATE TABLE\n" +
+        "  DROP TABLE\n" +
+        "TO SHOW HOW TO INVOKE SQL STATEMENTS.");
+
+      // create a table
+      System.out.println();
+      System.out.println(
+        "  Invoke the statement:\n" +
+        "    CREATE TABLE table1(col1 INTEGER)");
+
+      #sql {CREATE TABLE table1(col1 INTEGER)};
+
+      System.out.println();
+      System.out.println("  COMMIT");
+
+      #sql {COMMIT};
+
+      // drop a table
+      System.out.println();
+      System.out.println("  Invoke the statement:\n" +
+                         "    DROP TABLE table1");
+
+      #sql {DROP TABLE table1};
+
+      System.out.println();
+      System.out.println("  COMMIT");
+
+      #sql {COMMIT};
+    }
+    catch (Exception e)
+    {
+      System.out.println(e);
+    }
+  } //  StaticStmtInvoke
+
+  static void StaticStmtInvokeWithHostVars()
+  {
+    try
+    {
+      int hostVar1;
+      String hostVar2;
+
+      System.out.println();
+      System.out.println(
+        "----------------------------------------------------------\n" +
+        "USE THE SQL STATEMENTS:\n" +
+        "  DELETE\n" +
+        "  ROLLBACK\n" +
+        "TO SHOW HOW TO USE HOST VARIABLES.");
+
+      // execute a statement with host variables
+      System.out.println();
+      System.out.println(
+        "  Execute:\n" +
+        "    DELETE FROM org\n" +
+        "      WHERE deptnumb = :hostVar1\n" +
+        "      AND division = :hostVar2\n" +
+        "    for\n" +
+        "      hostVar1 = 15\n" +
+        "      hostVar2 = 'Eastern'");
+
+      hostVar1 = 15;
+      hostVar2 = "Eastern";
+
+      #sql {DELETE FROM org
+              WHERE deptnumb = :hostVar1 AND
+                    division = :hostVar2};
+
+      // rollback the transaction
+      System.out.println();
+      System.out.println("  Rollback the transaction.");
+      #sql {ROLLBACK};
+    }
+    catch (Exception e)
+    {
+      System.out.println(e);
+    }
+  } // StaticStmtInvokeWithHostVars
+} // DbUse
+

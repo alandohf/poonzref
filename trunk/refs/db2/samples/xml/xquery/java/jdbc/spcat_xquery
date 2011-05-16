@@ -1,0 +1,24 @@
+#! /bin/ksh
+#############################################################################
+# Licensed Materials # Property of IBM
+# 
+# Governed under the terms of the International
+# License Agreement for Non#Warranted Sample Code.
+# 
+# (C) COPYRIGHT International Business Machines Corp. 2006
+#  All Rights Reserved.
+# 
+#  US Government Users Restricted Rights # Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#############################################################################
+# SCRIPT: spcat_xquery 
+# To catalog JDBC stored procedures on UNIX
+# Catalogs the stored procedures in the Xquery_XmlProc library 
+# Xquery_XmlProc_Drop.db2 uncatalogs the stored procedures if previously cataloged 
+# Xquery_XmlProc_Create.db2 catologs the stored procedures 
+# Both CLP scripts can be run on their own
+# Usage: spcat_xquery
+
+db2 -td@ -vf Xquery_XmlProc_Drop.db2
+db2 -td@ -vf Xquery_XmlProc_Create.db2
+

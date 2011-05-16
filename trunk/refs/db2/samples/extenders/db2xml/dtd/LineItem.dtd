@@ -1,0 +1,21 @@
+<?xml encoding="US-ASCII"?>
+
+<!ELEMENT Order (Part+)>
+<!ATTLIST Order key CDATA #REQUIRED>
+<!ELEMENT Part (SuppKey,LineNumber,Quantity,ExtendedPrice,Discount,Tax,ReturnFlag,LineStatus,ShipDate,CommitDate,ReceiptDate,ShipInstruct,ShipMode,Comment)>
+<!ELEMENT SuppKey (#PCDATA)>
+<!ELEMENT LineNumber (#PCDATA)>
+<!ELEMENT Quantity (#PCDATA)>
+<!ELEMENT ExtendedPrice (#PCDATA)>
+<!ELEMENT Discount (#PCDATA)>
+<!ELEMENT Tax (#PCDATA)>
+<!ELEMENT ReturnFlag (#PCDATA)>
+<!ELEMENT LineStatus (#PCDATA)>
+<!ELEMENT ShipDate (#PCDATA)>
+<!ELEMENT CommitDate (#PCDATA)>
+<!ELEMENT ReceiptDate (#PCDATA)>
+<!ELEMENT ShipInstruct (#PCDATA)>
+<!ELEMENT ShipMode (#PCDATA)>
+<!ELEMENT Comment (#PCDATA)>
+<!ATTLIST Part key CDATA #REQUIRED>
+

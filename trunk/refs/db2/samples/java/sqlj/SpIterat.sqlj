@@ -1,0 +1,33 @@
+//***************************************************************************
+// Licensed Materials - Property of IBM
+//
+// Governed under the terms of the International
+// License Agreement for Non-Warranted Sample Code. 
+//
+// (C) COPYRIGHT International Business Machines Corp. 1997 - 2002        
+// All Rights Reserved.
+//
+// US Government Users Restricted Rights - Use, duplication or
+// disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+//***************************************************************************
+//
+// SOURCE FILE NAME: SpIterat.sqlj
+//    
+// SAMPLE: Iterator class file for SpServer.sqlj
+//***************************************************************************
+//
+// For more information on the sample programs, see the README file.
+//
+// For information on developing SQLJ applications, see the Application
+// Development Guide.
+//
+// For information on using SQL statements, see the SQL Reference. 
+//
+// For the latest information on programming, compiling, and running DB2 
+// applications, visit the DB2 application development website at 
+//     http://www.software.ibm.com/data/db2/udb/ad
+//**************************************************************************/
+
+import sqlj.runtime.ForUpdate;
+#sql public iterator SpIterat implements ForUpdate(double);
+

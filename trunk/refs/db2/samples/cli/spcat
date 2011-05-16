@@ -1,0 +1,23 @@
+#! /bin/ksh
+#############################################################################
+# Licensed Materials - Property of IBM
+# 
+# Governed under the terms of the International
+# License Agreement for Non-Warranted Sample Code.
+# 
+# (C) COPYRIGHT International Business Machines Corp. 1995 - 2002 
+# All Rights Reserved.
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#############################################################################
+# SCRIPT: spcat 
+# To catalog DB2 CLI stored procedures
+# Catalogs the stored procedures in the spserver library 
+# spdrop.db2 uncatalogs the stored procedures if previously cataloged 
+# spcreate.db2 catologs the stored procedures 
+# Both CLP scripts can be run on their own
+# Usage: spcat
+
+db2 -td@ -vf spdrop.db2
+db2 -td@ -vf spcreate.db2

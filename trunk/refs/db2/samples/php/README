@@ -1,0 +1,159 @@
+******************************************************************************
+* Licensed Materials - Property of IBM
+*
+* Governed under the terms of the International
+* License Agreement for Non-Warranted Sample Code.
+*
+* © COPYRIGHT International Business Machines Corp. 2007
+* All Rights Reserved.
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+******************************************************************************
+*
+*                        README for PHP Samples
+*
+* The <install path>\sqllib\samples\php directory contains this README file
+* where <install_path> is the location of DB2 9 on your hard drive. The
+* default location for <install_path> is C:\Program Files\IBM on Windows and
+* $HOME on unix
+*
+* This README describes how to run PHP sample code for DB2 9.
+* The DB2 9 sample code and build files for PHP are located
+* in the following directory:
+*
+*  Windows:
+*    <install_path>\sqllib\samples\php
+*  Unix:
+*    <install_path>/sqllib/samples/php
+*
+* Copy the sample files from this directory to a working directory prior to
+* running the sample programs. The sample program directories are typically
+* read-only on most platforms and some samples produce output files that
+* require write perimssions on the directory.
+*
+* WARNING: Some of these samples may change your database or database manager
+*          configuration.  Execute the samples against a test database
+*          only, such as the DB2 SAMPLE database.
+*
+******************************************************************************
+*
+*               Prepare your DB2 sample development environment
+*
+*   On Windows all samples should be run and built in a DB2 Command Window.
+*   The DB2 Command Window is needed to execute the db2 specific commands.
+*   Listed below is how to opening the DB2 Command Window:
+*
+*   o From the Start Menu click Start --> Programs --> IBM DB2 -->
+*    <DB2 copy name> --> Command Line Tools --> Command Window
+*
+*  1) Copy the files in <install path>sqllib\samples\php\* (windows),
+*     <install path>sqllib/samples/php/* (unix) to a working directory and
+*     ensure that directory has write permission.
+*
+*  2) Start the Database Manager with the following command:
+*       db2start
+*
+*  3) Create the sample database with the following command:
+*       db2sampl -v8
+*
+*  4) Test that you can connect to the database with the following command:
+*       db2 connect to sample
+*
+*  5) cd to the directory containing the files copied in Step 1.
+*
+******************************************************************************
+*
+*              Common file Descriptions
+* 
+* The following are the common files for PHP samples. For more
+* information on these files, refer to the program source files.
+*
+*******************************************************************************
+*
+* Common files
+*
+* README        - this file!
+*
+******************************************************************************
+*
+* Script files
+*
+* tbselinit.bat (Windows)
+* tbselinit     (UNIX)    - A script file used to set up some databases for
+*                           tbsel.php
+*
+******************************************************************************
+*
+* Common Utility PHP Module
+*
+* util_funcs.php - Defines common functions such as command line argument
+*                  checking. Also defines functions for connecting to and
+*                  disconnecting from a database, error handling, and
+*                  rolling back if an error occurs.
+*
+******************************************************************************
+*
+*                         PHP Samples Design
+*
+* The PHP sample programs form an object-based design reflecting the
+* component nature of DB2. Related samples demonstrate a specific level of
+* database programming. Each level is identified by the first two characters
+* of the sample name. Here are the database levels represented by the
+* samples:
+*
+* Identifier     DB2 Level
+*
+*     db        Database Level.
+*     tb        Table Level.
+*     dt        Data Type Level.
+*     ud        User-defined function client program.
+*
+******************************************************************************
+*
+*               PHP Sample Descriptions
+*
+* The following are the PHP sample files included with DB2.
+* For more information on the sample programs, refer to the program source
+* files.
+*
+******************************************************************************
+*
+* Database Level
+*
+* dbauth.php      - How to grant/display/revoke authorities at database level.
+* dbuse.php       - How to use database objects.
+*
+******************************************************************************
+*
+* Table Level
+*
+* tbconstr.php    - How to work with table constraints.
+* tbinfo.php      - How to get and set information at a table level.
+* tbpriv.php      - How to grant/display/revoke privileges at a table level.
+* tbsel.php       - How to select from each of: insert, update, delete.
+*                   Please run 'tbselinit.bat' (on Windows) or
+*                   'tbselinit' (on UNIX) prior to running this sample.
+*                   Refer to the sample header for detailed instructions.
+* tbselcreate.db2 - How to create the tables for the tbsel program.
+* tbseldrop.db2   - How to drop the tables for the tbsel program.
+* tbtrig.php      - How to use a trigger on a table.
+* tbuse.php       - How to manipulate table data.
+*
+******************************************************************************
+*
+* Data Type Level
+*
+* dtlob.php       - How to read and write LOB data.
+*
+******************************************************************************
+*
+* User-Defined Function Level
+*
+* udfcli.php      - Client application that calls the user-defined functions
+*                   in the udfsrv or UDFsrv shared library (which must be
+*                   built in another supported language).
+*
+******************************************************************************
+

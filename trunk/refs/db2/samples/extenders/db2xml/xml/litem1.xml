@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!DOCTYPE Order SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/LineItem.dtd">
+
+<Order key="1">
+  <Part key="156"> 
+     <SuppKey>4</SuppKey>
+     <LineNumber>1</LineNumber>
+     <Quantity>17</Quantity>
+     <ExtendedPrice>17954.55</ExtendedPrice>
+     <Discount>0.04</Discount>
+     <Tax>0.02</Tax>
+     <ReturnFlag>N</ReturnFlag>
+     <LineStatus>O</LineStatus>
+     <ShipDate>1996-03-13</ShipDate>
+     <CommitDate>1996-02-12</CommitDate>
+     <ReceiptDate>1996-03-22</ReceiptDate>
+     <ShipInstruct>DELIVER IN PERSON</ShipInstruct>
+     <ShipMode>TRUCK</ShipMode>
+     <Comment>iPBw4mMm7w7kQ zNPL i261OPP</Comment>
+  </Part>
+  <Part key="68"> 
+     <SuppKey>9</SuppKey>
+     <LineNumber>2</LineNumber>
+     <Quantity>36</Quantity>
+     <ExtendedPrice>34850.16</ExtendedPrice>
+     <Discount>0.09</Discount>
+     <Tax>0.06</Tax>
+     <ReturnFlag>N</ReturnFlag>
+     <LineStatus>O</LineStatus>
+     <ShipDate>1996-04-12</ShipDate>
+     <CommitDate>1996-02-28</CommitDate>
+     <ReceiptDate>1996-04-20</ReceiptDate>
+     <ShipInstruct>TAKE BACK RETURN</ShipInstruct>
+     <ShipMode>MAIL</ShipMode>
+     <Comment>5wM04SNyl0AnghCP2nx lAi</Comment>
+  </Part>
+  <Part key="64"> 
+     <SuppKey>5</SuppKey>
+     <LineNumber>3</LineNumber>
+     <Quantity>8</Quantity>
+     <ExtendedPrice>7712.48</ExtendedPrice>
+     <Discount>0.10</Discount>
+     <Tax>0.02</Tax>
+     <ReturnFlag>N</ReturnFlag>
+     <LineStatus>O</LineStatus>
+     <ShipDate>1996-01-29</ShipDate>
+     <CommitDate>1996-03-05</CommitDate>
+     <ReceiptDate>1996-01-31</ReceiptDate>
+     <ShipInstruct>TAKE BACK RETURN</ShipInstruct>
+     <ShipMode>REG AIR</ShipMode>
+     <Comment>SQC2C 5PNCy4mM</Comment>
+  </Part>
+  <Part key="3"> 
+     <SuppKey>6</SuppKey>
+     <LineNumber>4</LineNumber>
+     <Quantity>28</Quantity>
+     <ExtendedPrice>25284.00</ExtendedPrice>
+     <Discount>0.09</Discount>
+     <Tax>0.06</Tax>
+     <ReturnFlag>N</ReturnFlag>
+     <LineStatus>O</LineStatus>
+     <ShipDate>1996-04-21</ShipDate>
+     <CommitDate>1996-03-30</CommitDate>
+     <ReceiptDate>1996-05-16</ReceiptDate>
+     <ShipInstruct>NONE</ShipInstruct>
+     <ShipMode>AIR</ShipMode>
+     <Comment>Om0L65CSAwSj5k6k</Comment>
+  </Part>
+  <Part key="25"> 
+     <SuppKey>8</SuppKey>
+     <LineNumber>5</LineNumber>
+     <Quantity>24</Quantity>
+     <ExtendedPrice>22200.48</ExtendedPrice>
+     <Discount>0.10</Discount>
+     <Tax>0.04</Tax>
+     <ReturnFlag>N</ReturnFlag>
+     <LineStatus>O</LineStatus>
+     <ShipDate>1996-03-30</ShipDate>
+     <CommitDate>1996-03-14</CommitDate>
+     <ReceiptDate>1996-04-01</ReceiptDate>
+     <ShipInstruct>NONE</ShipInstruct>
+     <ShipMode>FOB</ShipMode>
+     <Comment>C2gOQj OB6RLk1BS15 igN</Comment>
+  </Part>
+  <Part key="16"> 
+     <SuppKey>3</SuppKey>
+     <LineNumber>6</LineNumber>
+     <Quantity>32</Quantity>
+     <ExtendedPrice>29312.32</ExtendedPrice>
+     <Discount>0.07</Discount>
+     <Tax>0.02</Tax>
+     <ReturnFlag>N</ReturnFlag>
+     <LineStatus>O</LineStatus>
+     <ShipDate>1996-01-30</ShipDate>
+     <CommitDate>1996-02-07</CommitDate>
+     <ReceiptDate>1996-02-03</ReceiptDate>
+     <ShipInstruct>DELIVER IN PERSON</ShipInstruct>
+     <ShipMode>MAIL</ShipMode>
+     <Comment>CB0SnyOL PQ32B70wB75k 6Aw10m0wh</Comment>
+  </Part>
+</Order>

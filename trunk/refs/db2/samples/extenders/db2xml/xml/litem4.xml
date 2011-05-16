@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE Order SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/LineItem.dtd">
+
+<Order key="4">
+  <Part key="167"> 
+     <SuppKey>4</SuppKey>
+     <LineNumber>1</LineNumber>
+     <Quantity>4</Quantity>
+     <ExtendedPrice>4268.64</ExtendedPrice>
+     <Discount>0.00</Discount>
+     <Tax>0.07</Tax>
+     <ReturnFlag>N</ReturnFlag>
+     <LineStatus>O</LineStatus>
+     <ShipDate>1996-01-10</ShipDate>
+     <CommitDate>1995-12-23</CommitDate>
+     <ReceiptDate>1996-01-23</ReceiptDate>
+     <ShipInstruct>TAKE BACK RETURN</ShipInstruct>
+     <ShipMode>SHIP</ShipMode>
+     <Comment>jLS22n33Qw</Comment>
+  </Part>
+</Order>

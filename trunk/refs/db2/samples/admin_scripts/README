@@ -1,0 +1,143 @@
+******************************************************************************
+* Licensed Materials - Property of IBM
+*
+* Governed under the terms of the International
+* License Agreement for Non-Warranted Sample Code.
+*
+* © COPYRIGHT International Business Machines Corp. 2007
+* All Rights Reserved.
+*
+* US Government Users Restricted Rights - Use, duplication or
+* disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*
+******************************************************************************
+*
+*               README for ADMIN SCRIPT CLP Samples
+*
+* The <install_path>/sqllib/samples/admin_scripts directory contains this
+* README file where <install_path> is the location of DB2 9 on your hard
+* drive.
+* The default location for <install_path> is $HOME on Unix and
+* C:\Program Files\IBM on Windows.
+*
+* This README describes how to run ADMIN SCRIPT CLP sample code for DB2 9.
+* The DB2 9 sample code for CLP is located in the following directory:
+*
+*    <install_path>/sqllib/samples/admin_scripts
+*
+* Copy the sample files from this directory to a working directory prior to
+* executing the sample programs. The sample program directories are typically
+* read-only on most platforms and some samples produce output files that
+* require write permissions on the directory.
+*
+* WARNING: Some of these samples may change your database or database manager
+*          configuration.  Execute the samples against a test database
+*          only, such as the DB2 SAMPLE database.
+*
+******************************************************************************
+*
+*               Prepare your DB2 sample development environment
+*
+* 1) Copy the files in <install_path>/sqllib/samples/admin_scripts/* to a
+*    working directory and ensure that directory has write permission.
+*
+*    On windows platform, all samples should be run and built in a DB2
+*    Command Window. The DB2 Command Window is needed to execute db2
+*    specific commands. You can follow the step below to open
+*    DB2 Command window.
+*    From the Start Menu click Start --> Programs --> IBM DB2 -->
+*    <DB2 copy name> --> Command Line Tools --> Command Window.
+*
+* 2) Start the Database Manager with the following command:
+*      db2start
+*
+* 3) Create the sample database with the following command:
+*      db2sampl
+*
+* 4) Connect to the database with the following command:
+*      db2 connect to sample
+*
+* 5) cd to the directory containing the files copied in Step 1.
+*
+******************************************************************************
+*
+*             *** Executing ADMIN SCRIPT CLP Samples ***
+*
+* Use following command to execute ADMIN SCRIPT CLP samples:
+*   db2 -vf <filename> -t
+*           <filename> -- Name of the ADMIN SCRIPT CLP file(including
+*                         the extension).
+*
+* Note: Use following command to execute the sample "truncate.db2"
+*       db2 -td@ -vf truncate.db2
+*           This sample has '@' as the delimiting character. If any character
+*           other than default character(;) is used to delimit the statements,
+*           use this command and replace '@' with the delimiting character.
+*
+******************************************************************************
+*
+*              Common file Descriptions
+* 
+* The following are the common files for ADMIN SCRIPT CLP samples. For more
+* information on these files, refer to the program source files.
+*
+******************************************************************************
+*
+* Common files
+*
+* README              - this file
+*
+******************************************************************************
+*
+*               ADMIN SCRIPT CLP Sample Descriptions
+*
+* The following are the ADMIN SCRIPT CLP sample files included with DB2.
+* For more information on the sample programs, refer to the program source
+* files.
+*
+******************************************************************************
+*
+*              ADMIN SCRIPT CLP Samples
+*
+* admincmd_tbload.db2 - How to load data in to table using ADMIN_CMD routine
+* alterpartition.db2  - How to perform addition/deletion of partitions on a
+*                       partitioned table
+* autocfg.db2         - How to automatically configure DB and DBM cfg
+*                       parameters based on the Performance Configuration
+*                       Wizard's recommendations
+* autodb.db2          - How to use DB2_ENABLE_AUTOCONFIG_DEFAULT registry
+*                       variable to enable/disable Configuration Advisor at
+*                       database creation
+* autorestore.db2     - How to restore a database with automatic storage.
+* autostore.db2       - How to create, backup & restore databases enabled
+*                       with automatic storage.
+* contacts.db2        - How to add, update and drop contacts and
+*                       contactgroups
+* gethealthconfig.db2 - How to get definition, alert configuration and
+*                       default alert configurations
+* getlogs.db2         - How to get the customer view of diagnostic log file
+*                       entries
+* healthmon.db2       - How to use table functions for Health Monitor
+*                       Snapshot
+* largerid.db2        - How to enable Large RIDs support on both new tables/
+*                       tablespaces and existing tables/tablespaces
+* lbac.db2            - How to take advantage of DB2 LBAC (Label Based
+*                       Access Control) feature
+* monitor.db2         - How to use the table functions SNAP_GET_APPL
+* onlineload.db2      - How to do online loading using the ALLOW READ ACCESS
+*                       option
+* partitionindex.db2  - How to create indexes on a partitioned table
+* rollindata.db2      - How to perform data-roll-in into a partitioned table
+* rolloutdata.db2     - How to perform data-roll-out from a partitioned table
+* security.db2        - How users can query details about the groups,
+*                       authorities, privileges and ownerships
+* setintegrity.db2    - How to perform online SET INTEGRITY on a table
+* tablepartition.db2  - How to create a partitioned table
+* tbeventmon.db2      - How to create and use event monitors written to
+*                       a table
+* tbonlineinx.db2     - How to create and reorg indexes on a table
+* tbrowcompress.db2   - How to perform row compression on a table
+* tbrunstats.db2      - How to perform runstats on a table
+* truncate.db2        - How to implement truncate table functionality
+*
+******************************************************************************

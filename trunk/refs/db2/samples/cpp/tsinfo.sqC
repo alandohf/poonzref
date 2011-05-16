@@ -1,0 +1,460 @@
+/****************************************************************************
+** Licensed Materials - Property of IBM
+** 
+** Governed under the terms of the International
+** License Agreement for Non-Warranted Sample Code.
+**
+** (C) COPYRIGHT International Business Machines Corp. 1996 - 2002        
+** All Rights Reserved.
+**
+** US Government Users Restricted Rights - Use, duplication or
+** disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*****************************************************************************
+**
+** SOURCE FILE NAME: tsinfo.sqC 
+**
+** SAMPLE: How to get information at the table space level
+**
+**         This program ends in ".sqC" even though it does not contain 
+**         embedded SQL statements. It links in the embedded SQL utility 
+**         file for database connection and disconnection, so it needs the 
+**         embedded SQL extension for the precompiler.
+**           
+** DB2 APIs USED:
+**         sqlbstpq -- Single Tablespace Query
+**         sqlbgtss -- Get Tablespace Statistics
+**         sqlbmtsq -- Tablespace Query
+**         sqlefmem -- Free Memory
+**         sqlbotsq -- Open Tablespace Query
+**         sqlbftpq -- Fetch Tablespace Query
+**         sqlbctsq -- Close Tablespace Query
+**         sqlbtcq -- Tablespace Container Query
+**         sqlbotcq -- Open Tablespace Container Query
+**         sqlbftcq -- Fetch Tablespace Container Query
+**         sqlbctcq -- Close Tablespace Container Query
+**
+** OUTPUT FILE: tsinfo.out (available in the online documentation)
+*****************************************************************************
+**
+** For more information on the sample programs, see the README file.
+**
+** For information on developing C++ applications, see the Application
+** Development Guide.
+**
+** For information on DB2 APIs, see the Administrative API Reference.
+**
+** For the latest information on programming, compiling, and running DB2
+** applications, visit the DB2 application development website at
+**     http://www.software.ibm.com/data/db2/udb/ad
+****************************************************************************/
+
+#include <string.h>
+#include <sqlenv.h>
+#include <sqlutil.h>
+#include <db2ApiDf.h>
+#include "utilemb.h"
+#if ((__cplusplus >= 199711L) && !defined DB2HP && !defined DB2AIX) || \
+    (DB2LINUX && (__LP64__ || (__GNUC__ >= 3)) )
+   #include <iostream>
+   using namespace std; 
+#else
+   #include <iostream.h>
+#endif
+
+class TsInfo
+{
+  public:
+    int SingleTablespaceInfoGet();
+    int AllTablespacesInfoGetUsingHigherLevelAPIs();
+    int AllTablespacesInfoGetUsingLowerLevelAPIs();
+    int AllTablespaceContainersInfoGetUsingHigherLevelAPIs();
+    int AllTablespaceContainersInfoGetUsingLowerLevelAPIs();
+  private: // support functions
+    int TablespaceInfoDisplay(struct SQLB_TBSPQRY_DATA *,
+                              struct SQLB_TBS_STATS *);
+    int ContainerInfoDisplay(struct SQLB_TBSCONTQRY_DATA *);
+};
+
+int TsInfo::TablespaceInfoDisplay(struct SQLB_TBSPQRY_DATA *tablespaceData,
+                                  struct SQLB_TBS_STATS *tablespaceStats)
+{
+  int rc = 0;
+  struct sqlca sqlca;
+
+  cout << "    Tablespace ID   = " << tablespaceData->id << endl;
+  cout << "    Tablespace Name = " << tablespaceData->name << endl;
+
+  // "Type" and "Content" are stored bitwise in the flag field
+  cout << "    Type            = ";
+  switch (tablespaceData->flags & 0xF)
+  {
+    case SQLB_TBS_SMS:
+      cout << "System-managed space" << endl;
+      break;
+    case SQLB_TBS_DMS:
+      cout << "Database-managed space" << endl;
+      break;
+    default:
+      cout << "UNKNOWN" << endl;
+      break;
+  }
+
+  cout << "    Contents        = ";
+  switch (tablespaceData->flags & 0xF0)
+  {
+    case SQLB_TBS_ANY:
+      cout << "All types of permanent data. Regular table space." << endl;
+      break;
+    case SQLB_TBS_LONG:
+      cout << "All types of permanent data. Large table space." << endl;
+      break;
+    case SQLB_TBS_TMP:
+      cout << "temp data" << endl;
+      break;
+    default:
+      cout << "UNKNOWN:" << (tablespaceData->flags & 0xF0) << ":" << endl;
+      break;
+  }
+
+  cout << "    State           = ";
+  switch (tablespaceData->tbsState)
+  {
+    case SQLB_NORMAL:
+      cout << "Normal" << endl;
+      break;
+    case SQLB_QUIESCED_SHARE:
+      cout << "Quiesced: SHARE" << endl;
+      break;
+    case SQLB_QUIESCED_UPDATE:
+      cout << "Quiesced: UPDATE" << endl;
+      break;
+    case SQLB_QUIESCED_EXCLUSIVE:
+      cout << "Quiesced: EXCLUSIVE" << endl;
+      break;
+    case SQLB_LOAD_PENDING:
+      cout << "Load pending" << endl;
+      break;
+    case SQLB_DELETE_PENDING:
+      cout << "Delete pending" << endl;
+      break;
+    case SQLB_BACKUP_PENDING:
+      cout << "Backup pending" << endl;
+      break;
+    case SQLB_ROLLFORWARD_IN_PROGRESS:
+      cout << "Roll forward in progress" << endl;
+      break;
+    case SQLB_ROLLFORWARD_PENDING:
+      cout << "Roll forward pending" << endl;
+      break;
+    case SQLB_RESTORE_PENDING:
+      cout << "Restore pending" << endl;
+      break;
+    case SQLB_DISABLE_PENDING:
+      cout << "Disable pending" << endl;
+      break;
+    case SQLB_REORG_IN_PROGRESS:
+      cout << "Reorg in progress" << endl;
+      break;
+    case SQLB_BACKUP_IN_PROGRESS:
+      cout << "Backup in progress" << endl;
+      break;
+    case SQLB_STORDEF_PENDING:
+      cout << "storage must be defined" << endl;
+      break;
+    case SQLB_RESTORE_IN_PROGRESS:
+      cout << "Restore in progress" << endl;
+      break;
+    case SQLB_STORDEF_ALLOWED:
+      cout << "storage may be defined" << endl;
+      break;
+    case SQLB_STORDEF_FINAL_VERSION:
+      cout << "storDef is in 'final' state" << endl;
+      break;
+    case SQLB_STORDEF_CHANGED:
+      cout << "storDef was changed prior to rollforward" << endl;
+      break;
+    case SQLB_REBAL_IN_PROGRESS:
+      cout << "dms rebalancer is active" << endl;
+      break;
+    case SQLB_PSTAT_DELETION:
+      cout << "TBS deletion in progress" << endl;
+      break;
+    case SQLB_PSTAT_CREATION:
+      cout << "TBS creation in progress" << endl;
+      break;
+    default:
+      cout << "UNKNOWN" << endl;
+      break;
+  } //switch
+  cout << "    Total pages     = " << tablespaceStats->totalPages << endl;
+  cout << "    Useable pages   = " << tablespaceStats->useablePages << endl;
+  cout << "    Used pages      = " << tablespaceStats->usedPages << endl;
+  cout << "    Free pages      = " << tablespaceStats->freePages << endl;
+  cout << "    High water mark = " << tablespaceStats->highWaterMark << endl;
+  cout << endl;
+
+  return 0;
+} //TsInfo::TablespaceInfoDisplay
+
+int TsInfo::ContainerInfoDisplay(struct SQLB_TBSCONTQRY_DATA *containerData)
+{
+  int rc = 0;
+  struct sqlca sqlca;
+
+  cout << "    Tablespace ID  = " << containerData->tbsID << endl;
+  cout << "    Container  ID  = " << containerData->id << endl;
+  cout << "    Container Name = " << containerData->name << endl;
+  cout << "    Container Type = ";
+  switch (containerData->contType)
+  {
+    case SQLB_CONT_PATH:
+      cout << "path" << endl;
+      break;
+    case SQLB_CONT_DISK:
+      cout << "disk" << endl;
+      break;
+    case SQLB_CONT_FILE:
+      cout << "file" << endl;
+      break;
+    default:
+      cout << "unknown" << endl;
+      break;
+  }
+  cout << endl;
+
+  return 0;
+} //TsInfo::ContainerInfoDisplay
+
+int TsInfo::SingleTablespaceInfoGet()
+{
+  int rc = 0;
+  struct sqlca sqlca;
+  sqluint32 tablespaceId;
+  struct SQLB_TBSPQRY_DATA tablespaceData = {0};
+  struct SQLB_TBS_STATS tablespaceStats = {0};
+
+  cout << "\n-----------------------------------------------------------";
+  cout << "\nUSE THE DB2 APIs:" << endl;
+  cout << "  sqlbstpq -- Single Tablespace Query" << endl;
+  cout << "  sqlbgtss -- Get Tablespace Statistics" << endl;
+  cout << "TO GET INFORMATION FOR A SINGLE TABLE SPACE." << endl;
+
+  tablespaceId = 1;
+  cout << "\n  Get information for table space ID: " << tablespaceId << endl;
+
+  strncpy(tablespaceData.tbspqver, SQLB_TBSPQRY_DATA_ID, 8);
+
+  // single table space query
+  sqlbstpq(&sqlca, tablespaceId, &tablespaceData, SQLB_RESERVED1);
+  DB2_API_CHECK("tablespace info 1 -- get");
+
+  // get table space statistics
+  sqlbgtss(&sqlca, tablespaceId, &tablespaceStats);
+  DB2_API_CHECK("tablespace info 2 -- get");
+
+  cout << "  Display collected data." << endl;
+  rc = TablespaceInfoDisplay(&tablespaceData, &tablespaceStats);
+
+  return 0;
+} //TsInfo::SingleTablespaceInfoGet
+
+int TsInfo::AllTablespacesInfoGetUsingHigherLevelAPIs()
+{
+  int rc = 0;
+  struct sqlca sqlca;
+  sqluint32 numTablespaces;
+  struct SQLB_TBSPQRY_DATA **ppTablespacesData;
+  int tspNb;
+  struct SQLB_TBS_STATS tablespaceStats = {0};
+
+  cout << "\n-----------------------------------------------------------";
+  cout << "\nUSE THE DB2 APIs:" << endl;
+  cout << "  sqlbmtsq -- Tablespace Query" << endl;
+  cout << "  sqlbgtss -- Get Tablespace Statistics" << endl;
+  cout << "  sqlefmem -- Free Memory" << endl;
+  cout << "TO GET INFORMATION FOR ALL TABLE SPACES." << endl;
+
+  cout << "\n  Get information for all table spaces." << endl;
+
+  // table space query
+  sqlbmtsq(&sqlca,
+           &numTablespaces,
+           &ppTablespacesData, SQLB_RESERVED1, SQLB_RESERVED2);
+  DB2_API_CHECK("all tablespaces info 1 -- get");
+
+  for (tspNb = 0; tspNb < numTablespaces; tspNb++)
+  {
+    // get table space statistics
+    sqlbgtss(&sqlca, ppTablespacesData[tspNb]->id, &tablespaceStats);
+    DB2_API_CHECK("tablespace info 2 -- get");
+
+    rc = TablespaceInfoDisplay(ppTablespacesData[tspNb], &tablespaceStats);
+  }
+
+  // free table space memory allocated by sqlbmtsq
+  sqlefmem(&sqlca, ppTablespacesData);
+  DB2_API_CHECK("tablespaces memory allocated by sqlbmtsq -- free");
+
+  return 0;
+} //TsInfo::AllTablespacesInfoGetUsingHigherLevelAPIs
+
+int TsInfo::AllTablespacesInfoGetUsingLowerLevelAPIs()
+{
+  int rc = 0;
+  struct sqlca sqlca;
+  sqluint32 numTablespaces;
+  struct SQLB_TBSPQRY_DATA tablespaceData = {0};
+  int tspNb;
+  sqluint32 numFetchedTablespaces;
+  struct SQLB_TBS_STATS tablespaceStats = {0};
+
+  cout << "\n-----------------------------------------------------------";
+  cout << "\nUSE THE DB2 APIs:" << endl;
+  cout << "  sqlbotsq -- Open Tablespace Query" << endl;
+  cout << "  sqlbftpq -- Fetch Tablespace Query" << endl;
+  cout << "  sqlbgtss -- Get Tablespace Statistics" << endl;
+  cout << "  sqlbctsq -- Close Tablespace Query" << endl;
+  cout << "TO GET INFORMATION FOR ALL TABLE SPACES." << endl;
+
+  cout << "\n  Get information for all table spaces." << endl;
+
+  // open table space query
+  sqlbotsq(&sqlca, SQLB_OPEN_TBS_ALL, &numTablespaces);
+  DB2_API_CHECK("tablespace query -- open");
+
+  for (tspNb = 0; tspNb < numTablespaces; tspNb++)
+  {
+    strcpy(tablespaceData.tbspqver, SQLB_TBSPQRY_DATA_ID);
+
+    // fetch tablespace query
+    sqlbftpq(&sqlca, 1, &tablespaceData, &numFetchedTablespaces);
+    DB2_API_CHECK("tablespace info 1 -- get");
+
+    // get table space statistics
+    sqlbgtss(&sqlca, tablespaceData.id, &tablespaceStats);
+    DB2_API_CHECK("tablespace info 2 -- get");
+
+    rc = TablespaceInfoDisplay(&tablespaceData, &tablespaceStats);
+  }
+
+  // close table space query
+  sqlbctsq(&sqlca);
+  DB2_API_CHECK("tablespace query -- close");
+
+  return 0;
+} //TsInfo::AllTablespacesInfoGetUsingLowerLevelAPIs
+
+int TsInfo::AllTablespaceContainersInfoGetUsingHigherLevelAPIs()
+{
+  int rc = 0;
+  struct sqlca sqlca;
+  sqluint32 tablespaceId;
+  sqluint32 numContainers;
+  struct SQLB_TBSCONTQRY_DATA *pContainersData = {0};
+  int contNb;
+
+  cout << "\n-----------------------------------------------------------";
+  cout << "\nUSE THE DB2 APIs:" << endl;
+  cout << "  sqlbtcq  -- Tablespace Container Query" << endl;
+  cout << "  sqlefmem -- Free Memory" << endl;
+  cout << "TO GET CONTAINER INFORMATION FOR ALL TABLE SPACES." << endl;
+
+  tablespaceId = SQLB_ALL_TABLESPACES;
+  cout << "\n  Get container information for all table spaces." << endl;
+
+  // tablespace container query
+  sqlbtcq(&sqlca, tablespaceId, &numContainers, &pContainersData);
+  DB2_API_CHECK("tablespace containers info -- get");
+
+  for (contNb = 0; contNb < numContainers; contNb++)
+  {
+    rc = ContainerInfoDisplay(&pContainersData[contNb]);
+  }
+
+  // free containers memory allocated by sqlbtcq
+  sqlefmem(&sqlca, pContainersData);
+  DB2_API_CHECK("containers memory allocated by sqlbtcq -- free");
+
+  return 0;
+} //TsInfo::AllTablespaceContainersInfoGetUsingHigherLevelAPIs
+
+int TsInfo::AllTablespaceContainersInfoGetUsingLowerLevelAPIs()
+{
+  int rc = 0;
+  struct sqlca sqlca;
+  sqluint32 tablespaceId;
+  sqluint32 numContainers;
+  int contNb;
+  struct SQLB_TBSCONTQRY_DATA containerData = {0};
+  sqluint32 numFetchedContainers;
+
+  cout << "\n-----------------------------------------------------------";
+  cout << "\nUSE THE DB2 APIs:" << endl;
+  cout << "  sqlbotcq -- Open Tablespace Container Query" << endl;
+  cout << "  sqlbftcq -- Fetch Tablespace Container Query" << endl;
+  cout << "  sqlbctcq -- Close Tablespace Container Query" << endl;
+  cout << "TO GET CONTAINER INFORMATION FOR ALL TABLE SPACES." << endl;
+
+  tablespaceId = SQLB_ALL_TABLESPACES;
+  cout << "\n  Get container information for all table spaces." << endl;
+
+  // open table space container query
+  sqlbotcq(&sqlca, tablespaceId, &numContainers);
+  DB2_API_CHECK("tablespace container query -- open");
+
+  for (contNb = 0; contNb < numContainers; contNb++)
+  {
+    // fetch table space container query
+    sqlbftcq(&sqlca, 1, &containerData, &numFetchedContainers);
+    DB2_API_CHECK("container info -- get");
+
+    rc = ContainerInfoDisplay(&containerData);
+  }
+
+  // close table space container query
+  sqlbctcq(&sqlca);
+  DB2_API_CHECK("tablespace container query -- close");
+
+  return 0;
+} //TsInfo::AllTablespaceContainersInfoGetUsingLowerLevelAPIs
+
+int main(int argc, char *argv[])
+{
+  int rc = 0;
+  CmdLineArgs check;
+  TsInfo info;
+  DbEmb db;
+
+  // check the command line arguments
+  rc = check.CmdLineArgsCheck1(argc, argv, db);
+  if (rc != 0)
+  {
+    return rc;
+  }
+
+  cout << "\nTHIS SAMPLE SHOWS ";
+  cout << "\nHOW TO GET INFORMATION AT THE TABLE SPACE LEVEL." << endl;
+
+  // connect database
+  rc = db.Connect();
+  if (rc != 0)
+  {
+    return rc;
+  }
+
+  rc = info.SingleTablespaceInfoGet();
+  rc = info.AllTablespacesInfoGetUsingHigherLevelAPIs();
+  rc = info.AllTablespacesInfoGetUsingLowerLevelAPIs();
+  rc = info.AllTablespaceContainersInfoGetUsingHigherLevelAPIs();
+  rc = info.AllTablespaceContainersInfoGetUsingLowerLevelAPIs();
+
+  // disconnect database
+  rc = db.Disconnect();
+  if (rc != 0)
+  {
+    return rc;
+  }
+
+  return 0;
+} //main
+

@@ -1,0 +1,13 @@
+<?xml encoding="US-ASCII"?>
+
+<!ELEMENT Order (Customer, Status, TotalPrice, Date, Priority, Clerk, ShipPriority, Comment)>
+<!ATTLIST Order key CDATA #REQUIRED>
+<!ELEMENT Customer (#PCDATA)>
+<!ELEMENT Status (#PCDATA)>
+<!ELEMENT TotalPrice (#PCDATA)>
+<!ELEMENT Date (#PCDATA)>
+<!ELEMENT Priority (#PCDATA)>
+<!ELEMENT Clerk (#PCDATA)>
+<!ELEMENT ShipPriority (#PCDATA)>
+<!ELEMENT Comment (#PCDATA)>
+

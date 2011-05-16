@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE DAD SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/dad.dtd">
+<DAD>
+   <dtdid>litem_dtd</dtdid>
+   <validation>NO</validation>
+   <Xcolumn>   
+     <table name="order">
+       <column name="order_key" 
+         type="integer"
+         path="/Order/@key"
+         multi_occurrence="NO">
+       </column>
+     </table>
+     <table name="part_key">
+       <column name="part_key" 
+         type="integer"
+         path="/Order/Part/@key"
+         multi_occurrence="YES">
+       </column>
+     </table>
+     <table name="discount">
+       <column name="discount" 
+         type="double"
+         path="/Order/Part/Discount"
+         multi_occurrence="YES">
+       </column>
+     </table>
+     <table name="ship_date">
+       <column name="ship_date" 
+         type="date"
+         path="/Order/Part/ShipDate"
+         multi_occurrence="YES">
+       </column>
+     </table>
+   </Xcolumn>
+</DAD>

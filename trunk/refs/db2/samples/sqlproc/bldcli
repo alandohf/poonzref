@@ -1,0 +1,77 @@
+#! /bin/sh
+#############################################################################
+# Licensed Materials - Property of IBM
+#
+# Governed under the terms of the International
+# License Agreement for Non-Warranted Sample Code.
+#
+# (C) COPYRIGHT International Business Machines Corp. 1995 - 2006
+#  All Rights Reserved.
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#############################################################################
+# SCRIPT: bldcli
+# Builds Solaris CLI applications
+# Usage: bldcli <prog_name> [ <db_name> [ <userid> <password> ]]
+
+# Set DB2PATH to where DB2 will be accessed.
+# The default is the standard instance path.
+DB2PATH=$HOME/sqllib
+
+# To compile 64 bit programs, uncomment the following line.
+# BUILD_64BIT=true
+
+BITWIDTH=64
+
+#Uncomment the following line to build 32-bit applications
+#BITWIDTH=32
+
+arch=`uname -p`
+if [ $arch = "i386" ];
+then
+  if [ $bitwidth = "64" ];
+  then
+    CFLAG_ARCH=amd64
+    LIB=lib64
+  else
+    CFLAG_ARCH=sse2
+    LIB=lib32
+  fi
+else
+  if [ $bitwidth = "64" ];
+  then
+    CFLAG_ARCH=v9
+    LIB=lib64
+  else
+    CFLAG_ARCH=v8plusa
+    LIB=lib32
+  fi
+fi
+
+# To specify a runtime path for shared libraries, uncomment the
+# following line (usually only needed for setuid applications).
+# RUNTIME=true
+
+if [ "$RUNTIME" != "" ]
+then
+  EXTRA_LFLAG="-R$DB2PATH/$LIB"
+else
+  EXTRA_LFLAG=""
+fi
+
+# If an embedded SQL program, precompile and bind it.
+if [ -f $1".sqc" ]
+then
+  ./embprep $1 $2 $3 $4
+fi
+
+# Compile the error-checking utility.
+cc -xarch=$CFLAG_ARCH -I$DB2PATH/include -c utilcli.c
+
+# Compile the program.
+cc -xarch=$CFLAG_ARCH -I$DB2PATH/include  -c $1.c
+
+# Link the program.
+cc -xarch=$CFLAG_ARCH -mt -o $1 $1.o utilcli.o \
+  -L$DB2PATH/$LIB $EXTRA_LFLAG -ldb2

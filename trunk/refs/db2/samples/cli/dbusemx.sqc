@@ -1,0 +1,138 @@
+/****************************************************************************
+** Licensed Materials - Property of IBM
+** 
+** Governed under the terms of the International
+** License Agreement for Non-Warranted Sample Code.
+**
+** (C) COPYRIGHT International Business Machines Corp. 1995 - 2002        
+** All Rights Reserved.
+**
+** US Government Users Restricted Rights - Use, duplication or
+** disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*****************************************************************************
+**                                                                        
+** SOURCE FILE NAME: dbusemx.sqc                                      
+**                                                                        
+** SAMPLE: How to execute embedded SQL statements in CLI
+**
+** CLI FUNCTIONS USED:
+**         SQLEndTran -- End Transactions of a Connection
+**         SQLSetConnectAttr -- Set Connection Attributes
+**
+** SQL STATEMENTS USED:
+**         INCLUDE
+**         CREATE TABLE
+**
+** STRUCTURES USED:
+**         sqlca
+**
+** OUTPUT FILE: dbusemx.out (available in the online documentation)
+*****************************************************************************
+**
+** For more information on the sample programs, see the README file.
+**
+** For information on developing CLI applications, see the CLI Guide
+** and Reference.
+**
+** For information on using SQL statements, see the SQL Reference.
+**
+** For the latest information on programming, building, and running DB2 
+** applications, visit the DB2 application development website: 
+**     http://www.software.ibm.com/data/db2/udb/ad
+****************************************************************************/
+
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sqlcli1.h>
+#include <sql.h>
+#include <sqlenv.h>
+#include "utilcli.h" /* header file for CLI sample code */
+
+int CLIMixEmbedded(SQLHANDLE);
+
+EXEC SQL INCLUDE SQLCA;
+
+int main(int argc, char *argv[])
+{
+  SQLRETURN cliRC = SQL_SUCCESS;
+  int rc = 0;
+  SQLHANDLE henv; /* environment handle */
+  SQLHANDLE hdbc; /* connection handle */
+
+  char dbAlias[SQL_MAX_DSN_LENGTH + 1];
+  char user[MAX_UID_LENGTH + 1];
+  char pswd[MAX_PWD_LENGTH + 1];
+
+  /* check the command line arguments */
+  rc = CmdLineArgsCheck1(argc, argv, dbAlias, user, pswd);
+  if (rc != 0)
+  {
+    return rc;
+  }
+
+  printf("\nTHIS SAMPLE SHOWS HOW TO EXECUTE\n");
+  printf("EMBEDDED SQL STATEMENTS IN CLI");
+
+  /* initialize the CLI application by calling a helper
+     utility function defined in utilcli.c */
+  rc = CLIAppInit(dbAlias,
+                  user,
+                  pswd,
+                  &henv,
+                  &hdbc,
+                  (SQLPOINTER)SQL_AUTOCOMMIT_OFF);
+  if (rc != 0)
+  {
+    return rc;
+  }
+
+  /* mix CLI calls with embedded SQL */
+  rc = CLIMixEmbedded(hdbc);
+
+  /* terminate the CLI application by calling a helper
+     utility function defined in utilcli.c */
+  rc = CLIAppTerm(&henv, &hdbc, dbAlias);
+  return rc;
+} /* main */
+
+/* mix CLI calls with embedded SQL */
+int CLIMixEmbedded(SQLHANDLE hdbc)
+{
+  SQLRETURN cliRC = SQL_SUCCESS;
+  int rc = 0;
+
+  printf("\n-----------------------------------------------------------");
+  printf("\nUSE THE EMBEDDED SQL STATEMENT\n");
+  printf("  CREATE TABLE table1 (col1 INTEGER)\n");
+  printf("TO SHOW HOW TO MIX CLI WITH EMBEDDED SQL:\n");
+
+  /* set AUTOCOMMIT OFF */
+  cliRC = SQLSetConnectAttr(hdbc,
+                            SQL_ATTR_AUTOCOMMIT,
+                            (SQLPOINTER)SQL_AUTOCOMMIT_OFF,
+                            SQL_NTS);
+  DBC_HANDLE_CHECK(hdbc, cliRC);
+  printf("\n  Transactions enabled\n");
+
+  /* execute the embedded SQL statement */
+  printf("\n  Execute the embedded SQL statement:\n");
+  printf("    CREATE TABLE table1 (col1 INTEGER)\n");
+
+  EXEC SQL CREATE TABLE table1(col1 INTEGER);
+  if (SQLCODE != 0)
+  {
+    printf("\nError while executing the embedded SQL statement.\n");
+  }
+
+  printf("\n  Rolling back the transaction...\n");
+
+  /* end transactions on the connection */
+  cliRC = SQLEndTran(SQL_HANDLE_DBC, hdbc, SQL_ROLLBACK);
+  DBC_HANDLE_CHECK(hdbc, cliRC);
+
+  printf("  Transaction rolled back.\n");
+
+  return rc;
+} /* CLIMixEmbedded */
+

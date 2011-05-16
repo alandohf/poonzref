@@ -1,0 +1,199 @@
+/* -*- Mode: C -*- */
+/******************************************************************************
+*
+*  Source File Name = tests2xc.sqx
+*
+*  Component Name   = DB2 XML Extender
+*
+*  Descriptive Name = Test for dxxGenXMLClob()
+*
+*  Copyright = 5622-044 (c) Copyright IBM Corp 1987, 1997, 2001,2002
+*              Licensed Materials - Program Property of IBM
+*
+*  Status = New code
+*
+*  Function = This client program tests the SQL-to-XML mapping stored
+*             procedure of DB2 XML Extender.
+*             It takes the arguments from the command line and calls the stored
+*             procedure dxxGenXMLClob.
+*
+*******************************************************************************/
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sqlutil.h>
+#include <sqlenv.h>
+#include "sqlca.h"
+#include "dxx.h"
+#include "dxxrc.h"
+
+/*******************************************************************
+** main
+*******************************************************************/
+int main(int argc, char *argv[]) {
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL BEGIN DECLARE SECTION;
+  char    dbname[18];
+  char    result_tabname[160];
+  char    result_colname[129];
+  char    result_valname[129];
+  sqlint32  overrideType = NO_OVERRIDE;
+  struct override_t {
+	char buf[32672];
+  } *override;
+  sqlint32 m;
+  sqlint32 n;
+  sqlint32 errCode;
+  char    msgtext[2048];
+  short   null_ind = -1;
+  short   override_ind = -1;
+  short   in_ind = 0;
+  short   n_ind;
+  short   res_ind;
+  short   valid_ind;
+  short   num_ind;
+  sqlint32 valid;
+  sqlint32 num_docs = 0;
+  short   errCode_ind;
+  short   msgtext_ind;
+
+  SQL TYPE is CLOB_FILE     dadfile;
+  SQL TYPE is CLOB(100K)    *dadobj=NULL;
+  SQL TYPE is CLOB(100K)    *result_doc=NULL;
+
+  struct {
+    short len;
+    char  data[1201];
+  }  hvSQLStmt;
+  char output[3000];
+EXEC SQL END DECLARE SECTION;
+
+  int     rc = 0, len;
+  char    dadfilename[512];
+  FILE   *testfile;
+  int     ERROR_CASE = 0;
+  char    errorMsg[1024];
+
+  override=NULL;
+  /* Process command-line arguments */
+  if ( argc < 3 ) {
+    printf("Usage: %s dbname dadfilename \n",
+           argv[0]);
+    return -1;
+  }
+  override= (struct override_t *)calloc(1, sizeof(struct override_t));
+  if (override == NULL) {
+	printf("out of memory \n");
+	goto exit;
+  }
+  result_doc = (struct result_doc_t *)calloc(1, sizeof(struct result_doc_t));
+  if (result_doc==NULL) {
+	printf("out of memory \n");
+	goto exit;
+  }
+  dadobj = (struct dadobj_t *)calloc(1, sizeof(struct dadobj_t));
+  if (dadobj==NULL) {
+	printf("out of memory \n");
+	goto exit;
+  }
+  if (argc > 3) {
+    if (!strcmp(argv[3], "-o")) {
+      /* Enable override. */
+      overrideType =
+        (!strcmp(argv[4],"SQL_OVERRIDE"))? SQL_OVERRIDE: XML_OVERRIDE;
+      strcpy(override->buf, argv[5]);
+      override_ind = 0;
+    } else {
+      override->buf[0]='\0';
+      overrideType = NO_OVERRIDE;
+    }
+  }
+
+
+  strcpy(dbname,         argv[1]);
+  strcpy(dadfilename,    argv[2]);
+
+
+  /* Connect to database */
+  fprintf(stdout, "Connecting to database %s\n", dbname);
+  EXEC SQL CONNECT TO :dbname;
+
+
+  /* Initialize the DAD CLOB object. */
+  strcpy(dadfile.name, dadfilename);
+  dadfile.name_length = strlen(dadfile.name);
+
+  testfile = fopen( dadfile.name, "r" );
+  if ( testfile != NULL ) {
+	 fclose( testfile );
+      }
+  else {
+        fprintf(stderr, "fopen() error.\n");
+	fprintf(stderr, "Error accessing file: %s \n", dadfilename);
+	rc = -1;
+	goto exit;
+  }
+
+  dadfile.file_options = SQL_FILE_READ;
+  /* DB2 would pass garbage if we directly fed
+     xmlfile into our stored procedure. */
+  EXEC SQL VALUES (:dadfile) INTO :*dadobj;
+
+
+  /* Call the stored procedure. */
+  if (ERROR_CASE)
+    in_ind = -1;
+  else
+    in_ind = 0;
+
+  printf ("Calling stored procedure db2xml!dxxGenXMLClob ...\n");
+
+  EXEC SQL CALL db2xml.dxxGenXMLClob(:*dadobj:in_ind,
+                                     :overrideType:in_ind,
+                                     :*override:override_ind,
+                                     :*result_doc:res_ind,
+                                     :valid:valid_ind,
+                                     :num_docs:num_ind,
+                                     :errCode:errCode_ind,
+                                     :msgtext:msgtext_ind);
+
+  printf("\n  SQLCODE = %d\n", SQLCODE);
+  if ( SQLCODE >= 0  && !(errCode < DXX_ERRCODE_OK)) {
+	  if( SQLCODE > 0 ){           
+        sqlaintp( errorMsg , 1024 , 80 , &sqlca );
+	    printf("\n The warning message is \"%s\"  and it is being ignored.\n"
+            , errorMsg );
+	  }
+
+     EXEC SQL COMMIT;
+
+  /* Print the output parms. */
+	if (valid_ind == -1)
+	  printf("valid             = NULL\n",valid);
+	else
+	  printf("valid             = %d\n",valid);
+	printf("num_docs          = %d\n",num_docs);
+	printf("result_doc length = %d\n",result_doc->length);
+	printf("Document          = %s\n",result_doc->data);
+	
+	printf("  errCode=%d:%d\n  msgtext'%s':%d\n",
+		   errCode, errCode_ind, msgtext, msgtext_ind);
+  };
+
+  if ( errCode < DXX_ERRCODE_OK ) {	
+	printf("  errCode=%d:%d\n  msgtext'%s':%d\n",
+		   errCode, errCode_ind, msgtext, msgtext_ind);
+	EXEC SQL ROLLBACK ;	
+  }
+
+  if ( SQLCODE < 0 )	{
+	sqlaintp( errorMsg , 1024 , 80 , &sqlca );
+	printf("\n The error message is %s \n" , errorMsg );
+	EXEC SQL ROLLBACK ;
+  }
+exit:
+  if (dadobj) free(dadobj);
+  if (override) free(override);
+  if (result_doc) free(result_doc);
+  return rc;
+}

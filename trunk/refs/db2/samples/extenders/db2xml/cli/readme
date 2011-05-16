@@ -1,0 +1,21 @@
+IBM DB2 DATABASE
+XML Extender Samples
+
+(C) COPYRIGHT INTERNATIONAL BUSINESS MACHINES CORPORATION 1998 - 2006
+    ALL RIGHTS RESERVED.
+
+
+These sample files use the default DB2 installation directory for your platform.
+If you installed DB2 to a different directory, change the directory in the 
+sample files to match your system. You can find the default DB2 installation 
+directories in the following topics of the DB2 Information Center:
+
+"Installing DB2 Servers (Linux and UNIX)"
+
+"Installing DB2 Servers (Windows)"
+
+
+This directory contains samples to interface XML Extender from C program
+through CLI(Call Level Interface).
+
+

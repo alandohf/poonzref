@@ -1,0 +1,51 @@
+#! /bin/ksh
+#############################################################################
+# Licensed Materials - Property of IBM
+#
+# Governed under the terms of the International
+# License Agreement for Non-Warranted Sample Code.
+#
+# (C) COPYRIGHT International Business Machines Corp. 1997 - 2006
+#  All Rights Reserved.
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#############################################################################
+# SCRIPT: udfcat
+# To catalog JDBC user-defined functions on UNIX
+# Catalogs the user-defined functions in the UDFsrv library
+# UDFDrop.db2 uncatalogs the functions if previously cataloged
+# UDFCreate.db2 catalogs the user-defined functions
+# Both CLP scripts can be run on their own
+# Usage: udfcat
+#############################################################################
+
+# Uncatalog the functions if previously cataloged
+db2 -td@ -vf UDFDrop.db2
+
+# Connect to 'sample' database
+db2 connect to sample
+
+# Uninstall the jar file if already installed
+db2 "CALL sqlj.remove_jar('MYJAR1')"
+
+# Remove the jar file if already exists
+rm UDFsrv.jar
+
+# Create a jar file 'UDFsrv.jar' using the class file 'UDFsrv.class'
+# Compile 'UDFsrv.java' to get the class file 'UDFsrv.class'
+echo "Executing 'javac UDFsrv.java'..."
+javac UDFsrv.java
+
+# Create the jar file
+echo "Executing 'jar cf UDFsrv.jar UDFsrv.class'..."
+jar cf $HOME/UDFsrv.jar UDFsrv.class Person.class
+
+# Install the jar file using a unique jar-id.
+db2 "CALL sqlj.install_jar('file:$HOME/UDFsrv.jar', 'MYJAR1')"
+
+# Disconnect from 'sample' database
+db2 connect reset
+
+# Catalog the user-defined functions
+db2 -td@ -vf UDFCreate.db2

@@ -1,0 +1,107 @@
+<?xml version="1.0"?> 
+<!DOCTYPE DAD SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/dad.dtd"> 
+<DAD> 
+ <dtdid>neworder.dtd</dtdid> 
+ <validation>NO</validation> 
+ <Xcollection> 
+ <prolog>?xml version="1.0"?</prolog> 
+ <doctype>!DOCTYPE Order SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/neworder.dtd"</doctype> 
+ <root_node> 
+ <element_node name="Order"> 
+ <RDB_node> 
+ <table name="order_tab"/> 
+ <table name="part_tab"/> 
+ <table name="ship_tab"/> 
+ <condition>order_tab.order_key=part_tab.order_key AND part_tab.part_key=ship_tab.part_key </condition> 
+ </RDB_node> 
+ <attribute_node name="Key"> 
+ <RDB_node> 
+ <table name="order_tab"/> 
+ <column name="order_key"/> 
+ </RDB_node> 
+ </attribute_node> 
+ <element_node name="Customer">
+        <element_node name="Name">
+            <text_node> 
+               <RDB_node>
+                  <table name="order_tab"/>
+                  <column name="customer_name"/>                                  
+               </RDB_node>
+            </text_node>
+        </element_node>
+        <element_node name="Email">
+           <text_node>
+               <RDB_node>
+                   <table name="order_tab"/> 
+                   <column name="customer_email"/> 
+               </RDB_node> 
+           </text_node> 
+        </element_node> 
+  </element_node> 
+      <element_node name="Part">
+          <attribute_node name="Key">
+                <RDB_node>
+                    <table name="part_tab"/>
+                    <column name="part_key"/>
+                </RDB_node>
+          </attribute_node>
+          <element_node name="ExtendedPrice"> 
+                <text_node> 
+                   <RDB_node> 
+                      <table name="part_tab"/> 
+                      <column name="price"/>  
+                      <condition>price &gt; 20000.00</condition> 
+                   </RDB_node> 
+                 </text_node>  
+           </element_node> 
+           <element_node name="Tax">  
+                <text_node> 
+                   <RDB_node> 
+                       <table name="part_tab"/> 
+                       <column name="tax"/>  
+                   </RDB_node> 
+                </text_node>  
+           </element_node> 
+	  <element_node name="Quantity">  
+                <text_node> 
+                   <RDB_node> 
+                       <table name="part_tab"/> 
+                       <column name="qty"/>  
+                   </RDB_node> 
+                </text_node>  
+          </element_node>            
+
+	  <element_node name="Shipment" multi_occurrence="YES">
+               <element_node name="ShipDate"> 
+                   <text_node> 
+                      <RDB_node>
+                          <table name="ship_tab"/>  
+                          <column name="date"/>  
+                          <condition>date &gt; '1966-01-01'</condition> 
+                      </RDB_node> 
+                   </text_node>  
+               </element_node> 
+               <element_node name="ShipMode">  
+                   <text_node> 
+                      <RDB_node>
+                          <table name="ship_tab"/> 
+                          <column name="mode"/>  
+                      </RDB_node> 
+                    </text_node>  
+               </element_node> 
+               <element_node name="Comment"> 
+                    <text_node> 
+                      <RDB_node> 
+                          <table name="ship_tab"/>
+                          <column name="comment"/>  
+                      </RDB_node> 
+                    </text_node>  
+               </element_node> 
+         </element_node> <!-- end of element Shipment--> 
+      </element_node> <!-- end of element Part --> 
+    </element_node> <!-- end of element Order --> 
+</root_node> 
+
+</Xcollection>
+
+</DAD>
