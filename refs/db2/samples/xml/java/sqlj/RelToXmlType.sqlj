@@ -1,0 +1,233 @@
+//***************************************************************************
+// Licensed Materials - Property of IBM
+//
+// Governed under the terms of the International
+// License Agreement for Non-Warranted Sample Code.
+//
+// (C) COPYRIGHT International Business Machines Corp.2006
+// All Rights Reserved.
+//
+// US Government Users Restricted Rights - Use, duplication or
+// disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+//***************************************************************************
+//
+// SOURCE FILE NAME: RelToXmlType.sqlj
+//
+// SAMPLE : Purchase order database uses relational tables to store the orders of
+//          different customers. This data can be returned as an XML object to the
+//          application. The XML object can be created using the XML constructor
+//          functions on the server side.
+//          To achieve this, the user can
+//             1. Create new tables having XML columns. (Done in set up script)
+//             2. Change the relational data to XML type using constructor functions.
+//             3. Insert the data in new tables
+//             4. Use the query to select all PO data.
+//
+// PREREQUISITE:
+//         The relational tables that store the purchase order data will have to
+//         be created before this sample is executed. For this the file
+//         setupscript.db2 will have to be run using the command
+//            db2 -tvf setupscript.db2
+//         After successfull execution of the script, this sample can be compiled using
+//            sqlj  RelToXmlType.sqlj
+//         and executed using
+//            java RelToXmlType
+//
+//          Please make sure that you run the cleanup script after running the
+//          sample using following command
+//             db2 -tvf cleanupscript.db2
+// 
+// SQL Statements USED:
+//         SELECT
+//         INSERT
+//
+// SQL/XML FUNCTION USED:
+//         XMLDOCUMENT
+//         XMLELEMENT
+//         XMLATTRIBUTES
+//
+// JAVA 2 CLASSES USED:
+//         Statement
+//         ResultSet
+//
+// Classes used from Util.sqlj are:
+//         Db
+//         Data
+//
+// OUTPUT FILE: RelToXmlType.out (available in the online documentation)
+//***************************************************************************
+//
+// For more information on the sample programs, see the README file.
+//
+// For information on developing SQLJ applications, see the Application
+// Development Guide.
+//
+// For information on using SQL statements, see the SQL Reference.
+//
+// For the latest information on programming, compiling, and running DB2
+// applications, visit the DB2 application development website at
+//     http://www.software.ibm.com/data/db2/udb/ad
+//**************************************************************************/
+
+import java.lang.*;
+import java.sql.*;
+import sqlj.runtime.*;
+import sqlj.runtime.ref.*;
+
+#sql iterator TbRead_cursor(int, int, String, String, String, String);
+
+class RelToXmlType
+{
+  public static void main(String argv[])
+  {
+    try
+    {
+      Db db = new Db(argv);
+
+      System.out.println();
+      System.out.println(
+        "THIS SAMPLE SHOWS HOW TO CONVERT DATA IN RELATIONAL TABLES\n" + 
+        "INTO A XML DOCUMENT USING THE XML CONSTRUCTOR FUNCTIONS");
+
+      // connect to the 'sample' database
+      db.getDefaultContext();
+
+      // execute the Query to Select data from relation tables
+      // and insert into tables as XML data type.
+      execQuery();
+      
+      // disconnect from the 'sample' database
+      db.disconnect();
+    }
+    catch (Exception e)
+    {
+      SqljException sqljExc = new SqljException(e);
+      sqljExc.handle();
+    }
+  } // main
+
+  static void execQuery()
+  {
+    try
+    {
+      TbRead_cursor cur1;
+      System.out.println();
+      System.out.println(
+        "----------------------------------------------------------\n" +
+        "USE THE SQL:\n" +
+        "  Statement\n" +
+        "TO EXECUTE THE QUERY WITH XML CONSTRUCTORS.");
+
+      // execute the query
+      System.out.println();
+      System.out.println(
+        "  Execute Statement:\n" +
+        "INSERT INTO Customerinfo_New (Custid, Address)\n" +
+        "(SELECT Custid, \n" +
+        "XMLDOCUMENT( \n" +
+        "XMLELEMENT(NAME \"Address\", \n" +
+        "XMLELEMENT(NAME \"Name\", c.Name), \n" +
+        "XMLELEMENT(NAME \"Street\", c.Street), \n" +
+        "XMLELEMENT(NAME \"City\", c.City), \n" +
+        "XMLELEMENT(NAME \"Province\", c.Province), \n" +
+        "XMLELEMENT(NAME \"PostalCode\", c.PostalCode))) \n" +
+        "FROM CustomerInfo_relational AS C)\n");
+
+      #sql{ 
+        INSERT INTO Customerinfo_New (Custid, Address)
+        (SELECT Custid, 
+        XMLDOCUMENT( 
+        XMLELEMENT(NAME "Address", 
+        XMLELEMENT(NAME "Name", c.Name), 
+        XMLELEMENT(NAME "Street", c.Street), 
+        XMLELEMENT(NAME "City", c.City), 
+        XMLELEMENT(NAME "Province", c.Province), 
+        XMLELEMENT(NAME "PostalCode", c.PostalCode))) 
+        FROM CustomerInfo_relational AS C)};
+
+      System.out.println(
+        "Execute Statement:\n" +
+        "INSERT INTO purchaseorder_new(PoNum, OrderDate, CustID, Status, LineItems)\n" +
+        "(SELECT Po.PoNum, OrderDate, CustID, Status,\n" +
+        "XMLDOCUMENT(\n" +
+        "XMLELEMENT(NAME \"itemlist\", \n" +
+        "XMLELEMENT(NAME \"PartID\", l.ProdID),\n" +
+        "XMLELEMENT(NAME \"Description\", p.Description ),\n" +
+        "XMLELEMENT(NAME \"Quantity\", l.Quantity),\n" +
+        "XMLELEMENT(NAME \"Price\", p.Price)))\n" +
+        "FROM purchaseorder_relational AS po, lineitem_relational AS l,\n" +
+              "products_relational AS P\n" +
+        "WHERE l.PoNum=po.PoNum AND l.ProdID=P.ProdID)\n");
+       
+      #sql{
+        INSERT INTO purchaseorder_new(PoNum, OrderDate, CustID, Status, LineItems) 
+        (SELECT Po.PoNum, OrderDate, CustID, Status, 
+        XMLDOCUMENT( 
+        XMLELEMENT(NAME "itemlist", 
+        XMLELEMENT(NAME "PartID", l.ProdID), 
+        XMLELEMENT(NAME "Description", p.Description ), 
+        XMLELEMENT(NAME "Quantity", l.Quantity), 
+        XMLELEMENT(NAME "Price", p.Price))) 
+        FROM purchaseorder_relational AS po, lineitem_relational AS l, 
+             products_relational AS P 
+        WHERE l.PoNum=po.PoNum AND l.ProdID=P.ProdID)};
+
+      System.out.println();
+ 
+     
+      #sql cur1 = {
+	SELECT po.PoNum, po.CustId, po.OrderDate, 
+        XMLELEMENT(NAME "PurchaseOrder", 
+        XMLATTRIBUTES(po.CustID AS "CustID", po.PoNum AS "PoNum", 
+                      po.OrderDate AS "OrderDate", po.Status AS "Status")), 
+        XMLELEMENT(NAME "Address", c.Address), 
+        XMLELEMENT(NAME "lineitems", po.LineItems) 
+        FROM PurchaseOrder_new AS po, CustomerInfo_new AS c 
+        WHERE  po.custid = c.custid 
+        ORDER BY po.custID};
+ 
+      int PoNum = 0;
+      int CustId = 0;
+      String OrderDate = "";
+      String PurchaseOrder = "";
+      String Address = "";
+      String LineItem = "";
+      
+      #sql {FETCH :cur1 INTO :PoNum, :CustId, :OrderDate, :PurchaseOrder,
+ 		  :Address, :LineItem};
+
+      while (true)
+      {
+        if (cur1.endFetch())
+        {
+           break;
+        }
+        System.out.println("    " +
+                           "\n Customer ID             : " +
+                           Data.format(CustId, 8) + " " +
+                           "\n Purchase Order Number   : " +
+                           Data.format(PoNum, 8) + " " +
+                           "\n Purchase Order Date     : " +
+                           Data.format(OrderDate, 11) + " " +
+                           "\n Purchase Order Document : \n" +
+ 			   Data.format(PurchaseOrder, 600) + " " +
+                           "\n Address in XML Format: \n" +
+                           Data.format(Address, 500) + " " +
+                           "\n Line Item in XML Format\n" +
+                           Data.format(LineItem, 500));
+
+         #sql {FETCH :cur1 INTO :PoNum, :CustId, :OrderDate, :PurchaseOrder,
+                  :Address, :LineItem};
+      }
+    // Rollback all the changes made to the sample Database
+    #sql{ROLLBACK};
+    }
+    catch (Exception e)
+    {
+      SqljException sqljExc = new SqljException(e);
+      sqljExc.handle();
+    }
+  } //execQuery
+} // RelToXmlType
+
+

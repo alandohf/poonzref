@@ -1,0 +1,17 @@
+<?xml encoding="US-ASCII"?>
+
+<!ELEMENT Order (Customer, Part+)>
+<!ATTLIST Order key CDATA #REQUIRED>
+<!ELEMENT Customer (Name, Email)>
+<!ELEMENT Name (#PCDATA)>
+<!ELEMENT Email (#PCDATA)>
+<!ELEMENT Part (key,Quantity,ExtendedPrice,Tax, Shipment+)>
+<!ELEMENT key (#PCDATA)>
+<!ELEMENT Quantity (#PCDATA)>
+<!ELEMENT ExtendedPrice (#PCDATA)>
+<!ELEMENT Tax (#PCDATA)>
+<!ATTLIST Part color CDATA #REQUIRED>
+<!ELEMENT Shipment (ShipDate, ShipMode)>
+<!ELEMENT ShipDate (#PCDATA)>
+<!ELEMENT ShipMode (#PCDATA)>
+

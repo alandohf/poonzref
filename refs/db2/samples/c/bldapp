@@ -1,0 +1,81 @@
+#! /bin/sh
+#############################################################################
+# Licensed Materials - Property of IBM
+#
+# Governed under the terms of the International
+# License Agreement for Non-Warranted Sample Code.
+#
+# (C) COPYRIGHT International Business Machines Corp. 1995, 2006
+# All Rights Reserved.
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#############################################################################
+# SCRIPT: bldapp
+# Builds Solaris C applications
+# Usage: bldapp <prog_name> [ <db_name> [ <userid> <password> ]]
+
+# Set DB2PATH to where DB2 will be accessed.
+# The default is the standard instance path.
+DB2PATH=$HOME/sqllib
+
+bitwidth=64
+
+# Uncomment the following line to compile 32-bit applications
+#bitwidth=32
+
+arch=`uname -p`
+if [ $arch = "i386" ];
+then
+  if [ $bitwidth = "64" ];
+  then
+    CFLAG_ARCH=amd64
+    LIB=lib64
+  else
+    CFLAG_ARCH=sse2
+    LIB=lib32
+  fi
+else
+  if [ $bitwidth = "64" ];
+  then
+    CFLAG_ARCH=v9
+    LIB=lib64
+  else
+    CFLAG_ARCH=v8plusa
+    LIB=lib32
+  fi
+fi
+
+# Set the runtime path.
+# LD_LIBRARY_PATH will be followed instead of the runtime path unless
+# you unset LD_LIBRARY_PATH first to allow the runtime path to be used.
+EXTRA_LFLAG="-R$DB2PATH/$LIB"
+
+# If an embedded SQL program, precompile and bind it.
+# Note: some .sqc files contain no SQL but link in 
+# utilemb.sqc, so if you get this warning, ignore it:
+# SQL0053W  No SQL statements were found in the program.
+if [ -f $1".sqc" ]
+then
+  ./embprep $1 $2 $3 $4
+  # Compile the utilemb.c error-checking utility.
+  cc -xarch=$CFLAG_ARCH -I$DB2PATH/include -c utilemb.c
+else
+  # Compile the utilapi.c error-checking utility.
+  cc -xarch=$CFLAG_ARCH -I$DB2PATH/include -c utilapi.c
+fi
+  
+# Compile the program.
+cc -xarch=$CFLAG_ARCH -I$DB2PATH/include -c $1.c
+
+if [ -f $1".sqc" ]
+then
+  # Link the program with utilemb.o
+  cc -xarch=$CFLAG_ARCH -mt -o $1 $1.o utilemb.o \
+    -L$DB2PATH/$LIB $EXTRA_LFLAG -ldb2
+else
+  # Link the program with utilapi.o
+  cc -xarch=$CFLAG_ARCH -mt -o $1 $1.o utilapi.o \
+    -L$DB2PATH/$LIB $EXTRA_LFLAG -ldb2
+fi
+

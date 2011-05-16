@@ -1,0 +1,934 @@
+--****************************************************************
+--*                                                              *
+--*    IBM DB2 Information Integrator Replication Version 9.1    *
+--*    for zOS (5655-I60)                                        *
+--*                                                              *
+--*    Sample SQL Replication control tables for zOS             *
+--*    Licensed Materials - Property of IBM                      *
+--*                                                              *
+--*    (C) Copyright IBM Corp. 1993, 2006. All Rights Reserved   *
+--*                                                              *
+--*    US Government Users Restricted Rights - Use, duplication  *
+--*    or disclosure restricted by GSA ADP Schedule Contract     *
+--*    with IBM Corp.                                            *
+--****************************************************************
+--* This is an example of creating SQL Replication control tables.
+--* Connect to DB2 z/OS sub system and run the script
+--*
+--************************************************************
+--*Note:
+--*
+--*  This SQL script is created with the assumption that the
+--*  databases in which the control tables are defined are running
+--*  under DB2 Universal Database for OS/390 and z/OS Version 7 or
+--*  Version 8 in Compatibility Mode (CM).
+--*
+--*  In Version 8 DB2 Universal Database for OS/390 and z/OS running
+--*  in New-Function Mode (NFM), the maximum lengths of some of the
+--*  database identifiers have been increased. If this script is
+--*  used to create replication control tables on a subsystem under
+--*  the New-Function Mode and you want the support of long names
+--*  in DB2 Replication, some of the control table columns need to
+--*  be modified according to the information provided in the
+--*  following table. As an alternative, you can run this script
+--*  as-is and then run AASNSAMP member(ASNM2V8) to alter all the
+--*  replication control tables to support long names.
+--*
+--*  Table Name
+--*          Column                   V8 NFM          V7, V8 CM
+--*  ------------------------------------------------------------
+--*  IBMSNAP_REGISTER
+--*          SOURCE_OWNER             VARCHAR(128)    VARCHAR(30)
+--*          SOURCE_TABLE             VARCHAR(128)    VARCHAR(18)
+--*          CD_OWNER                 VARCHAR(128)    VARCHAR(30)
+--*          CD_TABLE                 VARCHAR(128)    VARCHAR(18)
+--*          PHYS_CHANGE_OWNER        VARCHAR(128)    VARCHAR(30)
+--*          PHYS_CHANGE_TABLE        VARCHAR(128)    VARCHAR(18)
+--*          CCD_OWNER                VARCHAR(128)    VARCHAR(30)
+--*          CCD_TABLE                VARCHAR(128)    VARCHAR(18)
+--*
+--*  IBMSNAP_UOW
+--*          IBMSNAP_AUTHID           VARCHAR(128)    VARCHAR(30)
+--*
+--*  IBMSNAP_PRUNCNTL
+--*          TARGET_OWNER             VARCHAR(128)    VARCHAR(30)
+--*          TARGET_TABLE             VARCHAR(128)    VARCHAR(18)
+--*          SOURCE_OWNER             VARCHAR(128)    VARCHAR(30)
+--*          SOURCE_TABLE             VARCHAR(128)    VARCHAR(18)
+--*          PHYS_CHANGE_OWNER        VARCHAR(128)    VARCHAR(30)
+--*          PHYS_CHANGE_TABLE        VARCHAR(128)    VARCHAR(18)
+--*
+--*  IBMSNAP_SUBS_SET
+--*          CAPTURE_SCHEMA           VARCHAR(128)    VARCHAR(30)
+--*          TGT_CAPTURE_SCHEMA       VARCHAR(128)    VARCHAR(30)
+--*
+--*  IBMSNAP_SUBS_MEMBR
+--*          SOURCE_OWNER             VARCHAR(128)    VARCHAR(30)
+--*          SOURCE_TABLE             VARCHAR(128)    VARCHAR(18)
+--*          TARGET_OWNER             VARCHAR(128)    VARCHAR(30)
+--*          TARGET_TABLE             VARCHAR(128)    VARCHAR(18)
+--*          LOADX_SRC_N_TABLE        VARCHAR(128)    VARCHAR(18)
+--*
+--*  IBMSNAP_SUBS_COLS
+--*          TARGET_OWNER             VARCHAR(128)    VARCHAR(30)
+--*          TARGET_TABLE             VARCHAR(128)    VARCHAR(18)
+--*
+--*  IBMSNAP_APPLYTRAIL
+--*          SOURCE_OWNER             VARCHAR(128)    VARCHAR(30)
+--*          SOURCE_TABLE             VARCHAR(128)    VARCHAR(18)
+--*          TARGET_OWNER             VARCHAR(128)    VARCHAR(30)
+--*          TARGET_TABLE             VARCHAR(128)    VARCHAR(18)
+--*          CAPTURE_SCHEMA           VARCHAR(128)    VARCHAR(30)
+--*          TGT_CAPTURE_SCHEMA       VARCHAR(128)    VARCHAR(30)
+--*
+--*  If you are on Version 8 New-Function Mode or later release,
+--*  you can change the script to use the keyword VOLATILE
+--*  CARDINALITY in the CREATE TABLE statements for the control
+--*  tables with index defined. By declaring the control tables
+--*  VOLATILE, you can avoid possible table scan on the control
+--*  tables due to outdated statistics on the tables.
+--*
+--*  Capture and Apply control tables:
+--*  Recommand all control tables be created in the same database,
+--*  a database different then the source or target database.
+--*  Monitor control tables can be created in a different database.
+--*  Change all instances of DPROPR to a valid DB name as needed.
+--*  Locate and change all occurrences of STOGROUP DPROSTG
+--*  to a stogroup name of your choice.
+--*  Recommend 3 tablespaces for Capture and Apply control tables:
+--*  one for UOW table, one for tables that need PAGE locking, and
+--*  the last one for tables that need ROW locking.
+--*  Capture control tables can have any valid DB2 schema/creator.
+--*  Change all instances of 'DPR' to a valid DB2 schema as needed,
+--*  including the 'DPR' value inserted into ASN.IBMSNAP_CAPSCHEMAS.
+--*  Apply control tables must have ASN as schema.
+--*
+--*  Monitor control tables:
+--*  Change all instances of MONCNTL to a valid DB name as needed.
+--*  Locate and change all occurrences of STOGROUP DPROSTG
+--*  to a stogroup name of your choice.
+--*  Recommend 3 tablespaces for Monitor control tables:
+--*  two for tables that need ROW locking and the third one for
+--*  PAGE locking. Monitor control tables must have ASN as schema.
+--*
+--*  Customize the databases and the tablespaces as you need.
+--*
+--*
+--*Note:
+--*  Starting V8.1, there can be multiple Capture schemas defined
+--*  on the same Capture control server (subsystem). The control
+--*  table ASN.IBMSNAP_CAPSCHEMAS is created only if this is the
+--*  first Capture schema to be created on the Capture control
+--*  server. If you already have existing Capture schemas defined
+--*  on the Capture control server, you should comment out the
+--*  two SQL statements which are used to define
+--*  ASN.IBMSNAP_CAPSCHEMAS table and its unique index.
+--*
+--************************************************************
+--DELETE FROM ASN.IBMSNAP_CAPSCHEMAS WHERE CAP_SCHEMA_NAME = 'DPR';
+--DROP TABLESPACE DPROPR.DTSTSROW;
+--DROP TABLESPACE DPROPR.DTSTSPAG;
+--DROP TABLESPACE DPROPR.DTSTSUOW;
+--DROP DATABASE DPROPR;
+
+COMMIT;
+
+CREATE DATABASE DPROPR
+       STOGROUP DPROSTG
+       CCSID EBCDIC;
+
+CREATE TABLESPACE DTSTSROW
+       IN DPROPR
+       USING STOGROUP DPROSTG
+       PRIQTY 500
+       SECQTY 500
+       PCTFREE 0
+       SEGSIZE 4
+       LOCKSIZE ROW
+       CLOSE NO;
+
+CREATE TABLESPACE DTSTSPAG
+       IN DPROPR
+       USING STOGROUP DPROSTG
+       PRIQTY 500
+       SECQTY 500
+       PCTFREE 0
+       SEGSIZE 4
+       LOCKSIZE PAGE
+       CLOSE NO;
+
+CREATE TABLESPACE DTSTSUOW
+       IN DPROPR
+       USING STOGROUP DPROSTG
+       PRIQTY 500
+       SECQTY 500
+       PCTFREE 0
+       SEGSIZE 4
+       LOCKSIZE PAGE
+       CLOSE NO;
+
+
+--
+--  Capture Control Tables
+--
+
+CREATE TABLE DPR.IBMSNAP_REGISTER(
+SOURCE_OWNER            VARCHAR(30) NOT NULL,
+SOURCE_TABLE            VARCHAR(18) NOT NULL,
+SOURCE_VIEW_QUAL        SMALLINT NOT NULL,
+GLOBAL_RECORD           CHAR(1) NOT NULL,
+SOURCE_STRUCTURE        SMALLINT NOT NULL,
+SOURCE_CONDENSED        CHAR(1) NOT NULL,
+SOURCE_COMPLETE         CHAR(1) NOT NULL,
+CD_OWNER                VARCHAR(30),
+CD_TABLE                VARCHAR(18),
+PHYS_CHANGE_OWNER       VARCHAR(30),
+PHYS_CHANGE_TABLE       VARCHAR(18),
+CD_OLD_SYNCHPOINT       CHAR(10) FOR BIT DATA,
+CD_NEW_SYNCHPOINT       CHAR(10) FOR BIT DATA,
+DISABLE_REFRESH         SMALLINT NOT NULL,
+CCD_OWNER               VARCHAR(30),
+CCD_TABLE               VARCHAR(18),
+CCD_OLD_SYNCHPOINT      CHAR(10) FOR BIT DATA,
+SYNCHPOINT              CHAR(10) FOR BIT DATA,
+SYNCHTIME               TIMESTAMP,
+CCD_CONDENSED           CHAR(1),
+CCD_COMPLETE            CHAR(1),
+ARCH_LEVEL              CHAR(4) NOT NULL,
+DESCRIPTION             CHAR(254),
+BEFORE_IMG_PREFIX       VARCHAR(4),
+CONFLICT_LEVEL          CHAR(1),
+CHG_UPD_TO_DEL_INS      CHAR(1),
+CHGONLY                 CHAR(1),
+RECAPTURE               CHAR(1),
+OPTION_FLAGS            CHAR(4) NOT NULL,
+STOP_ON_ERROR           CHAR(1) WITH DEFAULT 'Y',
+STATE                   CHAR(1) WITH DEFAULT 'I',
+STATE_INFO              CHAR(8))
+IN DPROPR.DTSTSROW;
+
+CREATE UNIQUE INDEX DPR.IBMSNAP_REGISTERX
+ON DPR.IBMSNAP_REGISTER(
+SOURCE_OWNER            ASC,
+SOURCE_TABLE            ASC,
+SOURCE_VIEW_QUAL        ASC);
+
+CREATE INDEX DPR.IBMSNAP_REGISTERX1
+ON DPR.IBMSNAP_REGISTER(
+PHYS_CHANGE_OWNER       ASC,
+PHYS_CHANGE_TABLE       ASC);
+
+CREATE INDEX DPR.IBMSNAP_REGISTERX2
+ON DPR.IBMSNAP_REGISTER(
+GLOBAL_RECORD           ASC);
+
+CREATE TABLE DPR.IBMSNAP_UOW(
+IBMSNAP_UOWID           CHAR(10) FOR BIT DATA NOT NULL,
+IBMSNAP_COMMITSEQ       CHAR(10) FOR BIT DATA NOT NULL,
+IBMSNAP_LOGMARKER       TIMESTAMP NOT NULL,
+IBMSNAP_AUTHTKN         VARCHAR(30) NOT NULL,
+IBMSNAP_AUTHID          VARCHAR(30) NOT NULL,
+IBMSNAP_REJ_CODE        CHAR(1) NOT NULL WITH DEFAULT ,
+IBMSNAP_APPLY_QUAL      CHAR(18) NOT NULL WITH DEFAULT )
+IN DPROPR.DTSTSUOW;
+
+CREATE UNIQUE INDEX DPR.IBMSNAP_UOWX
+ON DPR.IBMSNAP_UOW(
+IBMSNAP_COMMITSEQ       ASC,
+IBMSNAP_LOGMARKER       ASC);
+
+CREATE TABLE DPR.IBMSNAP_PRUNCNTL(
+TARGET_SERVER           CHAR(18) NOT NULL,
+TARGET_OWNER            VARCHAR(30) NOT NULL,
+TARGET_TABLE            VARCHAR(18) NOT NULL,
+SYNCHTIME               TIMESTAMP,
+SYNCHPOINT              CHAR(10) FOR BIT DATA,
+SOURCE_OWNER            VARCHAR(30) NOT NULL,
+SOURCE_TABLE            VARCHAR(18) NOT NULL,
+SOURCE_VIEW_QUAL        SMALLINT NOT NULL,
+APPLY_QUAL              CHAR(18) NOT NULL,
+SET_NAME                CHAR(18) NOT NULL,
+CNTL_SERVER             CHAR(18) NOT NULL,
+TARGET_STRUCTURE        SMALLINT NOT NULL,
+CNTL_ALIAS              CHAR(8),
+PHYS_CHANGE_OWNER       VARCHAR(30),
+PHYS_CHANGE_TABLE       VARCHAR(18),
+MAP_ID                  VARCHAR(10) NOT NULL)
+IN DPROPR.DTSTSROW;
+
+CREATE UNIQUE INDEX DPR.IBMSNAP_PRUNCNTLX
+ON DPR.IBMSNAP_PRUNCNTL(
+SOURCE_OWNER            ASC,
+SOURCE_TABLE            ASC,
+SOURCE_VIEW_QUAL        ASC,
+APPLY_QUAL              ASC,
+SET_NAME                ASC,
+TARGET_SERVER           ASC,
+TARGET_TABLE            ASC,
+TARGET_OWNER            ASC);
+
+CREATE UNIQUE INDEX DPR.IBMSNAP_PRUNCNTLX1
+ON DPR.IBMSNAP_PRUNCNTL(
+MAP_ID                  ASC);
+
+CREATE INDEX DPR.IBMSNAP_PRUNCNTLX2
+ON DPR.IBMSNAP_PRUNCNTL(
+PHYS_CHANGE_OWNER       ASC,
+PHYS_CHANGE_TABLE       ASC);
+
+CREATE INDEX DPR.IBMSNAP_PRUNCNTLX3
+ON DPR.IBMSNAP_PRUNCNTL(
+APPLY_QUAL              ASC,
+SET_NAME                ASC,
+TARGET_SERVER           ASC);
+
+CREATE TABLE DPR.IBMSNAP_PRUNE_SET(
+TARGET_SERVER           CHAR(18) NOT NULL,
+APPLY_QUAL              CHAR(18) NOT NULL,
+SET_NAME                CHAR(18) NOT NULL,
+SYNCHTIME               TIMESTAMP,
+SYNCHPOINT              CHAR(10) FOR BIT DATA NOT NULL)
+IN DPROPR.DTSTSROW;
+
+CREATE UNIQUE INDEX DPR.IBMSNAP_PRUNE_SETX
+ON DPR.IBMSNAP_PRUNE_SET(
+TARGET_SERVER           ASC,
+APPLY_QUAL              ASC,
+SET_NAME                ASC);
+
+CREATE TABLE DPR.IBMSNAP_SIGNAL(
+SIGNAL_TIME             TIMESTAMP NOT NULL WITH DEFAULT ,
+SIGNAL_TYPE             VARCHAR(30) NOT NULL,
+SIGNAL_SUBTYPE          VARCHAR(30),
+SIGNAL_INPUT_IN         VARCHAR(500),
+SIGNAL_STATE            CHAR(1) NOT NULL,
+SIGNAL_LSN              CHAR(10) FOR BIT DATA)
+IN DPROPR.DTSTSROW
+DATA CAPTURE CHANGES;
+
+CREATE UNIQUE INDEX DPR.IBMSNAP_SIGNALX
+ON DPR.IBMSNAP_SIGNAL(
+SIGNAL_TIME             ASC);
+
+CREATE TABLE ASN.IBMSNAP_CAPSCHEMAS(
+CAP_SCHEMA_NAME         VARCHAR(30))
+IN DPROPR.DTSTSROW;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_CAPSCHEMAX
+ON ASN.IBMSNAP_CAPSCHEMAS(
+CAP_SCHEMA_NAME         ASC);
+
+INSERT INTO ASN.IBMSNAP_CAPSCHEMAS(CAP_SCHEMA_NAME)
+VALUES ('DPR');
+
+CREATE TABLE DPR.IBMSNAP_CAPTRACE(
+OPERATION               CHAR(8) NOT NULL,
+TRACE_TIME              TIMESTAMP NOT NULL,
+DESCRIPTION             VARCHAR(1024) NOT NULL)
+IN DPROPR.DTSTSPAG;
+
+CREATE INDEX DPR.IBMSNAP_CAPTRACEX
+ON DPR.IBMSNAP_CAPTRACE(
+TRACE_TIME              ASC);
+
+CREATE TABLE DPR.IBMSNAP_RESTART(
+MAX_COMMITSEQ           CHAR(10) FOR BIT DATA NOT NULL,
+MAX_COMMIT_TIME         TIMESTAMP NOT NULL,
+MIN_INFLIGHTSEQ         CHAR(10) FOR BIT DATA NOT NULL,
+CURR_COMMIT_TIME        TIMESTAMP NOT NULL,
+CAPTURE_FIRST_SEQ       CHAR(10) FOR BIT DATA NOT NULL)
+IN DPROPR.DTSTSPAG;
+
+CREATE TABLE DPR.IBMSNAP_CAPPARMS(
+RETENTION_LIMIT         INT,
+LAG_LIMIT               INT,
+COMMIT_INTERVAL         INT,
+PRUNE_INTERVAL          INT,
+TRACE_LIMIT             INT,
+MONITOR_LIMIT           INT,
+MONITOR_INTERVAL        INT,
+MEMORY_LIMIT            SMALLINT,
+REMOTE_SRC_SERVER       CHAR(18),
+AUTOPRUNE               CHAR(1),
+TERM                    CHAR(1),
+AUTOSTOP                CHAR(1),
+LOGREUSE                CHAR(1),
+LOGSTDOUT               CHAR(1),
+SLEEP_INTERVAL          SMALLINT,
+CAPTURE_PATH            VARCHAR(1040),
+STARTMODE               VARCHAR(10))
+IN DPROPR.DTSTSPAG;
+
+CREATE TABLE DPR.IBMSNAP_CAPENQ(
+LOCK_NAME               CHAR(9))
+IN DPROPR.DTSTSPAG;
+
+CREATE TABLE DPR.IBMSNAP_CAPMON(
+MONITOR_TIME            TIMESTAMP NOT NULL,
+RESTART_TIME            TIMESTAMP NOT NULL,
+CURRENT_MEMORY          INT NOT NULL,
+CD_ROWS_INSERTED        INT NOT NULL,
+RECAP_ROWS_SKIPPED      INT NOT NULL,
+TRIGR_ROWS_SKIPPED      INT NOT NULL,
+CHG_ROWS_SKIPPED        INT NOT NULL,
+TRANS_PROCESSED         INT NOT NULL,
+TRANS_SPILLED           INT NOT NULL,
+MAX_TRANS_SIZE          INT NOT NULL,
+LOCKING_RETRIES         INT NOT NULL,
+JRN_LIB                 CHAR(10),
+JRN_NAME                CHAR(10),
+LOGREADLIMIT            INT NOT NULL,
+CAPTURE_IDLE            INT NOT NULL,
+SYNCHTIME               TIMESTAMP NOT NULL)
+IN DPROPR.DTSTSPAG;
+
+CREATE UNIQUE INDEX DPR.IBMSNAP_CAPMONX
+ON DPR.IBMSNAP_CAPMON(
+MONITOR_TIME            ASC);
+
+CREATE TABLE DPR.IBMSNAP_PRUNE_LOCK(
+DUMMY                   CHAR(1))
+IN DPROPR.DTSTSPAG;
+
+COMMIT;
+
+INSERT INTO DPR.IBMSNAP_CAPPARMS(
+RETENTION_LIMIT, LAG_LIMIT, COMMIT_INTERVAL, PRUNE_INTERVAL,
+TRACE_LIMIT, MONITOR_LIMIT, MONITOR_INTERVAL, MEMORY_LIMIT,
+SLEEP_INTERVAL, AUTOPRUNE, TERM,AUTOSTOP, LOGREUSE, LOGSTDOUT,
+CAPTURE_PATH, STARTMODE)
+VALUES (10080, 10080, 30, 300, 10080,
+        10080, 300, 32, 5, 'Y', 'Y', 'N', 'N', 'N',
+        NULL, 'WARMSI');
+
+------------------------------------------------------------------
+--   Tables to ignore transactions    (All IBM platforms)
+--   Tables names start with IBMQREP
+------------------------------------------------------------------
+
+CREATE TABLE DPR.IBMQREP_IGNTRAN
+( AUTHID    	CHARACTER(128),
+ AUTHTOKEN 	CHARACTER(30),
+ PLANNAME  	CHARACTER(8)
+)  IN DPROPR.DTSTSROW;
+
+CREATE TABLE DPR.IBMQREP_IGNTRANTRC
+( AUTHID    	CHARACTER(128),
+ AUTHTOKEN 	CHARACTER(30),
+ PLANNAME  	CHARACTER(8),
+ TRANSID   	CHARACTER(10) 	FOR BIT DATA NOT NULL,
+ COMMITLSN 	CHARACTER(10) 	FOR BIT DATA NOT NULL
+)  IN DPROPR.DTSTSROW;
+
+------------------------------------------------------------------
+--   New version tables for V9         (All platforms)
+--   Tables names start with IBMQREP
+------------------------------------------------------------------
+
+CREATE TABLE DPR.IBMQREP_COLVERSION
+(  LSN           CHAR(10)     FOR BIT DATA NOT NULL,
+  TABLEID1       SMALLINT                  NOT NULL,
+  TABLEID2       SMALLINT                  NOT NULL,
+  POSITION       SMALLINT                  NOT NULL,
+  NAME           VARCHAR(128)              NOT NULL,
+  TYPE           SMALLINT                  NOT NULL,
+  LENGTH         INTEGER                   NOT NULL,
+  NULLS          CHAR(1)                   NOT NULL,
+  DEFAULT        VARCHAR(1536)
+)  IN DPROPR.DTSTSROW;
+
+CREATE UNIQUE INDEX DPR.IBMQREP_COLVERSIOX
+  ON DPR.IBMQREP_COLVERSION(
+  LSN, TABLEID1, TABLEID2, POSITION);
+
+CREATE TABLE DPR.IBMQREP_TABVERSION
+( LSN            CHAR(10)     FOR BIT DATA NOT NULL,
+  TABLEID1       SMALLINT                  NOT NULL,
+  TABLEID2       SMALLINT                  NOT NULL,
+  VERSION        INTEGER                   NOT NULL,
+  SOURCE_OWNER   VARCHAR(128)              NOT NULL,
+  SOURCE_NAME    VARCHAR(128)              NOT NULL
+) IN DPROPR.DTSTSROW;
+
+CREATE UNIQUE INDEX DPR.IBMQREP_TABVERSIOX
+  ON DPR.IBMQREP_TABVERSION(
+  LSN, TABLEID1, TABLEID2, VERSION);
+
+
+--
+-- Apply control tables
+--
+
+CREATE TABLE ASN.IBMSNAP_SUBS_SET(
+APPLY_QUAL              CHAR(18) NOT NULL,
+SET_NAME                CHAR(18) NOT NULL,
+SET_TYPE                CHAR(1) NOT NULL,
+WHOS_ON_FIRST           CHAR(1) NOT NULL,
+ACTIVATE                SMALLINT NOT NULL,
+SOURCE_SERVER           CHAR(18) NOT NULL,
+SOURCE_ALIAS            CHAR(8),
+TARGET_SERVER           CHAR(18) NOT NULL,
+TARGET_ALIAS            CHAR(8),
+STATUS                  SMALLINT NOT NULL,
+LASTRUN                 TIMESTAMP NOT NULL,
+REFRESH_TYPE            CHAR(1) NOT NULL,
+SLEEP_MINUTES           INT,
+EVENT_NAME              CHAR(18),
+LASTSUCCESS             TIMESTAMP,
+SYNCHPOINT              CHAR(10) FOR BIT DATA,
+SYNCHTIME               TIMESTAMP,
+CAPTURE_SCHEMA          VARCHAR(30) NOT NULL,
+TGT_CAPTURE_SCHEMA      VARCHAR(30),
+FEDERATED_SRC_SRVR      VARCHAR(18),
+FEDERATED_TGT_SRVR      VARCHAR(18),
+JRN_LIB                 CHAR(10),
+JRN_NAME                CHAR(10),
+OPTION_FLAGS            CHAR(4) NOT NULL,
+COMMIT_COUNT            SMALLINT,
+MAX_SYNCH_MINUTES       SMALLINT,
+AUX_STMTS               SMALLINT NOT NULL,
+ARCH_LEVEL              CHAR(4) NOT NULL)
+IN DPROPR.DTSTSROW;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_SUBS_SETX
+ON ASN.IBMSNAP_SUBS_SET(
+APPLY_QUAL              ASC,
+SET_NAME                ASC,
+WHOS_ON_FIRST           ASC);
+
+CREATE TABLE ASN.IBMSNAP_SUBS_MEMBR(
+APPLY_QUAL              CHAR(18) NOT NULL,
+SET_NAME                CHAR(18) NOT NULL,
+WHOS_ON_FIRST           CHAR(1) NOT NULL,
+SOURCE_OWNER            VARCHAR(30) NOT NULL,
+SOURCE_TABLE            VARCHAR(18) NOT NULL,
+SOURCE_VIEW_QUAL        SMALLINT NOT NULL,
+TARGET_OWNER            VARCHAR(30) NOT NULL,
+TARGET_TABLE            VARCHAR(18) NOT NULL,
+TARGET_CONDENSED        CHAR(1) NOT NULL,
+TARGET_COMPLETE         CHAR(1) NOT NULL,
+TARGET_STRUCTURE        SMALLINT NOT NULL,
+PREDICATES              VARCHAR(1024),
+MEMBER_STATE            CHAR(1),
+TARGET_KEY_CHG          CHAR(1) NOT NULL,
+UOW_CD_PREDICATES       VARCHAR(1024),
+JOIN_UOW_CD             CHAR(1),
+LOADX_TYPE              SMALLINT,
+LOADX_SRC_N_OWNER       VARCHAR(30),
+LOADX_SRC_N_TABLE       VARCHAR(18))
+IN DPROPR.DTSTSPAG;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_SUBS_MEMBX
+ON ASN.IBMSNAP_SUBS_MEMBR(
+APPLY_QUAL              ASC,
+SET_NAME                ASC,
+WHOS_ON_FIRST           ASC,
+SOURCE_OWNER            ASC,
+SOURCE_TABLE            ASC,
+SOURCE_VIEW_QUAL        ASC,
+TARGET_OWNER            ASC,
+TARGET_TABLE            ASC);
+
+CREATE TABLE ASN.IBMSNAP_SUBS_COLS(
+APPLY_QUAL              CHAR(18) NOT NULL,
+SET_NAME                CHAR(18) NOT NULL,
+WHOS_ON_FIRST           CHAR(1) NOT NULL,
+TARGET_OWNER            VARCHAR(30) NOT NULL,
+TARGET_TABLE            VARCHAR(18) NOT NULL,
+COL_TYPE                CHAR(1) NOT NULL,
+TARGET_NAME             VARCHAR(30) NOT NULL,
+IS_KEY                  CHAR(1) NOT NULL,
+COLNO                   SMALLINT NOT NULL,
+EXPRESSION              VARCHAR(254) NOT NULL)
+IN DPROPR.DTSTSPAG;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_SUBS_COLSX
+ON ASN.IBMSNAP_SUBS_COLS(
+APPLY_QUAL              ASC,
+SET_NAME                ASC,
+WHOS_ON_FIRST           ASC,
+TARGET_OWNER            ASC,
+TARGET_TABLE            ASC,
+TARGET_NAME             ASC);
+
+CREATE TABLE ASN.IBMSNAP_SUBS_STMTS(
+APPLY_QUAL              CHAR(18) NOT NULL,
+SET_NAME                CHAR(18) NOT NULL,
+WHOS_ON_FIRST           CHAR(1) NOT NULL,
+BEFORE_OR_AFTER         CHAR(1) NOT NULL,
+STMT_NUMBER             SMALLINT NOT NULL,
+EI_OR_CALL              CHAR(1) NOT NULL,
+SQL_STMT                VARCHAR(1024),
+ACCEPT_SQLSTATES        VARCHAR(50))
+IN DPROPR.DTSTSPAG;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_SUBS_STMTX
+ON ASN.IBMSNAP_SUBS_STMTS(
+APPLY_QUAL              ASC,
+SET_NAME                ASC,
+WHOS_ON_FIRST           ASC,
+BEFORE_OR_AFTER         ASC,
+STMT_NUMBER             ASC);
+
+CREATE TABLE ASN.IBMSNAP_SUBS_EVENT(
+EVENT_NAME              CHAR(18) NOT NULL,
+EVENT_TIME              TIMESTAMP NOT NULL,
+END_SYNCHPOINT          CHAR(10) FOR BIT DATA,
+END_OF_PERIOD           TIMESTAMP)
+IN DPROPR.DTSTSROW;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_SUBS_EVENX
+ON ASN.IBMSNAP_SUBS_EVENT(
+EVENT_NAME              ASC,
+EVENT_TIME              ASC);
+
+CREATE TABLE ASN.IBMSNAP_APPLYTRAIL(
+APPLY_QUAL              CHAR(18) NOT NULL,
+SET_NAME                CHAR(18) NOT NULL,
+SET_TYPE                CHAR(1) NOT NULL,
+WHOS_ON_FIRST           CHAR(1) NOT NULL,
+ASNLOAD                 CHAR(1),
+FULL_REFRESH            CHAR(1),
+EFFECTIVE_MEMBERS       INT,
+SET_INSERTED            INT NOT NULL,
+SET_DELETED             INT NOT NULL,
+SET_UPDATED             INT NOT NULL,
+SET_REWORKED            INT NOT NULL,
+SET_REJECTED_TRXS       INT NOT NULL,
+STATUS                  SMALLINT NOT NULL,
+LASTRUN                 TIMESTAMP NOT NULL,
+LASTSUCCESS             TIMESTAMP,
+SYNCHPOINT              CHAR(10) FOR BIT DATA,
+SYNCHTIME               TIMESTAMP,
+SOURCE_SERVER           CHAR(18) NOT NULL,
+SOURCE_ALIAS            CHAR(8),
+SOURCE_OWNER            VARCHAR(30),
+SOURCE_TABLE            VARCHAR(18),
+SOURCE_VIEW_QUAL        SMALLINT,
+TARGET_SERVER           CHAR(18) NOT NULL,
+TARGET_ALIAS            CHAR(8),
+TARGET_OWNER            VARCHAR(30) NOT NULL,
+TARGET_TABLE            VARCHAR(18) NOT NULL,
+CAPTURE_SCHEMA          VARCHAR(30) NOT NULL,
+TGT_CAPTURE_SCHEMA      VARCHAR(30),
+FEDERATED_SRC_SRVR      VARCHAR(18),
+FEDERATED_TGT_SRVR      VARCHAR(18),
+JRN_LIB                 CHAR(10),
+JRN_NAME                CHAR(10),
+COMMIT_COUNT            SMALLINT,
+OPTION_FLAGS            CHAR(4) NOT NULL,
+EVENT_NAME              CHAR(18),
+ENDTIME                 TIMESTAMP NOT NULL WITH DEFAULT ,
+SOURCE_CONN_TIME        TIMESTAMP,
+SQLSTATE                CHAR(5),
+SQLCODE                 INT,
+SQLERRP                 CHAR(8),
+SQLERRM                 VARCHAR(70),
+APPERRM                 VARCHAR(760))
+IN DPROPR.DTSTSROW;
+
+CREATE TYPE 2 INDEX ASN.IBMSNAP_APPLYTRAIX
+ON ASN.IBMSNAP_APPLYTRAIL(
+LASTRUN                 DESC,
+APPLY_QUAL              ASC);
+
+CREATE TABLE ASN.IBMSNAP_APPLYTRACE(
+APPLY_QUAL              CHAR(18) NOT NULL,
+TRACE_TIME              TIMESTAMP NOT NULL,
+OPERATION               CHAR(8) NOT NULL,
+DESCRIPTION             VARCHAR(1024) NOT NULL)
+IN DPROPR.DTSTSROW;
+
+CREATE INDEX ASN.IBMSNAP_APPLYTRACX
+ON ASN.IBMSNAP_APPLYTRACE(
+APPLY_QUAL              ASC,
+TRACE_TIME              ASC);
+
+CREATE TABLE ASN.IBMSNAP_COMPENSATE(
+APPLY_QUAL              CHAR(18) NOT NULL,
+MEMBER                  SMALLINT NOT NULL,
+INTENTSEQ               CHAR(10) FOR BIT DATA NOT NULL,
+OPERATION               CHAR(1) NOT NULL)
+IN DPROPR.DTSTSPAG;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_COMPENSATX
+ON ASN.IBMSNAP_COMPENSATE(
+APPLY_QUAL              ASC,
+MEMBER                  ASC);
+
+CREATE TABLE ASN.IBMSNAP_APPENQ(
+APPLY_QUAL              CHAR(18))
+IN DPROPR.DTSTSROW;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_APPENQX
+ON ASN.IBMSNAP_APPENQ(
+APPLY_QUAL              ASC);
+
+CREATE TABLE ASN.IBMSNAP_APPPARMS(
+APPLY_QUAL              CHAR(18) NOT NULL,
+APPLY_PATH              VARCHAR(1040),
+COPYONCE                CHAR(1) WITH DEFAULT 'N',
+DELAY                   INT WITH DEFAULT 6,
+ERRWAIT                 INT WITH DEFAULT 300,
+INAMSG                  CHAR(1) WITH DEFAULT 'Y',
+LOADXIT                 CHAR(1) WITH DEFAULT 'N',
+LOGREUSE                CHAR(1) WITH DEFAULT 'N',
+LOGSTDOUT               CHAR(1) WITH DEFAULT 'N',
+NOTIFY                  CHAR(1) WITH DEFAULT 'N',
+OPT4ONE                 CHAR(1) WITH DEFAULT 'N',
+SLEEP                   CHAR(1) WITH DEFAULT 'Y',
+SQLERRCONTINUE          CHAR(1) WITH DEFAULT 'N',
+SPILLFILE               VARCHAR(10) WITH DEFAULT 'MEM',
+TERM                    CHAR(1) WITH DEFAULT 'Y',
+TRLREUSE                CHAR(1) WITH DEFAULT 'N')
+IN DPROPR.DTSTSPAG;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_APPPARMSX
+ON ASN.IBMSNAP_APPPARMS(
+APPLY_QUAL              ASC);
+
+--INSERT INTO ASN.IBMSNAP_APPPARMS(
+--APPLY_QUAL,APPLY_PATH,COPYONCE,DELAY,ERRWAIT,INAMSG,LOADXIT,
+--LOGREUSE,LOGSTDOUT,NOTIFY,OPT4ONE,SLEEP,SQLERRCONTINUE,
+--SPILLFILE,TERM,TRLREUSE)
+--VALUES ('AQREC2','//''SYSADM','N',6,300,'Y','N',
+--'N','Y','N','N','Y','Y',
+--'MEM','Y','N');
+
+COMMIT;
+
+
+--
+-- Monitor control tables
+--
+
+--DROP TABLESPACE MONCNTL.TSMROW1;
+--DROP TABLESPACE MONCNTL.TSMROW2;
+--DROP TABLESPACE MONCNTL.TSMPAGE;
+--DROP DATABASE MONCNTL;
+
+CREATE DATABASE MONCNTL
+       STOGROUP DPROSTG
+       CCSID EBCDIC;
+
+CREATE TABLESPACE TSMROW1
+       IN MONCNTL
+       USING STOGROUP DPROSTG
+       PRIQTY 500
+       SECQTY 500
+       PCTFREE 0
+       SEGSIZE 4
+       LOCKSIZE ROW
+       CLOSE NO;
+
+CREATE TABLESPACE TSMROW2
+       IN MONCNTL
+       USING STOGROUP DPROSTG
+       PRIQTY 500
+       SECQTY 500
+       PCTFREE 0
+       SEGSIZE 4
+       LOCKSIZE ROW
+       CLOSE NO;
+
+CREATE TABLESPACE TSMPAGE
+       IN MONCNTL
+       USING STOGROUP DPROSTG
+       PRIQTY 500
+       SECQTY 500
+       PCTFREE 0
+       SEGSIZE 4
+       LOCKSIZE PAGE
+       CLOSE NO;
+
+CREATE TABLE ASN.IBMSNAP_CONTACTS(
+CONTACT_NAME            VARCHAR(127) NOT NULL,
+EMAIL_ADDRESS           VARCHAR(128) NOT NULL,
+ADDRESS_TYPE            CHAR(1) NOT NULL,
+DELEGATE                VARCHAR(127),
+DELEGATE_START          DATE,
+DELEGATE_END            DATE,
+DESCRIPTION             VARCHAR(1024))
+IN MONCNTL.TSMROW1;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_CONTACTSX
+ON ASN.IBMSNAP_CONTACTS(
+CONTACT_NAME            ASC);
+
+CREATE TABLE ASN.IBMSNAP_ALERTS(
+MONITOR_QUAL            CHAR(18) NOT NULL,
+ALERT_TIME              TIMESTAMP NOT NULL,
+COMPONENT               CHAR(1) NOT NULL,
+SERVER_NAME             CHAR(18) NOT NULL,
+SERVER_ALIAS            CHAR(8),
+SCHEMA_OR_QUAL          VARCHAR(30) NOT NULL,
+SET_NAME                CHAR(18) NOT NULL WITH DEFAULT ' ',
+CONDITION_NAME          CHAR(18) NOT NULL,
+OCCURRED_TIME           TIMESTAMP NOT NULL,
+ALERT_COUNTER           SMALLINT NOT NULL,
+ALERT_CODE              CHAR(10) NOT NULL,
+RETURN_CODE             INT NOT NULL,
+NOTIFICATION_SENT       CHAR(1) NOT NULL,
+ALERT_MESSAGE           VARCHAR(1024) NOT NULL)
+IN MONCNTL.TSMROW2;
+
+CREATE INDEX ASN.IBMSNAP_ALERTX
+ON ASN.IBMSNAP_ALERTS(
+MONITOR_QUAL            ASC,
+COMPONENT               ASC,
+SERVER_NAME             ASC,
+SCHEMA_OR_QUAL          ASC,
+SET_NAME                ASC,
+CONDITION_NAME          ASC,
+ALERT_CODE              ASC);
+
+CREATE TABLE ASN.IBMSNAP_MONPARMS(
+MONITOR_QUAL            CHAR(18) NOT NULL,
+ALERT_PRUNE_LIMIT       INT WITH DEFAULT 10080,
+AUTOPRUNE               CHAR(1) WITH DEFAULT 'Y',
+EMAIL_SERVER            VARCHAR(128),
+LOGREUSE                CHAR(1) WITH DEFAULT 'N',
+LOGSTDOUT               CHAR(1) WITH DEFAULT 'N',
+NOTIF_PER_ALERT         INT WITH DEFAULT 3,
+NOTIF_MINUTES           INT WITH DEFAULT 60,
+MONITOR_ERRORS          VARCHAR(128),
+MONITOR_INTERVAL        INT WITH DEFAULT 300,
+MONITOR_PATH            VARCHAR(1040),
+RUNONCE                 CHAR(1) WITH DEFAULT 'N',
+TERM                    CHAR(1) WITH DEFAULT 'N',
+TRACE_LIMIT             INT WITH DEFAULT 10080)
+IN MONCNTL.TSMPAGE;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_MONPARMSX
+ON ASN.IBMSNAP_MONPARMS(
+MONITOR_QUAL            ASC);
+
+CREATE TABLE ASN.IBMSNAP_GROUPS(
+GROUP_NAME              VARCHAR(127) NOT NULL,
+DESCRIPTION             VARCHAR(1024))
+IN MONCNTL.TSMROW1;
+
+CREATE TYPE 2 UNIQUE INDEX ASN.IBMSNAP_GROUPSX
+ON ASN.IBMSNAP_GROUPS(
+GROUP_NAME              ASC);
+
+CREATE TABLE ASN.IBMSNAP_CONTACTGRP(
+GROUP_NAME              VARCHAR(127) NOT NULL,
+CONTACT_NAME            VARCHAR(127) NOT NULL)
+IN MONCNTL.TSMROW1;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_CONTACTGPX
+ON ASN.IBMSNAP_CONTACTGRP(
+GROUP_NAME              ASC,
+CONTACT_NAME            ASC);
+
+CREATE TABLE ASN.IBMSNAP_CONDITIONS(
+MONITOR_QUAL            CHAR(18) NOT NULL,
+SERVER_NAME             CHAR(18) NOT NULL,
+COMPONENT               CHAR(1) NOT NULL,
+SCHEMA_OR_QUAL          VARCHAR(30) NOT NULL,
+SET_NAME                CHAR(18) NOT NULL WITH DEFAULT ' ',
+SERVER_ALIAS            CHAR(8),
+ENABLED                 CHAR(1) NOT NULL,
+CONDITION_NAME          CHAR(18) NOT NULL,
+PARM_INT                INT,
+PARM_CHAR               VARCHAR(128),
+CONTACT_TYPE            CHAR(1) NOT NULL,
+CONTACT                 VARCHAR(127) NOT NULL)
+IN MONCNTL.TSMROW1;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_MONCONDX
+ON ASN.IBMSNAP_CONDITIONS(
+MONITOR_QUAL            ASC,
+SERVER_NAME             ASC,
+COMPONENT               ASC,
+SCHEMA_OR_QUAL          ASC,
+SET_NAME                ASC,
+CONDITION_NAME          ASC);
+
+CREATE TABLE ASN.IBMSNAP_MONSERVERS(
+MONITOR_QUAL            CHAR(18) NOT NULL,
+SERVER_NAME             CHAR(18) NOT NULL,
+SERVER_ALIAS            CHAR(8),
+LAST_MONITOR_TIME       TIMESTAMP NOT NULL,
+START_MONITOR_TIME      TIMESTAMP,
+END_MONITOR_TIME        TIMESTAMP,
+LASTRUN                 TIMESTAMP NOT NULL,
+LASTSUCCESS             TIMESTAMP,
+STATUS                  SMALLINT NOT NULL)
+IN MONCNTL.TSMROW1;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_MONSERVERX
+ON ASN.IBMSNAP_MONSERVERS(
+MONITOR_QUAL            ASC,
+SERVER_NAME             ASC);
+
+CREATE TABLE ASN.IBMSNAP_MONENQ(
+MONITOR_QUAL            CHAR(18) NOT NULL)
+IN MONCNTL.TSMROW1;
+
+CREATE TABLE ASN.IBMSNAP_MONTRACE(
+MONITOR_QUAL            CHAR(18) NOT NULL,
+TRACE_TIME              TIMESTAMP NOT NULL,
+OPERATION               CHAR(8) NOT NULL,
+DESCRIPTION             VARCHAR(1024) NOT NULL)
+IN MONCNTL.TSMPAGE;
+
+CREATE INDEX ASN.IBMSNAP_MONTRACEX
+ON ASN.IBMSNAP_MONTRACE(
+MONITOR_QUAL            ASC,
+TRACE_TIME              ASC);
+
+CREATE TABLE ASN.IBMSNAP_MONTRAIL(
+MONITOR_QUAL            CHAR(18) NOT NULL,
+SERVER_NAME             CHAR(18) NOT NULL,
+SERVER_ALIAS            CHAR(8),
+STATUS                  SMALLINT NOT NULL,
+LASTRUN                 TIMESTAMP NOT NULL,
+LASTSUCCESS             TIMESTAMP,
+ENDTIME                 TIMESTAMP NOT NULL WITH DEFAULT ,
+LAST_MONITOR_TIME       TIMESTAMP NOT NULL,
+START_MONITOR_TIME      TIMESTAMP,
+END_MONITOR_TIME        TIMESTAMP,
+SQLCODE                 INT,
+SQLSTATE                CHAR(5),
+NUM_ALERTS              INT NOT NULL,
+NUM_NOTIFICATIONS       INT NOT NULL,
+SUSPENSION_NAME         VARCHAR(128))
+IN MONCNTL.TSMPAGE;
+
+--INSERT INTO ASN.IBMSNAP_MONPARMS(
+--MONITOR_QUAL, EMAIL_SERVER)
+--VALUES('MONQUAL', 'TIDE.SVL.IBM.COM');
+
+CREATE TABLE ASN.IBMSNAP_TEMPLATES(
+TEMPLATE_NAME                   VARCHAR(128) NOT NULL PRIMARY KEY,
+START_TIME                      TIME NOT NULL,
+WDAY                            SMALLINT DEFAULT null,
+DURATION                        INT NOT NULL)
+IN MONCNTL.TSMROW1;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_TEMPLATEX
+ON ASN.IBMSNAP_TEMPLATES(
+TEMPLATE_NAME			ASC);
+
+CREATE TABLE ASN.IBMSNAP_SUSPENDS(
+SUSPENSION_NAME                 VARCHAR(128) NOT NULL PRIMARY KEY,
+SERVER_NAME                     CHAR( 18) NOT NULL,
+SERVER_ALIAS                    CHAR(  8),
+TEMPLATE_NAME                   VARCHAR(128),
+START                           TIMESTAMP NOT NULL,
+STOP                            TIMESTAMP NOT NULL)
+IN MONCNTL.TSMROW1;
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_SUSPENDX1
+ON ASN.IBMSNAP_SUSPENDS(
+SUSPENSION_NAME			ASC);
+
+CREATE UNIQUE INDEX ASN.IBMSNAP_SUSPENDSX
+ON ASN.IBMSNAP_SUSPENDS(
+SERVER_NAME                     ASC,
+START                           ASC,
+TEMPLATE_NAME                   ASC);
+
+COMMIT;

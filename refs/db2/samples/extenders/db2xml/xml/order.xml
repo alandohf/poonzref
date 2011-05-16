@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE Order SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/getstart.dtd">
+<Order key="1">
+  <Customer>
+    <Name>American Motors</Name>
+    <Email>parts@am.com</Email>
+  </Customer>
+  <Part color="black ">
+    <key>68</key>
+    <Quantity>36</Quantity>
+    <ExtendedPrice>34850.16</ExtendedPrice>
+    <Tax>6.000000e-2</Tax>
+    <Shipment>
+      <ShipDate>1998-08-19</ShipDate>
+      <ShipMode>BOAT  </ShipMode>
+    </Shipment>
+    <Shipment>
+      <ShipDate>1998-08-19</ShipDate>
+      <ShipMode>AIR   </ShipMode>
+    </Shipment>
+  </Part>
+  <Part color="red   ">
+    <key>128</key>
+    <Quantity>28</Quantity>
+    <ExtendedPrice>38000.00</ExtendedPrice>
+    <Tax>7.000000e-2</Tax>
+    <Shipment>
+      <ShipDate>1998-12-30</ShipDate>
+      <ShipMode>TRUCK </ShipMode>
+    </Shipment>
+  </Part>
+</Order>

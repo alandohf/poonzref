@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!DOCTYPE DAD SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/dad.dtd">
+<DAD>
+<validation>NO</validation>
+<Xcollection>
+<SQL_stmt>select o.order_key, customer_name, customer_email, p.part_key, color, qty, price, tax, ship_id, date, mode from order_tab o, part_tab p, table(select substr(char(timestamp(generate_unique())),16) as ship_id, date, mode, part_key from ship_tab) s where o.order_key = 1 and p.price > 20000 and p.order_key = o.order_key and s.part_key = p.part_key ORDER BY order_key, part_key, ship_id</SQL_stmt>
+<prolog>?xml version="1.0"?</prolog>
+<doctype>!DOCTYPE Order SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/getstart.dtd"</doctype>
+<root_node>
+<element_node name="Order">
+  <attribute_node name="key">
+    <column name="order_key"/>
+  </attribute_node>
+  <element_node name="Customer">
+    <element_node name="Name">
+      <text_node><column name="customer_name"/></text_node>
+    </element_node>
+    <element_node name="Email">
+      <text_node><column name="customer_email"/></text_node>
+    </element_node>
+  </element_node>
+  <element_node name="Part">
+    <attribute_node name="color">
+      <column name="color"/>
+    </attribute_node>
+    <element_node name="key">
+      <text_node><column name="part_key"/></text_node>
+    </element_node>
+    <element_node name="Quantity">
+      <text_node><column name="qty"/></text_node>
+    </element_node>
+    <element_node name="ExtendedPrice">
+      <text_node><column name="price"/></text_node>
+    </element_node>
+    <element_node name="Tax">
+      <text_node><column name="tax"/></text_node>
+    </element_node>
+    <element_node name="Shipment" multi_occurrence="YES">
+      <element_node name="ShipDate">
+        <text_node><column name="date"/></text_node>
+      </element_node>
+      <element_node name="ShipMode">
+        <text_node><column name="mode"/></text_node>
+      </element_node>
+    </element_node>
+  </element_node>
+</element_node>
+</root_node>
+</Xcollection>
+</DAD>

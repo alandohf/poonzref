@@ -1,0 +1,78 @@
+/****************************************************************************
+** Licensed Materials - Property of IBM
+** 
+** Governed under the terms of the International
+** License Agreement for Non-Warranted Sample Code.
+**
+** (C) COPYRIGHT International Business Machines Corp. 1995 - 2002        
+** All Rights Reserved.
+**
+** US Government Users Restricted Rights - Use, duplication or
+** disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*****************************************************************************
+**
+** SOURCE FILE NAME: dbmconx2.sqc 
+**
+** SAMPLE: This file contains functions used in dbmconx.c
+**
+** SQL STATEMENTS USED:
+**         CREATE TABLE
+**         DROP TABLE
+**
+** STRUCTURES USED:
+**         sqlca
+*****************************************************************************
+**
+** For more information on the sample programs, see the README file.
+**
+** For information on developing CLI applications, see the CLI Guide
+** and Reference.
+**
+** For information on using SQL statements, see the SQL Reference.
+**
+** For the latest information on programming, building, and running DB2 
+** applications, visit the DB2 application development website: 
+**     http://www.software.ibm.com/data/db2/udb/ad
+****************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sqlenv.h>
+#include <sqlutil.h>
+#include "dbmconx2.h"
+
+/* create a table */
+int SecondDbCreateTable(void)
+{
+  int rc = 0;
+  struct sqlca sqlca;
+
+  printf("    CREATE TABLE books(title VARCHAR(21), price DECIMAL(7, 2)\n");
+
+  EXEC SQL CREATE TABLE books(title VARCHAR(21), price DECIMAL(7, 2));
+  if (sqlca.sqlcode != 0)
+  {
+    printf("Error creating a table in the second database.\n");
+  }
+
+  return 0;
+} /* SecondDbCreateTable */
+
+/* drop a table */
+int SecondDbDropTable(void)
+{
+  int rc = 0;
+  struct sqlca sqlca;
+
+  printf("    DROP TABLE books\n");
+
+  EXEC SQL DROP TABLE books;
+  if (sqlca.sqlcode != 0)
+  {
+    printf("Error dropping a table from the second database.\n");
+  }
+
+  return 0;
+} /* SecondDbDropTable */
+

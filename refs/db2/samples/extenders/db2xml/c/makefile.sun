@@ -1,0 +1,147 @@
+################################################################################
+###                                                                          ###
+### Source File Name = makefile.sun  for sqx samples                         ###
+###                                                                          ###
+### Licensed Materials - Property of IBM                                     ###
+###                                                                          ###
+### (C) COPYRIGHT International Business Machines Corp. 1996 - 2002          ###
+### All Rights Reserved.                                                     ###
+###                                                                          ###
+### US Government Users Restricted Rights - Use, duplication or              ###
+### disclosure restricted by GSA ADP Schedule Contract with IBM Corp.        ###
+###                                                                          ###
+###                                                                          ###
+### PURPOSE : This makefile compiles the DB2 Extenders sample programs.      ###
+###           To use, first edit the variables below that specify the        ###
+###           locations where DB2 and DMB are installed on your system,      ###
+###           then type "make -f makefile.sun".                              ###
+###                                                                          ###
+################################################################################
+# If you are running a 32-bit instance, comment the following line.
+CC = CC  -xarch=v9
+# And uncomment the following line.
+#CC = CC
+#CC = /opt/SUNWspro/SC4.2/bin/CC
+#
+# Edit the next variable to match your system
+#
+DB2_DIR = $(HOME)/sqllib
+PFLAGS = -DSOLARIS -KPIC -mt -xs -instances=static
+
+INCLUDES        = -I. -I$(DB2_DIR)/include
+
+INCS=   -I$(DB2_DIR)/include $(INCLUDES)
+
+LIBPATHS=  -L. -L$(DB2_DIR)/lib
+
+DB2_LIBS = $(LIBPATHS) -ldb2 -ldb2apie
+LIBS = $(DB2_LIBS)
+
+CFLAGS =  -c $(INCS) -DCHARMODE_ASCII
+
+
+all:    help dxxgenx dxxgenxb dxxgenxc dxxshrd dxxisrt dxxretr dxxretr2 dxxretrc
+
+help:
+	echo '** If you are running a 32-bit instance, use the option CC = CC
+
+
+dxxgenx: tests2x.C
+	$(CC) $(CFLAGS) $(PFLAGS) tests2x.C
+	$(CC) -misalign -KPIC -o dxxgenx tests2x.o $(LIBS)
+
+dxxgenxb: tests2xb.C
+	$(CC) $(CFLAGS) $(PFLAGS) tests2xb.C
+	$(CC) -misalign -KPIC -o dxxgenxb tests2xb.o $(LIBS)
+
+dxxgenxc: tests2xc.C
+	$(CC) $(CFLAGS) $(PFLAGS) tests2xc.C
+	$(CC) -misalign -KPIC -o dxxgenxc tests2xc.o $(LIBS)
+
+dxxisrt: insertx.C
+	$(CC)  $(CFLAGS) $(PFLAGS) insertx.C
+	$(CC) -misalign -KPIC -o dxxisrt insertx.o $(LIBS)
+
+dxxretr: retrieve.C
+	$(CC)  $(CFLAGS) $(PFLAGS) retrieve.C
+	$(CC) -misalign -KPIC -o dxxretr retrieve.o $(LIBS)
+
+dxxretr2: retrieve2.C
+	$(CC)  $(CFLAGS) $(PFLAGS) retrieve2.C
+	$(CC) -misalign -KPIC -o dxxretr2 retrieve2.o $(LIBS)
+
+dxxretrc: retrievec.C
+	$(CC)  $(CFLAGS) $(PFLAGS) retrievec.C
+	$(CC) -misalign -KPIC -o dxxretrc retrievec.o $(LIBS)
+
+dxxshrd: shred.C
+	$(CC)  $(CFLAGS) $(PFLAGS) shred.C
+	$(CC) -misalign -KPIC -o dxxshrd shred.o $(LIBS)
+
+# A client program that call the stored procedure dxxShredXML
+shred.C:  shred.sqx
+	db2 connect to mydb &&\
+	db2 prep shred.sqx bindfile using shred.bnd call_resolution deferred &&\
+	db2 bind shred.bnd &&\
+	db2 connect reset &&\
+	db2 terminate
+
+# A client program that call the stored procedure dxxInserXML
+insertx.C:  insertx.sqx
+	db2 connect to mydb &&\
+        db2 prep insertx.sqx bindfile using insertx.bnd call_resolution deferred &&\
+        db2 bind insertx.bnd &&\
+        db2 connect reset &&\
+        db2 terminate
+
+# A client program that call the stored procedure dxxRetrieveXML
+retrieve.C:  retrieve.sqx
+	db2 connect to mydb &&\
+        db2 prep retrieve.sqx bindfile using retrieve.bnd call_resolution deferred &&\
+        db2 bind retrieve.bnd &&\
+        db2 connect reset &&\
+        db2 terminate
+
+# A client program that call the stored procedure dxxRetrieveXML
+retrieve2.C:  retrieve2.sqx
+	db2 connect to mydb &&\
+        db2 prep retrieve2.sqx bindfile using retrieve2.bnd call_resolution deferred &&\
+        db2 bind retrieve2.bnd &&\
+        db2 connect reset &&\
+        db2 terminate
+
+# A client program that call the stored procedure dxxRetrieveXMLClob
+retrievec.C:  retrievec.sqx
+	db2 connect to mydb &&\
+        db2 prep retrievec.sqx bindfile using retrievec.bnd call_resolution deferred &&\
+        db2 bind retrievec.bnd &&\
+        db2 connect reset &&\
+        db2 terminate
+
+# A client program that call the stored procedure dxxGenXML
+tests2x.C:      tests2x.sqx
+	db2 connect to mydb &&\
+        db2 prep tests2x.sqx bindfile using tests2x.bnd call_resolution deferred &&\
+        db2 bind tests2x.bnd &&\
+        db2 connect reset &&\
+        db2 terminate
+
+# A client program that call the stored procedure dxxGenXML
+tests2xb.C:     tests2xb.sqx
+	db2 connect to mydb &&\
+        db2 prep tests2xb.sqx bindfile using tests2xb.bnd call_resolution deferred &&\
+        db2 bind tests2xb.bnd &&\
+        db2 connect reset &&\
+        db2 terminate
+
+# A client program that call the stored procedure dxxGenXMLClob
+tests2xc.C:     tests2xc.sqx
+	db2 connect to mydb &&\
+        db2 prep tests2xc.sqx bindfile using tests2xc.bnd call_resolution deferred &&\
+        db2 bind tests2xc.bnd &&\
+        db2 connect reset &&\
+        db2 terminate
+
+clean:
+	rm -f *.o *.bnd *.C dxxgenx dxxgenxb dxxgenxc dxxshrd dxxisrt dxxretr dxxretr2 dxxretrc
+

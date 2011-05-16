@@ -1,0 +1,59 @@
+#! /bin/sh
+#############################################################################
+# Licensed Materials - Property of IBM
+#
+# Governed under the terms of the International
+# License Agreement for Non-Warranted Sample Code.
+
+# (C) COPYRIGHT International Business Machines Corp. 1999 - 2002
+# All Rights Reserved.
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#
+# Builds a Java embedded SQL (SQLJ) application that uses DataSource
+#############################################################################
+# SCRIPT: bldsqljds
+# Builds UNIX Java embedded SQLJ application that uses DataSource
+#  Usage: see usage() function, below
+
+# Translate and compile the SQLJ source file
+# and bind the package to the database.
+
+
+usage(){
+	print "usage: bldsqljds <prog_name>"
+}
+
+case $1 in
+	DbConnDataSource)	
+		sqlj Util.sqlj
+		sqlj $1.sqlj
+		db2sqljcustomize -dataSource jdbc/defaultDataSource $1_SJProfile0
+		exit 0;
+	;;
+	DbConMDataSources)
+		sqlj Util.sqlj
+		sqlj $1.sqlj
+		db2sqljcustomize -dataSource jdbc/DB2SimpleDataSource_ds1 $1_SJProfile0
+		db2sqljcustomize -dataSource jdbc/DB2SimpleDataSource_ds2 $1_SJProfile0
+		exit 0;
+	;;
+	Batch1Demo | Batch2Demo | Batch3Demo | ScrollIterDemo)
+		sqlj Util.sqlj
+		sqlj $1.sqlj
+		db2sqljcustomize -dataSource jdbc/DB2SimpleDataSource_ds1 $1_SJProfile0
+		exit 0;
+	;;
+	BlobClobDemo)
+		sqlj Util.sqlj
+		sqlj $1.sqlj
+		db2sqljcustomize -dataSource jdbc/DB2SimpleDataSource_ds1 $1_SJProfile0
+		exit 0;
+	;;
+esac
+
+usage
+exit 1
+
+

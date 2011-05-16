@@ -1,0 +1,329 @@
+/****************************************************************************
+** Licensed Materials - Property of IBM
+**
+** Governed under the terms of the International
+** License Agreement for Non-Warranted Sample Code.
+**
+** (C) COPYRIGHT International Business Machines Corp. 2003
+** All Rights Reserved.
+**
+** US Government Users Restricted Rights - Use, duplication or
+** disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*****************************************************************************
+**
+** SOURCE FILE NAME: dblogconn.sqc
+**
+** SAMPLE: How to read database log files with a database connection
+**
+**         Note:
+**           You must be initially disconnected from the sample database
+**           to run this program. To ensure you are, enter 'db2 connect
+**           reset' on the command line prior to running dblogconn. 
+**
+** The sample database for this sample should be created using 'db2sampl -v8'.
+**
+** DB2 API USED:
+**         db2CfgSet -- Set Configuration
+**         db2ReadLog -- Asynchronous Read Log
+**
+** SQL STATEMENTS USED:
+**         ALTER TABLE
+**         COMMIT
+**         DELETE
+**         INSERT
+**         ROLLBACK
+**         CONNECT RESET 
+**
+** OUTPUT FILE: dblogconn.out (available in the online documentation)
+*****************************************************************************
+**
+** For detailed information about database backup and database recovery, see
+** the Data Recovery and High Availability Guide and Reference. This manual
+** will help you to determine which database and table space recovery methods
+** are best suited to your business environment.
+**
+** For more information on the sample programs, see the README file.
+**
+** For information on developing C applications, see the Application
+** Development Guide.
+**
+** For information on using SQL statements, see the SQL Reference.
+**
+** For information on DB2 APIs, see the Administrative API Reference.
+**
+** For the latest information on programming, building, and running DB2
+** applications, visit the DB2 application development website:
+**     http://www.software.ibm.com/data/db2/udb/ad
+****************************************************************************/
+#include "utilrecov.c"
+#include "utilemb.h"
+
+/* local function prototypes */
+int DbLogRecordsForCurrentConnectionRead(char *, char *, char *, char *);
+
+int main(int argc, char *argv[])
+{
+  int rc = 0;
+  char nodeName[SQL_INSTNAME_SZ + 1] = { 0 };
+  char serverWorkingPath[SQL_PATH_SZ + 1] = { 0 };
+  sqluint16 savedLogRetainValue = 0;
+  char dbAlias[SQL_ALIAS_SZ + 1] = { 0 };
+  char user[USERID_SZ + 1] = { 0 };
+  char pswd[PSWD_SZ + 1] = { 0 };
+
+  /* check the command line arguments */
+  rc = CmdLineArgsCheck3(argc, argv, dbAlias, nodeName, user, pswd);
+  CHECKRC(rc, "CmdLineArgsCheck3");
+
+  printf("\nTHIS SAMPLE SHOWS HOW TO READ DATABASE LOGS ASYNCHRONOUSLY\n");
+  printf("WITH A DATABASE CONNECTION.\n");
+
+  /* attach to a local or remote instance */
+  rc = InstanceAttach(nodeName, user, pswd);
+  CHECKRC(rc, "Instance Attach");
+
+  /* get the server working path */
+  rc = ServerWorkingPathGet(dbAlias, serverWorkingPath);
+  CHECKRC(rc, "ServerWorkingPathGet");
+
+  /* save log retain value */
+  rc = DbLogRetainValueSave(dbAlias, &savedLogRetainValue);
+  CHECKRC(rc, "DbLogRetainValueSave");
+
+  /* call the function to do asynchronous log read */
+  rc = DbLogRecordsForCurrentConnectionRead(dbAlias,
+                                            user, pswd, serverWorkingPath);
+  CHECKRC(rc, "DbLogRecordsForCurrentConnectionRead");
+
+  /* restore logretain value */
+  rc = DbLogRetainValueRestore(dbAlias, &savedLogRetainValue);
+  CHECKRC(rc, "DbLogRetainValueRestore");
+
+  /* detach from the local or remote instance */
+  rc = InstanceDetach(nodeName);
+  CHECKRC(rc, "InstanceDetach");
+
+  return 0;
+} /* end main */
+
+int DbLogRecordsForCurrentConnectionRead(char dbAlias[],
+                                         char user[],
+                                         char pswd[],
+                                         char serverWorkingPath[])
+{
+  int rc = 0;
+  struct sqlca sqlca = { 0 };
+  db2CfgParam cfgParameters[1] = { 0 };
+  db2Cfg cfgStruct = { 0 };
+  unsigned short logretain = 0;
+
+  db2BackupStruct backupStruct = { 0 };
+  db2TablespaceStruct tablespaceStruct = { 0 };
+  db2MediaListStruct mediaListStruct = { 0 };
+  db2Uint32 backupImageSize = 0;
+  db2RestoreStruct restoreStruct = { 0 };
+  db2TablespaceStruct rtablespaceStruct = { 0 };
+  db2MediaListStruct rmediaListStruct = { 0 };
+
+  SQLU_LSN startLSN;
+  SQLU_LSN endLSN;
+  char *logBuffer = NULL;
+  sqluint32 logBufferSize = 0;
+  db2ReadLogInfoStruct readLogInfo = { 0 };
+  db2ReadLogStruct readLogInput = { 0 };
+  int i = 0;
+
+  printf("\n*****************************\n");
+  printf("*** ASYNCHRONOUS READ LOG ***\n");
+  printf("*****************************\n");
+  printf("\nUSE THE DB2 APIs:\n");
+  printf("  db2CfgSet -- Set Configuration\n");
+  printf("  db2Backup -- Backup Database\n");
+  printf("  db2ReadLog -- Asynchronous Read Log\n");
+  printf("AND THE SQL STATEMENTS:\n");
+  printf("  CONNECT\n");
+  printf("  ALTER TABLE\n");
+  printf("  COMMIT\n");
+  printf("  INSERT\n");
+  printf("  DELETE\n");
+  printf("  ROLLBACK\n");
+  printf("  CONNECT RESET\n");
+  printf("TO READ LOG RECORDS FOR THE CURRENT CONNECTION.\n");
+
+  printf("\n  Update \'%s\' database configuration:\n", dbAlias);
+  printf("    - Enable the database configuration parameter LOGRETAIN \n");
+  printf("        i.e., set LOGRETAIN = RECOVERY/YES\n");
+
+  /* initialize cfgParameters */
+  cfgParameters[0].flags = 0;
+  cfgParameters[0].token = SQLF_DBTN_LOG_RETAIN;
+  cfgParameters[0].ptrvalue = (char *)&logretain;
+
+  /* enable LOGRETAIN */
+  logretain = SQLF_LOGRETAIN_RECOVERY;
+
+  /* initialize cfgStruct */
+  cfgStruct.numItems = 1;
+  cfgStruct.paramArray = cfgParameters;
+  cfgStruct.flags = db2CfgDatabase | db2CfgDelayed;
+  cfgStruct.dbname = dbAlias;
+
+  /* get database configuration */
+  db2CfgSet(db2Version900, (void *)&cfgStruct, &sqlca);
+  DB2_API_CHECK("Db Log Retain -- Enable");
+
+  tablespaceStruct.tablespaces = NULL;
+  tablespaceStruct.numTablespaces = 0;
+
+  mediaListStruct.locations = &serverWorkingPath;
+  mediaListStruct.numLocations = 1;
+  mediaListStruct.locationType = SQLU_LOCAL_MEDIA;
+
+  /* Calling up the routine for database backup */
+  rc = DbBackup(dbAlias, user, pswd, serverWorkingPath, &backupStruct);
+  CHECKRC(rc, "DbBackup");
+
+  /* connect to the database */
+  rc = DbConn(dbAlias, user, pswd);
+  CHECKRC(rc, "DbConn");
+
+  /* invoke SQL statements to fill database log */
+  printf("\n  Invoke the following SQL statements:\n"
+         "    ALTER TABLE emp_resume DATA CAPTURE CHANGES;\n"
+         "    COMMIT;\n"
+         "    INSERT INTO emp_resume\n"
+         "      VALUES('000777', 'ascii', 'This is a new resume.');\n"
+         "            ('777777', 'ascii', 'This is another new resume');\n"
+         "    COMMIT;\n"
+         "    DELETE FROM emp_resume WHERE empno = '000777';\n"
+         "    DELETE FROM emp_resume WHERE empno = '777777';\n"
+         "    COMMIT;\n"
+         "    DELETE FROM emp_resume WHERE empno = '000140';\n"
+         "    ROLLBACK;\n"
+         "    ALTER TABLE emp_resume DATA CAPTURE NONE;\n" "    COMMIT;\n");
+
+  EXEC SQL ALTER TABLE emp_resume DATA CAPTURE CHANGES;
+  EMB_SQL_CHECK("SQL statement 1 -- invoke");
+
+  EXEC SQL COMMIT;
+  EMB_SQL_CHECK("SQL statement 2 -- invoke");
+
+  EXEC SQL INSERT INTO emp_resume
+    VALUES('000777', 'ascii', 'This is a new resume.'),
+    ('777777', 'ascii', 'This is another new resume');
+  EMB_SQL_CHECK("SQL statement 3 -- invoke");
+
+  EXEC SQL COMMIT;
+  EMB_SQL_CHECK("SQL statement 4 -- invoke");
+
+  EXEC SQL DELETE FROM emp_resume WHERE empno = '000777';
+  EMB_SQL_CHECK("SQL statement 5 -- invoke");
+
+  EXEC SQL DELETE FROM emp_resume WHERE empno = '777777';
+  EMB_SQL_CHECK("SQL statement 6 -- invoke");
+
+  EXEC SQL COMMIT;
+  EMB_SQL_CHECK("SQL statement 7 -- invoke");
+
+  EXEC SQL DELETE FROM emp_resume WHERE empno = '000140';
+  EMB_SQL_CHECK("SQL statement 8 -- invoke");
+
+  EXEC SQL ROLLBACK;
+  EMB_SQL_CHECK("SQL statement 9 -- invoke");
+
+  EXEC SQL ALTER TABLE emp_resume DATA CAPTURE NONE;
+  EMB_SQL_CHECK("SQL statement 10 -- invoke");
+
+  EXEC SQL COMMIT;
+  EMB_SQL_CHECK("SQL statement 11 -- invoke");
+
+  printf("\n  Start reading database log.\n");
+
+  logBuffer = NULL;
+  logBufferSize = 0;
+
+  /*
+   * The API db2ReadLog (Asynchronous Read Log) is used to extract
+   * records from the database logs, and to query the log manager for
+   * current log state information. This API can only be used on
+   * recoverable databases. 
+   */
+
+  /* Query the log manager for current log state information. */
+  readLogInput.iCallerAction = DB2READLOG_QUERY;
+  readLogInput.piStartLSN = NULL;
+  readLogInput.piEndLSN = NULL;
+  readLogInput.poLogBuffer = NULL;
+  readLogInput.iLogBufferSize = 0;
+  readLogInput.iFilterOption = DB2READLOG_FILTER_ON;
+  readLogInput.poReadLogInfo = &readLogInfo;
+
+  db2ReadLog(db2Version900, &readLogInput, &sqlca);
+  DB2_API_CHECK("database log info -- get");
+
+  logBufferSize = 64 * 1024;    /* Maximum size of a log buffer */
+  logBuffer = (char *)malloc(logBufferSize);
+
+  memcpy(&startLSN, &(readLogInfo.initialLSN), sizeof(startLSN));
+  memcpy(&endLSN, &(readLogInfo.nextStartLSN), sizeof(endLSN));
+
+  /*
+   * Extract a log record from the database logs, and read the first
+   * log sequence asynchronously. 
+   */
+  readLogInput.iCallerAction = DB2READLOG_READ;
+  readLogInput.piStartLSN = &startLSN;
+  readLogInput.piEndLSN = &endLSN;
+  readLogInput.poLogBuffer = logBuffer;
+  readLogInput.iLogBufferSize = logBufferSize;
+  readLogInput.iFilterOption = DB2READLOG_FILTER_ON;
+  readLogInput.poReadLogInfo = &readLogInfo;
+
+  db2ReadLog(db2Version900, &readLogInput, &sqlca);
+  if (sqlca.sqlcode != SQLU_RLOG_READ_TO_CURRENT)
+  {
+    DB2_API_CHECK("database logs -- read");
+  }
+  else
+  {
+    if (readLogInfo.logRecsWritten == 0)
+    {
+      printf("\n  Database log empty.\n");
+    }
+  }
+
+  /* display log buffer */
+  rc = LogBufferDisplay(logBuffer, readLogInfo.logRecsWritten);
+  CHECKRC(rc, "LogBufferDisplay");
+
+  while (sqlca.sqlcode != SQLU_RLOG_READ_TO_CURRENT)
+  {
+    /* read the next log sequence */
+
+    memcpy(&startLSN, &(readLogInfo.nextStartLSN), sizeof(startLSN));
+
+    /*
+     * Extract a log record from the database logs, and read the
+     * next log sequence asynchronously. 
+     */
+    db2ReadLog(db2Version900, &readLogInput, &sqlca);
+    if (sqlca.sqlcode != SQLU_RLOG_READ_TO_CURRENT)
+    {
+      DB2_API_CHECK("database logs -- read");
+    }
+    /* display log buffer */
+    rc = LogBufferDisplay(logBuffer, readLogInfo.logRecsWritten);
+    CHECKRC(rc, "LogBufferDisplay");
+  }
+
+  /* free the log buffer */
+  free(logBuffer);
+  logBuffer = NULL;
+  logBufferSize = 0;
+
+  /* disconnect from the database */
+  rc = DbDisconn(dbAlias);
+  CHECKRC(rc, "DbDisconn");
+
+  return 0;
+} /* DbLogRecordsForCurrentConnectionRead */

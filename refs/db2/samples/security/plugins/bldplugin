@@ -1,0 +1,63 @@
+#!/bin/sh
+#############################################################################
+# Licensed Materials - Property of IBM
+#
+# Governed under the terms of the International
+# License Agreement for Non-Warranted Sample Code.
+#
+# (C) COPYRIGHT International Business Machines Corp. 1995, 2002
+# All Rights Reserved.
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#############################################################################
+# SCRIPT: bldplugin
+# Builds Solaris C security plugins
+# Usage: bldplugin <prog_name> [ cc options ]
+#
+# NOTE: this script is intended to be invoked via makefile which will set
+# the appropriate compilation flags for the USERFILE defines.
+
+# Set DB2PATH to where DB2 will be accessed.
+# The default is the standard instance path.
+DB2PATH=$HOME/sqllib
+
+# The program to compile is $1.  Other parameters are passed to cc
+prog=$1
+shift
+
+# Set compile and link flags for 32-bit and 64-bit programs. 
+bitwidth=`LANG=C db2level | awk '/bits/{print $5}'`
+arch=`uname -p`
+if [ $arch = "i386" ];
+then
+  if [ $bitwidth = "64" ];
+  then
+    CFLAG_ARCH=amd64
+  else
+    CFLAG_ARCH=sse2
+  fi
+else
+  if [ $bitwidth = "64" ];
+  then
+    CFLAG_ARCH=v9
+  else
+    CFLAG_ARCH=v8plusa
+  fi
+fi
+
+# Compile the program.
+if [ $prog = "IBMkrb5" ]; then
+  cc -xarch=$CFLAG_ARCH -mt -DUSE_UI_THREADS -Kpic -DDB2_PLAT_UNIX \
+  -I$DB2PATH/include -I/usr/include/IBMNASTK/ $* -g -c ${prog}.c
+else
+  cc $EXTRA_CFLAG -mt -DUSE_UI_THREADS -Kpic -DDB2_PLAT_UNIX \
+  -I$DB2PATH/include $* -g -c ${prog}.c
+fi
+
+# Link the program and create a shared library
+if [ $prog = "IBMkrb5" ]; then
+  cc -xarch=$CFLAG_ARCH -mt -g -G -Bsymbolic -o ${prog}.so ${prog}.o -lc -lgssapi_krb5 -lkrb5 -lksvc
+else
+  cc $EXTRA_CFLAG -mt -g -G -Bsymbolic -o ${prog}.so ${prog}.o -lc
+fi

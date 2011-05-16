@@ -1,0 +1,80 @@
+//***************************************************************************
+// Licensed Materials - Property of IBM
+//
+// Governed under the terms of the International
+// License Agreement for Non-Warranted Sample Code.
+//
+// (C) COPYRIGHT International Business Machines Corp. 2002 - 2003
+// All Rights Reserved.
+//
+// US Government Users Restricted Rights - Use, duplication or
+// disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+//***************************************************************************
+//
+// SOURCE FILE NAME: CreateDemoSchema.sqlj
+//
+// SAMPLE: This program creates the schema for the DataSource Demo programs
+//
+//***************************************************************************
+//
+// For more information on the sample programs, see the README file.
+//
+// For information on developing JDBC applications, see the Application
+// Development Guide.
+//
+// For information on using SQL statements, see the SQL Reference.
+//
+// For the latest information on programming, compiling, and running DB2
+// applications, visit the DB2 application development website at
+//     http://www.software.ibm.com/data/db2/udb/ad
+//**************************************************************************/
+
+import java.sql.*;
+import sqlj.runtime.*;
+import sqlj.runtime.ref.*;
+
+#sql context DemoSchemaCtx with (dataSource="jdbc/DB2SimpleDataSource_ds1");
+
+class CreateDemoSchema 
+{
+
+   public static void main(String argv[]) throws SQLException
+   {
+      // Obtain Connection Context from DataSource  jdbc/DB2SimpleDataSource_ds1
+      DemoSchemaCtx ctx = new DemoSchemaCtx();
+      try
+      {
+          #sql[ctx] { DROP TABLE Batch_Test1  };
+          System.out.println ("Table Batch_Test1 Dropped...");
+          #sql[ctx] { DROP TABLE Batch_Test2  };
+          System.out.println ("Table Batch_Test2 Dropped...");
+          #sql[ctx] { DROP TABLE Scroll_Test  };
+          System.out.println ("Table Scroll_Test Dropped...");
+          #sql[ctx] { DROP TABLE BlobClob_Tab  };
+          System.out.println ("Table BlobClob_Tab Dropped...");
+          
+      } catch (SQLException s) { }
+      try
+      {
+          #sql[ctx] { CREATE TABLE Batch_Test1 (c1 int, c2 char(30)) };
+          System.out.println ("Table Batch_Test1 Created...");
+          #sql[ctx] { CREATE TABLE Batch_Test2 (c1 int, c2 char(30), c3 char(40)) };
+          System.out.println ("Table Batch_Test2 Created...");
+          #sql[ctx] { CREATE TABLE Scroll_Test (c1 int, c2 char(30)) };
+          System.out.println ("Table Scroll_Test Created...");
+          #sql [ctx] { CREATE TABLE BlobClob_Tab (id int, blobcol blob(5000), clobcol clob(5000)) };
+          System.out.println ("Table BlobClob_Tab Created...");
+          System.out.println ("Demo programs can be run now...");
+      }
+      catch(Exception ex)
+      {
+         if (ex instanceof java.sql.SQLException)
+         {
+           System.out.println("error code: " +
+                 ((java.sql.SQLException)(ex)).getErrorCode());
+           System.out.println("error message: " + ex.getMessage());
+         }
+         ex.printStackTrace();
+      }
+   }
+}

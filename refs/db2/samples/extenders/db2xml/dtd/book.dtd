@@ -1,0 +1,16 @@
+<?xml encoding="US-ASCII"?>
+
+<!ELEMENT book (author*,chapter*,price)>
+<!ELEMENT author (#PCDATA)>
+<!ELEMENT chapter (section*, footnote*)>
+<!ATTLIST chapter 
+  id   (1|2|3) #REQUIRED
+  date CDATA #IMPLIED>
+<!ELEMENT price (#PCDATA)>
+<!ATTLIST price
+  date CDATA #IMPLIED
+  time CDATA #IMPLIED
+  timestamp CDATA #IMPLIED
+>
+<!ELEMENT section (#PCDATA)>
+<!ELEMENT footnote (#PCDATA)>

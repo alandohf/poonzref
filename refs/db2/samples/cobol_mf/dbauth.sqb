@@ -1,0 +1,151 @@
+      ***********************************************************************
+      ** Licensed Materials - Property of IBM
+      **
+      ** Governed under the terms of the International
+      ** License Agreement for Non-Warranted Sample Code.
+      **
+      ** (C) COPYRIGHT International Business Machines Corp. 1995 - 2002
+      ** All Rights Reserved.
+      **
+      ** US Government Users Restricted Rights - Use, duplication or
+      ** disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+      ***********************************************************************
+      **
+      ** SOURCE FILE NAME: dbauth.sqb
+      **
+      ** SAMPLE: How to grant and display authorities on a database
+      **
+      ** SQL STATEMENTS USED:
+      **         BEGIN DECLARE SECTION
+      **         END DECLARE SECTION
+      **         CONNECT
+      **         GRANT (Database Authorities)
+      **
+      ** OUTPUT FILE: dbauth.out (available in the online documentation)
+      ***********************************************************************
+      **
+      ** For more information on the sample programs, see the README file.
+      **
+      ** For information on developing COBOL applications, see the
+      ** Application Development Guide.
+      **
+      ** For information on using SQL statements, see the SQL Reference.
+      **
+      ** For the latest information on programming, compiling, and running
+      ** DB2 applications, visit the DB2 application development website:
+      **     http://www.software.ibm.com/data/db2/udb/ad
+      ***********************************************************************
+
+       Identification Division.
+       Program-Id. "dbauth".
+
+
+      ******************************************************************
+      *                         DATA DIVISION                          *
+      ******************************************************************
+
+       DATA DIVISION.
+
+      *******************   Working-Storage  ***************************
+       Working-Storage Section.
+
+           copy "sqlenv.cbl".
+           copy "sql.cbl".
+           copy "sqlca.cbl".
+
+
+      * ------  general variables   ------------------------------------
+
+       77 errloc      pic x(80).
+
+
+           EXEC SQL BEGIN DECLARE SECTION END-EXEC.
+       01 dbalias.
+          49 dbalias-len    pic s9(4) comp-5 value 0.
+          49 dbalias-buf    pic x(9) value " ".
+       01 userid.
+          49 userid-len     pic s9(4) comp-5 value 0.
+          49 userid-buf     pic x(128) value " ".
+       01 pswd.
+          49 pswd-len       pic s9(4) comp-5 value 0.
+          49 pswd-buf       pic x(19).
+           EXEC SQL END DECLARE SECTION END-EXEC.
+
+      ******************************************************************
+      *                        PROCEDURE DIVISION                      *
+      ******************************************************************
+
+       PROCEDURE DIVISION.
+
+      *******************   Main   *************************************
+       Main Section.
+
+           display " ".
+           display "DATABASES: HOW TO GRANT AND DISPLAY AUTHORITIES".
+           display "           AT DATABASE LEVEL".
+           display " ".
+
+      * ----------------------------------------------------------------
+           display "Enter database alias( 'sample' by default): "
+              with no advancing.
+           accept dbalias-buf.
+           if dbalias-buf = spaces
+              move "sample" to dbalias-buf.
+           inspect dbalias-buf
+              tallying dbalias-len for characters before initial " ".
+
+           display "Enter user id( current by default)        : "
+              with no advancing.
+           accept userid-buf.
+           inspect userid-buf
+              tallying userid-len for characters before initial " ".
+           if userid-buf not equal spaces
+              display "Enter password                            : "
+                 with no advancing
+              accept pswd-buf.
+              inspect pswd-buf
+                 tallying pswd-len for characters before initial " ".
+
+           display " ".
+
+      * ----------------------------------------------------------------
+           if userid-buf = spaces
+              EXEC SQL CONNECT TO :dbalias END-EXEC
+           else
+              EXEC SQL
+                CONNECT TO :dbalias USER :userid USING :pswd
+              END-EXEC.
+
+
+      * ----------------------------------------------------------------
+           perform Db-Auth-Grant.
+      * ----------------------------------------------------------------
+
+       End-Main. stop run.
+
+      ********************  Db-Auth-Grant  *****************************
+       Db-Auth-Grant Section.
+
+           display "USE THE SQL STATEMENTS:".
+           display "-GRANT (Database Authorities)".
+           display "-COMMIT".
+           display "TO GRANT AUTHORITIES AT DATABASE LEVEL.".
+           display " ".
+
+
+           display "    GRANT CONNECT, CREATETAB, BINDADD".
+           display "        ON DATABASE".
+           display "        TO USER user1".
+
+           EXEC SQL
+              GRANT CONNECT, CREATETAB, BINDADD
+              ON DATABASE
+              TO USER user1
+           END-EXEC.
+
+           move "user authorities at db. level -- grant" to errloc.
+           call "checkerr" using SQLCA errloc.
+           if sqlcode is less than 0 go to End-Db-Auth-Grant.
+
+       End-Db-Auth-Grant.
+

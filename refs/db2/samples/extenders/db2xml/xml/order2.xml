@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!DOCTYPE Order SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/Order.dtd">
+
+<Order key="2">
+     <Customer>79</Customer>
+     <Status>O</Status>
+     <TotalPrice>27712.62</TotalPrice>
+     <Date>1996-12-01</Date>
+     <Priority>1-URGENT</Priority>
+     <Clerk>Clerk#000000880</Clerk>
+     <ShipPriority>0</ShipPriority>
+     <Comment>5PRxL1nM7xhQNzP2hnjhy1zz ykhg4P2A MMg5Px3OCN 0B0iyCRgiC2</Comment>
+</Order>

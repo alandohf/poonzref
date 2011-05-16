@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!DOCTYPE Order SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/LineItem.dtd">
+
+<Order key="3">
+  <Part key="107"> 
+     <SuppKey>2</SuppKey>
+     <LineNumber>1</LineNumber>
+     <Quantity>38</Quantity>
+     <ExtendedPrice>38269.80</ExtendedPrice>
+     <Discount>0.00</Discount>
+     <Tax>0.05</Tax>
+     <ReturnFlag>A</ReturnFlag>
+     <LineStatus>F</LineStatus>
+     <ShipDate>1993-12-11</ShipDate>
+     <CommitDate>1993-11-27</CommitDate>
+     <ReceiptDate>1993-12-16</ReceiptDate>
+     <ShipInstruct>TAKE BACK RETURN</ShipInstruct>
+     <ShipMode>RAIL</ShipMode>
+     <Comment>3AR yMS77lQ12kR</Comment>
+  </Part>
+  <Part key="195"> 
+     <SuppKey>7</SuppKey>
+     <LineNumber>2</LineNumber>
+     <Quantity>30</Quantity>
+     <ExtendedPrice>32855.70</ExtendedPrice>
+     <Discount>0.05</Discount>
+     <Tax>0.01</Tax>
+     <ReturnFlag>A</ReturnFlag>
+     <LineStatus>F</LineStatus>
+     <ShipDate>1994-02-05</ShipDate>
+     <CommitDate>1993-12-29</CommitDate>
+     <ReceiptDate>1994-02-18</ReceiptDate>
+     <ShipInstruct>TAKE BACK RETURN</ShipInstruct>
+     <ShipMode>FOB</ShipMode>
+     <Comment>6wQnO0Llg6y</Comment>
+  </Part>
+  <Part key="101"> 
+     <SuppKey>2</SuppKey>
+     <LineNumber>3</LineNumber>
+     <Quantity>44</Quantity>
+     <ExtendedPrice>44048.40</ExtendedPrice>
+     <Discount>0.07</Discount>
+     <Tax>0.03</Tax>
+     <ReturnFlag>R</ReturnFlag>
+     <LineStatus>F</LineStatus>
+     <ShipDate>1994-01-19</ShipDate>
+     <CommitDate>1993-12-23</CommitDate>
+     <ReceiptDate>1994-02-15</ReceiptDate>
+     <ShipInstruct>TAKE BACK RETURN</ShipInstruct>
+     <ShipMode>SHIP</ShipMode>
+     <Comment>LhiA7wygz0k4g4zRhMLBAM</Comment>
+  </Part>
+  <Part key="46"> 
+     <SuppKey>9</SuppKey>
+     <LineNumber>4</LineNumber>
+     <Quantity>37</Quantity>
+     <ExtendedPrice>35003.48</ExtendedPrice>
+     <Discount>0.09</Discount>
+     <Tax>0.05</Tax>
+     <ReturnFlag>A</ReturnFlag>
+     <LineStatus>F</LineStatus>
+     <ShipDate>1993-12-22</ShipDate>
+     <CommitDate>1993-12-28</CommitDate>
+     <ReceiptDate>1994-01-04</ReceiptDate>
+     <ShipInstruct>DELIVER IN PERSON</ShipInstruct>
+     <ShipMode>AIR</ShipMode>
+     <Comment>jykM7l5S7xl6nin26jhn75C60kj2iQAgg</Comment>
+  </Part>
+  <Part key="5"> 
+     <SuppKey>2</SuppKey>
+     <LineNumber>5</LineNumber>
+     <Quantity>6</Quantity>
+     <ExtendedPrice>5430.00</ExtendedPrice>
+     <Discount>0.04</Discount>
+     <Tax>0.01</Tax>
+     <ReturnFlag>R</ReturnFlag>
+     <LineStatus>F</LineStatus>
+     <ShipDate>1994-01-28</ShipDate>
+     <CommitDate>1993-12-15</CommitDate>
+     <ReceiptDate>1994-02-14</ReceiptDate>
+     <ShipInstruct>TAKE BACK RETURN</ShipInstruct>
+     <ShipMode>REG AIR</ShipMode>
+     <Comment>6nmBmjQkgiCyzCQBkxPPOx5j4hB 0lRywgniP7</Comment>
+  </Part>
+  <Part key="196"> 
+     <SuppKey>8</SuppKey>
+     <LineNumber>6</LineNumber>
+     <Quantity>35</Quantity>
+     <ExtendedPrice>38366.65</ExtendedPrice>
+     <Discount>0.01</Discount>
+     <Tax>0.05</Tax>
+     <ReturnFlag>R</ReturnFlag>
+     <LineStatus>F</LineStatus>
+     <ShipDate>1993-12-23</ShipDate>
+     <CommitDate>1994-01-10</CommitDate>
+     <ReceiptDate>1994-01-13</ReceiptDate>
+     <ShipInstruct>COLLECT COD</ShipInstruct>
+     <ShipMode>RAIL</ShipMode>
+     <Comment>nNMwmwnnji74jRnMPl0z41BgwCLjk7ANPQM</Comment>
+  </Part>
+</Order>

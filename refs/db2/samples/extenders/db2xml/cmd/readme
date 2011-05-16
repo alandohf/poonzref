@@ -1,0 +1,73 @@
+IBM DB2 DATABASE
+XML Extender Samples
+
+(C) COPYRIGHT INTERNATIONAL BUSINESS MACHINES CORPORATION 1998 - 2006
+    ALL RIGHTS RESERVED.
+
+
+
+This directory contains sample command files that demonstrate XML
+Extender administration, stored procedures and functions.  These command
+files are referred to in the Getting Started chapter of the XML Extender
+Administration and Programming book.
+   
+Before proceeding, you must set the following DB2 registry variables for
+some of the XML Extender UDFs to execute properly:
+   DB2_DXX_PATHS_ALLOWED_READ
+   DB2_DXX_PATHS_ALLOWED_WRITE
+
+These sample files use the default DB2 installation directory for your platform.
+If you installed DB2 to a different directory, change the directory in the 
+sample files to match your system. You can find the default DB2 installation 
+directories in the following topics of the DB2 Information Center:
+
+"Installing DB2 Servers (Linux and UNIX)"
+
+"Installing DB2 Servers (Windows)"
+
+
+The command files have to be run in the sequence listed below.
+
+1. getstart_db.cmd
+     Creates the database.  Creates and populates four tables.
+
+2. getstart_prep.cmd
+     Binds the database to the XML Extender packages.  Enables the
+     database for XML Extender.
+
+3. getstart_insertDTD.cmd
+     Inserts the DTD used to validate the XML document into the
+     db2xml.DTD_REF table.
+
+4. getstart_createTabCol.cmd
+     Creates a table that will have an XML enabled column.
+
+5. getstart_alterTabCol.cmd
+     Alters the table by adding the column that will be enabled for XML.
+
+6. getstart_enableCol.cmd
+     Enables the column for XML.
+
+7. getstart_createIndex.cmd
+     Creates indexes on the side tables of the XML enabled column.
+
+8. getstart_insertXML.cmd
+     Inserts the XML document into the XML enabled column.
+
+9. getstart_queryCol.cmd
+     Runs SQL query against the side tables of the XML enabled column.
+
+10.getstart_stp.cmd
+     Demonstrates use of the XML Extender composition stored procedure
+     driver.
+
+11.getstart_exportXML.cmd
+     Demonstrates use of an XML Extender retrieval UDF.
+
+12.getstart_xslt.cmd
+     Demonstrates use of an XML Extender transform UDF.
+
+13.getstart_clean.cmd
+     Cleans up the samples environment.
+
+

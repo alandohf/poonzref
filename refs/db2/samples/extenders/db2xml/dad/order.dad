@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE DAD SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/dad.dtd">
+<DAD>
+   <dtdid>order_dtd</dtdid>
+   <validation>NO</validation>
+   <Xcolumn>
+     <table name="order">
+       <column name="customer_num" 
+         type="Integer"
+         path="/Order/Customer"
+         multi_occurrence="NO">
+       </column>
+       <column name="price" 
+         type="double"
+         path="/Order/TotalPrice"
+         multi_occurrence="NO">
+       </column>
+       <column name="date" 
+         type="date"
+         path="/Order/Date"
+         multi_occurrence="NO">
+       </column>
+     </table>
+   </Xcolumn>
+</DAD>

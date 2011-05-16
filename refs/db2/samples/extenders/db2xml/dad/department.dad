@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE DAD SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/dad.dtd">
+<DAD>
+  <dtdid>department.dtd</dtdid> 
+  <validation>NO</validation> 
+  <Xcollection>
+  <SQL_stmt>SELECT d.deptno, d.deptname, p.projno, p.prstdate, p.prstaff, p.projname, e.empno, e.job, e.firstnme, e.lastname FROM department d, employee e, project p WHERE e.workdept=d.deptno AND p.deptno=d.deptno AND d.deptname like '%SYSTEMS%' ORDER BY deptno, projno, empno</SQL_stmt>
+  <prolog>?xml version="1.0"?</prolog>
+  <doctype>!DOCTYPE department SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/department.dtd"</doctype>
+  <root_node>
+  <element_node name="department">
+    <attribute_node name="id"> 
+      <column name="deptno"/> 
+    </attribute_node> 
+    <element_node name="name">
+      <text_node> 
+        <column name="deptname"/>
+      </text_node>
+    </element_node>
+    <element_node name="work" multi_occurrence="NO">
+      <element_node name="project">
+        <attribute_node name="id"> 
+          <column name="projno"/> 
+        </attribute_node>
+        <attribute_node name="start"> 
+          <column name="prstdate"/> 
+        </attribute_node>
+        <attribute_node name="staffing"> 
+          <column name="prstaff"/> 
+        </attribute_node>
+        <element_node name="name">
+          <text_node> 
+            <column name="projname"/>
+          </text_node>
+        </element_node>
+      </element_node>  <!-- end of project --> 
+    </element_node>  <!-- end of work --> 
+
+    <element_node name="personel" multi_occurrence="NO">
+      <element_node name="employee">
+        <attribute_node name="id">
+          <column name="empno"/> 
+        </attribute_node>
+        <attribute_node name="job">
+          <column name="job"/> 
+        </attribute_node>
+        <element_node name="name">
+          <element_node name="first">
+            <text_node> 
+              <column name="firstnme"/>
+            </text_node>
+          </element_node>
+          <element_node name="last">
+            <text_node> 
+              <column name="lastname"/>
+            </text_node>
+          </element_node>          
+        </element_node>  <!-- end of name -->
+      </element_node>  <!-- end of employee -->
+    </element_node>  <!-- end of personel -->
+  </element_node>  <!-- end of department -->
+  </root_node>
+  </Xcollection>
+</DAD>

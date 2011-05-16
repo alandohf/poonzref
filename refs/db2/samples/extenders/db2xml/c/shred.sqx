@@ -1,0 +1,177 @@
+/* -*- Mode: C -*- */
+/******************************************************************************
+*
+*  Source File Name = shred.sqx
+*
+*  Component Name   = DB2 XML Extender
+*
+*  Descriptive Name = Test dxxShredXML
+*
+*  Copyright = 5622-044 (c) Copyright IBM Corp 1987, 1997, 2001,2002
+*              Licensed Materials - Program Property of IBM
+*
+*  Status = New code
+*
+*  Function = This client program tests the dxxShredXML stored
+*             procedure of DB2 XML Extender.
+*             It takes the arguments from the command line and calls the stored
+*             procedure dxxShredXML.
+*
+*******************************************************************************/
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sqlutil.h>
+#include <sqlenv.h>
+#include "sqlca.h"
+#include "dxx.h"
+#include "dxxrc.h"
+
+/*******************************************************************
+** main
+*******************************************************************/
+int main(int argc, char *argv[]) {
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL BEGIN DECLARE SECTION;
+  char    dbname[18];
+  char    dadfile_buf[4000];
+  SQL TYPE is CLOB_FILE      xmlfile;
+  SQL TYPE is CLOB(1M)      *xmlobjp = NULL;
+  SQL TYPE is CLOB(100M)      *largexmlobjp = NULL;
+  SQL TYPE is CLOB_FILE      dadfile;
+  SQL TYPE is CLOB(100K)     dadobj;
+  sqlint32 errCode = -1;
+  char    msgtext[2048];
+  short   null_ind = -1;
+  short   non_null_ind = 0;
+  short   errCode_ind;
+  short   msgtext_ind;
+EXEC SQL END DECLARE SECTION;
+  int     rc = -1, len;
+  int large=0; // indicates whether flag "-large" present
+  char    dadfilename[512];
+  FILE   *testfile;
+  char    errorMsg[1024]; 
+  /* Process command-line arguments */
+  if (argc != 4 && argc !=5) {
+    printf("Usage: %s [-large] dbname dadfilename xmlfilename\n", argv[0]);
+    return -1;
+  }
+  if (argc==5 ) {
+    if (strcmp(argv[1], "-large")!=0) {
+	  printf("Usage: %s [-large] dbname dadfilename xmlfilename\n", argv[0]);
+      return -1;
+    } else {
+      large=1;
+      strcpy(dbname,         argv[2]);
+      strcpy(dadfilename,    argv[3]);
+      strcpy(xmlfile.name,    argv[4]);
+    }
+  } else {
+    strcpy(dbname,         argv[1]);
+    strcpy(dadfilename,    argv[2]);
+    strcpy(xmlfile.name,    argv[3]);
+  }
+
+
+  /* Connect to database */
+  fprintf(stdout, "Connecting to database %s\n", dbname);
+  EXEC SQL CONNECT TO :dbname;
+
+  /* Initialize the XML CLOB object. */
+  xmlfile.name_length = strlen(xmlfile.name);
+  xmlfile.file_options = SQL_FILE_READ;
+
+  testfile = fopen( xmlfile.name, "r" );
+
+  if ( testfile != NULL ) {
+	 fclose( testfile );
+  } else {
+        fprintf(stderr, "fopen() error.\n");
+	fprintf(stderr, "Error accessing file: %s \n", xmlfile.name);
+	goto exit;
+  }
+
+  /* DB2 would pass garbage if we directly fed
+     xmlfile into our stored procedure. */
+  if (large==0)	 {
+    xmlobjp =  (struct xmlobjp_t *) malloc( sizeof (*xmlobjp));
+    if (xmlobjp ==NULL) {
+      fprintf(stderr, "Malloc() error.\n");
+      goto exit;
+    }
+    EXEC SQL VALUES (:xmlfile) INTO :*xmlobjp;
+  } else {
+    largexmlobjp =  (struct largexmlobjp_t *) malloc( sizeof (*largexmlobjp));
+    if (largexmlobjp ==NULL) {
+      fprintf(stderr, "Malloc() error.\n");
+      goto exit;
+    }
+    EXEC SQL VALUES (:xmlfile) INTO :*largexmlobjp;
+  }
+
+
+  /* Initialize the DAD CLOB object. */
+     strcpy(dadfile.name, dadfilename);
+     dadfile.name_length = strlen(dadfile.name);
+     dadfile.file_options = SQL_FILE_READ;
+
+     testfile = fopen( dadfile.name, "r" );
+     if ( testfile != NULL ) {
+    	 fclose( testfile );
+     } else {
+    	fprintf(stderr, "fopen() error.\n");
+    	fprintf(stderr, "Error accessing file: %s \n", dadfile.name);
+    	rc = -1;
+    	goto exit;
+     }
+
+      /* DB2 would pass garbage if we directly fed
+         xmlfile into our stored procedure. */
+     EXEC SQL VALUES (:dadfile) INTO :dadobj;
+   if (large==0) {
+      /* Call the stored procedure. */
+     EXEC SQL CALL db2xml.dxxShredXML (:dadobj:non_null_ind,
+                                       :*xmlobjp:non_null_ind,
+                                       :errCode:errCode_ind,
+                                       :msgtext:msgtext_ind);
+   } else {
+     EXEC SQL CALL db2xml.dxxShredXML100MB (:dadobj:non_null_ind,
+                                       :*largexmlobjp:non_null_ind,
+                                       :errCode:errCode_ind,
+                                       :msgtext:msgtext_ind);
+   }
+   /* Print the output parms. */
+
+      printf("  errCode=%d:%d\n  msgtext'%s':%d\n",
+             errCode, errCode_ind, msgtext, msgtext_ind);
+   if ( SQLCODE >= 0) {    
+      if( SQLCODE > 0 ){
+         sqlaintp( errorMsg , 1024 , 80 , &sqlca );
+   	     printf("\n The warning message is \"%s\"  and it is being ignored.\n"
+               , errorMsg );
+      }             
+
+      if (errCode < DXX_ERRCODE_OK)
+         EXEC SQL ROLLBACK;
+      else
+         EXEC SQL COMMIT;
+   }
+   else
+   {
+      sqlaintp( errorMsg , 1024 , 80 , &sqlca );
+      printf("\n The error message is %s \n" , errorMsg );
+      EXEC SQL ROLLBACK ;
+   }
+   if (large==0) {
+     free( xmlobjp );
+   } else { /* allocating xmlobj  */
+     free(largexmlobjp);
+   }
+
+  EXEC SQL CONNECT RESET;
+  rc = errCode;
+exit:
+  return rc;
+}
+

@@ -1,0 +1,76 @@
+/****************************************************************************
+** Licensed Materials - Property of IBM
+** 
+** Governed under the terms of the International
+** License Agreement for Non-Warranted Sample Code.
+**
+** (C) COPYRIGHT International Business Machines Corp. 1998 - 2002        
+** All Rights Reserved.
+**
+** US Government Users Restricted Rights - Use, duplication or
+** disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*****************************************************************************
+**
+** SOURCE FILE NAME: dbmcon2.sqC 
+**    
+** SAMPLE: Functions used in the multiple databases program dbmcon.sqC 
+**           
+** SQL STATEMENTS USED:
+**         CREATE TABLE
+**         DROP TABLE
+**
+*****************************************************************************
+**
+** For more information on the sample programs, see the README file.
+**
+** For information on developing C++ applications, see the Application
+** Development Guide.
+**
+** For information on using SQL statements, see the SQL Reference.
+**
+** For information on DB2 APIs, see the Administrative API Reference.
+**
+** For the latest information on programming, compiling, and running DB2
+** applications, visit the DB2 application development website at
+**     http://www.software.ibm.com/data/db2/udb/ad
+****************************************************************************/
+
+#include <sqlenv.h>
+#include <sqlutil.h>
+#include "utilemb.h"
+#include "dbmcon2.h"
+#if ((__cplusplus >= 199711L) && !defined DB2HP && !defined DB2AIX) || \
+    (DB2LINUX && (__LP64__ || (__GNUC__ >= 3)) )
+   #include <iostream>
+   using namespace std; 
+#else
+   #include <iostream.h>
+#endif
+
+int DbMCon2::CreateTable()
+{
+  int rc = 0;
+  struct sqlca sqlca;
+
+  cout << "    CREATE TABLE books(title VARCHAR(21), price DECIMAL(7, 2))"
+       << endl;
+
+  EXEC SQL CREATE TABLE books(title VARCHAR(21), price DECIMAL(7, 2));
+  EMB_SQL_CHECK("table -- create");
+
+  return 0;
+} //DbMCon2::CreateTable
+
+int DbMCon2::DropTable()
+{
+  int rc = 0;
+  struct sqlca sqlca;
+
+  cout << "    DROP TABLE books" << endl;
+
+  EXEC SQL DROP TABLE books;
+  EMB_SQL_CHECK("table -- drop");
+
+  return 0;
+} //DbMCon2::DropTable
+

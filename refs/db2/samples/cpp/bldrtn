@@ -1,0 +1,72 @@
+#! /bin/sh
+#############################################################################
+# Licensed Materials - Property of IBM
+#
+# Governed under the terms of the International
+# License Agreement for Non-Warranted Sample Code.
+#
+# (C) COPYRIGHT International Business Machines Corp. 1995 - 2006
+# All Rights Reserved.
+#
+# US Government Users Restricted Rights - Use, duplication or
+# disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#############################################################################
+# SCRIPT: bldrtn
+# Builds Solaris C++ routines (stored procedures or UDFs)
+# Usage: bldrtn <prog_name> [ <db_name> ]
+
+# Set DB2PATH to where DB2 will be accessed.
+# The default is the standard instance path.
+DB2PATH=$HOME/sqllib
+
+bitwidth=64
+
+# Uncomment the following line to compile 32-bit applications
+#bitwidth=32
+
+arch=`uname -p`
+if [ $arch = "i386" ];
+then
+  if [ $bitwidth = "64" ];
+  then
+    CFLAG_ARCH=amd64
+    LIB=lib64
+  else
+    CFLAG_ARCH=sse2
+    LIB=lib32
+  fi
+else
+  if [ $bitwidth = "64" ];
+  then
+    CFLAG_ARCH=v9
+    LIB=lib64
+  else
+    CFLAG_ARCH=v8plusa
+    LIB=lib32
+  fi
+fi
+
+# Set the runtime path.
+# LD_LIBRARY_PATH will be followed instead of the runtime path unless
+# you unset LD_LIBRARY_PATH first to allow the runtime path to be used.
+EXTRA_LFLAG="-R$DB2PATH/$LIB"
+
+# If an embedded SQL program, precompile and bind it.
+if [ -f $1".sqC" ]
+then
+  ./embprep $1 $2
+fi
+
+# Compile the program.
+CC -xarch=$CFLAG_ARCH -mt -DUSE_UI_THREADS -Kpic \
+  -I$DB2PATH/include -c $1.C
+
+# Link the program and create a shared library
+CC -xarch=$CFLAG_ARCH -mt -G -o $1 $1.o -L$DB2PATH/$LIB \
+  $EXTRA_LFLAG -ldb2
+
+# Copy the shared library to the sqllib/function subdirectory.
+# Note: the user must have write permission to this directory.
+rm -f $DB2PATH/function/$1
+cp $1 $DB2PATH/function
+

@@ -1,0 +1,51 @@
+#! /bin/ksh
+#############################################################################
+# Licensed Materials - Property of IBM
+#
+# Governed under the terms of the International
+# License Agreement for Non-Warranted Sample Code.
+#
+# (C) COPYRIGHT International Business Machines Corp. 1997 - 2006
+#  All Rights Reserved.
+#
+#  US Government Users Restricted Rights - Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#############################################################################
+# SCRIPT: spcat
+# To catalog JDBC stored procedures on UNIX
+# Catalogs the stored procedures in the SpServer library
+# SpDrop.db2 uncatalogs the stored procedures if previously cataloged
+# SpCreate.db2 catalogs the stored procedures
+# Both CLP scripts can be run on their own
+# Usage: spcat
+#############################################################################
+
+# Uncatalog the stored procedures if previously cataloged
+db2 -td@ -vf SpDrop.db2
+
+# Connect to 'sample' database
+db2 connect to sample
+
+# Uninstall the jar file if already installed
+db2 "CALL sqlj.remove_jar('MYJAR')"
+
+# Remove the jar file if it already exists
+rm SpServer.jar
+
+# Create a jar file 'SPServer.jar' using the class file 'SpServer.class'
+# Compile 'SpServer.java' to get the class file 'SpServer.class'
+echo "Executing 'javac SpServer.java'..."
+javac SpServer.java
+
+# Create the jar file
+echo "Executing 'jar cf SpServer.jar SpServer.class'..."
+jar cf $HOME/SpServer.jar SpServer.class
+
+# Install the jar file using a unique jar-id.
+db2 "CALL sqlj.install_jar('file:$HOME/SpServer.jar', 'MYJAR')"
+
+# Disconnect from 'sample' database
+db2 connect reset
+
+# Catalog the stored procedures
+db2 -td@ -vf SpCreate.db2

@@ -1,0 +1,112 @@
+      ***********************************************************************
+      ** Licensed Materials - Property of IBM
+      ** 
+      ** Governed under the terms of the International
+      ** License Agreement for Non-Warranted Sample Code.
+      **
+      ** (C) COPYRIGHT International Business Machines Corp. 1998 - 2002  
+      ** All Rights Reserved.
+      **
+      ** US Government Users Restricted Rights - Use, duplication or
+      ** disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+      ***********************************************************************
+      **
+      ** SOURCE FILE NAME: lobfile.sqb 
+      **
+      ** SAMPLE: Demonstrates the use of LOB file handles
+      **
+      **         This sample program demonstrates the use of LOB values.
+      **         The program creates a CURSOR, and fetches the contents
+      **         of the "emp_resume" table (the SAMPLE database must be
+      **         installed with teh "db2sampl" executable), and then
+      **         outputs the first 15 lines of the resume.
+      ** 
+      ** SQL STATEMENTS USED:
+      **         BEGIN DECLARE SECTION 
+      **         END DECLARE SECTION 
+      **         CONNECT
+      **         SELECT
+      **
+      ** OUTPUT FILE: lobfile.out (available in the online documentation)
+      ***********************************************************************
+      **
+      ** For more information on the sample programs, see the README file. 
+      **
+      ** For information on developing COBOL applications, see the 
+      ** Application Development Guide.
+      **
+      ** For information on using SQL statements, see the SQL Reference. 
+      **
+      ** For the latest information on programming, compiling, and running
+      ** DB2 applications, visit the DB2 application development website: 
+      **     http://www.software.ibm.com/data/db2/udb/ad
+      ***********************************************************************
+
+       Identification Division.
+       Program-ID. "lobfile".
+
+       Data Division.
+       Working-Storage Section.
+
+           copy "sqlenv.cbl".
+           copy "sql.cbl".
+           copy "sqlca.cbl".
+
+           EXEC SQL BEGIN DECLARE SECTION END-EXEC.                     1
+       01 userid            pic x(8).
+       01 passwd.
+         49 passwd-length   pic s9(4) comp-5 value 0.
+         49 passwd-name     pic x(18).
+       01 resume            USAGE IS SQL TYPE IS CLOB-FILE.
+       01 lobind            pic s9(4) comp-5.
+           EXEC SQL END DECLARE SECTION END-EXEC.
+
+       77 errloc          pic x(80).
+
+       Procedure Division.
+       Main Section.
+           display "Sample COBOL program: LOBFILE".
+
+      * Get database connection information.
+           display "Enter your user id (default none): " 
+                with no advancing.
+           accept userid.
+
+           if userid = spaces
+             EXEC SQL CONNECT TO sample END-EXEC
+           else
+             display "Enter your password : " with no advancing
+             accept passwd-name.
+
+      * Passwords in a CONNECT statement must be entered in a VARCHAR
+      * format with the length of the input string.
+           inspect passwd-name tallying passwd-length for characters
+              before initial " ".
+
+           EXEC SQL CONNECT TO sample USER :userid USING :passwd
+               END-EXEC.
+           move "CONNECT TO" to errloc.
+           call "checkerr" using SQLCA errloc.
+
+           move "RESUME.TXT" to resume-NAME.                            2
+           move 10 to resume-NAME-LENGTH.
+           move SQL-FILE-OVERWRITE to resume-FILE-OPTIONS.
+
+           EXEC SQL SELECT resume INTO :resume :lobind                  3
+                    FROM emp_resume
+                    WHERE resume_format = 'ascii'
+                    AND empno = '000130' END-EXEC.
+           if lobind less than 0 go to NULL-LOB-indicated.
+
+           display "Resume for EMPNO 000130 is in file : RESUME.TXT".
+           go to End-Main.
+
+       NULL-LOB-indicated.
+           display "NULL LOB indicated".
+
+       End-Main.
+           EXEC SQL CONNECT RESET END-EXEC.
+           move "CONNECT RESET" to errloc.
+           call "checkerr" using SQLCA errloc.
+       End-Prog.
+                  stop run.

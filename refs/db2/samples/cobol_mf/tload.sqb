@@ -1,0 +1,283 @@
+      ***********************************************************************
+      ** Licensed Materials - Property of IBM
+      ** 
+      ** Governed under the terms of the International
+      ** License Agreement for Non-Warranted Sample Code.
+      **
+      ** (C) COPYRIGHT International Business Machines Corp. 1995 - 2002  
+      ** All Rights Reserved.
+      **
+      ** US Government Users Restricted Rights - Use, duplication or
+      ** disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+      ***********************************************************************
+      **
+      ** SOURCE FILE NAME: tload.sqb 
+      **
+      ** SAMPLE: How to export and load table data
+      **
+      ** DB2 APIs USED:
+      **         db2gExport -- EXPORT
+      **         sqlgvqdp   -- QUIESCE TABLESPACES FOR TABLE
+      **         sqlgload   -- LOAD
+      **
+      ** SQL STATEMENTS USED:
+      **         BEGIN DECLARE SECTION 
+      **         END DECLARE SECTION 
+      **         EXECUTE IMMEDIATE
+      **         CREATE TABLE
+      **         CONNECT
+      **         COMMIT
+      **
+      ** OUTPUT FILE: tload.out (available in the online documentation)
+      ***********************************************************************
+      **
+      ** For more information on the sample programs, see the README file. 
+      **
+      ** For information on developing COBOL applications, see the 
+      ** Application Development Guide.
+      **
+      ** For information on DB2 APIs, see the Administrative API Reference.
+      **
+      ** For information on using SQL statements, see the SQL Reference. 
+      **
+      ** For the latest information on programming, compiling, and running
+      ** DB2 applications, visit the DB2 application development website: 
+      **     http://www.software.ibm.com/data/db2/udb/ad
+      ***********************************************************************
+
+       Identification Division.
+       Program-ID. "tload".
+
+       Data Division.
+       Working-Storage Section.
+
+           copy "sqlenv.cbl".
+           copy "sqlca.cbl".
+           copy "sqlutil.cbl".
+           copy "db2ApiDf.cbl".
+
+           EXEC SQL BEGIN DECLARE SECTION END-EXEC.
+       77 statement         pic x(25).
+
+       01 userid            pic x(8).
+       01 passwd.
+         49 passwd-length   pic s9(4) comp-5 value 0.
+         49 passwd-name     pic x(18).
+       01 mysqlchar.
+         49 mysqlchar-LENGTH  pic s9(4) comp-5.
+         49 mysqlchar-DATA    pic x(100).
+       01 mysqllob            usage is SQL type is clob(100).
+       77 mysqlmethd          pic s9(4) comp-5.
+           EXEC SQL END DECLARE SECTION END-EXEC.
+
+       77 errloc              pic x(80).
+       77 stmt                pic x(25).
+       77 impstmt             pic x(30).
+
+       77 rc                  pic s9(9) comp-5.
+
+      * Variables for IMPORT/EXPORT APIs
+       77 msgfile-x           pic x(10) value "EXPMSG.TXT".
+       77 msgfile-x-len       pic 9(4) comp-5 value 10.
+       77 fileformat          pic x(3) value "DEL".
+       77 fileformat-len      pic 9(4) comp-5 value 3.
+
+      * Variables for the QUIESCE TABLESPACES FOR TABLE API
+       77 tname-len     pic s9(4) comp-5 value +15.
+       77 quiesce-mode  pic s9(4) comp-5 value +2.
+       77 tname         pic x(19) value "tload.loadtable".
+
+      * Variables for the LOAD API
+       77 lclfile-len   pic s9(4) comp-5 value +7.
+       77 lclfile       pic x(7)  value "LOADMSG".
+      
+       01 datafile-ixf.
+           05 datafile-len       pic 9(9)  comp-5 value 12.
+           05 datafile           pic x(12) value "EXPTABLE.IXF".
+
+      * COMMON Variables among the above APIs
+       77 reserved-x    pic s9(9) comp-5 value 0.
+       77 msgfile-len   pic s9(4) comp-5.
+       77 filetype-len  pic s9(4) comp-5 value 3.
+       77 msgfile       pic x(1025).
+       77 filetype      pic x(3)  value "IXF".
+       77 callerac      pic s9(4) comp-5.
+
+       Procedure Division.
+       tload Section.
+           display "Sample COBOL program: TLOAD".
+
+           display "Enter your user id (default none): " 
+                with no advancing.
+           accept userid.
+
+           if userid = spaces
+             EXEC SQL CONNECT TO sample END-EXEC
+           else
+             display "Enter your password : " with no advancing
+             accept passwd-name.
+
+           inspect passwd-name tallying passwd-length for characters
+              before initial " ".
+
+           display " ".
+
+           move "select id,name from staff" to stmt.
+           move "insert into tload.loadtable (id,name)" to impstmt.
+
+      * need to preset the size of structure field and counts
+           move stmt              to mysqllob-DATA.
+           move 25                to mysqllob-LENGTH.
+           move SQL-METH-D to mysqlmethd.
+
+
+      * Prepare the DB2G-EXPORT-STRUCT
+           set DB2-PI-DATA-FILE-NAME of DB2G-EXPORT-STRUCT
+               to address of datafile.
+           move datafile-len to DB2-I-DATA-FILE-NAME-LEN
+               of DB2G-EXPORT-STRUCT.
+           set DB2-PI-LOB-PATH-LIST of DB2G-EXPORT-STRUCT
+               to NULL.
+           set DB2-PI-LOB-FILE-LIST of DB2G-EXPORT-STRUCT
+               to NULL.
+           set DB2-PI-DATA-DESCRIPTOR of DB2G-EXPORT-STRUCT
+               to address of mysqlmethd.
+           set DB2-PI-ACTION-STRING of DB2G-EXPORT-STRUCT
+               to address of mysqllob.
+           set DB2-PI-FILE-TYPE of DB2G-EXPORT-STRUCT
+               to address of fileformat.
+           set DB2-PI-FILE-TYPE-MOD of DB2G-EXPORT-STRUCT
+               to address of SQL-FILETMOD.
+           set DB2-PI-MSG-FILE-NAME of DB2G-EXPORT-STRUCT
+               to address of msgfile-x.
+           move SQLU-INITIAL
+               to DB2-I-CALLER-ACTION of DB2G-EXPORT-STRUCT.
+           set DB2-PO-EXPORT-INFO-OUT of DB2G-EXPORT-STRUCT
+               to address of DB2EXPORT-OUT.
+           move fileformat-len
+               to DB2-I-FILE-TYPE-LEN of DB2G-EXPORT-STRUCT.
+           move msgfile-x-len
+               to DB2-I-MSG-FILE-NAME-LEN of DB2G-EXPORT-STRUCT.
+
+      * connecting to SAMPLE database.
+           EXEC SQL CONNECT TO sample USER :userid USING :passwd
+                END-EXEC.
+           move "CONNECT TO SAMPLE" to errloc.
+           call "checkerr" using SQLCA errloc.
+
+           display "Exporting id and name from staff table into file: ",
+                   datafile.
+
+      *********************
+      * EXPORT API called *
+      *********************
+           call "db2gExport" using
+                                 by value     DB2VERSION820
+                                 by reference DB2G-EXPORT-STRUCT
+                                 by reference sqlca
+                           returning rc.
+           move "EXPORTING TABLE" to errloc.
+           call "checkerr" using SQLCA errloc.
+
+           display "Rows exported : ", DB2-O-ROWS-EXPORTED.
+
+      * drop the table just in case it already exists
+           move "drop table tload.loadtable" to statement.
+           EXEC SQL EXECUTE IMMEDIATE :statement END-EXEC.
+           EXEC SQL COMMIT END-EXEC.
+
+      * create the table loadtable
+            EXEC SQL CREATE TABLE tload.loadtable (num char(6),
+                 format varchar(10))
+                END-EXEC.
+           move "CREATE TABLE loadtable" to errloc.
+           call "checkerr" using SQLCA errloc.
+           EXEC SQL COMMIT END-EXEC.
+           move "COMMIT the CREATE TABLE" to errloc.
+           call "checkerr" using SQLCA errloc.
+
+      *********************************
+      * QUIESCE TABLESPACES FOR TABLE *
+      *********************************
+           move SQLU-QUIESCEMODE-EXCLUSIVE to quiesce-mode.
+           call "sqlgvqdp" using
+                                 by value tname-len
+                                 by reference   tname
+                                 by value       quiesce-mode
+                                 by reference   reserved-x
+                                 by reference   sqlca
+                           returning rc.
+
+           move "QUIESCE TABLESPACES FOR TABLE" to errloc.
+           call "checkerr" using SQLCA errloc.
+
+           display "Tablespace for loadtable has been quiesced.".
+
+      ********
+      * LOAD *
+      ********
+      * initialize variables for the Load API
+           move impstmt           to mysqlchar-DATA.
+           move 30                to mysqlchar-LENGTH.
+
+           set DB2-PI-SOURCE-LIST of DB2G-LOAD-STRUCT
+              to address of SQLU-MEDIA-LIST.
+           set DB2-PI-LOB-PATH-LIST of DB2G-LOAD-STRUCT
+              to NULL.
+           set DB2-PI-DATA-DESCRIPTOR of DB2G-LOAD-STRUCT
+              to address of mysqlmethd.
+           set DB2-PI-ACTION-STRING of DB2G-LOAD-STRUCT
+              to address of mysqlchar.
+           set DB2-PI-FILE-TYPE of DB2G-LOAD-STRUCT
+              to address of fileformat.
+           set DB2-PI-FILE-TYPE-MOD of DB2G-LOAD-STRUCT
+              to NULL.
+           set DB2-PI-LOCAL-MSG-FILE-NAME of DB2G-LOAD-STRUCT
+              to address of lclfile.
+           set DB2-PI-TEMP-FILES-PATH of DB2G-LOAD-STRUCT
+              to NULL.
+           set DB2-PI-COPY-TARGET-LIST of DB2G-LOAD-STRUCT
+              to NULL.
+           set DB2-PI-NULL-INDICATORS of DB2G-LOAD-STRUCT
+              to NULL.
+           set DB2-PI-LOAD-INFO-IN of DB2G-LOAD-STRUCT
+              to address of DB2G-LOAD-IN.
+           set DB2-PO-LOAD-INFO-OUT of DB2G-LOAD-STRUCT
+              to address of DB2LOAD-OUT.
+           set DB2-PI-PART-LOAD-INFO-IN of DB2G-LOAD-STRUCT
+              to address of DB2G-PART-LOAD-IN.
+           set DB2-PO-PART-LOAD-INFO-OUT of DB2G-LOAD-STRUCT
+              to address of DB2PART-LOAD-OUT.
+           move SQLU-INITIAL to DB2-I-CALLER-ACTION of DB2G-LOAD-STRUCT.
+           move 3 to DB2-I-FILE-TYPE-LEN of DB2G-LOAD-STRUCT.
+           move 7 to DB2-I-LOCAL-MSG-FILE-LEN of DB2G-LOAD-STRUCT.
+           move 0 to DB2-I-TEMP-FILES-PATH-LEN of DB2G-LOAD-STRUCT.
+           move DB2-O-ROWS-EXPORTED to DB2-I-ROWCOUNT of DB2G-LOAD-IN.
+           move 0 to DB2-I-SAVECOUNT of DB2G-LOAD-IN.
+           move 0 to DB2-I-WARNINGCOUNT of DB2G-LOAD-IN.
+           move SQLU-ALLOW-NO-ACCESS to
+              DB2-I-ACCESS-LEVEL of DB2G-LOAD-IN.
+           move 0 to DB2-I-LOCK-WITH-FORCE of DB2G-LOAD-IN.
+           move SQL-STATS-ALL to DB2-I-STATS-OPT of DB2G-LOAD-IN.
+
+      
+      * Call LOAD API
+           call "db2gLoad" using
+                                 by value       DB2VERSION820
+                                 by reference   DB2G-LOAD-STRUCT
+                                 by reference   sqlca
+                           returning rc.
+           move "LOAD" to errloc.
+           call "checkerr" using SQLCA errloc.
+      
+           display "Load of table LOADTABLE is complete.".
+           display "Rows loaded: ", 
+              DB2-O-ROWS-LOADED of DB2LOAD-OUT.
+           display "Rows committed: ",
+              DB2-O-ROWS-COMMITTED of DB2LOAD-OUT.
+
+           EXEC SQL CONNECT RESET END-EXEC.
+           move "CONNECT RESET" to errloc.
+           call "checkerr" using SQLCA errloc.
+
+       End-tload. stop run.

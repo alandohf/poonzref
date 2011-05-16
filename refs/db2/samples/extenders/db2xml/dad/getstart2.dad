@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE DAD SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/dad.dtd">
+<dad>
+<dtdid>/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/getstart.dtd</dtdid>
+<validation>YES</validation><Xcolumn>
+
+<Xcolumn> 
+   <table name="order_side_tab"> 
+      <column name="order_key" 
+         type="integer" 
+         path="/Order/@key"
+         multi_occurrence="NO"/> 
+      <column name="customer" 
+         type="varchar(50)" 
+         path="/Order/Customer/Name" 
+         multi_occurrence="NO"/> 
+   </table> 
+   <table name="part_side_tab">
+      <column name="price" 
+         type="decimal(10,2)" 
+         path="/Order/Part/ExtendedPrice" 
+         multi_occurrence="YES"/>
+   </table>
+   <table name="ship_side_tab">
+      <column name="date" 
+         type="DATE" 
+         path="/Order/Part/Shipment/ShipDate" 
+         multi_occurrence="YES"/>
+   </table> 
+
+</Xcolumn>
+</dad>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE book SYSTEM "/opt/IBM/db2/V9.1/samples/extenders/db2xml/dtd/book.dtd">
+
+<book>
+  <chapter id="1" date="07/01/1997">
+        <section>This is a section in Chapter One.</section>
+  </chapter>
+  <chapter id="2" date="01/02/1997">
+        <section>This is a section in Chapter Two.</section>
+        <footnote>A footnote in Chapter Two is here.</footnote>
+  </chapter>
+  <price date="12/22/1998" time="11.12.13" timestamp="1998-12-22-11.12.13.888888">
+     38.281
+  </price>
+</book>

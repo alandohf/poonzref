@@ -1,0 +1,23 @@
+#! /bin/ksh
+#############################################################################
+# Licensed Materials # Property of IBM
+# 
+# Governed under the terms of the International
+# License Agreement for Non#Warranted Sample Code.
+# 
+# (C) COPYRIGHT International Business Machines Corp. 1997 - 2002
+#  All Rights Reserved.
+# 
+#  US Government Users Restricted Rights # Use, duplication or
+#  disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+#############################################################################
+# SCRIPT: udfjcat 
+# To catalog SQLj user-defined functions on UNIX
+# Catalogs the user-defined functions in the UDFjsrv library 
+# UDFjDrop.db2 uncatalogs the functions if previously cataloged 
+# UDFjCreate.db2 catalogs the user-defined functions 
+# Both CLP scripts can be run on their own
+# Usage: udfjcat
+
+db2 -td@ -vf UDFjDrop.db2
+db2 -td@ -vf UDFjCreate.db2

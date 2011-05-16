@@ -1,0 +1,116 @@
+//***************************************************************************
+// Licensed Materials - Property of IBM
+//
+// Governed under the terms of the International
+// License Agreement for Non-Warranted Sample Code.
+//
+// (C) COPYRIGHT International Business Machines Corp. 2002 - 2003
+// All Rights Reserved.
+//
+// US Government Users Restricted Rights - Use, duplication or
+// disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+//***************************************************************************
+//
+// SOURCE FILE NAME: DbConnDataSource.sqlj
+//
+// SAMPLE: How to connect to a database using DataSource with Type 4 driver
+//
+//         This sample program shows how to connect and access to a database 
+//         using a DataSource (registered in a JNDI namespace) in an SQLJ 
+//         application using the Universal JDBC Type 4 driver.
+//
+//         Since no context is specified in the SELECT statement, the default
+//         DataSource jdbc/defaultDataSource is used. The DataSource is
+//         registered using createRegisterDS.java and DS1.prop. Refer to 
+//         the README file for details on how to run this sample. 
+//
+// SQL Statements USED:
+//         SELECT
+//
+// Classes used from Util.sqlj are:
+//         Data
+//
+// OUTPUT FILE: DbConnDataSource.out (available in the online documentation)
+// Output will vary depending on the JDBC driver connectivity used.
+//***************************************************************************
+//
+// For more information on the sample programs, see the README file.
+//
+// For information on developing JDBC applications, see the Application
+// Development Guide.
+//
+// For information on using SQL statements, see the SQL Reference.
+//
+// For the latest information on programming, compiling, and running DB2
+// applications, visit the DB2 application development website at
+//     http://www.software.ibm.com/data/db2/udb/ad
+//**************************************************************************/
+
+import java.sql.*;
+import sqlj.runtime.*;
+import sqlj.runtime.ref.*;
+
+#sql iterator DbConnDataSource_SimplePosIter(String, String);
+
+class DbConnDataSource 
+{
+  public static void main(String argv[])
+  {
+    try
+    {
+      System.out.println();
+      System.out.print("THIS SAMPLE SHOWS HOW TO CONNECT AND ACCESS ");
+      System.out.println("TO THE SAMPLE DATABASE ");
+      System.out.print("USING THE DEFAULT DATASOURCE jdbc/defaultDataSource ");
+      System.out.println("WITH TYPE 4 DRIVER.");
+
+      // connect to the 'sample' database
+      DefaultContext.getDefaultContext();
+
+      // perform an SQL statement
+      DbConnDataSource_SimplePosIter posIter = null;
+      String empno = null;
+      String firstname = null;
+
+      System.out.println();
+      System.out.println(
+        "  Perform:\n" +
+        "    SELECT empno, firstnme\n" +
+        "      FROM employee\n" +
+        "      WHERE firstnme like 'MA%'\n");
+
+      #sql posIter = { SELECT empno, firstnme 
+                         FROM employee
+                         WHERE firstnme like 'MA%' };
+
+      System.out.println(
+        "  ** NOTE! **\n" +
+        "    Connection is obtained from DataSource: jdbc/defaultDataSource \n");
+
+      System.out.println(
+        "  Results:\n" +
+        "    EMPNO  FIRSTNME \n" +
+        "    ------ ---------- ");
+
+      while (true)
+      {
+        #sql { FETCH :posIter into :empno, :firstname };
+        if (posIter.endFetch()) 
+        {
+          break;
+        }
+        System.out.println("    "+Data.format(empno, 6) +
+                           " " + Data.format(firstname, 12));
+      }      
+    }
+    catch(Exception ex)
+    {
+       if (ex instanceof java.sql.SQLException)
+       {
+         System.out.println("error code: " + 
+                            ((java.sql.SQLException)(ex)).getErrorCode());
+       }
+       ex.printStackTrace();
+    }
+  }
+}

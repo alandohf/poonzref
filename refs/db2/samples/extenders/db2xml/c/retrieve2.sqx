@@ -1,0 +1,194 @@
+/* -*- Mode: C -*- */
+/******************************************************************************
+*
+*
+*  Source File Name = retrieve2.sqx
+*
+*  Component Name   = DB2 XML Extender
+*
+*  Descriptive Name = Test for dxxRetrieveXML
+*
+*  Copyright = 5622-044 (c) Copyright IBM Corp 1987, 1997, 2001,2002
+*              Licensed Materials - Program Property of IBM
+*
+*  Status = New code
+*
+*  Function = This client program tests the SQL-to-XML mapping stored
+*             procedure of DB2 XML Extender.
+*             It takes the arguments from the command line and calls the stored
+*             procedure dxxRetrieve.
+*
+*******************************************************************************/
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sqlutil.h>
+#include <sqlenv.h>
+#include "sqlca.h"
+#include "dxx.h"
+#include "dxxrc.h"
+
+
+/*******************************************************************
+** main
+*******************************************************************/
+int main(int argc, char *argv[]) {
+EXEC SQL INCLUDE SQLCA;
+EXEC SQL BEGIN DECLARE SECTION;
+  char    dbname[18];
+  char    result_tabname[160];
+  char    result_colname[129];
+  char    result_valname[129];
+  char    collectionName[129];
+  sqlint32 overrideType= NO_OVERRIDE;
+  struct override_t {
+	char buf[32672];
+  } *override;
+  sqlint32 m;
+  sqlint32 n;
+  sqlint32 errCode;
+  char    msgtext[2048];
+  short   null_ind = -1;
+  short   override_ind = -1; 
+  short   n_ind;
+  short   errCode_ind;
+  short   msgtext_ind;
+  short   collectionName_ind;
+  short   result_tabname_ind;
+  short   result_colname_ind;
+  short   result_valname_ind;
+  short   m_ind;
+  short   overrTypeInd;
+
+  struct {
+    short len;
+    char  data[1201];
+  }  hvSQLStmt;
+  char output[2000];
+EXEC SQL END DECLARE SECTION;
+  int     rc = 0, len;
+  int     ERROR_CASE = 0;
+  int tmp_tbl_used=0;
+  char errorMsg[1024] ; 
+
+  override=NULL;
+  /* Process command-line arguments */
+  if ((argc != 9) && (argc != 7) && (argc != 6)) {
+    printf("Usage: %s dbname collectionname result_tabname result_colname"
+           " result_validcolname [max_ndocs|{-o overrideType override}]\n",
+           argv[0]);
+    return -1;
+  }
+  strcpy(dbname,         argv[1]);
+  strcpy(collectionName, argv[2]);
+  strcpy(result_tabname, argv[3]);
+  strcpy(result_colname, argv[4]);
+  strcpy(result_valname, argv[5]);
+  m = (argc == 7)? atol(argv[6]): 0;
+  printf("m:%d\n", m);
+
+  override= (struct override_t *)calloc(1, sizeof(struct override_t));
+  if (override == NULL) {
+	printf("out of memory\n");
+	goto exit;
+  }
+
+  if (argc > 6) {
+    if (!strcmp(argv[6], "-o")) {
+      /* Enable override. */
+      overrideType =
+        (!strcmp(argv[7],"SQL_OVERRIDE"))? SQL_OVERRIDE: XML_OVERRIDE;
+	  strcpy(override->buf, argv[8]);
+      override_ind = 0;
+    } else {
+      override->buf[0]='\0';
+      overrideType = NO_OVERRIDE;
+    }
+  }
+
+  /* for error case */
+  if (m == -1)
+     ERROR_CASE = 1;
+  collectionName_ind = 0;
+  result_tabname_ind = 0;
+  result_colname_ind = 0;
+  result_valname_ind = 0;
+  m_ind              = 0;
+  overrTypeInd       = 0;
+
+  /* Connect to database */
+  fprintf(stdout, "Connecting to database %s\n", dbname); 
+  EXEC SQL CONNECT TO :dbname;
+
+  /* very unrobust comparison: no allowance for mixed-case, names
+     prefixed with "SESSION", leading spaces */
+  if (!strncmp(result_tabname,"SESSION", 7)) {
+	tmp_tbl_used=1;
+	printf ("Creating global temporary table ...\n");
+	if (strlen(result_valname)>0) {
+	  sprintf(hvSQLStmt.data,
+	   "declare global temporary table result_tab(%s varchar(3000), %s integer) "
+		   "not logged in mytsp",result_colname, result_valname);
+	} else {
+	  sprintf(hvSQLStmt.data,
+	   "declare global temporary table result_tab(%s varchar(3000)) "
+		   "not logged in mytsp",result_colname);
+	}
+	hvSQLStmt.len = strlen(hvSQLStmt.data);
+	EXEC SQL EXECUTE IMMEDIATE :hvSQLStmt;
+	printf ("Completion sqlcode = %d\n", SQLCODE);
+  }
+  /* Call the stored procedure. */
+  if (!ERROR_CASE) {
+           printf ("Calling stored procedure db2xml!dxxRetrieveXML ...\n");
+
+           EXEC SQL CALL db2xml.dxxRetrieveXML(:collectionName:collectionName_ind,
+                                               :result_tabname:result_tabname_ind,
+                                               :result_colname:result_colname_ind,
+                                               :result_valname:result_valname_ind,
+                                               :overrideType:overrTypeInd,
+                                               :*override:override_ind,
+                                               :m:m_ind,
+                                               :n:n_ind,
+                                               :errCode:errCode_ind,
+                                               :msgtext:msgtext_ind);
+  }
+
+  /* Print the output parms. */
+
+  printf("  n=%d:%d\n  errCode=%d:%d\n  msgtext'%s':%d\n",
+         n, n_ind, errCode, errCode_ind, msgtext, msgtext_ind);
+  if (SQLCODE >= 0) {                
+     if( SQLCODE > 0 ){
+        sqlaintp( errorMsg , 1024 , 80 , &sqlca );
+	    printf("\n The warning message is \"%s\"  and it is being ignored.\n"
+            , errorMsg );
+     } 
+
+
+     if (errCode < DXX_ERRCODE_OK)
+        EXEC SQL ROLLBACK;
+     else
+        EXEC SQL COMMIT;
+  }
+  else
+  {
+    sqlaintp( errorMsg , 1024 , 80 , &sqlca );
+    printf("\n The error message is %s \n" , errorMsg );
+    EXEC SQL ROLLBACK;
+  }
+  if (tmp_tbl_used) {
+	sprintf(hvSQLStmt.data,
+		   "select %s from session.result_tab", result_colname);
+	hvSQLStmt.len = strlen(hvSQLStmt.data);
+	EXEC SQL PREPARE out_doc FROM :hvSQLStmt;
+	EXEC SQL DECLARE c1 CURSOR FOR out_doc;
+	EXEC SQL OPEN c1;
+	EXEC SQL FETCH c1 INTO :output;
+	printf ("\nResulting XML Document:\n%s\n", output);
+  }
+exit:
+  if (override)
+	free(override);
+  return rc;
+}

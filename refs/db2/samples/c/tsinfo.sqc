@@ -1,0 +1,462 @@
+/****************************************************************************
+** Licensed Materials - Property of IBM
+** 
+** Governed under the terms of the International
+** License Agreement for Non-Warranted Sample Code.
+**
+** (C) COPYRIGHT International Business Machines Corp. 1996 - 2002        
+** All Rights Reserved.
+**
+** US Government Users Restricted Rights - Use, duplication or
+** disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+*****************************************************************************
+**
+** SOURCE FILE NAME: tsinfo.sqc 
+**    
+** SAMPLE: How to get information at the table space level
+**
+**         This program ends in ".sqc" even though it does not contain 
+**         embedded SQL statements. It links in the embedded SQL utility 
+**         file for database connection and disconnection, so it needs the 
+**         embedded SQL extension for the precompiler.
+**           
+** DB2 API USED:
+**         sqlbstpq -- Single Tablespace Query
+**         sqlbgtss -- Get Tablespace Statistics
+**         sqlbmtsq -- Tablespace Query
+**         sqlefmem -- Free Memory
+**         sqlbotsq -- Open Tablespace Query
+**         sqlbftpq -- Fetch Tablespace Query
+**         sqlbctsq -- Close Tablespace Query
+**         sqlbtcq -- Tablespace Container Query
+**         sqlbotcq -- Open Tablespace Container Query
+**         sqlbftcq -- Fetch Tablespace Container Query
+**         sqlbctcq -- Close Tablespace Container Query
+**
+** OUTPUT FILE: tsinfo.out (available in the online documentation)
+*****************************************************************************
+**
+** For more information on the sample programs, see the README file.
+**
+** For information on developing C applications, see the Application
+** Development Guide.
+**
+** For information on DB2 APIs, see the Administrative API Reference.
+**
+** For the latest information on programming, building, and running DB2 
+** applications, visit the DB2 application development website: 
+**     http://www.software.ibm.com/data/db2/udb/ad
+****************************************************************************/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sqlenv.h>
+#include <sqlutil.h>
+#include <db2ApiDf.h>
+#include "utilemb.h"
+
+int SingleTablespaceInfoGet(void);
+int AllTablespacesInfoGetUsingHigherLevelAPIs(void);
+int AllTablespacesInfoGetUsingLowerLevelAPIs(void);
+int AllTablespaceContainersInfoGetUsingHigherLevelAPIs(void);
+int AllTablespaceContainersInfoGetUsingLowerLevelAPIs(void);
+
+/* support functions */
+int TablespaceInfoDisplay(struct SQLB_TBSPQRY_DATA, struct SQLB_TBS_STATS);
+int ContainerInfoDisplay(struct SQLB_TBSCONTQRY_DATA);
+
+int main(int argc, char *argv[])
+{
+  int rc = 0;
+  char dbAlias[SQL_ALIAS_SZ + 1];
+  char user[USERID_SZ + 1];
+  char pswd[PSWD_SZ + 1];
+
+  /* check the command line arguments */
+  rc = CmdLineArgsCheck1(argc, argv, dbAlias, user, pswd);
+  if (rc != 0)
+  {
+    return rc;
+  }
+
+  printf("\nTHIS SAMPLE SHOWS ");
+  printf("HOW TO GET INFORMATION AT THE TABLE SPACE LEVEL.\n"); 
+
+  /* connect to database */
+  rc = DbConn(dbAlias, user, pswd);
+  if (rc != 0)
+  {
+    return rc;
+  }
+
+  rc = SingleTablespaceInfoGet();
+  rc = AllTablespacesInfoGetUsingHigherLevelAPIs();
+  rc = AllTablespacesInfoGetUsingLowerLevelAPIs();
+  rc = AllTablespaceContainersInfoGetUsingHigherLevelAPIs();
+  rc = AllTablespaceContainersInfoGetUsingLowerLevelAPIs();
+
+  /* disconnect from database */
+  rc = DbDisconn(dbAlias);
+
+  return 0;
+} /* main */
+
+int TablespaceInfoDisplay(struct SQLB_TBSPQRY_DATA tablespaceData,
+                          struct SQLB_TBS_STATS tablespaceStats)
+{
+  int rc = 0;
+  struct sqlca sqlca;
+
+  printf("    Table space ID  = %ld\n",
+         tablespaceData.id);
+  printf("    Table space Name= %s\n",
+         tablespaceData.name);
+
+  /* "Type" and "Content" are stored bitwise in the flag field */
+  printf("    Type            = ");
+  switch (tablespaceData.flags & 0xF)
+  {
+    case SQLB_TBS_SMS:
+      printf("System-managed space\n");
+      break;
+    case SQLB_TBS_DMS:
+      printf("Database-managed space\n");
+      break;
+    default:
+      printf("UNKNOWN\n");
+      break;
+  } /* endswitch */
+
+  printf("    Contents        = ");
+  switch (tablespaceData.flags & 0xF0)
+  {
+    case SQLB_TBS_ANY:
+      printf("All types of permanent data. Regular table space\n");
+      break;
+    case SQLB_TBS_LONG:
+      printf("All types of permanent data. Large table space\n");
+      break;
+    case SQLB_TBS_TMP:
+      printf("temp data\n");
+      break;
+    default:
+      printf("UNKNOWN:%d:\n", tablespaceData.flags & 0xF0);
+      break;
+  } /* endswitch */
+
+  printf("    State           = ");
+  switch (tablespaceData.tbsState)
+  {
+    case SQLB_NORMAL:
+      printf("Normal\n");
+      break;
+    case SQLB_QUIESCED_SHARE:
+      printf("Quiesced: SHARE\n");
+      break;
+    case SQLB_QUIESCED_UPDATE:
+      printf("Quiesced: UPDATE\n");
+      break;
+    case SQLB_QUIESCED_EXCLUSIVE:
+      printf("Quiesced: EXCLUSIVE\n");
+      break;
+    case SQLB_LOAD_PENDING:
+      printf("Load pending\n");
+      break;
+    case SQLB_DELETE_PENDING:
+      printf("Delete pending\n");
+      break;
+    case SQLB_BACKUP_PENDING:
+      printf("Backup pending\n");
+      break;
+    case SQLB_ROLLFORWARD_IN_PROGRESS:
+      printf("Roll forward in progress\n");
+      break;
+    case SQLB_ROLLFORWARD_PENDING:
+      printf("Roll forward pending\n");
+      break;
+    case SQLB_RESTORE_PENDING:
+      printf("Restore pending\n");
+      break;
+    case SQLB_DISABLE_PENDING:
+      printf("Disable pending\n");
+      break;
+    case SQLB_REORG_IN_PROGRESS:
+      printf("Reorg in progress\n");
+      break;
+    case SQLB_BACKUP_IN_PROGRESS:
+      printf("Backup in progress\n");
+      break;
+    case SQLB_STORDEF_PENDING:
+      printf("storage must be defined\n");
+      break;
+    case SQLB_RESTORE_IN_PROGRESS:
+      printf("Restore in progress\n");
+      break;
+    case SQLB_STORDEF_ALLOWED:
+      printf("storage may be defined\n");
+      break;
+    case SQLB_STORDEF_FINAL_VERSION:
+      printf("storDef is in 'final' state\n");
+      break;
+    case SQLB_STORDEF_CHANGED:
+      printf("storDef was changed prior to rollforward\n");
+      break;
+    case SQLB_REBAL_IN_PROGRESS:
+      printf("dms rebalancer is active\n");
+      break;
+    case SQLB_PSTAT_DELETION:
+      printf("TBS deletion in progress\n");
+      break;
+    case SQLB_PSTAT_CREATION:
+      printf("TBS creation in progress\n");
+      break;
+    default:
+      printf("UNKNOWN\n");
+      break;
+  } /* endswitch */
+
+  printf("    Total pages     = %ld\n",
+         tablespaceStats.totalPages);
+  printf("    Useable pages   = %ld\n",
+         tablespaceStats.useablePages);
+  printf("    Used pages      = %ld\n",
+         tablespaceStats.usedPages);
+  printf("    Free pages      = %ld\n",
+         tablespaceStats.freePages);
+  printf("    High water mark = %ld\n",
+         tablespaceStats.highWaterMark);
+
+  printf("\n");
+
+  return 0;
+} /* TablespaceInfoDisplay */
+
+int ContainerInfoDisplay(struct SQLB_TBSCONTQRY_DATA containerData)
+{
+  int rc = 0;
+  struct sqlca sqlca;
+
+  printf("    Tablespace ID  = %ld\n", containerData.tbsID);
+  printf("    Container  ID  = %ld\n", containerData.id);
+  printf("    Container Name = %s\n", containerData.name);
+  printf("    Container Type = ");
+  switch (containerData.contType)
+  {
+    case SQLB_CONT_PATH:
+      printf("path\n");
+      break;
+    case SQLB_CONT_DISK:
+      printf("disk\n");
+      break;
+    case SQLB_CONT_FILE:
+      printf("file\n");
+      break;
+    default:
+      printf("unknown\n");
+      break;
+  }
+
+  printf("\n");
+
+  return 0;
+} /* ContainerInfoDisplay */
+
+int SingleTablespaceInfoGet(void)
+{
+  int rc = 0;
+  struct sqlca sqlca;
+  sqluint32 tablespaceId;
+  struct SQLB_TBSPQRY_DATA tablespaceData;
+  struct SQLB_TBS_STATS tablespaceStats;
+
+  printf("\n-----------------------------------------------------------");
+  printf("\nUSE THE DB2 APIs:\n");
+  printf("  sqlbstpq -- Single Tablespace Query\n");
+  printf("  sqlbgtss -- Get Tablespace Statistics\n");
+  printf("TO GET INFORMATION ON A SINGLE TABLE SPACE.\n");
+
+  tablespaceId = 1;
+  printf("\n  Get info for table space ID: %d\n", tablespaceId);
+
+  strcpy(tablespaceData.tbspqver, SQLB_TBSPQRY_DATA_ID);
+
+  /* single table space query */
+  sqlbstpq(&sqlca, tablespaceId, &tablespaceData, SQLB_RESERVED1);
+  DB2_API_CHECK("tablespace info 1 -- get");
+
+  /* get table space statistics */
+  sqlbgtss(&sqlca, tablespaceId, &tablespaceStats);
+  DB2_API_CHECK("tablespace info 2 -- get");
+
+  printf("  Display collected data.\n");
+  rc = TablespaceInfoDisplay(tablespaceData, tablespaceStats);
+
+  return 0;
+} /* SingleTablespaceInfoGet */
+
+int AllTablespacesInfoGetUsingHigherLevelAPIs(void)
+{
+  int rc = 0;
+  struct sqlca sqlca;
+
+  sqluint32 numTablespaces;
+  struct SQLB_TBSPQRY_DATA **ppTablespacesData;
+  int tspNb;
+  struct SQLB_TBS_STATS tablespaceStats;
+
+  printf("\n-----------------------------------------------------------");
+  printf("\nUSE THE DB2 APIs:\n");
+  printf("  sqlbmtsq -- Tablespace Query\n");
+  printf("  sqlbgtss -- Get Tablespace Statistics\n");
+  printf("  sqlefmem -- Free Memory\n");
+  printf("TO GET INFORMATION FOR ALL TABLE SPACES.\n");
+
+  printf("\n  Get information for all table spaces.\n");
+
+  /* table space query */
+  sqlbmtsq(&sqlca,
+           &numTablespaces,
+           &ppTablespacesData,
+           SQLB_RESERVED1,
+           SQLB_RESERVED2);
+  DB2_API_CHECK("all tablespaces info 1 -- get");
+
+  for (tspNb = 0; tspNb < numTablespaces; tspNb++)
+  {
+    /* get table space statistics */
+    sqlbgtss(&sqlca, ppTablespacesData[tspNb]->id, &tablespaceStats);
+    DB2_API_CHECK("tablespace info 2 -- get");
+
+    rc = TablespaceInfoDisplay(*ppTablespacesData[tspNb], tablespaceStats);
+  }
+
+  /* free table space memory allocated by sqlbmtsq */
+  sqlefmem(&sqlca, ppTablespacesData);
+  DB2_API_CHECK("tablespaces memory allocated by sqlbmtsq -- free");
+
+  return 0;
+} /* AllTablespacesInfoGetUsingHigherLevelAPIs */
+
+int AllTablespacesInfoGetUsingLowerLevelAPIs(void)
+{
+  int rc = 0;
+  struct sqlca sqlca;
+
+  sqluint32 numTablespaces;
+  struct SQLB_TBSPQRY_DATA tablespaceData;
+  int tspNb;
+  sqluint32 numFetchedTablespaces;
+  struct SQLB_TBS_STATS tablespaceStats;
+
+  printf("\n-----------------------------------------------------------");
+  printf("\nUSE THE DB2 APIs:\n");
+  printf("  sqlbotsq -- Open Tablespace Query\n");
+  printf("  sqlbftpq -- Fetch Tablespace Query\n");
+  printf("  sqlbgtss -- Get Tablespace Statistics\n");
+  printf("  sqlbctsq -- Close Tablespace Query\n");
+  printf("TO GET INFORMATION FOR ALL TABLE SPACES.\n");
+
+  printf("\n  Get information for all table spaces.\n");
+
+  /* open table space query */
+  sqlbotsq(&sqlca, SQLB_OPEN_TBS_ALL, &numTablespaces);
+  DB2_API_CHECK("tablespace query -- open");
+
+  for (tspNb = 0; tspNb < numTablespaces; tspNb++)
+  {
+    strcpy(tablespaceData.tbspqver, SQLB_TBSPQRY_DATA_ID);
+
+    /* fetch table space query */
+    sqlbftpq(&sqlca, 1, &tablespaceData, &numFetchedTablespaces);
+    DB2_API_CHECK("tablespace info 1 -- get");
+
+    /* get table space statistics */
+    sqlbgtss(&sqlca, tablespaceData.id, &tablespaceStats);
+    DB2_API_CHECK("tablespace info 2 -- get");
+
+    rc = TablespaceInfoDisplay(tablespaceData, tablespaceStats);
+  }
+
+  /* close table space query */
+  sqlbctsq(&sqlca);
+  DB2_API_CHECK("tablespace query -- close");
+
+  return 0;
+} /* AllTablespacesInfoGetUsingLowerLevelAPIs */
+
+int AllTablespaceContainersInfoGetUsingHigherLevelAPIs(void)
+{
+  int rc = 0;
+  struct sqlca sqlca;
+  sqluint32 tablespaceId;
+  sqluint32 numContainers;
+  struct SQLB_TBSCONTQRY_DATA *pContainersData;
+  int contNb;
+
+  printf("\n-----------------------------------------------------------");
+  printf("\nUSE THE DB2 APIs:\n");
+  printf("  sqlbtcq  -- Tablespace Container Query\n");
+  printf("  sqlefmem -- Free Memory\n");
+  printf("TO GET INFORMATION FOR ALL TABLE SPACE CONTAINERS.\n");
+
+  tablespaceId = SQLB_ALL_TABLESPACES;
+  printf("\n  Get container information for all table spaces.\n");
+
+  /* table space container query */
+  sqlbtcq(&sqlca, tablespaceId, &numContainers, &pContainersData);
+  DB2_API_CHECK("tablespace containers info -- get");
+
+  for (contNb = 0; contNb < numContainers; contNb++)
+  {
+    rc = ContainerInfoDisplay(pContainersData[contNb]);
+  }
+
+  /* free container memory allocated by sqlbtcq */
+  sqlefmem(&sqlca, pContainersData);
+  DB2_API_CHECK("containers memory allocated by sqlbtcq -- free");
+
+  return 0;
+} /* AllTablespaceContainersInfoGetUsingHigherLevelAPIs */
+
+int AllTablespaceContainersInfoGetUsingLowerLevelAPIs(void)
+{
+  int rc = 0;
+  struct sqlca sqlca;
+  sqluint32 tablespaceId;
+  sqluint32 numContainers;
+  int contNb;
+  struct SQLB_TBSCONTQRY_DATA containerData;
+  sqluint32 numFetchedContainers;
+
+  printf("\n-----------------------------------------------------------");
+  printf("\nUSE THE DB2 APIs:\n");
+  printf("  sqlbotcq -- Open Tablespace Container Query\n");
+  printf("  sqlbftcq -- Fetch Tablespace Container Query\n");
+  printf("  sqlbctcq -- Close Tablespace Container Query\n");
+
+  printf("TO GET INFORMATION FOR ALL TABLE SPACE CONTAINERS.\n");
+
+  tablespaceId = SQLB_ALL_TABLESPACES;
+  printf("\n  Get container information for all table spaces.\n");
+
+  /* open table space container query */
+  sqlbotcq(&sqlca, tablespaceId, &numContainers);
+  DB2_API_CHECK("tablespace container query -- open");
+
+  for (contNb = 0; contNb < numContainers; contNb++)
+  {
+    /* fetch table space container query */
+    sqlbftcq(&sqlca, 1, &containerData, &numFetchedContainers);
+    DB2_API_CHECK("container info -- get");
+
+    rc = ContainerInfoDisplay(containerData);
+  }
+
+  /* close table space container query */
+  sqlbctcq(&sqlca);
+  DB2_API_CHECK("tablespace container query -- close");
+
+  return 0;
+} /* AllTablespaceContainersInfoGetUsingLowerLevelAPIs */
+
