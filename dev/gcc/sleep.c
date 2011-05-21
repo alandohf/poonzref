@@ -1,8 +1,17 @@
- #include <unistd.h>
- #include <stdio.h>
- #include <stdlib.h>
- #include <time.h>
- #include <string.h>
+/*
+**************************************************
+*author panzhiwei
+*http://stackoverflow.com/questions/4014827/best-way-to-switch-on-a-string-in-c
+*
+*
+**************************************************
+*/
+
+#include <unistd.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
  
 #define SIZE 256
 #define BADKEY -1
@@ -24,11 +33,10 @@ static t_symstruct lookuptable[] = {
 
 #define NKEYS (sizeof(lookuptable)/sizeof(t_symstruct))
 
-
- char* alert_time(void);
- int alert(char msg[]);
- char tm_buffer[SIZE];
- int keyfromstring(char *key);
+char* alert_time(void);
+int alert(char msg[]);
+char tm_buffer[SIZE];
+int keyfromstring(char *key);
 
  int main(){
 	while(1){
@@ -60,7 +68,7 @@ static t_symstruct lookuptable[] = {
 		    case BADKEY: 
 			printf("no jobs to be done!"); 
 		}
-		sleep(60);
+		sleep(30);
 	}
  
 return 0;
