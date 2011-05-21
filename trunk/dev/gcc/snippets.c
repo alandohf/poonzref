@@ -61,4 +61,90 @@ int DbConnect(char dbAlias[], char user[], char pswd[])
 
   free(cfgParameters[0].ptrvalue);
   free(cfgParameters[1].ptrvalue);
-          
+
+//
+  switch (argc)
+  {
+    case 1:
+      strcpy(dbAlias, "sample");
+      strcpy(user, "");
+      strcpy(pswd, "");
+      break;
+    case 2:
+      strcpy(dbAlias, argv[1]);
+      strcpy(user, "");
+      strcpy(pswd, "");
+      break;
+    case 4:
+      strcpy(dbAlias, argv[1]);
+      strcpy(user, argv[2]);
+      strcpy(pswd, argv[3]);
+      break;
+    default:
+      printf("\nUSAGE: %s [dbAlias [userid passwd]]\n",
+             argv[0]);
+      rc = 1;
+      break;
+  }
+  
+  
+
+int DbConn(char paramDbAlias[], char paramUser[], char paramPswd[])
+{
+  struct sqlca sqlca;
+  int rc = 0;
+
+  strcpy(dbAlias, paramDbAlias);
+  strcpy(user, paramUser);
+  strcpy(pswd, paramPswd);
+
+  printf("\n  Connecting to '%s' database...\n", dbAlias);
+  if (strlen(user) == 0)
+  {
+    EXEC SQL CONNECT TO :dbAlias;
+    EMB_SQL_CHECK("CONNECT");
+  }
+  else
+  {
+    EXEC SQL CONNECT TO :dbAlias USER :user USING :pswd;
+    EMB_SQL_CHECK("CONNECT");
+  }
+  printf("  Connected to '%s' database.\n", dbAlias);
+
+  return 0;
+} /* DbConn */
+
+int DbDisconn(char *dbAlias)
+{
+  struct sqlca sqlca;
+  int rc = 0;
+
+  printf("\n  Disconnecting from '%s' database...\n", dbAlias);
+
+  /* Commit all non-committed transactions to release database locks */
+  EXEC SQL COMMIT;
+  EMB_SQL_CHECK("COMMIT");
+
+  EXEC SQL CONNECT RESET;
+  EMB_SQL_CHECK("CONNECT RESET");
+
+  printf("  Disconnected from '%s' database.\n", dbAlias);
+
+  return 0;
+} /* DbDisconn */
+
+
+//
+/* macro for embedded SQL checking */
+#define EMB_SQL_CHECK(MSG_STR)                     \
+SqlInfoPrint(MSG_STR, &sqlca, __LINE__, __FILE__); \
+if (sqlca.sqlcode < 0)                             \
+{                                                  \
+  TransRollback();                                 \
+  return 1;                                        \
+}
+
+/* function used in EMB_SQL_CHECK macro */
+void TransRollback(void);
+
+           
