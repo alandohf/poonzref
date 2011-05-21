@@ -74,11 +74,7 @@ int keyfromstring(char *key);
 return 0;
 }
 
-/*
-*************************************************
-*self defined functions
-***************************************************
-*/
+
 
 char* alert_time(){
 	time_t curtime;
