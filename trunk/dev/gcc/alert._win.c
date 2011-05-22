@@ -2,8 +2,10 @@
 **************************************************
 *author panzhiwei
 *http://stackoverflow.com/questions/4014827/best-way-to-switch-on-a-string-in-c
-*
-*
+*v0.1 day alert
+*v0.2 month alert 
+*v0.3 suspend for n mins
+*D:\pzw\prj\poonzref\dev\gcc>tcc alert._win.c -o alert.exe && time 9:30 && date 2011-05-10 &&  alert.exe
 **************************************************
 */
 
@@ -12,7 +14,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
- 
+//daily alert intervals 
 #define SIZE 256
 #define BADKEY -1
 #define C0700 1
@@ -23,81 +25,191 @@
 #define C1900 6
 #define C2300 7
 #define C0000 8
+#define C0930 9
+//monthly alert intervals 
+#define D01 1
+#define D02 2
+#define D03 3
+#define D04 4
+#define D05 5
+#define D06 6
+#define D07 7
+#define D08 8
+#define D09 9
+#define D10 10
+#define D11 11
+#define D12 12
+#define D13 13
+#define D14 14
+#define D15 15
+#define D27 27
+#define D28 28
+#define D29 29
+#define D30 30
+#define D31 31
+
 
 typedef struct { char *key; int val; } t_symstruct;
 
-static t_symstruct lookuptable[] = {
-{ "07:00", C0700 }, { "08:00", C0800 }, { "08:30", C0830 }, { "12:00", C1200 }
-,{ "12:28", C1228 }, { "19:00", C1900 }, { "23:00", C2300 }, { "00:00", C0000 }
+static t_symstruct lookuptable_d[] = {
+	 { "07:00", C0700 }
+	,{ "08:00", C0800 }
+	,{ "08:30", C0830 }
+	,{ "12:00", C1200 }
+	,{ "12:28", C1228 }
+	,{ "19:00", C1900 }
+	,{ "23:00", C2300 }
+	,{ "00:00", C0000 }
+	,{ "09:30", C0930 }
 };
 
-#define NKEYS (sizeof(lookuptable)/sizeof(t_symstruct))
+static t_symstruct lookuptable_m[] = {
+	 { "01", D01 }
+	,{ "02", D02 }
+	,{ "03", D03 }
+	,{ "04", D04 }
+	,{ "05", D05 }
+	,{ "06", D06 }
+	,{ "07", D07 }
+	,{ "08", D08 }
+	,{ "09", D09 }
+	,{ "10", D10 }
+	,{ "11", D11 }
+	,{ "12", D12 }
+	,{ "13", D13 }
+	,{ "14", D14 }
+	,{ "15", D15 }
+	,{ "27", D27 }
+	,{ "28", D28 }
+	,{ "29", D29 }
+	,{ "30", D30 }
+	,{ "31", D31 }
+};
 
-char* alert_time(void);
-int alert(char msg[]);
+#define NKEYS_D (sizeof(lookuptable_d)/sizeof(t_symstruct))
+#define NKEYS_M (sizeof(lookuptable_m)/sizeof(t_symstruct))
+
+//global vars
+struct tm *loctime;
 char tm_buffer[SIZE];
-int keyfromstring(char *key);
+
+//prototype
+struct tm *alert_time(void);
+int alert(char msg[]);
+int keyfromstring(char *key,t_symstruct lookuptable[],int NKEYS );
 
  int main(){
-	while(1){
-		   switch (keyfromstring(alert_time())) {
+	 
+	while(1){ 
+		   strftime(tm_buffer, SIZE, "%H:%M", alert_time());
+		   //printf(tm_buffer);
+	   switch (keyfromstring(tm_buffer,lookuptable_d,NKEYS_D)) {
 		    case C0700: 
-			alert("day/same/ring");    	
+			alert("same_chk/day_interface/kpi_ring");    	
 			break;
 		    case C0800: 
-			alert("however,get/up! ");
+			alert("is it still early? ");
 			break;
 		    case C0830: 
-			alert("however,go/out! ");
+			alert("work work! ");
 			break;
 		    case C1200: 
-			alert("wave/same/interfaces.except/holidays!");
+			alert("wave/same/interfaces_report.except/holidays!");
 			break;
 		    case C1228: 
-			alert("lunch!");
+			alert("hungry!");
 			break;
 		    case C1900: 
-			alert("dinner!");
+			alert("hungry!");
 			break; 	     	     	    
 		    case C2300: 
-			alert("however,sleep!");
+			alert("rest time!");
 			break; 	     	     	    
 		    case C0000: 
-			alert("however,sleep!");
+			alert("rest time!");
+			break; 	     	     	    
+		    case C0930: 
+						strftime(tm_buffer, SIZE, "%d", alert_time());	
+						switch (keyfromstring(tm_buffer,lookuptable_m,NKEYS_M)) {
+						    case D01: 
+							alert("#1.load_sample/bass1_lst#2.R107/108");    	
+							break;
+						    case D02: 
+							alert("#3interface/upload");
+							break;
+						    case D03: 
+							alert("#3interface_chk&#5interface/upload");
+							break;
+						    case D04: 
+							alert("#5interface_chk&#8interface/upload");
+							break;
+						    case D05: 
+							alert("#8interface_chk&#10interface/upload!");
+							break;
+						    case D06: 
+							alert("#10interface_chk&#15interface/upload!!");
+							break; 	     	     	    
+						    case D07: 
+							alert("05001/05002/all_month_interface_chk!");
+							break; 	     	     	    
+						    case D08: 
+							alert("05001/05002/all_month_interface_chk!");
+							break; 	     	     	    
+						    case D09: 
+							alert("05001/05002");
+							break; 	     	     	    
+						    case D10: 
+							alert("zhanght.tcl");
+							break; 	     	     	    
+						    case D11: 
+							alert("tbs chk/ftp down files");
+							break; 	   
+						    case D12: 
+							alert("backup_tables/tbs_struct");
+							break; 	   
+						    case D27: 
+							alert("LOAD_IMEI/91005");
+							break; 	     	     	    
+						    case BADKEY: 
+							//do nothing 
+							;
+						} //inner switch end 
 			break; 	     	     	    
 		    case BADKEY: 
 			//do nothing 
 			; 
-		}
-		// ms/no s!
-		sleep(30*1000);
-	}
+	} //outside switch end 
+	
+	sleep(59*1000);
+	
+	} //while end 
  
 return 0;
-}
+	
+} //main end
 
 
 
-char* alert_time(){
+struct tm *alert_time(){
 	time_t curtime;
-	struct tm *loctime;
 	/* Get the current time.  */
 	curtime = time (NULL);
 	/* Convert it to local time representation.  */
 	loctime = localtime (&curtime);
-	strftime(tm_buffer, SIZE, "%H:%M", loctime);
-	return tm_buffer;
+	//strftime(tm_buffer, SIZE, "%H:%M", loctime);
+	return loctime;
 }
 
 
 int alert(char msg[1000]){
 	char cmd[2000];
-	sprintf(cmd,"wscript ./alert.vbs %s %s",alert_time(),msg);
+	strftime(tm_buffer, SIZE, "%c", alert_time());
+	sprintf(cmd,"wscript ./alert.vbs %s %s",tm_buffer,msg);
 	system(cmd);
 	return 0;
 	}
-	
-int keyfromstring(char *key)
+
+int keyfromstring(char *key,t_symstruct lookuptable[],int NKEYS )
 {
 	int i;
 	for (i=0; i < NKEYS; i++) {
@@ -107,5 +219,3 @@ int keyfromstring(char *key)
 	}
 	return BADKEY;
 }
-
-
