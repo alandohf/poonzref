@@ -5,7 +5,10 @@
 *v0.1 day alert
 *v0.2 month alert 
 *v0.3 suspend for n mins
-*D:\pzw\prj\poonzref\dev\gcc>tcc alert._win.c -o alert.exe && time 9:30 && date 2011-05-10 &&  alert.exe
+*v0.4 week alert
+*D:\pzw\prj\poonzref\dev\gcc>\
+*tcc alert._win.c -o alert.exe && time 9:30 && date 2011-05-10 &&  alert.exe
+*cmd>time 9:30 && date 2011-05-10
 **************************************************
 */
 
@@ -203,8 +206,15 @@ struct tm *alert_time(){
 
 int alert(char msg[1000]){
 	char cmd[2000];
+	FILE *fp;
 	strftime(tm_buffer, SIZE, "%c", alert_time());
 	sprintf(cmd,"wscript ./alert.vbs %s %s",tm_buffer,msg);
+	if((fp=fopen("E:/bass1/alert_log.out","a"))==NULL){
+		fprintf(stderr, " %s\n", strerror(errno));
+		exit(1);
+	}
+	fprintf(fp, "%s %s\n", tm_buffer,msg); 
+	fclose(fp);
 	system(cmd);
 	return 0;
 	}
