@@ -6,9 +6,10 @@
 *v0.2 month alert 
 *v0.3 suspend for n mins
 *v0.4 week alert
+*compile methods:
+*cmd>time 9:30 && date 2011-05-10
 *D:\pzw\prj\poonzref\dev\gcc>\
 *tcc alert_win.c -o alert.exe && time 9:30 && date 2011-05-10 &&  alert.exe
-*cmd>time 9:30 && date 2011-05-10
 *net start w32time
 *w32tm /resync /nowait
 **************************************************
@@ -94,13 +95,16 @@ static t_symstruct lookuptable_m[] = {
 #define NKEYS_D (sizeof(lookuptable_d)/sizeof(t_symstruct))
 #define NKEYS_M (sizeof(lookuptable_m)/sizeof(t_symstruct))
 
-//global vars
+/** global vars **/
 struct tm *loctime;
 char tm_buffer[SIZE];
 
-//prototype
+/**prototype**/
+//get current time 
 struct tm *alert_time(void);
+//take the alert action
 int alert(char msg[]);
+//get the index of hour/time
 int keyfromstring(char *key,t_symstruct lookuptable[],int NKEYS );
 
  int main(){
@@ -215,6 +219,7 @@ int alert(char msg[1000]){
 	FILE *fp;
 	strftime(tm_buffer, SIZE, "%c", alert_time());
 	sprintf(cmd,"wscript ./alert.vbs %s %s",tm_buffer,msg);
+	//change the path if necessory
 	if((fp=fopen("E:/bass1/alert_log.out","a"))==NULL){
 		fprintf(stderr, " %s\n", strerror(errno));
 		exit(1);
