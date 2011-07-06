@@ -29,11 +29,18 @@ main ( int argc, char *argv[] )
 	//t3();
 //	t_struct();
 //	t_ptr1 ();
-	count_distinct();
+//	count_distinct();
 //int array[10] = {10,9,8,7,6,5,4,3,2,1};
 //    bubbleSort( array, 10);
 //    printArray( array, 10);
 //t_self_incr();
+/**	
+	float f_a=100000000.00;
+	float f_b=0.000000001;
+	printf("%f\n",f_a+f_b);
+	同样的也不要在很大的浮点数和很小的浮点数之间进行运算,否则：	
+	精度丢失!
+	**/
 	return 0;
 }				/* ----------  end of function main  ---------- */
 
@@ -131,8 +138,8 @@ int t2(int *arr)
 }
 
 printf("%d\n",i);
-
-for(int j=0;j<i;j++)
+int j;
+for( j=0;j<i;j++)
  {
   if(min>arr[j]){min=arr[j];}
  }
@@ -173,7 +180,8 @@ int count_distinct(){
 //   int array[7] = {0,0,0,1,2,3,3};
 //http://stackoverflow.com/questions/698739/why-am-i-not-getting-a-compile-error-when-declaring-a-c-array-with-variable-size
    int unique = 1; //incase we have only one element; it is unique!
-   for(int i = 0; i < size -1 /* since we don't want to compare last element with junk*/; i++)
+   int i = 0;
+   for( i = 0; i < size -1 /* since we don't want to compare last element with junk*/; i++)
     {
      if(array[i]==array[i+1])
        continue;
@@ -186,10 +194,11 @@ int count_distinct(){
  
 
 int t_self_incr(){
-	for(int i = 0 ; i < 10 ; ++i)	
+	int i = 0;
+	for( i = 0 ; i < 10 ; ++i)	
 		printf("%d ",++i);
 		printf("\n");
-	for(int i = 0 ; i < 10 ; ++i)	
+	for( i = 0 ; i < 10 ; ++i)	
 		printf("%d ",i++);
 		printf("\n");
 	return 0;
