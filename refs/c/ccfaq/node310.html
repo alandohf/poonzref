@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>20.4 怎样清屏？怎样输出彩色文本？怎样移动光标到指定位置？</TITLE>
+<META NAME="description" CONTENT="20.4 怎样清屏？怎样输出彩色文本？怎样移动光标到指定位置？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node311.html">
+<LINK REL="previous" HREF="node309.html">
+<LINK REL="up" HREF="node306.html">
+<LINK REL="next" HREF="node311.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4523"
+  HREF="node309.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4529"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4531"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4533"
+  HREF="node311.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002140000000000000000"></A>
+<A NAME="q:19.4"></A>
+<BR>
+<SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">4</SPAN> 怎样清屏？怎样输出彩色文本？怎样移动光标到指定位置？
+</H1>
+这些功能跟你所用的终端类型&nbsp;(或显示器)&nbsp;有关。你需要使用&nbsp;termcap, 
+term-info&nbsp;或&nbsp;curses&nbsp;类的函数库, 或者系统提供的特殊函数。
+在&nbsp;MS-DOS&nbsp;系统下, 有两个函数可以使用&nbsp;clrscr()&nbsp;和&nbsp;gotoxy()。
+
+<P>
+有一个不彻底的可移植的清屏方法: 输出卷纸字符
+&nbsp;(<code>'</code>&#92;f<code>'</code>), 可以清除一部分
+的显示。还有个更加可移植的办法&nbsp;(尽管很简陋), 输出足够多的换行
+使当前屏幕清空。
+最后一个方法: 使用&nbsp;system()&nbsp;函数&nbsp;(参见问题&nbsp;<A HREF="node336.html#q:19.27">19.30</A>)&nbsp;来调用操作系统
+的清屏指令。
+
+<P>
+参考资料 [<A
+ HREF="node388.html#pcs">PCS</A>, Sec. 5.1.4 pp. 54-60, Sec. 5.1.5 pp. 60-62]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4523"
+  HREF="node309.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4529"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4531"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4533"
+  HREF="node311.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

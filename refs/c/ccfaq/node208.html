@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>13.17 我发现如果坚持检查返回值以确保用户输入的是我期待的数值,
+则&nbsp;scanf()&nbsp;的使用会安全很多, 但有的时候好像会陷入无限循环。</TITLE>
+<META NAME="description" CONTENT="13.17 我发现如果坚持检查返回值以确保用户输入的是我期待的数值,
+则&nbsp;scanf()&nbsp;的使用会安全很多, 但有的时候好像会陷入无限循环。">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node209.html">
+<LINK REL="previous" HREF="node207.html">
+<LINK REL="up" HREF="node191.html">
+<LINK REL="next" HREF="node209.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3192"
+  HREF="node207.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3198"
+  HREF="node191.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3200"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3202"
+  HREF="node209.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0014170000000000000000"></A>
+<A NAME="q:12.19"></A>
+<BR>
+<SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">17</SPAN> 我发现如果坚持检查返回值以确保用户输入的是我期待的数值,
+则&nbsp;scanf()&nbsp;的使用会安全很多, 但有的时候好像会陷入无限循环。
+</H1>
+在&nbsp;scanf()&nbsp;转换数字的时候, 它遇到的任何非数字字符都会终止转换
+<SPAN  CLASS="textbf">并被保留在输入流中</SPAN>。因此, 除非采用了其它的步骤, 那么未预料到的
+非数字输入会不断&nbsp;``阻塞" scanf(): scanf()&nbsp;永远都不能越过错误的非数字字
+符而处理后边的合法数字字符。如果用户在数字格式的&nbsp;scanf&nbsp;如&nbsp;%d&nbsp;或&nbsp;%f&nbsp;
+中输入字符&nbsp;`x', 那么提示后并用同样的&nbsp;scanf()&nbsp;调用重试的代码会立即遇到
+同一个&nbsp;'x'。
+
+<P>
+参见问题&nbsp;<A HREF="node209.html#q:12.20">12.18</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 7.9.6.2]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 15.8 pp. 357-64]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3192"
+  HREF="node207.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3198"
+  HREF="node191.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3200"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3202"
+  HREF="node209.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

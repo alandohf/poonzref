@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>17.7 ``Segmentation violation", ``Bus error"&nbsp;和&nbsp;
+``General protection fault"&nbsp;
+意味着什么？</TITLE>
+<META NAME="description" CONTENT="17.7 ``Segmentation violation", ``Bus error"&nbsp;和&nbsp;
+``General protection fault"&nbsp;
+意味着什么？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="previous" HREF="node276.html">
+<LINK REL="up" HREF="node270.html">
+<LINK REL="next" HREF="node278.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4064"
+  HREF="node276.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4068"
+  HREF="node270.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4070"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4072"
+  HREF="node278.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001870000000000000000"></A>
+<A NAME="q:16.8"></A>
+<BR>
+<SPAN CLASS="arabic">17</SPAN>.<SPAN CLASS="arabic">7</SPAN> ``Segmentation violation", 
+``Bus error"&nbsp;和&nbsp;
+``General protection fault"&nbsp;
+意味着什么？
+</H1>
+通常, 这意味着你的程序试图访问不该访问的内存地址, 一般是由于堆栈出错或是
+不正确的使用指针。
+可能的原因有: 局部数组溢出&nbsp;(用堆栈分配的自动变量);
+不小心, 用了空指针&nbsp;(参见问题&nbsp;<A HREF="node61.html#q:5.2">5.2</A>&nbsp;和&nbsp;<A HREF="node74.html#q:5.20">5.15</A>)、
+未初始化指针、地址未对齐的指针或其它没有适当分配的
+指针&nbsp;(参见问题&nbsp;<A HREF="node95.html#q:7.1">7.1</A>&nbsp;和&nbsp;<A HREF="node96.html#q:7.2">7.2</A>);
+malloc&nbsp;内部被破坏&nbsp;(参见问题&nbsp;<A HREF="node110.html#q:7.19">7.16</A>);
+函数调用参数不匹配, 特别是如果用了指针, 两个可能出错的函数是
+&nbsp;scanf() (参见问题&nbsp;<A HREF="node202.html#q:12.12">12.11</A>)&nbsp;和&nbsp;fprintf() (确定他的第
+一个参数是&nbsp;FILE *)。
+
+<P>
+参见问题&nbsp;<A HREF="node273.html#q:16.3">16.3</A>&nbsp;和&nbsp;<A HREF="node274.html#q:16.4">16.4</A>。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4064"
+  HREF="node276.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4068"
+  HREF="node270.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4070"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4072"
+  HREF="node278.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

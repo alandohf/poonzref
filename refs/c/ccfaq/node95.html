@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>8.1 为什么这段代码不行？char *answer;
+printf("Type something:&#92;n");
+gets(answer);
+printf("You typed
+&#92;"%s&#92;"&#92;n",
+answer);</TITLE>
+<META NAME="description" CONTENT="8.1 为什么这段代码不行？char *answer;
+printf("Type something:&#92;n");
+gets(answer);
+printf("You typed
+&#92;"%s&#92;"&#92;n",
+answer);">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node96.html">
+<LINK REL="previous" HREF="node94.html">
+<LINK REL="up" HREF="node94.html">
+<LINK REL="next" HREF="node96.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1751"
+  HREF="node94.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1757"
+  HREF="node94.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1759"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1761"
+  HREF="node96.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00910000000000000000"></A>
+<A NAME="q:7.1"></A>
+<BR>
+<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN> 为什么这段代码不行？char *answer;
+printf(<TT>"</TT>Type something:&#92;n<TT>"</TT>);
+gets(answer);
+printf(<TT>"</TT>You typed
+&#92;<TT>"</TT>%s&#92;<TT>"</TT>&#92;n<TT>"</TT>,
+answer);
+</H1>
+指针变量&nbsp;answer, 传入&nbsp;gets(), 意在指向保存得到的应答的位置,
+但却没有指向任何合法的位置。换言之, 我们不知道指针&nbsp;answer&nbsp;指向何处。
+因为局部变量没有初始化, 通常包含垃圾信息, 所以甚至都不能保证&nbsp;answer&nbsp;
+是一个合法的指针。参见问题&nbsp;<A HREF="node13.html#q:1.30">1.10</A>&nbsp;和&nbsp;<A HREF="node60.html#q:5.1">5.1</A>。
+
+<P>
+改正提问程序的最简单方案是使用局部数组, 而不是指针,
+让编译器考虑分配的问题:
+<PRE>
+    #include &lt;stdio.h&gt;
+    #include &lt;string.h&gt;
+
+	char answer[100], *p;
+	printf("Type something:\n");
+	fgets(answer, sizeof answer, stdin);
+	if((p = strchr(answer, '\n')) != NULL)
+	    *p = '\0';
+	printf("You typed \"%s\"\n", answer);
+</PRE>
+
+<P>
+本例中同时用&nbsp;fgets()&nbsp;代替&nbsp;gets(), 以便&nbsp;array&nbsp;的结束符不被改写。
+参见问题&nbsp;<A HREF="node211.html#q:12.23">12.20</A>。不幸的是, 本例中的&nbsp;fgets()&nbsp;不会象&nbsp;gets()&nbsp;
+那样自动地去掉结尾的&nbsp;&#92;n。 也可以用&nbsp;malloc()&nbsp;分配
+&nbsp;answer&nbsp;缓冲区。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1751"
+  HREF="node94.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1757"
+  HREF="node94.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1759"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1761"
+  HREF="node96.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

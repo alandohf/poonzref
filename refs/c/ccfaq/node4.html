@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.1 我如何决定使用那种整数类型？</TITLE>
+<META NAME="description" CONTENT="2.1 我如何决定使用那种整数类型？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node5.html">
+<LINK REL="previous" HREF="node3.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node5.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html573"
+  HREF="node3.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html579"
+  HREF="node3.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html581"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html583"
+  HREF="node5.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00310000000000000000"></A>
+<A NAME="q:1.1"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> 我如何决定使用那种整数类型？
+</H1>
+
+<P>
+如果需要大数值&nbsp;(大于&nbsp;<SPAN CLASS="MATH">32,767</SPAN>&nbsp;或小于&nbsp;<SPAN CLASS="MATH">-32,767</SPAN>), 使用&nbsp;long&nbsp;型。
+否则, 如果空间很重要&nbsp;(如有大数组或很多结构), 使用&nbsp;short&nbsp;型。
+除此之外, 就使用&nbsp;int&nbsp;型。如果严格定义的溢出特征很重要而负值无关紧
+要, 或者你希望在操作二进制位和字节时避免符号扩展的问题, 请使用对应的
+无符号类型。但是, 要注意在表达式中混用有符号和无符号值的情况。
+
+<P>
+尽管字符类型&nbsp;(尤其是无符号字符型)&nbsp;可以当成&nbsp;``小''&nbsp;整型使用, 但由于不可
+预知的符号扩展和代码增大有时这样做可能得不偿失。
+使用无符号字符型有所帮助; 类似的问题参见问题&nbsp;<A HREF="node192.html#q:12.1">12.1</A>。
+
+<P>
+在选择浮点型和双精度浮点型时也有类似的权衡。但如果一个变量的指针必
+须为特定的类型时, 以上规则不再适用。
+
+<P>
+如果因为某种原因你需要声明一个有<SPAN  CLASS="textbf">严格</SPAN>大小的变量,
+确保象&nbsp;C99&nbsp;的&nbsp;&lt;inttypes.h&gt;&nbsp;那样用某种适当的
+&nbsp;typedef&nbsp;封装这种选择。 通常, 这样做唯一的
+好原因是试图符合某种外部强加的存储方案, 请参见问题&nbsp;<A HREF="node353.html#q:20.5">20.3</A>。
+
+<P>
+如果你需要操作超过&nbsp;C&nbsp;的内置类型支持的超大变量, 请参见问题&nbsp;<A HREF="node304.html#q:18.15d">18.17</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. 2.2 p. 34]; [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 2.2 p. 36, Sec. A4.2
+pp. 195-6, Sec. B11 p. 257]; [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 5.2.4.2.1, Sec. 6.1.2.5];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Secs. 5.1,5.2 pp. 110-114]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html573"
+  HREF="node3.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html579"
+  HREF="node3.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html581"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html583"
+  HREF="node5.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

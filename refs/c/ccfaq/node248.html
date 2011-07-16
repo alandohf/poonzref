@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>15.4 浮点计算程序表现奇怪, 在不同的机器上给出不同的结果。</TITLE>
+<META NAME="description" CONTENT="15.4 浮点计算程序表现奇怪, 在不同的机器上给出不同的结果。">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node249.html">
+<LINK REL="previous" HREF="node247.html">
+<LINK REL="up" HREF="node244.html">
+<LINK REL="next" HREF="node249.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3701"
+  HREF="node247.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3707"
+  HREF="node244.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3709"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3711"
+  HREF="node249.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001640000000000000000"></A>
+<A NAME="q:14.4a"></A>
+<BR>
+<SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">4</SPAN> 浮点计算程序表现奇怪, 在不同的机器上给出不同的结果。
+</H1>
+
+<P>
+首先阅读问题&nbsp;<A HREF="node246.html#q:14.2">14.2</A>.
+
+<P>
+如果问题并不是那么简单, 那么回想一下, 电脑一般都是用一种浮点的格式来近似
+的模拟实数的运算, 注意是近似, 不是完全。下溢、误差的累积和其它非常规性是
+常遇到的麻烦。
+
+<P>
+不要假设浮点运算结果是精确的, 特别是别假设两个浮点值可以进行等价比较。也
+不要随意的引入&nbsp;``模糊因素"; 参见问题&nbsp;<A HREF="node249.html#q:14.5">14.5</A>。
+
+<P>
+这并不是&nbsp;C&nbsp;特有的问题, 其它电脑语言有一样的问题。浮点的某些方面被通常
+定义为&nbsp;``中央处理器&nbsp;(CPU)&nbsp;是这样做的" (参见问题&nbsp;<A HREF="node189.html#q:11.34">11.34</A>), 否则在一
+个没有&nbsp;``正确"&nbsp;浮点模型的处理器上, 编译器要被迫做代价非凡的仿真。
+
+<P>
+本文不打算列举在处理浮点运算上的潜在难点和合适的做法。一本好的有关数字
+编程的书能涵盖基本的知识。参见下面的参考资料。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kp">K&amp;P</A>, Sec. 6 pp. 115-8]; [<A
+ HREF="node388.html#knuth">Knuth</A>, Volume 2 chapter 4];
+[<A
+ HREF="node388.html#goldberg">Goldberg</A>]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3701"
+  HREF="node247.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3707"
+  HREF="node244.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3709"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3711"
+  HREF="node249.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

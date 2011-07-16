@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.12 我需要根据条件把一个复杂的表达式赋值给两个变量中的
+一个。可以用下边这样的代码吗？&nbsp;
+((condition) ? a : b) = complicated_expression;</TITLE>
+<META NAME="description" CONTENT="4.12 我需要根据条件把一个复杂的表达式赋值给两个变量中的
+一个。可以用下边这样的代码吗？&nbsp;
+((condition) ? a : b) = complicated_expression;">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="previous" HREF="node47.html">
+<LINK REL="up" HREF="node36.html">
+<LINK REL="next" HREF="node49.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1126"
+  HREF="node47.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1130"
+  HREF="node36.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1132"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1134"
+  HREF="node49.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION005120000000000000000"></A>
+<A NAME="q:3.16"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">12</SPAN> 我需要根据条件把一个复杂的表达式赋值给两个变量中的
+一个。可以用下边这样的代码吗？&nbsp;
+((condition) ? a : b) = complicated_expression;
+</H1>
+不能。?&nbsp;:&nbsp;操作符, 跟多数操作符一样, 生成一个值, 而不能
+被赋值。换言之, ?&nbsp;:&nbsp;不能生成一个&nbsp;``左值"。如果你真的需
+要, 你可以试试下面这样的代码:
+<PRE>
+    *((condition) ? &amp;a : &amp;b) = complicated_expression;
+</PRE>
+尽管这毫无优雅可言。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.3.15]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 7.1 pp. 179-180]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1126"
+  HREF="node47.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1130"
+  HREF="node36.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1132"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1134"
+  HREF="node49.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

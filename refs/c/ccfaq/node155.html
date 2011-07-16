@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>12. ANSI/ISO&nbsp;标准&nbsp;C</TITLE>
+<META NAME="description" CONTENT="12. ANSI/ISO&nbsp;标准&nbsp;C">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node191.html">
+<LINK REL="previous" HREF="node132.html">
+<LINK REL="up" HREF="ccfaq.html">
+<LINK REL="next" HREF="node156.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2493"
+  HREF="node154.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2499"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2501"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2503"
+  HREF="node156.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001300000000000000000"></A>
+<A NAME="s:11"></A>
+<BR>
+<SPAN CLASS="arabic">12</SPAN>. ANSI/ISO&nbsp;标准&nbsp;C
+</H1>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html2505"
+  HREF="node156.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">1</SPAN> 什么是&nbsp;``ANSI C&nbsp;标准"？</A>
+<LI><A NAME="tex2html2506"
+  HREF="node157.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">2</SPAN> 我如何得到一份标准的副本？</A>
+<LI><A NAME="tex2html2507"
+  HREF="node158.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">3</SPAN> 我在哪里可以找到标准的更新？</A>
+<LI><A NAME="tex2html2508"
+  HREF="node159.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">4</SPAN> 很多&nbsp;ANSI&nbsp;编译器在遇到以下代码时都会警告类型不匹配。
+&nbsp;extern int func(float);
+int func(x)
+float x;
+{ ...</A>
+<LI><A NAME="tex2html2509"
+  HREF="node160.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">5</SPAN> 能否混用旧式的和新型的函数语法？</A>
+<LI><A NAME="tex2html2510"
+  HREF="node161.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">6</SPAN> 为什么声明&nbsp;
+extern int f(struct x *p);
+&nbsp;报出了一个奇怪的警告信息&nbsp;``结构&nbsp;x&nbsp;在参数列表中声明"？</A>
+<LI><A NAME="tex2html2511"
+  HREF="node162.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">7</SPAN> 我不明白为什么我不能象这样在初始化和数组维度中使用常量:
+const int n = 5;
+int a[n];</A>
+<LI><A NAME="tex2html2512"
+  HREF="node163.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">8</SPAN> 既然不能修改字符串常量, 为什么不把它们定义为字符常量的数组？</A>
+<LI><A NAME="tex2html2513"
+  HREF="node164.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">9</SPAN> ``const char *p"&nbsp;和&nbsp;``char * const p"&nbsp;有何区别？</A>
+<LI><A NAME="tex2html2514"
+  HREF="node165.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">10</SPAN> 为什么我不能向接受&nbsp;const char **&nbsp;的函数传入&nbsp;char **？</A>
+<LI><A NAME="tex2html2515"
+  HREF="node166.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">11</SPAN> 怎样正确声明&nbsp;main()？</A>
+<LI><A NAME="tex2html2516"
+  HREF="node167.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">12</SPAN> 我能否把&nbsp;main()&nbsp;定义为&nbsp;void, 以避免扰人的&nbsp;``main无返回值"&nbsp;警告？</A>
+<LI><A NAME="tex2html2517"
+  HREF="node168.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">13</SPAN> 可&nbsp;main()&nbsp;的第三个参数&nbsp;envp&nbsp;是怎么回事？</A>
+<LI><A NAME="tex2html2518"
+  HREF="node169.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">14</SPAN> 我觉得把&nbsp;main()&nbsp;声明为&nbsp;void&nbsp;不会失败, 因为我调用了&nbsp;exit()&nbsp;
+而不是&nbsp;return&nbsp;, 况且我的操作系统也忽略了程序的退出/返回状态。</A>
+<LI><A NAME="tex2html2519"
+  HREF="node170.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">15</SPAN> 那么到底会出什么问题？真的有什么系统不支持&nbsp;void main()&nbsp;吗？</A>
+<LI><A NAME="tex2html2520"
+  HREF="node171.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">16</SPAN> 我一直用的那本书《熟练傻瓜C语言》总是使用&nbsp;void main()。</A>
+<LI><A NAME="tex2html2521"
+  HREF="node172.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">17</SPAN> 从&nbsp;main()&nbsp;中, exit(status)&nbsp;和返回同样的&nbsp;status&nbsp;真的等价吗？</A>
+<LI><A NAME="tex2html2522"
+  HREF="node173.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">18</SPAN> 我试图用&nbsp;ANSI ``字符串化"&nbsp;预处理操作符&nbsp;#&nbsp;向信息中插入符号
+常量的值, 但它字符串化的总是宏的名字而不是它的值。</A>
+<LI><A NAME="tex2html2523"
+  HREF="node174.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">19</SPAN> 警告信息&nbsp;``warning: macro replacement within a
+string literal"&nbsp;是什么意思？</A>
+<LI><A NAME="tex2html2524"
+  HREF="node175.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">20</SPAN> 在我用&nbsp;#ifdef&nbsp;去掉的代码里出现了奇怪的语法错误。</A>
+<LI><A NAME="tex2html2525"
+  HREF="node176.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">21</SPAN> #pragma&nbsp;是什么, 有什么用？</A>
+<LI><A NAME="tex2html2526"
+  HREF="node177.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">22</SPAN> ``#pragma once"&nbsp;是什么意思？我在一些头文件中看到了它。</A>
+<LI><A NAME="tex2html2527"
+  HREF="node178.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">23</SPAN> a[3] = <TT>"</TT>abc<TT>"</TT>;&nbsp;合法吗？它是什么意思？</A>
+<LI><A NAME="tex2html2528"
+  HREF="node179.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">24</SPAN> 为什么我不能对&nbsp;void*&nbsp;指针进行运算？</A>
+<LI><A NAME="tex2html2529"
+  HREF="node180.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">25</SPAN> memcpy()&nbsp;和&nbsp;memmove()&nbsp;有什么区别？</A>
+<LI><A NAME="tex2html2530"
+  HREF="node181.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">26</SPAN> malloc(0)&nbsp;有什么用？返回一个控指针还是指向&nbsp;0&nbsp;
+字节的指针？</A>
+<LI><A NAME="tex2html2531"
+  HREF="node182.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">27</SPAN> 为什么&nbsp;ANSI&nbsp;标准规定了外部标示符的长度和大小写限制？</A>
+<LI><A NAME="tex2html2532"
+  HREF="node183.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">28</SPAN> 我的编译对最简单的测试程序报出了一大堆的语法错误。</A>
+<LI><A NAME="tex2html2533"
+  HREF="node184.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">29</SPAN> 为什么有些&nbsp;ASNI/ISO&nbsp;标准库函数未定义？我明明使用
+的就是&nbsp;ANSI&nbsp;编译器。</A>
+<LI><A NAME="tex2html2534"
+  HREF="node185.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">30</SPAN> 谁有把旧的&nbsp;C&nbsp;程序转化为&nbsp;ANSI C&nbsp;或相反的工具,
+或者自动生成原型的工具？</A>
+<LI><A NAME="tex2html2535"
+  HREF="node186.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">31</SPAN> 为什么声称兼容&nbsp;ANSI&nbsp;的&nbsp;Frobozz Magic C&nbsp;编译器不能
+编译这些代码？我知道这些代码是&nbsp;ANSI&nbsp;的, 因为&nbsp;gcc&nbsp;可以编译。</A>
+<LI><A NAME="tex2html2536"
+  HREF="node187.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">32</SPAN> 人们好像有些在意实现定义&nbsp;(implementation-defin-ed)、未明确
+&nbsp;(unspecified)&nbsp;和无定义&nbsp;(undefined)&nbsp;行为的区别。它们的区别到底在哪里？</A>
+<LI><A NAME="tex2html2537"
+  HREF="node188.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">33</SPAN> 一个程序的&nbsp;``合法", ``有效"&nbsp;或&nbsp;``符合"&nbsp;到底是什么意思？</A>
+<LI><A NAME="tex2html2538"
+  HREF="node189.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">34</SPAN> 我很吃惊, ANSI&nbsp;标准竟然有那么多没有定义的东西。
+标准的唯一任务不就是让这些东西标准化吗？</A>
+<LI><A NAME="tex2html2539"
+  HREF="node190.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">35</SPAN> 有人说&nbsp;i = i++&nbsp;的行为是未定义的, 但是我刚在一个兼容&nbsp;ANSI&nbsp;
+的编译器上测试, 得到了我希望的结果。</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2493"
+  HREF="node154.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2499"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2501"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2503"
+  HREF="node156.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

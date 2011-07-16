@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>14.12 怎样在日期上加&nbsp;N&nbsp;天？怎样取得两个日期的时间间隔？</TITLE>
+<META NAME="description" CONTENT="14.12 怎样在日期上加&nbsp;N&nbsp;天？怎样取得两个日期的时间间隔？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node235.html">
+<LINK REL="previous" HREF="node233.html">
+<LINK REL="up" HREF="node222.html">
+<LINK REL="next" HREF="node235.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3523"
+  HREF="node233.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3529"
+  HREF="node222.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3531"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3533"
+  HREF="node235.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0015120000000000000000"></A>
+<A NAME="q:13.14"></A>
+<BR>
+<SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">12</SPAN> 怎样在日期上加&nbsp;N&nbsp;天？怎样取得两个日期的时间间隔？
+</H1>
+ANSI/ISO&nbsp;标准&nbsp;C&nbsp;函数&nbsp;mktime()&nbsp;和&nbsp;difftime()&nbsp;对这两个问题提供了一些
+有限的支持。 mktime()&nbsp;接受没有规格化的日期, 所以可以用一个
+日期的&nbsp;struct tm&nbsp;结构, 直接在&nbsp;tm_mday&nbsp;域进行加或减, 然后调用&nbsp;mktime()&nbsp;
+对年、月、日域进行规格化, 同时也转换成了&nbsp;time_t&nbsp;值。
+可以用&nbsp;mktime()&nbsp;来计算两个日期的&nbsp;time_t&nbsp;值, 然后用&nbsp;difftime()&nbsp;计算
+两个&nbsp;time_t&nbsp;值的秒数差分。
+
+<P>
+但是, 这些方法只有日期在&nbsp;time_t&nbsp;表达范围内才保证工作正常。对于保守的&nbsp;
+time_t, 通常范围是从&nbsp;1970&nbsp;年到大约&nbsp;2037&nbsp;年; 注意有些&nbsp;time_t&nbsp;的表达
+不是按照&nbsp;Unix&nbsp;和&nbsp;Posix&nbsp;标准的。tm_mday&nbsp;域是个&nbsp;int, 所以日偏移量超出
+&nbsp;32,736&nbsp;就会上溢。还要注意, 在夏令时转换的时候, 一天并不是&nbsp;24&nbsp;小时, 
+所以不要假设可以用&nbsp;86400&nbsp;整除。
+
+<P>
+另一个解决的方法是用&nbsp;``Julian&nbsp;日期", 这可以支持更宽的时间范围。处理&nbsp;Julian&nbsp;
+日期的代码可以在以下地方找到: Snippets&nbsp;收集&nbsp;(参见问题&nbsp;<A HREF="node303.html#q:18.15c">18.16</A>); Simtel/Oakland
+站点&nbsp;(文件&nbsp;JULCAL10.ZIP, 参见问题&nbsp;<A HREF="node305.html#q:18.16">18.18</A>)&nbsp;和&nbsp;文献中提到的文章&nbsp;
+``Date conversionsciteburki。
+
+<P>
+参见问题&nbsp;<A HREF="node233.html#q:13.13">13.11</A>, <A HREF="node377.html#q:20.31">20.27</A>&nbsp;和&nbsp;<A HREF="node378.html#q:20.32">20.28</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. B10 p. 256]; [<A
+ HREF="node388.html#iso">ISO</A>, Secs. 7.12.2.2,7.12.2.3];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Secs. 18.4,18.5 pp. 401-2]; [<A
+ HREF="node388.html#burki">Burki</A>]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3523"
+  HREF="node233.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3529"
+  HREF="node222.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3531"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3533"
+  HREF="node235.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

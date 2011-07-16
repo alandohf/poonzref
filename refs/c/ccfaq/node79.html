@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7.4 那么为什么作为函数形参的数组和指针申明可以互换呢 ？</TITLE>
+<META NAME="description" CONTENT="7.4 那么为什么作为函数形参的数组和指针申明可以互换呢 ？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node80.html">
+<LINK REL="previous" HREF="node78.html">
+<LINK REL="up" HREF="node75.html">
+<LINK REL="next" HREF="node80.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1534"
+  HREF="node78.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1540"
+  HREF="node75.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1542"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1544"
+  HREF="node80.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00840000000000000000"></A>
+<A NAME="q:6.4"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">4</SPAN> 那么为什么作为函数形参的数组和指针申明可以互换呢 ？
+</H1>
+这是一种便利。
+
+<P>
+由于数组会马上蜕变为指针, 数组事实上从来没有传入过函数。允许指针参数声明
+为数组只不过是为让它看起来好像传入了数组, 因为该参数可能在函数内当作数组
+使用。特别地, 任何声明&nbsp;``看起来象"&nbsp;数组的参数, 例如
+<PRE>
+    void f(char a[])
+    { ... }
+</PRE>
+在编译器里都被当作指针来处理, 因为在传入数组的时候,那正是函数接收到的.
+<PRE>
+    void f(char *a)
+    { ... }
+</PRE>
+
+<P>
+这种转换仅限于函数形参的声明, 别的地方并不适用。如果这种转换令你困惑,
+请避免它; 很多程序员得出结论, 让形参声明&nbsp;``看上去象"&nbsp;调用或函数内的用法
+所带来的困惑远远大于它所提供的方便。
+
+<P>
+参见问题&nbsp;<A HREF="node93.html#q:6.21">6.18</A>。
+
+<P>
+参考资料：&nbsp;[<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. 5.3 p. 95, Sec. A10.1 p. 205];
+[<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 5.3 p. 100, Sec. A8.6.3 p. 218, Sec. A10.1 p. 226];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.5.4.3, Sec. 6.7.1, Sec. 6.9.6];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 9.3 p. 271]; [<A
+ HREF="node388.html#ctp">CT&amp;P</A>, Sec. 3.3 pp. 33-4]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1534"
+  HREF="node78.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1540"
+  HREF="node75.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1542"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1544"
+  HREF="node80.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

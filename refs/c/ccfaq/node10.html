@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.7 怎样建立和理解非常复杂的声明？例如定义一个包含&nbsp;N&nbsp;个指向返
+回指向字符的指针的函数的指针的数组？</TITLE>
+<META NAME="description" CONTENT="2.7 怎样建立和理解非常复杂的声明？例如定义一个包含&nbsp;N&nbsp;个指向返
+回指向字符的指针的函数的指针的数组？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node11.html">
+<LINK REL="previous" HREF="node9.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node11.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html645"
+  HREF="node9.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html651"
+  HREF="node3.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html653"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html655"
+  HREF="node11.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00370000000000000000"></A>
+<A NAME="q:1.21"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> 怎样建立和理解非常复杂的声明？例如定义一个包含&nbsp;N&nbsp;个指向返
+回指向字符的指针的函数的指针的数组？
+</H1>
+这个问题至少有以下&nbsp;3&nbsp;种答案: 
+
+<OL>
+<LI>char *(*(*a[N])())();
+</LI>
+<LI>用&nbsp;typedef&nbsp;逐步完成声明: 
+<PRE>
+    typedef char *pc;       /* 字符指针           */
+    typedef pc fpc();       /* 返回字符指针的函数 */
+    typedef fpc *pfpc;      /* 上面函数的指针     */
+    typedef pfpc fpfpc();   /* 返回函数指针的函数 */
+    typedef fpfpc *pfpfpc;  /* 上面函数的指针     */
+    pfpfpc a[N];	    /* 上面指针的数组     */
+</PRE>
+
+<P>
+</LI>
+<LI>使用&nbsp;cdecl&nbsp;程序, 它可以把英文翻译成&nbsp;C&nbsp;或者把&nbsp;C&nbsp;翻译成英文: 
+<PRE>
+    cdecl&gt; declare a as array of pointer to function returning
+       pointer to function returning pointer to char
+    char *(*(*a[])())()
+</PRE>
+通过类型转换,&nbsp;cdecl&nbsp;也可以用于解释复杂的声明, 指出参数应该进入哪一对括号
+&nbsp;(如同在上述的复杂函数定义中)。参见问题&nbsp;<A HREF="node288.html#q:18.1">18.1</A>。
+</LI>
+</OL>
+一本好的&nbsp;C&nbsp;语言书都会解释如何&nbsp;``从内到外''&nbsp;解释和理解这样复杂
+的&nbsp;C&nbsp;语言声明&nbsp;(``模拟声明使用'')。
+
+<P>
+上文的例子中的函数指针声明还没有包括参数类型信息。如果参数有复杂类型, 
+声明就会变得真正的混乱了。现代的&nbsp;cdecl&nbsp;版本可以提供帮助。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 5.12 p. 122];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.5ff (esp. Sec. 6.5.4)];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 4.5 pp. 85-92, Sec. 5.10.1 pp. 149-50]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html645"
+  HREF="node9.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html651"
+  HREF="node3.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html653"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html655"
+  HREF="node11.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

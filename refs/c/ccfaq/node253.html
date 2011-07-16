@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>15.9 怎样测试&nbsp;IEEE NaN&nbsp;以及其它特殊值？</TITLE>
+<META NAME="description" CONTENT="15.9 怎样测试&nbsp;IEEE NaN&nbsp;以及其它特殊值？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node254.html">
+<LINK REL="previous" HREF="node252.html">
+<LINK REL="up" HREF="node244.html">
+<LINK REL="next" HREF="node254.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3761"
+  HREF="node252.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3767"
+  HREF="node244.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3769"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3771"
+  HREF="node254.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001690000000000000000"></A>
+<A NAME="q:14.9"></A>
+<BR>
+<SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">9</SPAN> 怎样测试&nbsp;IEEE NaN&nbsp;以及其它特殊值？
+</H1>
+许多实现高质量&nbsp;IEEE&nbsp;浮点的系统会提供简洁的工具去处理这些特殊值。例如,
+在&nbsp;&lt;math.h&gt;&nbsp;以非标准扩展功能, 或可能以
+&nbsp;&lt;ieee.h&gt;&nbsp;或
+&nbsp;&lt;nan.h&gt;&nbsp;提供预定义常数, 及象
+&nbsp;isnan()&nbsp;这类的函数。这些工具的
+标准化进程正在进行中。 一个粗陋但通常有效的测试&nbsp;NaN&nbsp;的方法：
+<PRE>
+	#define isnan(x)    ((x) != (x))
+</PRE>
+虽然一些不支持&nbsp;IEEE&nbsp;的编译器可能会把这个判断优化掉。
+
+<P>
+C99&nbsp;提供&nbsp;isnan(), fpclassify()&nbsp;及其它一些类别的例程。
+
+<P>
+必要时, 还可以用&nbsp;sprintf()&nbsp;格式化需测试的值, 在许多系统上, 它会
+产生&nbsp;``NaN"&nbsp;或&nbsp;``Inf"&nbsp;的字符串。你就可以比较了。
+
+<P>
+参见问题&nbsp;<A HREF="node344.html#q:19.39">19.38</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#c9x">C9X</A>, Sec. 7.7.3]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3761"
+  HREF="node252.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3767"
+  HREF="node244.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3769"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3771"
+  HREF="node254.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

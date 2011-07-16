@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>20.27 怎样分配大于&nbsp;64K&nbsp;的数组或结构？</TITLE>
+<META NAME="description" CONTENT="20.27 怎样分配大于&nbsp;64K&nbsp;的数组或结构？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node334.html">
+<LINK REL="previous" HREF="node332.html">
+<LINK REL="up" HREF="node306.html">
+<LINK REL="next" HREF="node334.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4799"
+  HREF="node332.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4805"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4807"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4809"
+  HREF="node334.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0021270000000000000000"></A>
+<A NAME="q:19.23"></A>
+<BR>
+<SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">27</SPAN> 怎样分配大于&nbsp;64K&nbsp;的数组或结构？
+</H1>
+一台合理的电脑应该可以让你透明地访问所有的有效内存。如果, 你很不幸, 
+你可能需要重新考虑程序使用内存的方式, 或者用各种针对系统的技巧。
+
+<P>
+64K&nbsp;仍然是一块相当大的内存。不管你的电脑有多少内存, 分配这么
+一大段连续的内存是个不小的要求。标准&nbsp;C&nbsp;不保证一个单独的对象可以
+大于&nbsp;32K, 或者&nbsp;C99&nbsp;的&nbsp;64K。通常, 设计数据结构时
+的一个好的思想, 是使它不要求所有的内存都连续。对于动态分配的多维
+数组, 你可以使用指针的指针, 在问题&nbsp;<A HREF="node88.html#q:6.16">6.13</A>&nbsp;中有举例说明。
+你可以用链接或结构指针数组来代替一个大的结构数组。
+
+<P>
+如果你使用的是&nbsp;PC&nbsp;兼容机&nbsp;(基于&nbsp;8086)&nbsp;系统, 遇到了
+&nbsp;64K&nbsp;或&nbsp;640K的限制, 可以考虑使用&nbsp;``huge"&nbsp;
+(巨大)&nbsp;内存模型, 或者扩展或延伸内存, 或&nbsp;malloc&nbsp;的变体函数
+&nbsp;halloc()&nbsp;和&nbsp;farmalloc(), 或者用一个&nbsp;32&nbsp;比特
+的&nbsp;``平直"&nbsp;编译器&nbsp;(例如&nbsp;djgpp, 参见问题&nbsp;<A HREF="node290.html#q:18.3">18.3</A>), 
+或某种&nbsp;DOS&nbsp;扩充器, 或换一个操作系统。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 5.2.4.1]; [<A
+ HREF="node388.html#c9x">C9X</A>, Sec. 5.2.4.1]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4799"
+  HREF="node332.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4805"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4807"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4809"
+  HREF="node334.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

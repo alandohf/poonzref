@@ -1,0 +1,122 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>12.4 很多&nbsp;ANSI&nbsp;编译器在遇到以下代码时都会警告类型不匹配。
+&nbsp;extern int func(float);
+int func(x)
+float x;
+{ ...</TITLE>
+<META NAME="description" CONTENT="12.4 很多&nbsp;ANSI&nbsp;编译器在遇到以下代码时都会警告类型不匹配。
+&nbsp;extern int func(float);
+int func(x)
+float x;
+{ ...">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node160.html">
+<LINK REL="previous" HREF="node158.html">
+<LINK REL="up" HREF="node155.html">
+<LINK REL="next" HREF="node160.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2576"
+  HREF="node158.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2582"
+  HREF="node155.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2584"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2586"
+  HREF="node160.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001340000000000000000"></A>
+<A NAME="q:11.3"></A>
+<BR>
+<SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">4</SPAN> 很多&nbsp;ANSI&nbsp;编译器在遇到以下代码时都会警告类型不匹配。
+&nbsp;extern int func(float);
+int func(x)
+float x;
+{ ...
+</H1>
+你混用了新型的原型声明&nbsp;``extern int func(float);"&nbsp;和老式的定义
+&nbsp;``int func(x) float x;"。 通常这两种风格可以混同, 但是这种情况下不行。
+
+<P>
+旧的&nbsp;C&nbsp;编译器&nbsp;(包括未使用原型和变长参数列表的&nbsp;ANSI C)&nbsp;会&nbsp;``放宽"&nbsp;传入
+函数的某些参数。 浮点数被升为双精度浮点数, 字符和段整型被升为整型。
+对于旧式的函数定义, 参数值会在被调函数的内部自动转换为对应的较窄
+的类型, 如果在函数中那样声明了。
+
+<P>
+这个问题可以通过在定义中使用新型的语法一致性:
+<PRE>
+    int func(float x) { ... }
+</PRE>
+或者把新型原型声明改成跟旧式定义一致。
+<PRE>
+    extern int func(double);
+</PRE>
+这种情况下, 如果可能, 最好把就是定义也改成使用双精度数。
+
+<P>
+毫无疑问, 在函数参数和返回值中避免使用&nbsp;``窄的"&nbsp;
+(char, short int&nbsp;和&nbsp;float)&nbsp;类型要安全得多。
+
+<P>
+参见问题&nbsp;<A HREF="node11.html#q:1.25">1.8</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. A7.1 p. 186]; [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. A7.3.2 p. 202];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.3.2.2, Sec. 6.5.4.3];
+[<A
+ HREF="node388.html#rationale">Rationale</A>, Sec. 3.3.2.2, Sec. 3.5.4.3];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 9.2 pp. 265-7, Sec. 9.4 pp. 272-3]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2576"
+  HREF="node158.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2582"
+  HREF="node155.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2584"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2586"
+  HREF="node160.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

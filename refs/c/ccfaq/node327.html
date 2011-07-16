@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>20.21 为什么用了详尽的路径还不能打开文件？
+&nbsp;fopen("c:&#92;&nbsp;newdir&nbsp;&#92;file.dat",
+"r")&nbsp;
+返回错误。</TITLE>
+<META NAME="description" CONTENT="20.21 为什么用了详尽的路径还不能打开文件？
+&nbsp;fopen("c:&#92;&nbsp;newdir&nbsp;&#92;file.dat",
+"r")&nbsp;
+返回错误。">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node328.html">
+<LINK REL="previous" HREF="node326.html">
+<LINK REL="up" HREF="node306.html">
+<LINK REL="next" HREF="node328.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4727"
+  HREF="node326.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4733"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4735"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4737"
+  HREF="node328.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0021210000000000000000"></A>
+<A NAME="q:19.17"></A>
+<BR>
+<SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">21</SPAN> 为什么用了详尽的路径还不能打开文件？
+&nbsp;fopen(<TT>"</TT>c:&#92;&nbsp;newdir&nbsp;&#92;file.dat<TT>"</TT>,
+<TT>"</TT>r<TT>"</TT>)&nbsp;
+返回错误。
+</H1>
+你实际请求的文件名内含有字符&nbsp;&#92;n&nbsp;和&nbsp;&#92;f, 
+可能并不存在, 也不是你希望的。
+
+<P>
+在字符常量和字符串中, 反斜杠&nbsp;&#92;&nbsp;是逃逸字符, 它赋予后面紧跟的
+字符特殊意义。为了正确的把反斜杠传递给&nbsp;fopen() (或其它函数), 必须成双的
+使用, 这样第一个反斜杠引述了第二个:
+<PRE>
+        fopen("c:\\newdir\\file.dat", "r")
+</PRE>
+
+<P>
+另一个选择, 在&nbsp;MS-DOS&nbsp;下, 正斜杠也被接受为路径分隔符, 所以也可以这样用：
+<PRE>
+        fopen("c:/newdir/file.dat", "r")
+</PRE>
+
+<P>
+注意, 顺便提一下, 用于预处理&nbsp;#include&nbsp;指令的头文件名不是字符串文字, 
+所以不必担心反斜杠的问题。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4727"
+  HREF="node326.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4733"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4735"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4737"
+  HREF="node328.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

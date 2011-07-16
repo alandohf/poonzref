@@ -1,0 +1,129 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7.13 我该如何动态分配多维数组 ？</TITLE>
+<META NAME="description" CONTENT="7.13 我该如何动态分配多维数组 ？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node89.html">
+<LINK REL="previous" HREF="node87.html">
+<LINK REL="up" HREF="node75.html">
+<LINK REL="next" HREF="node89.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1642"
+  HREF="node87.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1648"
+  HREF="node75.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1650"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1652"
+  HREF="node89.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION008130000000000000000"></A>
+<A NAME="q:6.16"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">13</SPAN> 我该如何动态分配多维数组 ？
+</H1>
+传统的解决方案是分配一个指针数组, 然后把每个指针初始化为动态分配的&nbsp;``列"。 以下为
+一个二维的例子:
+<PRE>
+    #include &lt;stdlib.h&gt;
+
+	int **array1 = malloc(nrows * sizeof(int *));
+	for(i = 0; i &lt; nrows; i++)
+	    array1[i] = malloc(ncolumns * sizeof(int));
+</PRE>
+当然, 在真实代码中, 所有的&nbsp;malloc&nbsp;返回值都必须检查。你也可以使用&nbsp;sizeof(*array1)&nbsp;
+和&nbsp;sizeof(**array1)&nbsp;代替&nbsp;sizeof(int *)&nbsp;和&nbsp;sizeof(int)。
+
+<P>
+你可以让数组的内容连续, 但在后来重新分配列的时候会比较困难, 得使用一点指针算术:
+<PRE>
+	int **array2 = malloc(nrows * sizeof(int *));
+	array2[0] = malloc(nrows * ncolumns * sizeof(int));
+	for(i = 1; i &lt; nrows; i++)
+	    array2[i] = array2[0] + i * ncolumns;
+</PRE>
+在两种情况下, 动态数组的成员都可以用正常的数组下标&nbsp;arrayx[i][j]&nbsp;来访问
+&nbsp;(for 0 &lt;= i &lt;nrows&nbsp;和&nbsp;0 &lt;= j &lt;ncolumns)。
+
+<P>
+如果上述方案的两次间接因为某种原因不能接受, 你还可以同一个单独的动态分配
+的一维数组来模拟二维数组:
+<PRE>
+    int *array3 = malloc(nrows * ncolumns * sizeof(int));
+</PRE>
+
+<P>
+但是, 你现在必须手工计算下标, 用&nbsp;array3[i * ncolumns + j]&nbsp;访问第&nbsp;i, j&nbsp;个成员。
+使用宏可以隐藏显示的计算, 但是调用它的时候要使用括号和逗号, 这看起来不太象
+多维数组语法, 而且宏需要至少访问一维。参见问题&nbsp;<A HREF="node91.html#q:6.19">6.16</A>。
+
+<P>
+另一种选择是使用数组指针:
+<PRE>
+    int (*array4)[NCOLUMNS] = malloc(nrows * sizeof(*array4));
+</PRE>
+但是这个语法变得可怕而且运行时最多只能确定一维。
+
+<P>
+当然, 使用这些技术, 你都必须记住在不用的时候释放数组&nbsp;(这可能需要多个步骤;
+参见问题&nbsp;<A HREF="node114.html#q:7.23">7.20</A>)。 而且你可能不能混用动态数组和传统的静态分配数组。
+参见问题&nbsp;<A HREF="node92.html#q:6.20">6.17</A>&nbsp;和&nbsp;<A HREF="node90.html#q:6.18">6.15</A>。
+
+<P>
+最后, 在&nbsp;C99&nbsp;中你可以使用变长数组。
+
+<P>
+所有这些技术都可以延伸到三维或更多的维数。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#c9x">C9X</A>, Sec. 6.5.5.2]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1642"
+  HREF="node87.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1648"
+  HREF="node75.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1650"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1652"
+  HREF="node89.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

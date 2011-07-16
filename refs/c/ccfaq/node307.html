@@ -1,0 +1,150 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>20.1 怎样从键盘直接读入字符而不用等&nbsp;RETURN&nbsp;键？怎样
+防止字符输入时的回显？</TITLE>
+<META NAME="description" CONTENT="20.1 怎样从键盘直接读入字符而不用等&nbsp;RETURN&nbsp;键？怎样
+防止字符输入时的回显？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node308.html">
+<LINK REL="previous" HREF="node306.html">
+<LINK REL="up" HREF="node306.html">
+<LINK REL="next" HREF="node308.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4487"
+  HREF="node306.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4493"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4495"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4497"
+  HREF="node308.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002110000000000000000"></A>
+<A NAME="q:19.1"></A>
+<BR>
+<SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">1</SPAN> 怎样从键盘直接读入字符而不用等&nbsp;RETURN&nbsp;键？怎样
+防止字符输入时的回显？
+</H1>
+唉, 在&nbsp;C&nbsp;里没有一个标准且可移植的方法。在标准中跟本就
+没有提及屏幕和键盘的概念, 只有基于字符&nbsp;``流"&nbsp;的简单输入输出。
+
+<P>
+在某个级别, 与键盘的交互输入一般上都是由系统取得一行的输入才
+提供给需要的程序。这给操作系统提供了一个加入行编辑的机会&nbsp;(退格、
+删除、消除等), 使得系统地操作具一致性, 而不用每一个程序自己
+建立。当用户对输入满意, 并键入&nbsp;RETURN (或等价的键)后, 输入行才被提供
+给需要的程序。即使程序中用了读入单个字符的函数&nbsp;(例如&nbsp;getchar()&nbsp;
+等), 第一次调用就会等到完成了一整行的输入才会返回。这时, 可能
+有许多字符提供给了程序, 以后的许多调用&nbsp;(象&nbsp;getchar()&nbsp;的函数)&nbsp;
+都会马上返回。
+
+<P>
+当程序想在一个字符输入时马上读入, 所用的方式途径就采决于行处理在
+输入流中的位置, 以及如何使之失效。在一些系统下&nbsp;(例如&nbsp;MS-DOS,
+VMS&nbsp;的某些模态), 程序可以使用一套不同或修改过的操作系统函数
+来扰过行输入模态。在另外一些系统下&nbsp;(例如&nbsp;Unix, VMS&nbsp;的
+另一些模态), 操作系统中负责串行输入的部分&nbsp;(通常称为&nbsp;``终端驱动")&nbsp;必须
+设置为行输入关闭的模态, 这样, 所有以后调用的常用输入函数
+&nbsp;(例如&nbsp;read(), getchar()&nbsp;等)&nbsp;就会立即返回输入的字符。
+最后, 少数的系统&nbsp;(特别是那些老旧的批处理大型主机)&nbsp;使用外围处理器
+进行输入, 只有行处理模式。
+
+<P>
+因此, 当你需要用到单字符输入时&nbsp;(关闭键盘回显也是类似的问题), 你需要
+用一个针对所用系统的特定方法, 假如系统提供的话。新闻组&nbsp;comp.lang.c&nbsp;
+讨论的问题基本上都是&nbsp;C&nbsp;语言中有明确支持的, 一般上你会从针对个别系统的
+新闻组以及相对应的常用问题集中得到更好的解答, 例如
+&nbsp;comp.unix.questions&nbsp;或&nbsp;comp.os.msdos.programmer。
+另外要注意, 有些解答即使是对相似系统的变种也不尽相同, 例如&nbsp;Unix&nbsp;
+的不同变种。同时也要记住, 当回答一些针对特定系统的问题时, 你的答案在你
+的系统上可以工作并不代表可以在所有人的系统上都工作。
+
+<P>
+然而, 这类问题被经常的问起, 这里提供一个对于通常情况的简略回答。
+
+<P>
+某些版本的&nbsp;curses&nbsp;函数库包含了&nbsp;cbreak(),&nbsp;noecho()
+&nbsp;和&nbsp;getch()&nbsp;函数, 这些函数可以做到你所需的。如果你只是想要
+读入一个简短的口令而不想回显的话, 可以试试&nbsp;getpass()。在&nbsp;Unix
+系统下, 可以用&nbsp;ioctl()&nbsp;来控制终端驱动的模式, ``传统"系统下有&nbsp;CBREAK
+和&nbsp;RAW&nbsp;模式,&nbsp;System V&nbsp;或&nbsp;POSIX&nbsp;系统下有&nbsp;ICANON, 
+&nbsp;c_cc[VMIN]&nbsp;和&nbsp;c_cc[VTIME]&nbsp;模式, 而&nbsp;ECHO&nbsp;模式
+在所有系统中都有。必要时, 用函数&nbsp;system()&nbsp;和&nbsp;stty&nbsp;命令。
+更多的信息可以查看所用的系统, 传统系统下, 查看&nbsp;&lt;sgtty.h&gt;
+&nbsp;和&nbsp;tty(4), System V&nbsp;下, 查看&nbsp;&lt;termio.h&gt;
+&nbsp;和&nbsp;termio(4), POSIX&nbsp;下, 查看&nbsp;&lt;termios.h&gt;
+&nbsp;和&nbsp;termios(4)。在&nbsp;MS-DOS&nbsp;系统下, 用函数&nbsp;getch()&nbsp;或
+&nbsp;getche(), 或者相对应的&nbsp;BIOS&nbsp;中断。在&nbsp;VMS&nbsp;下, 
+使用屏幕管理例程&nbsp;(SMG$), 或&nbsp;curses&nbsp;函数库, 或者低层
+&nbsp;$QIO&nbsp;的&nbsp;IO$_READVBLK&nbsp;函数, 以及&nbsp;IO$M_NOECHO&nbsp;
+等其它函数。也可以通过设置&nbsp;VMS&nbsp;的终端驱动, 在单字符输入或
+&nbsp;``通过"&nbsp;模式间切换。 如果是其它操作系统, 你就要靠自己了。
+
+<P>
+另外需要说明一点, 简单的使用&nbsp;setbuf()&nbsp;或&nbsp;setvbuf()&nbsp;来设置
+&nbsp;sdtin&nbsp;为无缓冲, 通常并<SPAN  CLASS="textit">不能</SPAN>切换到单字符输入模式。
+
+<P>
+如果你在试图写一个可移植的程序, 一个比较好的方法是自己定义三套函数：
+&nbsp;1) 设置终端驱动或输入系统进入单字符输入模式, (如果有必要的话), 
+&nbsp;2) 取得字符,&nbsp;3) 程序使用结束后的终端驱动复原。理想上, 也许有一天, 
+这样的一组函数可以成为标准的一部分。本常用问题集的扩充版
+&nbsp;(参见问题&nbsp;<A HREF="node386.html#q:20.40">20.36</A>)&nbsp;含有一套适用于几个流行系统的函数。
+
+<P>
+参见问题&nbsp;<A HREF="node308.html#q:19.2">19.2</A>
+
+<P>
+参考资料: [<A
+ HREF="node388.html#pcs">PCS</A>, Sec. 10 pp. 128-9, Sec. 10.1 pp. 130-1];
+[<A
+ HREF="node388.html#posix">POSIX</A>, Sec. 7]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4487"
+  HREF="node306.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4493"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4495"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4497"
+  HREF="node308.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

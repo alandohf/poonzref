@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>20.36 怎样实现精度小于秒的延时或记录用户回应的时间？</TITLE>
+<META NAME="description" CONTENT="20.36 怎样实现精度小于秒的延时或记录用户回应的时间？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node343.html">
+<LINK REL="previous" HREF="node341.html">
+<LINK REL="up" HREF="node306.html">
+<LINK REL="next" HREF="node343.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4907"
+  HREF="node341.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4913"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4915"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4917"
+  HREF="node343.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0021360000000000000000"></A>
+<A NAME="q:19.37"></A>
+<BR>
+<SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">36</SPAN> 怎样实现精度小于秒的延时或记录用户回应的时间？
+</H1>
+很不幸, 这没有可移植解决方法。下面是一些你可以在你的系统中寻找
+的函数: clock(), delay(), ftime(), getimeofday(), msleep(), nap(),
+napms(), nanaosleep(), setitimer(), sleep(), Sleep(), times()&nbsp;和&nbsp;
+usleep。至少在&nbsp;Unix&nbsp;系统下, 函数&nbsp;wait()&nbsp;不是
+你想要的。函数&nbsp;select()&nbsp;和&nbsp;poll()&nbsp;(如果存在)
+可以用来实现简单的延时。在&nbsp;MS-DOS&nbsp;下, 可以重新对系统计时器
+和计时器中断编程。
+
+<P>
+这些函数中, 只有&nbsp;clock()&nbsp;在&nbsp;ANSI&nbsp;标准中。两次调用
+&nbsp;clock()&nbsp;之间的差分就是执行所用的时间, 如果
+&nbsp;CLOCKS_PER_SEC&nbsp;的值大于&nbsp;1, 你可以得到精确度小于秒
+的计时。但是,&nbsp;clock()&nbsp;
+返回的是执行程序使用的处理器的时间, 在多任务系统下, 有可能
+和真实的时间相差很多。
+
+<P>
+如果你需要实现一个延时, 而你只有报告时间的函数可用, 你可以
+实现一个繁忙等待。但是这只是在单用户, 单任务系统下可选, 
+因为这个方法对于其它进程极不友好。在多任务系统下, 确保你
+调用函数, 让你的进程在这段时间进入休眠状态。可用函数&nbsp;
+&nbsp;sleep(), select()&nbsp;或&nbsp;poll()&nbsp;和
+&nbsp;alarm()&nbsp;或&nbsp;setitimer()实现。
+
+<P>
+对于非常短暂的延时, 使用一个空循环颇据有诱惑力:
+<PRE>
+    long int i;
+    for (i = 0; i &lt; 1000000; ++i)
+	;
+</PRE>
+但是请尽量抵制这个诱惑！因为, 经过你仔细计算的延时循环可能
+在下个月因为更快的处理器出现而不能正常工作。更糟糕的是, 
+一个聪明的编译器可能注意到这个循环什么也没做, 而把它完全优化
+掉。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 18.1 pp. 398-9];
+[<A
+ HREF="node388.html#pcs">PCS</A>, Sec. 12 pp. 197-8,215-6];
+[<A
+ HREF="node388.html#posix">POSIX</A>, Sec. 4.5.2]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4907"
+  HREF="node341.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4913"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4915"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4917"
+  HREF="node343.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

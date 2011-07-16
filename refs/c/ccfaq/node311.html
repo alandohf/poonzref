@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>20.5 怎样读入方向键, 功能键？</TITLE>
+<META NAME="description" CONTENT="20.5 怎样读入方向键, 功能键？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node312.html">
+<LINK REL="previous" HREF="node310.html">
+<LINK REL="up" HREF="node306.html">
+<LINK REL="next" HREF="node312.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4535"
+  HREF="node310.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4541"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4543"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4545"
+  HREF="node312.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002150000000000000000"></A>
+<A NAME="q:19.5"></A>
+<BR>
+<SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">5</SPAN> 怎样读入方向键, 功能键？
+</H1>
+terminfo, 某些版本的&nbsp;termcap, 以及某些版本的&nbsp;curses&nbsp;函数库
+有对这些非&nbsp;ASCII&nbsp;键的支持。典型的, 一个特殊键会发送一个多字符序列&nbsp;(通常
+以&nbsp;ESC&nbsp;[<code>'\033'</code>]&nbsp;字符开头)。分析这个多字符序列比较麻烦。如果
+你首先调用了&nbsp;keypad(), curses&nbsp;会帮你做分析。
+
+<P>
+在&nbsp;MS-DOS&nbsp;下, 如果你在读入键盘输入时, 收到一个值为&nbsp;0&nbsp;的字符
+&nbsp;(不是字符&nbsp;<code>'0'</code>), 这就标志着下一个读入的值代表一个特殊键。
+有关键盘的编码可参见任何&nbsp;DOS&nbsp;的编程指南。简单的说明: 上、下、
+左、右键的编码是&nbsp;72, 80, 75, 77, 功能键从&nbsp;59&nbsp;到&nbsp;68。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#pcs">PCS</A>, Sec. 5.1.4 pp. 56-7]。 
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4535"
+  HREF="node310.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4541"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4543"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4545"
+  HREF="node312.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

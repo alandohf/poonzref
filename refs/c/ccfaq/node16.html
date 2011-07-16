@@ -1,0 +1,103 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.13 以下的初始化有什么区别？char a[] = "string
+literal"; char *p = "string
+literal"; 当我向&nbsp;p[i]&nbsp;赋值的时候, 我的
+程序崩溃了。</TITLE>
+<META NAME="description" CONTENT="2.13 以下的初始化有什么区别？char a[] = "string
+literal"; char *p = "string
+literal"; 当我向&nbsp;p[i]&nbsp;赋值的时候, 我的
+程序崩溃了。">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node17.html">
+<LINK REL="previous" HREF="node15.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node17.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html717"
+  HREF="node15.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html723"
+  HREF="node3.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html725"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html727"
+  HREF="node17.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION003130000000000000000"></A>
+<A NAME="q:1.32"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">13</SPAN> 以下的初始化有什么区别？char a[] = <TT>"</TT>string
+literal<TT>"</TT>; char *p  = <TT>"</TT>string
+literal<TT>"</TT>; 当我向&nbsp;p[i]&nbsp;赋值的时候, 我的
+程序崩溃了。
+</H1>
+字符串常量有两种稍有区别的用法。用作数组初始值&nbsp;(如同在&nbsp;char a[]&nbsp;
+的声明中), 它指明该数组中字符的初始值。其它情况下, 它会转化为一个
+无名的静态字符数组, 可能会存储在只读内存中, 这就是造成它不一定能被修改。
+在表达式环境中, 数组通常被立即转化为一个指针
+&nbsp;(参见第&nbsp;<A HREF="node75.html#s:6">6</A>&nbsp;章), 因此第二个声明把&nbsp;p&nbsp;初始化成
+指向无名数组的第一个元素。
+
+<P>
+为了编译旧代码, 有的编译器有一个控制字符串是否可写的开关。
+
+<P>
+参见问题&nbsp;<A HREF="node14.html#q:1.31">1.11</A>、&nbsp;<A HREF="node76.html#q:6.1">6.1</A>、&nbsp;<A HREF="node77.html#q:6.2">6.2</A>&nbsp;和&nbsp;<A HREF="node81.html#q:6.8">6.6</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 5.5 p. 104];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.1.4, Sec. 6.5.7];
+[<A
+ HREF="node388.html#rationale">Rationale</A>, Sec. 3.1.4]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 2.7.4 pp. 31-2]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html717"
+  HREF="node15.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html723"
+  HREF="node3.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html725"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html727"
+  HREF="node17.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

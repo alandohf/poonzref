@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>21.7 怎样掉换字节？</TITLE>
+<META NAME="description" CONTENT="21.7 怎样掉换字节？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node358.html">
+<LINK REL="previous" HREF="node356.html">
+<LINK REL="up" HREF="node350.html">
+<LINK REL="next" HREF="node358.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5121"
+  HREF="node356.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5127"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5129"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5131"
+  HREF="node358.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002270000000000000000"></A>
+<A NAME="q:20.9b"></A>
+<BR>
+<SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">7</SPAN> 怎样掉换字节？
+</H1>
+V7 Unix&nbsp;有一个&nbsp;swap()&nbsp;的函数, 但似乎被遗忘了。
+
+<P>
+使用明示的字节调换代码有个问题, 你必须决定是否要调用;
+参见问题&nbsp;<A HREF="node356.html#q:20.9">20.6</A>。更好的方法是使用函数&nbsp;(例如&nbsp;BSD&nbsp;
+系统中网络函数&nbsp;ntohs()&nbsp;等), 函数会进行已知字符
+顺序和机器顺序&nbsp;(未知)&nbsp;之间的转换, 对于已经和机器匹配
+的字符顺序, 函数不作任何转换。
+
+<P>
+如果你必须自己写字符转换的代码, 两个明显的方法就是使用
+指针或联合, 就象问题&nbsp;<A HREF="node356.html#q:20.9">20.6</A>&nbsp;一样。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#pcs">PCS</A>, Sec. 11 p. 179]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5121"
+  HREF="node356.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5127"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5129"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5131"
+  HREF="node358.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

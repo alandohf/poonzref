@@ -1,0 +1,132 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>6.3 用缩写的指针比较&nbsp;``if(p)"&nbsp;检查空指针是否可靠？
+如果空指针的内部表达不是&nbsp;0&nbsp;会怎么样？</TITLE>
+<META NAME="description" CONTENT="6.3 用缩写的指针比较&nbsp;``if(p)"&nbsp;检查空指针是否可靠？
+如果空指针的内部表达不是&nbsp;0&nbsp;会怎么样？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node63.html">
+<LINK REL="previous" HREF="node61.html">
+<LINK REL="up" HREF="node59.html">
+<LINK REL="next" HREF="node63.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1314"
+  HREF="node61.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1320"
+  HREF="node59.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1322"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1324"
+  HREF="node63.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00730000000000000000"></A>
+<A NAME="q:5.3"></A>
+<BR>
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">3</SPAN> 用缩写的指针比较&nbsp;``if(p)"&nbsp;检查空指针是否可靠？
+如果空指针的内部表达不是&nbsp;0&nbsp;会怎么样？
+</H1>
+当&nbsp;C&nbsp;在表达式中要求布尔值时, 如果表达式等于&nbsp;0&nbsp;则认为该值为假,
+否则为真。换言之, 只要写出
+<PRE>
+    if(expr)
+</PRE>
+无论&nbsp;``expr"&nbsp;是任何表达式, 编译器本质上都会把它当
+<PRE>
+    if((expr) != 0)
+</PRE>
+处理。
+
+<P>
+如果用指针&nbsp;p&nbsp;代替&nbsp;``expr"&nbsp;则
+<PRE>
+    if(p) 等价于 if(p != 0)。
+</PRE>
+而这是一个比较上下文, 因此编译器可以看出&nbsp;0&nbsp;实际上是一个空指针常数, 
+并使用正确的空指针值。这里没有任何欺骗; 编译器就是这样工作的, 并为、
+二者生成完全一样的代码。空指针的内部表达<SPAN  CLASS="textbf">无关紧要</SPAN>。
+
+<P>
+布尔否操作符&nbsp;!&nbsp;可如下描述:
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">!expr</TD>
+<TD ALIGN="LEFT">本质上等价于</TD>
+<TD ALIGN="LEFT">(expr)？0:1</TD>
+</TR>
+<TR><TD ALIGN="LEFT">&nbsp;</TD>
+<TD ALIGN="LEFT">或等价于</TD>
+<TD ALIGN="LEFT">((expr) == 0)</TD>
+</TR>
+</TABLE>
+</DIV>
+从而得出结论
+<DIV ALIGN="CENTER">
+<TABLE CELLPADDING=3>
+<TR><TD ALIGN="LEFT">if(!p)</TD>
+<TD ALIGN="LEFT">等价于</TD>
+<TD ALIGN="LEFT">if(p == 0)</TD>
+</TR>
+</TABLE>
+</DIV>
+类似&nbsp;if(p)&nbsp;这样的&nbsp;``缩写", 尽管完全合法, 但被一些人认为是不好的风格&nbsp;(另外
+一些人认为恰恰是好的风格; 参见问题&nbsp;<A HREF="node286.html#q:17.10">17.8</A>)。
+
+<P>
+参见问题&nbsp;<A HREF="node130.html#q:9.2">9.2</A>。
+
+<P>
+参考资料：&nbsp;[<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. A7.4.7 p. 204]; [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.3.3.3,
+Sec. 6.3.9, Sec. 6.3.13, Sec. 6.3.14, Sec. 6.3.15, Sec. 6.6.4.1,
+Sec. 6.6.5]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 5.3.2 p. 122]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1314"
+  HREF="node61.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1320"
+  HREF="node59.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1322"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1324"
+  HREF="node63.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

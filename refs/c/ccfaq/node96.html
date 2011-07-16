@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>8.2 我的&nbsp;strcat()&nbsp;不行.我试了
+&nbsp;char *s1 = "Hello, "; char *s2 =
+"world!"; char *s3 = strcat(s1, s2);&nbsp;
+但是我得到了奇怪的结果。</TITLE>
+<META NAME="description" CONTENT="8.2 我的&nbsp;strcat()&nbsp;不行.我试了
+&nbsp;char *s1 = "Hello, "; char *s2 =
+"world!"; char *s3 = strcat(s1, s2);&nbsp;
+但是我得到了奇怪的结果。">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node97.html">
+<LINK REL="previous" HREF="node95.html">
+<LINK REL="up" HREF="node94.html">
+<LINK REL="next" HREF="node97.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1763"
+  HREF="node95.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1769"
+  HREF="node94.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1771"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1773"
+  HREF="node97.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00920000000000000000"></A> <A NAME="q:7.2"></A>
+<BR>
+<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">2</SPAN> 我的&nbsp;strcat()&nbsp;不行.我试了
+&nbsp;char *s1 = <TT>"</TT>Hello, <TT>"</TT>; char *s2 =
+<TT>"</TT>world!<TT>"</TT>; char *s3 = strcat(s1, s2);&nbsp;
+但是我得到了奇怪的结果。
+</H1>
+跟前面的问题&nbsp;<A HREF="node95.html#q:7.1">7.1</A>&nbsp;一样, 这里主要的问题是没有正确地为连接
+结果分配空间。C&nbsp;没有提供自动管理的字符串类型。C&nbsp;编译器只为源码
+中明确提到的对象分配空间&nbsp;(对于字符串, 这包括字符数组和串常量)。
+程序员必须为字符串连接这样的运行期操作的结果分配足够的空间,
+通常可以通过声明数组或调用&nbsp;malloc()&nbsp;完成。
+
+<P>
+strcat()&nbsp;不进行任何分配; 第二个串原样不动地附加在第一个之后。
+因此, 一种解决办法是把第一个串声明为数组:
+<PRE>
+    char s1[20] = "Hello, ";
+</PRE>
+由于&nbsp;strcat()&nbsp;返回第一个参数的值, 本例中为&nbsp;s1, s3&nbsp;实际上是多
+余的; 在&nbsp;strcat()&nbsp;调用之后, s1&nbsp;包含结果。
+
+<P>
+提问中的&nbsp;strcat()&nbsp;调用实际上有两个问题: s1&nbsp;指向的字符串常数,
+除了空间不足以放入连接的字符串之外, 甚至都不一定可写。
+参见问题&nbsp;<A HREF="node16.html#q:1.32">1.13</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#ctp">CT&amp;P</A>, Sec. 3.2 p. 32]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1763"
+  HREF="node95.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1769"
+  HREF="node94.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1771"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1773"
+  HREF="node97.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>14.7 我想用&nbsp;qsort()&nbsp;对一个结构数组排序。我的比较函数接受结构指针,
+但是编译器认为这个函数对于&nbsp;qsort()&nbsp;是错误类型。我要怎样转换这个函数指针
+才能避免这样的警告？</TITLE>
+<META NAME="description" CONTENT="14.7 我想用&nbsp;qsort()&nbsp;对一个结构数组排序。我的比较函数接受结构指针,
+但是编译器认为这个函数对于&nbsp;qsort()&nbsp;是错误类型。我要怎样转换这个函数指针
+才能避免这样的警告？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node230.html">
+<LINK REL="previous" HREF="node228.html">
+<LINK REL="up" HREF="node222.html">
+<LINK REL="next" HREF="node230.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3463"
+  HREF="node228.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3469"
+  HREF="node222.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3471"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3473"
+  HREF="node230.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001570000000000000000"></A>
+<A NAME="q:13.9"></A>
+<BR>
+<SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">7</SPAN> 我想用&nbsp;qsort()&nbsp;对一个结构数组排序。我的比较函数接受结构指针,
+但是编译器认为这个函数对于&nbsp;qsort()&nbsp;是错误类型。我要怎样转换这个函数指针
+才能避免这样的警告？
+</H1>
+这个转换必须在比较函数中进行, 而函数必须定义为接受&nbsp;``一般指针" (const void*)
+的类型, 就象上文问题&nbsp;<A HREF="node228.html#q:13.8">13.6</A>&nbsp;中所讨论的。比较函数可能像这样:
+<PRE>
+	int mystructcmp(const void *p1, const void *p2)
+	{
+	    const struct mystruct *sp1 = p1;
+	    const struct mystruct *sp2 = p2;
+	    /* 现在比较 sp1-&gt;whatever 和 sp2-&gt; ... */
+</PRE>
+
+<P>
+从一般指针到结构&nbsp;mystruct&nbsp;指针的转换过程发生在&nbsp;sp1 = p1&nbsp;和&nbsp;sp2 = p2&nbsp;
+的初始化中; 由于&nbsp;p1&nbsp;和&nbsp;p2&nbsp;都是&nbsp;void&nbsp;指针, 编译器隐式的进行了类型转换。
+
+<P>
+另一方面, 如果你对结构的指针进行排序, 则如问题&nbsp;<A HREF="node228.html#q:13.8">13.6</A>&nbsp;所示,
+你需要间接使用： sp1 = *(struct mystruct * const *)p1。
+
+<P>
+一般而言, 为了让编译器&nbsp;``闭嘴"&nbsp;而进行类型转换是一个坏主意。编译器
+的警告信息通常希望告诉你某些事情, 忽略或轻易去掉
+会让你陷入危险, 除非你明确知道你在做什么。参见问题&nbsp;<A HREF="node54.html#q:4.9">4.5</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 7.10.5.2]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 20.5 p. 419]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3463"
+  HREF="node228.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3469"
+  HREF="node222.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3471"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3473"
+  HREF="node230.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

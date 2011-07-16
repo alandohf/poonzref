@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3. 结构、联合和枚举</TITLE>
+<META NAME="description" CONTENT="3. 结构、联合和枚举">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node36.html">
+<LINK REL="previous" HREF="node3.html">
+<LINK REL="up" HREF="ccfaq.html">
+<LINK REL="next" HREF="node19.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html739"
+  HREF="node17.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html745"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html747"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html749"
+  HREF="node19.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00400000000000000000"></A>
+<A NAME="s:2"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>. 结构、联合和枚举
+</H1>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html751"
+  HREF="node19.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> 声明&nbsp;struct x1 { ...};&nbsp;和&nbsp;typedef struct { ...} x2;
+有什么不同？</A>
+<LI><A NAME="tex2html752"
+  HREF="node20.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> 为什么&nbsp;struct x { ...}; x thestruct;&nbsp;不对？</A>
+<LI><A NAME="tex2html753"
+  HREF="node21.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN> 一个结构可以包含指向自己的指针吗？</A>
+<LI><A NAME="tex2html754"
+  HREF="node22.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN> 在&nbsp;C&nbsp;语言中实现抽象数据类型什么方法最好?</A>
+<LI><A NAME="tex2html755"
+  HREF="node23.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">5</SPAN> 在&nbsp;C&nbsp;中是否有模拟继承等面向对象程序设计特性的好方法？</A>
+<LI><A NAME="tex2html756"
+  HREF="node24.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">6</SPAN> 我遇到这样声明结构的代码: struct name {
+int namelen; char
+namestr[1];};&nbsp;然后又使用一些内存分配技巧使&nbsp;namestr&nbsp;
+数组用起来好像有多个元素。这样合法和可移植吗？</A>
+<LI><A NAME="tex2html757"
+  HREF="node25.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">7</SPAN> 是否有自动比较结构的方法？</A>
+<LI><A NAME="tex2html758"
+  HREF="node26.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">8</SPAN> 如何向接受结构参数的函数传入常数值？</A>
+<LI><A NAME="tex2html759"
+  HREF="node27.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">9</SPAN> 怎样从/向数据文件读/写结构？</A>
+<LI><A NAME="tex2html760"
+  HREF="node28.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">10</SPAN> 我的编译器在结构中留下了空洞, 这导致空间浪费而且无法
+与外部数据文件进行&nbsp;"二进制"&nbsp;读写。能否关掉填充, 或者控制结构域的
+对齐方式?</A>
+<LI><A NAME="tex2html761"
+  HREF="node29.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">11</SPAN> 为什么&nbsp;sizeof&nbsp;返回的值大于结构的期望值,
+是不是尾部有填充?</A>
+<LI><A NAME="tex2html762"
+  HREF="node30.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">12</SPAN> 如何确定域在结构中的字节偏移？</A>
+<LI><A NAME="tex2html763"
+  HREF="node31.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">13</SPAN> 怎样在运行时用名字访问结构中的域？</A>
+<LI><A NAME="tex2html764"
+  HREF="node32.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">14</SPAN> 程序运行正确, 但退出时却&nbsp;``core dump''了，怎么回事？</A>
+<LI><A NAME="tex2html765"
+  HREF="node33.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">15</SPAN> 可以初始化一个联合吗？</A>
+<LI><A NAME="tex2html766"
+  HREF="node34.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">16</SPAN> 枚举和一组预处理的&nbsp;#define&nbsp;有什么不同？</A>
+<LI><A NAME="tex2html767"
+  HREF="node35.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">17</SPAN> 有什么容易的显示枚举值符号的方法？</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html739"
+  HREF="node17.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html745"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html747"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html749"
+  HREF="node19.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

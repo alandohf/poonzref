@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>21.22 怎样从&nbsp;C&nbsp;中调用&nbsp;FORTRAN (C++, BASIC, Pascal, Ada, LISP)
+的函数？反之亦然？</TITLE>
+<META NAME="description" CONTENT="21.22 怎样从&nbsp;C&nbsp;中调用&nbsp;FORTRAN (C++, BASIC, Pascal, Ada, LISP)
+的函数？反之亦然？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node373.html">
+<LINK REL="previous" HREF="node371.html">
+<LINK REL="up" HREF="node350.html">
+<LINK REL="next" HREF="node373.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5301"
+  HREF="node371.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5307"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5309"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5311"
+  HREF="node373.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0022220000000000000000"></A>
+<A NAME="q:20.25"></A>
+<BR>
+<SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">22</SPAN> 怎样从&nbsp;C&nbsp;中调用&nbsp;FORTRAN (C++, BASIC, Pascal, Ada, LISP)
+的函数？反之亦然？
+</H1>
+这完全依赖于机器以及使用的各个编译器的特别调用顺序, 有可能
+完全做不到。仔细阅读编译器的文档, 有些时候有个&nbsp;``混合语言编程
+指南", 尽管传递参数以及保证正确的运行启动的技巧通常很晦涩难懂。
+
+<P>
+对于&nbsp;FORTRAN, 更多的信息可以从&nbsp;Glenn Geers&nbsp;的&nbsp;FORT.gz&nbsp;找到,
+这个文档可以从匿名&nbsp;ftp&nbsp;网站&nbsp;<TT><A NAME="tex2html82"
+  HREF="suphys.physics.su.oz.au">suphys.physics.su.oz.au</A></TT>&nbsp;的&nbsp;src&nbsp;
+目录取得。&nbsp;Burkhard Burow&nbsp;写的头文件&nbsp;cfortran.h&nbsp;简化了许多
+流行机器上的&nbsp;C/FORTRAN&nbsp;接口。可以从匿名&nbsp;ftp&nbsp;网站&nbsp;<TT><A NAME="tex2html83"
+  HREF="zebra.desy.de">zebra.desy.de</A></TT>&nbsp;或&nbsp;<TT><A NAME="tex2html84"
+  HREF="http://www-zeus.desy.de/~burow">http://www-zeus.desy.de/~burow</A></TT>&nbsp;取得。
+
+<P>
+C++&nbsp;中, 外部函数说明的&nbsp;``C"&nbsp;修改量表明函数应该按&nbsp;C&nbsp;的调用约定使用。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 4.9.8 pp. 106-7]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5301"
+  HREF="node371.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5307"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5309"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5311"
+  HREF="node373.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

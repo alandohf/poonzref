@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.3 怎样定义和声明全局变量和函数最好？</TITLE>
+<META NAME="description" CONTENT="2.3 怎样定义和声明全局变量和函数最好？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node7.html">
+<LINK REL="previous" HREF="node5.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node7.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html597"
+  HREF="node5.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html603"
+  HREF="node3.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html605"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html607"
+  HREF="node7.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00330000000000000000"></A>
+<A NAME="q:1.7"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> 怎样定义和声明全局变量和函数最好？
+</H1>
+首先, 尽管一个全局变量或函数可以&nbsp;(在多个编译单元中)&nbsp;有多处&nbsp;``声明'', 
+但是&nbsp;``定义''&nbsp;却只能允许出现一次。定义是分配空间并赋初值&nbsp;(如果有)&nbsp;的声
+明。最好的安排是在某个相关的&nbsp;.c&nbsp;文件中定义, 然后在头文件
+&nbsp;(.h)&nbsp;中进行外部声明, 在需要使用的时候, 只要包含对应的头文
+件即可。定义变量的&nbsp;.c&nbsp;文件也应该包含该头文件, 以便编译器
+检查定义和声明的一致性。
+
+<P>
+这条规则提供了高度的可移植性: 它和&nbsp;ANSI C&nbsp;标准一致, 同时也兼容大多数
+&nbsp;ANSI&nbsp;前的编译器和连接器。Unix&nbsp;编译器和连接器通常使用&nbsp;``通用模式''
+允许多重定义, 只要保证最多对一处进行初始化就可以了; ANSI C&nbsp;标准称
+这种行为为&nbsp;``公共扩展'', 没有语带双关的意思。
+
+<P>
+可以使用预处理技巧来使类似
+<PRE>
+	DEFINE(int, i);
+</PRE>
+的语句在一个头文件中只出现一次, 然后根据某个宏的设定在需要的时候转化
+成定义或声明。但不清楚这样的麻烦是否值得。
+
+<P>
+如果希望让编译器检查声明的一致性, 一定要把全局声明放到头文件中。特别
+是, 永远不要把外部函数的原型放到&nbsp;.c&nbsp;文件中: 通常它与定义的一
+致性不能得到检查, 而矛盾的原型比不用还糟糕。
+
+<P>
+参见问题&nbsp;<A HREF="node136.html#q:10.6">10.4</A>&nbsp;和&nbsp;<A HREF="node293.html#q:18.8">18.6</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. 4.5 pp. 76-7]; [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 4.4 pp. 80-1];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.1.2.2, Sec. 6.7, Sec. 6.7.2, Sec. G.5.11];
+[<A
+ HREF="node388.html#rationale">Rationale</A>, Sec. 3.1.2.2];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 4.8 pp. 101-104, Sec. 9.2.3 p. 267];
+[<A
+ HREF="node388.html#ctp">CT&amp;P</A>, Sec. 4.2 pp. 54-56].
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html597"
+  HREF="node5.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html603"
+  HREF="node3.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html605"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html607"
+  HREF="node7.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

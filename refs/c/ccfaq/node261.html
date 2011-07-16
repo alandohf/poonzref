@@ -1,0 +1,136 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>16.4 怎样写一个有可变参数的函数？</TITLE>
+<META NAME="description" CONTENT="16.4 怎样写一个有可变参数的函数？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node262.html">
+<LINK REL="previous" HREF="node260.html">
+<LINK REL="up" HREF="node257.html">
+<LINK REL="next" HREF="node262.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3867"
+  HREF="node260.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3873"
+  HREF="node257.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3875"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3877"
+  HREF="node262.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001740000000000000000"></A>
+<A NAME="q:15.4"></A>
+<BR>
+<SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">4</SPAN> 怎样写一个有可变参数的函数？
+</H1>
+用&nbsp;&lt;stdarg.h&gt;&nbsp;提供的辅助设施。
+
+<P>
+下面是一个把任意个字符串连接起来的函数, 结果存在&nbsp;malloc&nbsp;的内存中：
+<PRE>
+    #include &lt;stdlib.h&gt;          /* 说明 malloc, NULL, size_t */
+    #include &lt;stdarg.h&gt;          /* 说明 va_ 相关类型和函数 */
+    #include &lt;string.h&gt;          /* 说明 strcat 等 */
+
+    char *vstrcat(const char *first, ...)
+    {
+        size_t len;
+        char *retbuf;
+        va_list argp;
+        char *p;
+
+        if(first == NULL)
+	    return NULL;
+
+        len = strlen(first);
+
+        va_start(argp, first);
+
+        while((p = va_arg(argp, char *)) != NULL)
+	    len += strlen(p);
+
+        va_end(argp);
+
+        retbuf = malloc(len + 1);   /* +1 包含终止符 \0 */
+
+        if(retbuf == NULL)
+	    return NULL;	    /* 出错 */
+
+        (void)strcpy(retbuf, first);
+
+        va_start(argp, first);	    /* 重新开始扫描 */
+
+        while((p = va_arg(argp, char *)) != NULL)
+	    (void)strcat(retbuf, p);
+
+        va_end(argp);
+
+        return retbuf;
+    }
+</PRE>
+调用如下:
+<PRE>
+	char *str = vstrcat("Hello, ", "world!", (char *)NULL);
+</PRE>
+注意最后一个参数的类型重置; 参见问题&nbsp;<A HREF="node61.html#q:5.2">5.2</A>, <A HREF="node260.html#q:15.3">15.3</A>。
+注意调用者要释放返回的存储空间, 那是用&nbsp;malloc&nbsp;分配的。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 7.3 p. 155, Sec. B7 p. 254];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 7.8]; [<A
+ HREF="node388.html#rationale">Rationale</A>, Sec. 4.8];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 11.4 pp. 296-9]; [<A
+ HREF="node388.html#ctp">CT&amp;P</A>, Sec. A.3 pp. 139-141];
+[<A
+ HREF="node388.html#pcs">PCS</A>, Sec. 11 pp. 184-5, Sec. 13 p. 242]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3867"
+  HREF="node260.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3873"
+  HREF="node257.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3875"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3877"
+  HREF="node262.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>21.14 怎样不用临时变量而交换两个值？</TITLE>
+<META NAME="description" CONTENT="21.14 怎样不用临时变量而交换两个值？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node365.html">
+<LINK REL="previous" HREF="node363.html">
+<LINK REL="up" HREF="node350.html">
+<LINK REL="next" HREF="node365.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5205"
+  HREF="node363.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5211"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5213"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5215"
+  HREF="node365.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0022140000000000000000"></A>
+<A NAME="q:20.15c"></A>
+<BR>
+<SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">14</SPAN> 怎样不用临时变量而交换两个值？
+</H1>
+一个标准而古老的汇编程序员的技巧是：
+<PRE>
+    a ^= b;
+    b ^= a;
+    a ^= b;
+</PRE>
+但是这样的代码在现代高级程序设计语言中没什么用处。
+临时变量基本上是自由使用的, 一般上的三个赋值是:
+<PRE>
+    int t = a;
+    a = b;
+    b = t;
+</PRE>
+这不只对读者更清晰, 更有可能被编译器辨别出来而
+变成最有效的代码&nbsp;(例如有可能使用&nbsp;EXCH&nbsp;指令)。
+后面的代码明显的可以用于指针和浮点值, 而不象
+&nbsp;XOR&nbsp;技巧只能用于整型。参见问题&nbsp;<A HREF="node40.html#q:3.3b">3.4</A>&nbsp;和&nbsp;<A HREF="node134.html#q:10.3">10.2</A>。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5205"
+  HREF="node363.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5211"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5213"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5215"
+  HREF="node365.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

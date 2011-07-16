@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>4.2 使用我的编译器,下面的代码
+&nbsp;int i=7; printf("%d&#92;n",
+i++ * i++);&nbsp;返回&nbsp;49？不管按什么顺序计算, 难道不该打印出56吗？</TITLE>
+<META NAME="description" CONTENT="4.2 使用我的编译器,下面的代码
+&nbsp;int i=7; printf("%d&#92;n",
+i++ * i++);&nbsp;返回&nbsp;49？不管按什么顺序计算, 难道不该打印出56吗？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node39.html">
+<LINK REL="previous" HREF="node37.html">
+<LINK REL="up" HREF="node36.html">
+<LINK REL="next" HREF="node39.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1006"
+  HREF="node37.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1012"
+  HREF="node36.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1014"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1016"
+  HREF="node39.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00520000000000000000"></A>
+<A NAME="q:3.2"></A>
+<BR>
+<SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> 使用我的编译器,下面的代码
+&nbsp;int i=7; printf(<TT>"</TT>%d&#92;n<TT>"</TT>,
+i++ * i++);&nbsp;返回&nbsp;49？不管按什么顺序计算, 难道不该打印出56吗？
+</H1>
+尽管后缀自加和后缀自减操作符&nbsp;++&nbsp;和&nbsp;<code>--</code>&nbsp;在输出其旧值之后
+才会执行运算, 但这里的``之后"常常被误解。<SPAN  CLASS="textbf">没有</SPAN>任何保证
+确保自增或
+自减会在输出变量原值之后和对表达式的其它部分进行计算之前立即进
+行。也不能保证变量的更新会在表达式&nbsp;``完成" (按照&nbsp;ANSI C&nbsp;的术语,
+在下一个&nbsp;``序列点"&nbsp;之前, 参见问题&nbsp;<A HREF="node43.html#q:3.8">3.7</A>)&nbsp;之前的某个时刻进行。
+本例中, 编译器选择使用变量的旧值相乘以后再对二者进行自增运算。
+
+<P>
+包含多个不确定的副作用的代码的行为总是被认为未定义。(简单而言,
+``多个不确定副作用"&nbsp;是指在同一个表达式中使用导致同一对象修改两
+次或修改以后又被引用的自增, 自减和赋值操作符的任何组合。这是一
+个粗略的定义; 严格的定义参见问题&nbsp;<A HREF="node43.html#q:3.8">3.7</A>,  ``未定义"&nbsp;的含义
+参见问题&nbsp;<A HREF="node187.html#q:11.33">11.32</A>。) 甚至都不要试图探究这些东西在你的编译
+器中是如何实现的&nbsp;(这与许多&nbsp;C&nbsp;教科书上的弱智练习正好相反); 正如
+&nbsp;K&amp;R&nbsp;明智地指出, ``如果你不知道它们在不同的机器上<SPAN  CLASS="textbf">如何</SPAN>实现,
+这样的无知可能恰恰会有助于保护你。begintex2html_deferred
+<P>
+参考资料: [<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. 2.12 p. 50]; [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 2.12 p. 54];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.3]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 7.12 pp. 227-9];
+[<A
+ HREF="node388.html#ctp">CT&amp;P</A>, Sec. 3.7 p. 47]; [<A
+ HREF="node388.html#pcs">PCS</A>, Sec. 9.5 pp. 120-1]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1006"
+  HREF="node37.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1012"
+  HREF="node36.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1014"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1016"
+  HREF="node39.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

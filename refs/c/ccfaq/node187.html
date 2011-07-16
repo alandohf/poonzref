@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>12.32 人们好像有些在意实现定义&nbsp;(implementation-defin-ed)、未明确
+&nbsp;(unspecified)&nbsp;和无定义&nbsp;(undefined)&nbsp;行为的区别。它们的区别到底在哪里？</TITLE>
+<META NAME="description" CONTENT="12.32 人们好像有些在意实现定义&nbsp;(implementation-defin-ed)、未明确
+&nbsp;(unspecified)&nbsp;和无定义&nbsp;(undefined)&nbsp;行为的区别。它们的区别到底在哪里？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node188.html">
+<LINK REL="previous" HREF="node186.html">
+<LINK REL="up" HREF="node155.html">
+<LINK REL="next" HREF="node188.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2912"
+  HREF="node186.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2918"
+  HREF="node155.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2920"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2922"
+  HREF="node188.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0013320000000000000000"></A>
+<A NAME="q:11.33"></A>
+<BR>
+<SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">32</SPAN> 人们好像有些在意实现定义&nbsp;(implementation-defin-ed)、未明确
+&nbsp;(unspecified)&nbsp;和无定义&nbsp;(undefined)&nbsp;行为的区别。它们的区别到底在哪里？
+</H1>
+简单地说: 实现定义意味着实现必须选择某种行为并提供文档。
+未明确意味着实现必须选择某种行为但不必提供文档。
+未定义意味着任何事情都可能发生。标准在任何情况下都不强加需求;
+前两种情况下, 它有时建议一组可能的行为&nbsp;(也可能要求从中选择一种)。
+
+<P>
+注意既然标准对无定义行为<SPAN  CLASS="textbf">没有</SPAN>强制要求, 编译器就绝对可以做
+任何事情。特别地, 对程序其它部分的正常运行没有任何保证;
+参见问题&nbsp;<A HREF="node38.html#q:3.2">3.2</A>, 有一个相对简单的例子。
+
+<P>
+如果你对书写可移植代码有兴趣, 你可以忽略它们的区别, 因为通常你都
+希望避免依赖三种行为中的任何一种。
+
+<P>
+参见问题&nbsp;<A HREF="node44.html#q:3.9">3.8</A>&nbsp;和&nbsp;<A HREF="node189.html#q:11.34">11.34</A>。
+
+<P>
+第四种不那么严格定义的行为是&nbsp;``场景特定"&nbsp;(locale-specific)。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 3.10, Sec. 3.16, Sec. 3.17];
+[<A
+ HREF="node388.html#rationale">Rationale</A>, Sec. 1.6]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2912"
+  HREF="node186.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2918"
+  HREF="node155.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2920"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2922"
+  HREF="node188.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

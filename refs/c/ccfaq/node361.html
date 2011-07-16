@@ -1,0 +1,109 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>21.11 什么是提高程序效率的最好方法？</TITLE>
+<META NAME="description" CONTENT="21.11 什么是提高程序效率的最好方法？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node362.html">
+<LINK REL="previous" HREF="node360.html">
+<LINK REL="up" HREF="node350.html">
+<LINK REL="next" HREF="node362.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5169"
+  HREF="node360.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5175"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5177"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5179"
+  HREF="node362.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0022110000000000000000"></A>
+<A NAME="q:20.13"></A>
+<BR>
+<SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">11</SPAN> 什么是提高程序效率的最好方法？
+</H1>
+
+<P>
+选择好的算法, 小心地实现, 同时确定程序不做额外的事。例如,
+即使世界上最优化的字符复制循环也比不上不用复制。
+
+<P>
+当担心效率时, 要保持几样事情在视野中, 这很重要。首先, 虽然效率
+是个非常流行的话题, 它并不总是象人们想的那样重要。大多数程序的
+大多数代码并不是时间紧要的。当代码不是时间紧要时, 通常把代码写
+得清楚和可移植比达到最大效率更重要。记住, 电脑运行得非常
+非常快, 那些看起来&nbsp;``低效率"&nbsp;的代码, 也许可以编译得比较有效率,
+而运行起来也没有明显的延时。
+
+<P>
+试图预知程序的&nbsp;``热点"&nbsp;是个非常困难的事。当要关心效率时, 使用
+&nbsp;profiling&nbsp;
+软件来确定程序中需要得到关注的地方。通常, 实际计算时间都被外围
+任务占用了&nbsp;(例如&nbsp;I/O&nbsp;或内存的分配), 可以通过使用缓冲和超高速
+缓存来提高速度。
+
+<P>
+即使对于时间紧要的代码, 最无效的优化技巧是忙乱于代码细节。
+许多常被建议的&nbsp;``有效的代码技巧", 即使是很简单的编译器也会自动
+完成&nbsp;(例如, 用移位运算符代替二的幂次方乘)。非常多的手动优化
+有可能是代码变得笨重而使效率反而低下了, 同时几乎不可移植。
+例如, 也许可以在某台机器上提了速, 但在另一台机器上去变慢了。
+任何情况下, 修整代码通常最多得到线性信能提高; 更好的算法可以
+得到更好的回报。
+
+<P>
+有关效率的更多讨论, 以及当效率很重要时, 如何提高效率的建议,
+可以从以下书中得到：&nbsp;Kernighan&nbsp;和&nbsp;Plauger&nbsp;的&nbsp;《The Elements
+of Programming Style》[<A
+ HREF="node388.html#kp">K&amp;P</A>]&nbsp;中的第七章, 和&nbsp;Jon Bentley&nbsp;的
+&nbsp;《Writing Efficient Programs》[<A
+ HREF="node388.html#bentley">Bentley</A>]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5169"
+  HREF="node360.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5175"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5177"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5179"
+  HREF="node362.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

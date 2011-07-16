@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>8.14 我用一行这样的代码分配一个巨大的数组, 用于数字运算:
+&nbsp;double *array = malloc(300 * 300 * sizeof( double ));&nbsp;
+malloc()&nbsp;并没有返回&nbsp;null, 但是程序运行得有些奇怪, 好像改写了某些内存,
+或者&nbsp;malloc()&nbsp;并没有分配我申请的那么多内存, 云云。</TITLE>
+<META NAME="description" CONTENT="8.14 我用一行这样的代码分配一个巨大的数组, 用于数字运算:
+&nbsp;double *array = malloc(300 * 300 * sizeof( double ));&nbsp;
+malloc()&nbsp;并没有返回&nbsp;null, 但是程序运行得有些奇怪, 好像改写了某些内存,
+或者&nbsp;malloc()&nbsp;并没有分配我申请的那么多内存, 云云。">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node109.html">
+<LINK REL="previous" HREF="node107.html">
+<LINK REL="up" HREF="node94.html">
+<LINK REL="next" HREF="node109.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1907"
+  HREF="node107.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1913"
+  HREF="node94.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1915"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1917"
+  HREF="node109.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION009140000000000000000"></A>
+<A NAME="q:7.16"></A>
+<BR>
+<SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">14</SPAN> 我用一行这样的代码分配一个巨大的数组, 用于数字运算:
+&nbsp;double *array = malloc(300 * 300 * sizeof( double ));&nbsp;
+malloc()&nbsp;并没有返回&nbsp;null, 但是程序运行得有些奇怪, 好像改写了某些内存,
+或者&nbsp;malloc()&nbsp;并没有分配我申请的那么多内存, 云云。
+</H1>
+注意&nbsp;300 * 300&nbsp;是&nbsp;90,000, 这在你乘上&nbsp;sizeof(double)&nbsp;以前就已经不能放
+入&nbsp;16&nbsp;位的&nbsp;int&nbsp;中了。 如果你需要分配这样大的内存空间, 你可得小心为妙。
+如果在你的机器上&nbsp;size_t (malloc()&nbsp;接受的类型)&nbsp;是&nbsp;32位, 而&nbsp;int&nbsp;为&nbsp;16&nbsp;位,
+你可以写&nbsp;300 * (300 * sizeof(double))&nbsp;来避免这个问题。
+(参见问题&nbsp;<A HREF="node47.html#q:3.14">3.11</A>)。否则, 你必须把你的数据结构分解为更小的块,
+或者使用&nbsp;32&nbsp;位的机器或编译器, 或者使用某种非标准的内存分配函数。
+参见问题&nbsp;<A HREF="node333.html#q:19.23">19.27</A>。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1907"
+  HREF="node107.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1913"
+  HREF="node94.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1915"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1917"
+  HREF="node109.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

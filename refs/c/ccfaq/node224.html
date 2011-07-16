@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>14.2 为什么&nbsp;strncpy()&nbsp;不能总在目标串放上终止符
+&nbsp;'&#92;0'？</TITLE>
+<META NAME="description" CONTENT="14.2 为什么&nbsp;strncpy()&nbsp;不能总在目标串放上终止符
+&nbsp;'&#92;0'？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node225.html">
+<LINK REL="previous" HREF="node223.html">
+<LINK REL="up" HREF="node222.html">
+<LINK REL="next" HREF="node225.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3403"
+  HREF="node223.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3409"
+  HREF="node222.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3411"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3413"
+  HREF="node225.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001520000000000000000"></A>
+<A NAME="q:13.2"></A>
+<BR>
+<SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">2</SPAN> 为什么&nbsp;strncpy()&nbsp;不能总在目标串放上终止符
+&nbsp;<TT>'</TT>&#92;0<TT>'</TT>？
+</H1>
+strncpy()&nbsp;最初被设计为用来处理一种现在已经废弃的数据结构---定长,
+不必&nbsp;'&#92;0'&nbsp;结束的&nbsp;``字符串"。strncpy&nbsp;的另一个怪癖是它
+会用多个&nbsp;'&#92;0'&nbsp;填充短串, 直到达到指定的长度。在其它
+环境中使用&nbsp;strncpy()&nbsp;有些麻烦, 因为你必须经常在目的串末尾手工加
+&nbsp;'&#92;0'。
+
+<P>
+你可以用&nbsp;strncat&nbsp;代替&nbsp;strncpy&nbsp;来绕开这个问题:
+如果目的串开始时为空&nbsp;(就是说, 如果你先用&nbsp;*dest = '&#92;0'),
+strncat()&nbsp;就可以完成你希望&nbsp;strncpy()&nbsp;完成的事情。另外一个方法是用
+&nbsp;sprintf(dest, <TT>"</TT>%.*s<TT>"</TT>, n, source)。
+
+<P>
+如果需要复制任意字节&nbsp;(而不是字符串), memcpy()&nbsp;是个比&nbsp;strncpy()&nbsp;
+更好的选择。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3403"
+  HREF="node223.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3409"
+  HREF="node222.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3411"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3413"
+  HREF="node225.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

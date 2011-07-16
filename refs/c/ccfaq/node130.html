@@ -1,0 +1,115 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>10.2 因为在&nbsp;C&nbsp;语言中所有的非零值都被看作&nbsp;``真", 是不是把&nbsp;TRUE&nbsp;
+定义为&nbsp;1&nbsp;很危险？如果某个内置的函数或关系操作符&nbsp;``返回"&nbsp;不是&nbsp;1&nbsp;的
+其它值怎么办？</TITLE>
+<META NAME="description" CONTENT="10.2 因为在&nbsp;C&nbsp;语言中所有的非零值都被看作&nbsp;``真", 是不是把&nbsp;TRUE&nbsp;
+定义为&nbsp;1&nbsp;很危险？如果某个内置的函数或关系操作符&nbsp;``返回"&nbsp;不是&nbsp;1&nbsp;的
+其它值怎么办？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node131.html">
+<LINK REL="previous" HREF="node129.html">
+<LINK REL="up" HREF="node128.html">
+<LINK REL="next" HREF="node131.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2175"
+  HREF="node129.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2181"
+  HREF="node128.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2183"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2185"
+  HREF="node131.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001120000000000000000"></A>
+<A NAME="q:9.2"></A>
+<BR>
+<SPAN CLASS="arabic">10</SPAN>.<SPAN CLASS="arabic">2</SPAN> 因为在&nbsp;C&nbsp;语言中所有的非零值都被看作&nbsp;``真", 是不是把&nbsp;TRUE&nbsp;
+定义为&nbsp;1&nbsp;很危险？如果某个内置的函数或关系操作符&nbsp;``返回"&nbsp;不是&nbsp;1&nbsp;的
+其它值怎么办？
+</H1>
+C&nbsp;语言中的确任何非零值都都被看作真, 但这仅限于&nbsp;``输入", 也就是说,
+仅限于需要布尔值的地方。内建操作符生成布尔值时, 可以保证为&nbsp;1&nbsp;或&nbsp;0。
+因此, 这样的测试
+<PRE>
+    if((a == b) == TRUE)
+</PRE>
+能如愿运行&nbsp;(只要&nbsp;TRUE&nbsp;为&nbsp;1), 但显然这很傻。 事实上, 跟&nbsp;TRUE&nbsp;和&nbsp;FALSE&nbsp;的
+跟&nbsp;TRUE&nbsp;和&nbsp;FALSE&nbsp;的 显示比较都不合适, 因为有些库函数&nbsp;(如&nbsp;isupper(),
+isalpha()&nbsp;等)&nbsp;在成功时返 回非零值, 但不一定为1。 (再说,
+如果你认为&nbsp;``if((a == b) == TRUE)"&nbsp;比&nbsp;``if(a == b)"&nbsp;好,
+为什么就此打住呢？为什么不使用&nbsp;``if(((a == b) == TRUE) ==
+TRUE)"&nbsp;呢?)&nbsp;一般规则是只在向布尔变量赋值或
+函数参数中才使用&nbsp;TRUE&nbsp;和&nbsp;FALSE&nbsp;(或类似的东西), 或者用于函数的返回值,
+但决不用于比较。
+
+<P>
+预处理宏&nbsp;TRUE&nbsp;和&nbsp;FALSE&nbsp;(当然还有&nbsp;NULL)&nbsp;只是用于增加代码可读性,
+而不是因为其 值可能改变。(参见问题&nbsp;<A HREF="node62.html#q:5.3">5.3</A>&nbsp;和&nbsp;<A HREF="node67.html#q:5.10">5.8</A>。)
+
+<P>
+尽管使用&nbsp;TRUE&nbsp;和&nbsp;FALSE&nbsp;这样的宏&nbsp;(或者&nbsp;YES&nbsp;和&nbsp;NO)&nbsp;看上去更清楚, 布尔值和
+定义在&nbsp;C&nbsp;语言中的复杂性让很多程序员觉得&nbsp;TRUE&nbsp;和&nbsp;FALSE&nbsp;宏不过更令人迷惑,
+因而更喜欢使用&nbsp;1&nbsp;和&nbsp;0。 参见问题&nbsp;<A HREF="node66.html#q:5.9">5.7</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. 2.6 p. 39, Sec. 2.7 p. 41]; [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 2.6
+p. 42, Sec. 2.7 p. 44, Sec. A7.4.7 p. 204, Sec. A7.9 p. 206];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.3.3.3, Sec. 6.3.8, Sec. 6.3.9, Sec. 6.3.13, Sec. 6.3.14,
+Sec. 6.3.15, Sec. 6.6.4.1, Sec. 6.6.5]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 7.5.4 pp. 196-7,
+Sec. 7.6.4 pp. 207-8, Sec. 7.6.5 pp. 208-9, Sec. 7.7 pp. 217-8,
+Sec. 7.8 pp. 218-9, Sec. 8.5 pp. 238-9, Sec. 8.6 pp. 241-4];
+``What the Tortoise Said to Achilles"。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2175"
+  HREF="node129.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2181"
+  HREF="node128.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2183"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2185"
+  HREF="node131.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

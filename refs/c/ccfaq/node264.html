@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>16.7 怎样知道实际上有多少个参数传入函数？</TITLE>
+<META NAME="description" CONTENT="16.7 怎样知道实际上有多少个参数传入函数？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node265.html">
+<LINK REL="previous" HREF="node263.html">
+<LINK REL="up" HREF="node257.html">
+<LINK REL="next" HREF="node265.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3903"
+  HREF="node263.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3909"
+  HREF="node257.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3911"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3913"
+  HREF="node265.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001770000000000000000"></A>
+<A NAME="q:15.8"></A>
+<BR>
+<SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">7</SPAN> 怎样知道实际上有多少个参数传入函数？
+</H1>
+这一段信息不可移植。 一些旧系统提供一个非标准函数&nbsp;nargs()。
+然而它的可信度值得怀疑, 因为它的典型返回值是参数的字节长度, 而不是参数
+的个数。结构、整数和浮点类型的值一般需要几个字节的长度。
+
+<P>
+任何接收可变参数的函数都应该可以从传入的<SPAN  CLASS="textbf">参数本身</SPAN>来得到参数的数目。
+类&nbsp;printf&nbsp;函数从格式字符串中的格式说明符来
+确定参数个数, 就象&nbsp;%d&nbsp;这样的格式说明符。所以如果格式字符串和参数数目不符时,
+此类函数会出错的很厉害。
+
+<P>
+还有一个常用的技巧, 如果所有的参数是同一个类型, 在参数列最后加一个标
+记值。 通常用&nbsp;0、-1&nbsp;或适当类型转换的空指针, 参见问题&nbsp;<A HREF="node61.html#q:5.2">5.2</A>&nbsp;和
+&nbsp;<A HREF="node261.html#q:15.4">15.4</A>&nbsp;例子中&nbsp;exec1()&nbsp;和&nbsp;vstrcat()&nbsp;的用法。
+
+<P>
+最后, 如果类型是可预见的, 你可以加一个参数数目的参数。当然调用者通常是
+很不喜欢这种做法的。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#pcs">PCS</A>, Sec. 11 pp. 167-8]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3903"
+  HREF="node263.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3909"
+  HREF="node257.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3911"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3913"
+  HREF="node265.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

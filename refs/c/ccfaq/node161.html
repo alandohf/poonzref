@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>12.6 为什么声明&nbsp;
+extern int f(struct x *p);
+&nbsp;报出了一个奇怪的警告信息&nbsp;``结构&nbsp;x&nbsp;在参数列表中声明"？</TITLE>
+<META NAME="description" CONTENT="12.6 为什么声明&nbsp;
+extern int f(struct x *p);
+&nbsp;报出了一个奇怪的警告信息&nbsp;``结构&nbsp;x&nbsp;在参数列表中声明"？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node162.html">
+<LINK REL="previous" HREF="node160.html">
+<LINK REL="up" HREF="node155.html">
+<LINK REL="next" HREF="node162.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2600"
+  HREF="node160.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2606"
+  HREF="node155.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2608"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2610"
+  HREF="node162.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001360000000000000000"></A>
+<A NAME="q:11.5"></A>
+<BR>
+<SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">6</SPAN> 为什么声明&nbsp;
+extern int f(struct x *p);
+&nbsp;报出了一个奇怪的警告信息&nbsp;``结构&nbsp;x&nbsp;在参数列表中声明"？
+</H1>
+与&nbsp;C&nbsp;语言通常的作用范围规则大相径庭的是, 在原型中第一次声明&nbsp;(甚至提到)&nbsp;
+的结构不能和同一源文件中的其它结构兼容, 它在原型的结束出就超出了作用范围。
+
+<P>
+要解决这个问题, 在同一源文件的原型之前放上这样的声明:
+<PRE>
+    struct x;
+</PRE>
+它在文件范围内提供了一个不完整的结构&nbsp;x&nbsp;的声明, 这样, 后续的用到结构&nbsp;x&nbsp;
+的声明至少能够确定它们引用的是同一个结构&nbsp;x。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.1.2.1, Sec. 6.1.2.6, Sec. 6.5.2.3]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2600"
+  HREF="node160.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2606"
+  HREF="node155.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2608"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2610"
+  HREF="node162.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

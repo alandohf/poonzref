@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>21.8 怎样转换整数到二进制或十六进制？</TITLE>
+<META NAME="description" CONTENT="21.8 怎样转换整数到二进制或十六进制？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node359.html">
+<LINK REL="previous" HREF="node357.html">
+<LINK REL="up" HREF="node350.html">
+<LINK REL="next" HREF="node359.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5133"
+  HREF="node357.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5139"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5141"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5143"
+  HREF="node359.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002280000000000000000"></A>
+<A NAME="q:20.10"></A>
+<BR>
+<SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">8</SPAN> 怎样转换整数到二进制或十六进制？
+</H1>
+确定你真的知道你在问什么。整数是以二进制存储的, 虽然
+对于大多数情况下, 把它们当成是八进制、十进制或十六进制
+并没有错, 只要方便就好。数字表达的进制只有在读入或写出
+到外部世界时才起作用。
+
+<P>
+在源程序中, 非十进制的数字由在前的&nbsp;0&nbsp;或&nbsp;0x&nbsp;表示&nbsp;(分别位
+八进制和十六进制)。在进行&nbsp;I/O&nbsp;操作时, 数字格式的进制在
+&nbsp;printf&nbsp;和&nbsp;scanf&nbsp;这类函数里, 由格式符决定
+&nbsp;(%d,&nbsp;%o&nbsp;和&nbsp;%x&nbsp;等); 在
+&nbsp;strtol()&nbsp;和&nbsp;strtoul()&nbsp;中, 则由他们的第三
+个参数决定。 如果你想要输出任意进制的数字字符串, 你需要
+自己提供相关的函数&nbsp;(基本上是&nbsp;strtol&nbsp;的反函数)。
+在进行二进制&nbsp;I/O&nbsp;时, 进制就不相干了。
+
+<P>
+更多的有关二进制的&nbsp;I/O, 参见问题&nbsp;<A HREF="node27.html#q:2.11">2.9</A>。还有问题
+&nbsp;<A HREF="node126.html#q:8.6">8.4</A>&nbsp;和&nbsp;<A HREF="node223.html#q:13.1">13.1</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Secs. 7.10.1.5,7.10.1.6]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5133"
+  HREF="node357.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5139"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5141"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5143"
+  HREF="node359.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

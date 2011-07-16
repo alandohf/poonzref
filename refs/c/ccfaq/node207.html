@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>13.16 我用&nbsp;scanf %d&nbsp;读取一个数字, 然后再用&nbsp;gets()&nbsp;读取字符串, 但是
+编译器好像跳过了&nbsp;gets()&nbsp;调用！</TITLE>
+<META NAME="description" CONTENT="13.16 我用&nbsp;scanf %d&nbsp;读取一个数字, 然后再用&nbsp;gets()&nbsp;读取字符串, 但是
+编译器好像跳过了&nbsp;gets()&nbsp;调用！">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node208.html">
+<LINK REL="previous" HREF="node206.html">
+<LINK REL="up" HREF="node191.html">
+<LINK REL="next" HREF="node208.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3180"
+  HREF="node206.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3186"
+  HREF="node191.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3188"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3190"
+  HREF="node208.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0014160000000000000000"></A>
+<A NAME="q:12.18a"></A>
+<BR>
+<SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">16</SPAN> 我用&nbsp;scanf %d&nbsp;读取一个数字, 然后再用&nbsp;gets()&nbsp;读取字符串, 但是
+编译器好像跳过了&nbsp;gets()&nbsp;调用！
+</H1>
+scanf %d&nbsp;不处理结尾的换行符。如果输入的数字后边紧接着一个换行符, 则换行
+符会被&nbsp;gets()&nbsp;处理。
+
+<P>
+作为一个一般规则, 你不能混用&nbsp;scanf()&nbsp;和&nbsp;gets(), 或任何其它的输入例程的调用;
+scanf&nbsp;对换行符的特殊处理几乎一定会带来问题。要么就用&nbsp;scanf()&nbsp;处理所有的
+输入, 要么干脆不用。
+
+<P>
+参见问题&nbsp;<A HREF="node209.html#q:12.20">12.18</A>&nbsp;和&nbsp;<A HREF="node211.html#q:12.23">12.20</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 7.9.6.2]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 15.8 pp. 357-64]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3180"
+  HREF="node206.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3186"
+  HREF="node191.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3188"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3190"
+  HREF="node208.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

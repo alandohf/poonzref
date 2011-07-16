@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>6.7 如果&nbsp;NULL&nbsp;和&nbsp;0&nbsp;作为空指针常数是等价的, 那我到底该用哪一个呢？</TITLE>
+<META NAME="description" CONTENT="6.7 如果&nbsp;NULL&nbsp;和&nbsp;0&nbsp;作为空指针常数是等价的, 那我到底该用哪一个呢？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node67.html">
+<LINK REL="previous" HREF="node65.html">
+<LINK REL="up" HREF="node59.html">
+<LINK REL="next" HREF="node67.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1362"
+  HREF="node65.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1368"
+  HREF="node59.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1370"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1372"
+  HREF="node67.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00770000000000000000"></A>
+<A NAME="q:5.9"></A>
+<BR>
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">7</SPAN> 如果&nbsp;NULL&nbsp;和&nbsp;0&nbsp;作为空指针常数是等价的, 那我到底该用哪一个呢？
+</H1>
+许多程序员认为在所有的指针上下文中都应该使用&nbsp;NULL, 以表明该值应该被看作指针。
+另一些人则认为用一个宏来定义&nbsp;0, 只不过把事情搞得更复杂, 反而令人困惑。因而
+倾向于使用未加修饰的&nbsp;0。没有正确的答案。
+(参见问题&nbsp;<A HREF="node130.html#q:9.2">9.2</A>&nbsp;和&nbsp;<A HREF="node286.html#q:17.10">17.8</A>) C&nbsp;程序员应该明白, 在指针上下文中
+&nbsp;NULL&nbsp;和&nbsp;0&nbsp;是完全等价的, 而未加修饰的&nbsp;0&nbsp;也完全可以接受。任何使用&nbsp;NULL&nbsp;
+(跟&nbsp;0&nbsp;相对)&nbsp;的地方都应该看作一种温和的提示, 是在使用指针; 程序员&nbsp;(和编译器都)
+不能依靠它来区别指针&nbsp;0&nbsp;和整数&nbsp;0。
+
+<P>
+在需要其它类型的&nbsp;0&nbsp;的时候, 即便它可能工作也不能使用&nbsp;NULL,
+因为这样做发出了错误的格式信息。(而且,
+ANSI&nbsp;允许把&nbsp;NULL&nbsp;定义为&nbsp;((void *)0), 这在非指针的
+上下文中完全无效。特别是,
+不能在需要&nbsp;ASCII&nbsp;空字符&nbsp;(NUL)&nbsp;的地方用&nbsp;NULL。如果有必要,
+提供你自己的定义
+<PRE>
+    #define NUL '\0'
+</PRE>
+
+<P>
+参考资料：&nbsp;[<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. 5.4 pp. 97-8]; [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 5.4 p. 102]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1362"
+  HREF="node65.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1368"
+  HREF="node59.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1370"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1372"
+  HREF="node67.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

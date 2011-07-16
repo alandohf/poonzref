@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>2.6 我似乎不能成功定义一个链表。我试过
+&nbsp;typedef struct { char *item; NODEPTR next;
+} *NODEPTR;&nbsp;但是编译器报了错误信息。难道在C语言中一个
+结构不能包含指向自己的指针吗？</TITLE>
+<META NAME="description" CONTENT="2.6 我似乎不能成功定义一个链表。我试过
+&nbsp;typedef struct { char *item; NODEPTR next;
+} *NODEPTR;&nbsp;但是编译器报了错误信息。难道在C语言中一个
+结构不能包含指向自己的指针吗？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node10.html">
+<LINK REL="previous" HREF="node8.html">
+<LINK REL="up" HREF="node3.html">
+<LINK REL="next" HREF="node10.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html633"
+  HREF="node8.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html639"
+  HREF="node3.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html641"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html643"
+  HREF="node10.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00360000000000000000"></A> <A NAME="q:1.14"></A>
+<BR>
+<SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> 我似乎不能成功定义一个链表。我试过
+&nbsp;typedef struct {
+	char *item;
+	NODEPTR next;
+} *NODEPTR;&nbsp;但是编译器报了错误信息。难道在C语言中一个
+结构不能包含指向自己的指针吗？
+</H1>
+C&nbsp;语言中的结构当然可以包含指向自己的指针; [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, 第&nbsp;6.5&nbsp;节]
+的讨论
+和例子表明了这点。&nbsp;NODEPTR&nbsp;例子的问题是在声明&nbsp;next&nbsp;域的时候
+&nbsp;typedef&nbsp;还没有定义。为了解决这个问题, 首先赋予这个结构一个标签
+&nbsp;(``struct node'')。然后, 声明&nbsp;``next''&nbsp;域为
+&nbsp;``struct node *'', 
+或者分开&nbsp;typedef&nbsp;定义和结构定义, 或者两者都采纳。
+以下是一个修改后的版本:
+<PRE>
+	struct node {
+	    char *item;
+	    struct node *next;
+	};
+
+	typedef struct node *NODEPTR;
+</PRE>
+至少还有三种同样正确的方法解决这个问题。
+
+<P>
+在用&nbsp;typedef&nbsp;定义互相引用的两个结构时也会产生类似的问题, 
+可以用同样的方法解决。
+
+<P>
+参见问题&nbsp;<A HREF="node19.html#q:2.1">2.1</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. 6.5 p. 101]; [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 6.5 p. 139];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.5.2, Sec. 6.5.2.3]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 5.6.1 pp. 132-3]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html633"
+  HREF="node8.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html639"
+  HREF="node3.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html641"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html643"
+  HREF="node10.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>13.30 怎样正确的读取二进制文件？我有时看到&nbsp;0x0a&nbsp;和&nbsp;0x0d&nbsp;混淆了,
+而且如果数据中包含&nbsp;0x1a&nbsp;的话, 我好像会提前遇到&nbsp;EOF。</TITLE>
+<META NAME="description" CONTENT="13.30 怎样正确的读取二进制文件？我有时看到&nbsp;0x0a&nbsp;和&nbsp;0x0d&nbsp;混淆了,
+而且如果数据中包含&nbsp;0x1a&nbsp;的话, 我好像会提前遇到&nbsp;EOF。">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="previous" HREF="node220.html">
+<LINK REL="up" HREF="node191.html">
+<LINK REL="next" HREF="node222.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3348"
+  HREF="node220.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3352"
+  HREF="node191.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3354"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3356"
+  HREF="node222.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0014300000000000000000"></A>
+<A NAME="q:12.38"></A>
+<BR>
+<SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">30</SPAN> 怎样正确的读取二进制文件？我有时看到&nbsp;0x0a&nbsp;和&nbsp;0x0d&nbsp;混淆了,
+而且如果数据中包含&nbsp;0x1a&nbsp;的话, 我好像会提前遇到&nbsp;EOF。
+</H1>
+读取二进制数据文件的时候你应该用&nbsp;``rb"&nbsp;调用&nbsp;fopen(), 确保不会发生
+文本文件的解释。类似的, 写二进制文件时, 使用&nbsp;``wb"。
+
+<P>
+注意文本/二进制区别只是发生在文件打开时: 一旦文件打开之后,
+在其上调用何种&nbsp;I/O&nbsp;函数无关紧要。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 7.9.5.3]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 15.2.1 p. 348]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3348"
+  HREF="node220.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3352"
+  HREF="node191.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3354"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3356"
+  HREF="node222.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>
