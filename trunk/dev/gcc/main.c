@@ -10,7 +10,8 @@ main()
 
 //printf("i1 = %ld\n",mypow10(10));
 long res = 0 ;
-for(int i = 1; i < 10; i++){
+int i ;	
+for( i = 1; i < 10; i++){
 printf("i%d = %ld\n",i,t_math_pow(1,i));
      res+=t_math_pow(1,i);
 }
