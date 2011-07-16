@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>12.12 我能否把&nbsp;main()&nbsp;定义为&nbsp;void, 以避免扰人的&nbsp;``main无返回值"&nbsp;警告？</TITLE>
+<META NAME="description" CONTENT="12.12 我能否把&nbsp;main()&nbsp;定义为&nbsp;void, 以避免扰人的&nbsp;``main无返回值"&nbsp;警告？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node168.html">
+<LINK REL="previous" HREF="node166.html">
+<LINK REL="up" HREF="node155.html">
+<LINK REL="next" HREF="node168.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2672"
+  HREF="node166.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2678"
+  HREF="node155.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2680"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2682"
+  HREF="node168.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0013120000000000000000"></A>
+<A NAME="q:11.12b"></A>
+<BR>
+<SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">12</SPAN> 我能否把&nbsp;main()&nbsp;定义为&nbsp;void, 以避免扰人的&nbsp;``main无返回值"&nbsp;警告？
+</H1>
+不能。main()&nbsp;必须声明为返回&nbsp;int, 且没有参数或者接受适当类型的两个参数。
+如果你调用了&nbsp;exit()&nbsp;但还是有警告信息, 你可能需要插入一条冗余的&nbsp;return&nbsp;语句
+&nbsp;(或者使用某种&nbsp;``未到达"&nbsp;指令, 如果有的话）。
+
+<P>
+把函数声明为&nbsp;void&nbsp;并不仅仅关掉了警告信息：它可能导致与调用者（对于&nbsp;main(), 就是
+&nbsp;C&nbsp;运行期初始代码)&nbsp;期待的不同的函数调用/返回顺序。
+
+<P>
+注意, 这里讨论的&nbsp;main()&nbsp;是相对于&nbsp;``宿体"&nbsp;的实现; 它们不适用于&nbsp;``自立"
+&nbsp;的实现, 因为它们可能连&nbsp;main()&nbsp;都没有。但是，自立的实现相对比较少，
+如果你在使用这样的系统, 你也许已经知道了。 如果你从没听说过
+它们之间的不同, 你可能正在使用&nbsp;``宿体"&nbsp;的实现, 那我们的讨论就适用。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, 5.1.2.2.1, Sec. G.5.1];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 20.1 p. 416]; [<A
+ HREF="node388.html#ctp">CT&amp;P</A>, Sec. 3.10 pp. 50-51]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2672"
+  HREF="node166.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2678"
+  HREF="node155.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2680"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2682"
+  HREF="node168.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

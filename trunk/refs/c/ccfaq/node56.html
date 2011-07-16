@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>5.7 C&nbsp;有&nbsp;``按引用传递"&nbsp;吗？</TITLE>
+<META NAME="description" CONTENT="5.7 C&nbsp;有&nbsp;``按引用传递"&nbsp;吗？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node57.html">
+<LINK REL="previous" HREF="node55.html">
+<LINK REL="up" HREF="node49.html">
+<LINK REL="next" HREF="node57.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1229"
+  HREF="node55.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1235"
+  HREF="node49.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1237"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1239"
+  HREF="node57.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00670000000000000000"></A>
+<A NAME="q:4.11"></A>
+<BR>
+<SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">7</SPAN> C&nbsp;有&nbsp;``按引用传递"&nbsp;吗？
+</H1>
+真的没有。
+
+<P>
+严格地讲, C&nbsp;总是按值传递。你可以自己模拟按引用传递, 定义接受指针
+的函数, 然后在调用时使用&nbsp;&amp;&nbsp;操作符。事实上, 当你向函数传
+入数组&nbsp;(传入指针的情况参见问题&nbsp;<A HREF="node79.html#q:6.4">6.4</A>&nbsp;及其它)&nbsp;时, 编译器本质上
+就是在模拟按引用传递。但是&nbsp;C&nbsp;没有任何真正等同于正式的按引用传递或
+&nbsp;C++&nbsp;的引用参数的东西。另一方面, 类似函数的预处理宏可以提供一种
+``按名称传递"的形式。
+
+<P>
+参见问题&nbsp;<A HREF="node53.html#q:4.8">4.4</A>&nbsp;和&nbsp;<A HREF="node351.html#q:20.1">20.1</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. 1.8 pp. 24-5, Sec. 5.2 pp. 91-3];
+[<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 1.8 pp. 27-8, Sec. 5.2 pp. 95-7];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.3.2.2]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 9.5 pp. 273-4]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1229"
+  HREF="node55.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1235"
+  HREF="node49.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1237"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1239"
+  HREF="node57.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

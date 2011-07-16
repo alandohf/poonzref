@@ -1,0 +1,97 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>21.16 是否有使用非常量&nbsp;case&nbsp;标志的方法
+&nbsp;(例如范围或任意的表达式)？</TITLE>
+<META NAME="description" CONTENT="21.16 是否有使用非常量&nbsp;case&nbsp;标志的方法
+&nbsp;(例如范围或任意的表达式)？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node367.html">
+<LINK REL="previous" HREF="node365.html">
+<LINK REL="up" HREF="node350.html">
+<LINK REL="next" HREF="node367.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5229"
+  HREF="node365.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5235"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5237"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5239"
+  HREF="node367.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0022160000000000000000"></A>
+<A NAME="q:20.18"></A>
+<BR>
+<SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">16</SPAN> 是否有使用非常量&nbsp;case&nbsp;标志的方法
+&nbsp;(例如范围或任意的表达式)？
+</H1>
+没有。最初设计&nbsp;switch&nbsp;语句就是为编译器能简单的做
+转换, 所以&nbsp;case&nbsp;标志被限制在单个、整形、常量的
+表达式。如果你不介意详述的列出所有的情况, 你可以把几个
+&nbsp;case&nbsp;标志连到同个语句, 这样你可以覆盖一个小的范围。
+
+<P>
+如果你想要根据任意范围或非常量表达式进行选择, 你只能用
+&nbsp;if/else&nbsp;链。
+
+<P>
+参见问题&nbsp;<A HREF="node365.html#q:20.17">20.15</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. 3.4 p. 55]; [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 3.4 p. 58];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.6.4.2]; [<A
+ HREF="node388.html#rationale">Rationale</A>, Sec. 3.6.4.2];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 8.7 p. 248]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5229"
+  HREF="node365.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5235"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5237"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5239"
+  HREF="node367.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

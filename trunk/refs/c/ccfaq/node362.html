@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>21.12 指针真得比数组快吗？函数调用会拖慢程序多少？
+&nbsp;++i&nbsp;比&nbsp;i = i +1&nbsp;快吗？</TITLE>
+<META NAME="description" CONTENT="21.12 指针真得比数组快吗？函数调用会拖慢程序多少？
+&nbsp;++i&nbsp;比&nbsp;i = i +1&nbsp;快吗？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node363.html">
+<LINK REL="previous" HREF="node361.html">
+<LINK REL="up" HREF="node350.html">
+<LINK REL="next" HREF="node363.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5181"
+  HREF="node361.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5187"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5189"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5191"
+  HREF="node363.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0022120000000000000000"></A>
+<A NAME="q:20.14"></A>
+<BR>
+<SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">12</SPAN> 指针真得比数组快吗？函数调用会拖慢程序多少？
+&nbsp;++i&nbsp;比&nbsp;i = i +1&nbsp;快吗？
+</H1>
+这些问题的精确回答, 跟你所用的处理器和编译器有关。如果你必
+须知道, 你就得小心的给程序计时。通常, 差别是很小的, 小到要经过
+千万次迭代才能看到不同。如果可能, 查看编译器的汇编输出, 看看这
+两种方法是否被编译的一样。
+
+<P>
+一般的机器, 通常遍历大的数组时, 用指针比用数组要快, 但是某些
+处理器就相反。
+
+<P>
+函数调用, 虽然明显比内联代码要慢, 但是它对程序的模块化和
+代码清晰度的贡献, 很少有好的理由来避免它。
+
+<P>
+在修整象&nbsp;i = i + 1&nbsp;这样的代码前, 记住你是在跟编译器
+打交道, 而不是键击编程的计算器。对于&nbsp;++i,
+&nbsp;i += 1&nbsp;和&nbsp;i = i + 1, 任何好的编译器都会生成
+完全一样的代码。使用任何一种形式只跟风格有关, 于效率无关。
+参见问题&nbsp;<A HREF="node46.html#q:3.12b">3.10</A>。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5181"
+  HREF="node361.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5187"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5189"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5191"
+  HREF="node363.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

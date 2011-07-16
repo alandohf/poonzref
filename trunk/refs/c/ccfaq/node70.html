@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>6.11 为什么有那么多关于空指针的疑惑？为什么这些问题如此经常地出现？</TITLE>
+<META NAME="description" CONTENT="6.11 为什么有那么多关于空指针的疑惑？为什么这些问题如此经常地出现？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node71.html">
+<LINK REL="previous" HREF="node69.html">
+<LINK REL="up" HREF="node59.html">
+<LINK REL="next" HREF="node71.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1410"
+  HREF="node69.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1416"
+  HREF="node59.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1418"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1420"
+  HREF="node71.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION007110000000000000000"></A>
+<A NAME="q:5.14"></A>
+<BR>
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">11</SPAN> 为什么有那么多关于空指针的疑惑？为什么这些问题如此经常地出现？
+</H1>
+C&nbsp;程序员传统上喜欢知道很多&nbsp;(可能比他们需要知道的还要多)&nbsp;关于机器实现的细节。
+空指针在源码和大多数机器实现中都用零来表示的事实导致了很多无根据的猜测。
+而预处理宏&nbsp;(NULL)&nbsp;的使用又似乎在暗示这个值可能在某个时刻或者在某种怪异的机
+器上会改变。``if(p == 0)"&nbsp;这种结构又很容易被误认为在比较之前把&nbsp;p&nbsp;转成了整
+数类型, 而不是把&nbsp;0&nbsp;转成了指针类型。最后, 术语&nbsp;``空"&nbsp;的几种用法&nbsp;(如上文
+问题&nbsp;<A HREF="node69.html#q:5.13">5.10</A>&nbsp;所列出的)&nbsp;之间的区别又可能被忽视。
+
+<P>
+冲出这些迷惘的一个好办法是想象&nbsp;C&nbsp;使用一个关键字&nbsp;(或许象&nbsp;Pascal&nbsp;那样, 用
+&nbsp;``nil")&nbsp;作为空指针常数。编译器要么在源代码没有歧义的时候把&nbsp;``nil"&nbsp;转成适
+当类型的空指针, 或者有歧义的时候发出提示。现在事实上,
+C&nbsp;语言的空指针常 数关键字不是&nbsp;``nil"&nbsp;而是&nbsp;``0",
+这在多数情况下都能正常工作, 除了一个未加修饰
+的&nbsp;``0"&nbsp;用在非指针上下文的时候,
+编译器把它生成整数&nbsp;0&nbsp;而不是发出错误信息,
+如果那个未加修饰的&nbsp;0&nbsp;是应该是空指针常数, 那么生成的程序不行。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1410"
+  HREF="node69.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1416"
+  HREF="node59.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1418"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1420"
+  HREF="node71.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

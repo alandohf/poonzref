@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>21.3 怎样写数据文件, 使之可以在不同字大小、字节顺序或浮点
+格式的机器上读入？</TITLE>
+<META NAME="description" CONTENT="21.3 怎样写数据文件, 使之可以在不同字大小、字节顺序或浮点
+格式的机器上读入？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node354.html">
+<LINK REL="previous" HREF="node352.html">
+<LINK REL="up" HREF="node350.html">
+<LINK REL="next" HREF="node354.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5073"
+  HREF="node352.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5079"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5081"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5083"
+  HREF="node354.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002230000000000000000"></A>
+<A NAME="q:20.5"></A>
+<BR>
+<SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">3</SPAN> 怎样写数据文件, 使之可以在不同字大小、字节顺序或浮点
+格式的机器上读入？
+</H1>
+
+<P>
+最可移植的方法是是用文本文件&nbsp;(通常是&nbsp;ASCII), 用&nbsp;fprintf()&nbsp;
+写入, 用&nbsp;fscanf()&nbsp;读入, 或类似的函数。同理, 这也适用于网络
+协议。不必太相信那些说文本文件太大或读写太慢的论点。大多数现实情况下,
+操作的效率是可接受的, 而可以在不同机器间交换和用标准工具就可以对其进行
+操作是个巨大的优势。
+
+<P>
+如果你必须使用二进制文件, 你可以通过使用某些标准格式来提高可移植性,
+还可以利用已经写好的&nbsp;I/O&nbsp;函数库。这些格式包括：&nbsp;Sun&nbsp;的&nbsp;XDR (RFC 1014)、
+&nbsp;OSI&nbsp;的&nbsp;ASN.1 (在&nbsp; CCITT X.409&nbsp;和&nbsp;ISO 8825 ``Basic Encoding Rules"&nbsp;中
+都有引用)、&nbsp;CDF、&nbsp;netCDF&nbsp;或&nbsp;HDF。参见问题&nbsp;<A HREF="node28.html#q:2.12">2.10</A>&nbsp;和&nbsp;<A HREF="node221.html#q:12.38">12.30</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#pcs">PCS</A>, Sec. 6 pp. 86, 88]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5073"
+  HREF="node352.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5079"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5081"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5083"
+  HREF="node354.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

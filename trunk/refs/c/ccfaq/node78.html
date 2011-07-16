@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7.3 那么, 在&nbsp;C&nbsp;语言中&nbsp;``指针和数组等价"&nbsp;到底是什么意思 ？</TITLE>
+<META NAME="description" CONTENT="7.3 那么, 在&nbsp;C&nbsp;语言中&nbsp;``指针和数组等价"&nbsp;到底是什么意思 ？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node79.html">
+<LINK REL="previous" HREF="node77.html">
+<LINK REL="up" HREF="node75.html">
+<LINK REL="next" HREF="node79.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1522"
+  HREF="node77.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1528"
+  HREF="node75.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1530"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1532"
+  HREF="node79.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00830000000000000000"></A>
+<A NAME="q:6.3"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">3</SPAN> 那么, 在&nbsp;C&nbsp;语言中&nbsp;``指针和数组等价"&nbsp;到底是什么意思 ？
+</H1>
+在&nbsp;C&nbsp;语言中对数组和指针的困惑多数都来自这句话。说数组和指针&nbsp;``等价"&nbsp;
+不表示它们相同, 甚至也不能互换。它的意思是说数组和指针的算法定义
+可以用指针方便的访问数组或者模拟数组。
+
+<P>
+特别地, 等价的基础来自这个关键定义:
+<BLOCKQUOTE>
+一个&nbsp;T&nbsp;的数组类型的左值如果出现在表达式中会蜕变为一个指向数组第一个
+成员的指针(除了三种例外情况); 结果指针的类型是&nbsp;T&nbsp;的指针。
+
+</BLOCKQUOTE>
+
+<P>
+这就是说, 一旦数组出现在表达式中, 编译器会隐式地生成一个指向数组第
+一个成员地指针, 就像程序员写出了&nbsp;&amp;a[0]&nbsp;一样。例外的情况是, 数组为
+&nbsp;sizeof&nbsp;或&nbsp;&amp;&nbsp;操作符的操作数, 或者为字符数组的字符串初始值。
+
+<P>
+作为这个这个定义的后果, 编译器并那么不严格区分数组下标操作符和指针。
+在形如&nbsp;a[i]&nbsp;的表达式中, 根据上边的规则, 数组蜕化为指针然后按照指针变
+量的方式如&nbsp;p[i]&nbsp;那样寻址, 如问题&nbsp;<A HREF="node77.html#q:6.2">6.2</A>&nbsp;所述, 尽管最终的内存访问
+并不一样。 如果你把数组地址赋给指针:
+<PRE>
+    p = a;
+</PRE>
+那么&nbsp;p[3] 和&nbsp;a[3] 将会访问同样的成员。
+
+<P>
+参见问题&nbsp;<A HREF="node81.html#q:6.8">6.6</A> 和&nbsp;<A HREF="node86.html#q:6.14">6.11</A>。
+
+<P>
+参考资料：&nbsp;[<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. 5.3 pp. 93-6]; [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 5.3 p. 99];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.2.2.1, Sec. 6.3.2.1, Sec. 6.3.6];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 5.4.1 p. 124]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1522"
+  HREF="node77.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1528"
+  HREF="node75.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1530"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1532"
+  HREF="node79.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,123 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7. 数组和指针</TITLE>
+<META NAME="description" CONTENT="7. 数组和指针">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node94.html">
+<LINK REL="previous" HREF="node59.html">
+<LINK REL="up" HREF="ccfaq.html">
+<LINK REL="next" HREF="node76.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1468"
+  HREF="node74.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1474"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1476"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1478"
+  HREF="node76.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00800000000000000000"></A>
+<A NAME="s:6"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>. 数组和指针
+</H1>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html1480"
+  HREF="node76.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN> 我在一个源文件中定义了&nbsp;char a[6], 在另一个中声明了
+&nbsp;extern char *a&nbsp;。为什么不行 ？</A>
+<LI><A NAME="tex2html1481"
+  HREF="node77.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN> 可是我听说&nbsp;char a[ ]&nbsp;和&nbsp;char *a&nbsp;是一样的。</A>
+<LI><A NAME="tex2html1482"
+  HREF="node78.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">3</SPAN> 那么, 在&nbsp;C&nbsp;语言中&nbsp;``指针和数组等价"&nbsp;到底是什么意思 ？</A>
+<LI><A NAME="tex2html1483"
+  HREF="node79.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">4</SPAN> 那么为什么作为函数形参的数组和指针申明可以互换呢 ？</A>
+<LI><A NAME="tex2html1484"
+  HREF="node80.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">5</SPAN> 如果你不能给它赋值, 那么数组如何能成为左值呢 ？</A>
+<LI><A NAME="tex2html1485"
+  HREF="node81.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">6</SPAN> 现实地讲, 数组和指针地区别是什么 ？</A>
+<LI><A NAME="tex2html1486"
+  HREF="node82.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">7</SPAN> 有人跟我讲, 数组不过是常指针。</A>
+<LI><A NAME="tex2html1487"
+  HREF="node83.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">8</SPAN> 我遇到一些&nbsp;``搞笑"&nbsp;的代码, 包含&nbsp;5[<TT>"</TT>abcdef<TT>"</TT>]
+&nbsp;这样的&nbsp;``表达式"。 这为什么是合法的&nbsp;C&nbsp;表达式呢 ？</A>
+<LI><A NAME="tex2html1488"
+  HREF="node84.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">9</SPAN> 既然数组引用会蜕化为指针, 如果&nbsp;arr&nbsp;是数组, 那么&nbsp;arr&nbsp;和&nbsp;&amp;arr&nbsp;
+又有什么区别呢 ？</A>
+<LI><A NAME="tex2html1489"
+  HREF="node85.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">10</SPAN> 我如何声明一个数组指针 ？</A>
+<LI><A NAME="tex2html1490"
+  HREF="node86.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">11</SPAN> 我如何在运行期设定数组的大小 ？ 我怎样才能避免固定大小的数组 ？</A>
+<LI><A NAME="tex2html1491"
+  HREF="node87.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">12</SPAN> 我如何声明大小和传入的数组一样的局部数组 ？</A>
+<LI><A NAME="tex2html1492"
+  HREF="node88.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">13</SPAN> 我该如何动态分配多维数组 ？</A>
+<LI><A NAME="tex2html1493"
+  HREF="node89.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">14</SPAN> 有个灵巧的窍门: 如果我这样写
+&nbsp;int realarray[10];
+int *array = &amp;realarray[-1];&nbsp;
+我就可以把&nbsp;``array"&nbsp;当作下标从&nbsp;1&nbsp;开始的数组。</A>
+<LI><A NAME="tex2html1494"
+  HREF="node90.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">15</SPAN> 当我向一个接受指针的指针的函数传入二维数组的时候,
+编译器报错了。</A>
+<LI><A NAME="tex2html1495"
+  HREF="node91.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">16</SPAN> 我怎样编写接受编译时宽度未知的二维数组的函数 ？</A>
+<LI><A NAME="tex2html1496"
+  HREF="node92.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">17</SPAN> 我怎样在函数参数传递时混用静态和动态多维数组 ？</A>
+<LI><A NAME="tex2html1497"
+  HREF="node93.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">18</SPAN> 当数组是函数的参数时, 为什么&nbsp;sizeof&nbsp;不能正确报告数组的大小 ？</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1468"
+  HREF="node74.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1474"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1476"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1478"
+  HREF="node76.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

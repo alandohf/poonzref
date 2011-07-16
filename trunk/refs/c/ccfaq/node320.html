@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>20.14 怎样在读入文件前, 知道文件大小？</TITLE>
+<META NAME="description" CONTENT="20.14 怎样在读入文件前, 知道文件大小？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node321.html">
+<LINK REL="previous" HREF="node319.html">
+<LINK REL="up" HREF="node306.html">
+<LINK REL="next" HREF="node321.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4643"
+  HREF="node319.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4649"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4651"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4653"
+  HREF="node321.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0021140000000000000000"></A>
+<A NAME="q:19.12"></A>
+<BR>
+<SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">14</SPAN> 怎样在读入文件前, 知道文件大小？
+</H1>
+
+<P>
+如果文件大小指的是你从&nbsp;C&nbsp;程序中可以读进的字符数量, 要得到这个精确的数字
+可能困难或不可能。
+
+<P>
+Unix&nbsp;系统函数&nbsp;stat()&nbsp;会给出准确的答案。有些系统提供了类似
+&nbsp;Unix&nbsp;的&nbsp;stat()&nbsp;函数, 但只返回一个近似值。你可以调用&nbsp;fseek()&nbsp;搜
+索到文件尾, 再调用&nbsp;ftell(), 或者调用&nbsp;fstat(), 然而这些
+方法都有同样的问题: fstat()&nbsp;不可移植, 通常返回和&nbsp;stat()&nbsp;一样
+的值; ftell()&nbsp;并不保证可以返回字符计数, 除非是用于二进制文件, 但是, 
+严格来讲, 二进制文件并不一定支持&nbsp;fseek&nbsp;搜索到&nbsp;SEEK_END。
+某些系统提供&nbsp;filesize()&nbsp;或&nbsp;filelength()&nbsp;的函数, 但是它们明显
+的不可移植。
+
+<P>
+你是否确定你必须预先知道文件大小？作为一个&nbsp;C&nbsp;程序最准确的方法
+就是打开文件并读入, 
+也许可以重新整理代码, 使其边读入边计算文件大小。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 7.9.9.4]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 15.5.1];
+[<A
+ HREF="node388.html#pcs">PCS</A>, Sec. 12 p. 213]; [<A
+ HREF="node388.html#posix">POSIX</A>, Sec. 5.6.2]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4643"
+  HREF="node319.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4649"
+  HREF="node306.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4651"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4653"
+  HREF="node321.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

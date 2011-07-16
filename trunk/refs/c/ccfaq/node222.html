@@ -1,0 +1,131 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>14. 库函数</TITLE>
+<META NAME="description" CONTENT="14. 库函数">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node244.html">
+<LINK REL="previous" HREF="node191.html">
+<LINK REL="up" HREF="ccfaq.html">
+<LINK REL="next" HREF="node223.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3358"
+  HREF="node221.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3364"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3366"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3368"
+  HREF="node223.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001500000000000000000"></A>
+<A NAME="s:13"></A>
+<BR>
+<SPAN CLASS="arabic">14</SPAN>. 库函数
+</H1>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html3370"
+  HREF="node223.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">1</SPAN> 怎样把数字转为字符串&nbsp;(与&nbsp;atoi&nbsp;相反)？有&nbsp;itoa()&nbsp;函数吗？</A>
+<LI><A NAME="tex2html3371"
+  HREF="node224.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">2</SPAN> 为什么&nbsp;strncpy()&nbsp;不能总在目标串放上终止符
+&nbsp;<TT>'</TT>&#92;0<TT>'</TT>？</A>
+<LI><A NAME="tex2html3372"
+  HREF="node225.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">3</SPAN> 为什么有些版本的&nbsp;toupper()&nbsp;对大写字符会有奇怪的反应？
+为什么有的代码在调用&nbsp;toupper()&nbsp;前先调用&nbsp;tolower()？</A>
+<LI><A NAME="tex2html3373"
+  HREF="node226.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">4</SPAN> 怎样把字符串分隔成用空白作间隔符的段？怎样实现类似传递给
+&nbsp;main()&nbsp;的&nbsp;argc&nbsp;和&nbsp;argv？</A>
+<LI><A NAME="tex2html3374"
+  HREF="node227.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">5</SPAN> 我需要一些处理正则表达式或通配符匹配的代码。</A>
+<LI><A NAME="tex2html3375"
+  HREF="node228.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">6</SPAN> 我想用&nbsp;strcmp()&nbsp;作为比较函数, 调用&nbsp;qsort()&nbsp;对一个字符串数组
+排序, 但是不行。</A>
+<LI><A NAME="tex2html3376"
+  HREF="node229.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">7</SPAN> 我想用&nbsp;qsort()&nbsp;对一个结构数组排序。我的比较函数接受结构指针,
+但是编译器认为这个函数对于&nbsp;qsort()&nbsp;是错误类型。我要怎样转换这个函数指针
+才能避免这样的警告？</A>
+<LI><A NAME="tex2html3377"
+  HREF="node230.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">8</SPAN> 怎样对一个链表排序？</A>
+<LI><A NAME="tex2html3378"
+  HREF="node231.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">9</SPAN> 怎样对多于内存的数据排序？</A>
+<LI><A NAME="tex2html3379"
+  HREF="node232.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">10</SPAN> 怎样在&nbsp;C&nbsp;程序中取得当前日期或时间？</A>
+<LI><A NAME="tex2html3380"
+  HREF="node233.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">11</SPAN> 我知道库函数&nbsp;localtime()&nbsp;可以把&nbsp;time_t&nbsp;转换成结构
+&nbsp;struct tm, 而&nbsp;ctime()&nbsp;可以把&nbsp;time_t&nbsp;转换成为可打印的字符串。
+怎样才能进行反向操作, 把&nbsp;struct tm&nbsp;或一个字符串转换成&nbsp;time_t？</A>
+<LI><A NAME="tex2html3381"
+  HREF="node234.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">12</SPAN> 怎样在日期上加&nbsp;N&nbsp;天？怎样取得两个日期的时间间隔？</A>
+<LI><A NAME="tex2html3382"
+  HREF="node235.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">13</SPAN> 我需要一个随机数生成器。</A>
+<LI><A NAME="tex2html3383"
+  HREF="node236.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">14</SPAN> 怎样获得在一定范围内的随机数？</A>
+<LI><A NAME="tex2html3384"
+  HREF="node237.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">15</SPAN> 每次执行程序,&nbsp;rand()&nbsp;都返回相同顺序的数字。</A>
+<LI><A NAME="tex2html3385"
+  HREF="node238.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">16</SPAN> 我需要随机的真/假值, 所以我用直接用&nbsp;rand() % 2, 可是我得到
+交替的&nbsp;0, 1, 0, 1, 0 ……</A>
+<LI><A NAME="tex2html3386"
+  HREF="node239.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">17</SPAN> 怎样产生标准分布或高斯分布的随机数？</A>
+<LI><A NAME="tex2html3387"
+  HREF="node240.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">18</SPAN> 我不断得到库函数未定义错误, 但是我已经&nbsp;#inlude&nbsp;了所有用到的头文件了。</A>
+<LI><A NAME="tex2html3388"
+  HREF="node241.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">19</SPAN> 虽然我在连接时明确地指定了正确的函数库, 我还是得到库函数未定义错误。</A>
+<LI><A NAME="tex2html3389"
+  HREF="node242.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">20</SPAN> 连接器说&nbsp;_end&nbsp;未定义代表什么意思？</A>
+<LI><A NAME="tex2html3390"
+  HREF="node243.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">21</SPAN> 我的编译器提示&nbsp;printf&nbsp;未定义！这怎么可能？</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3358"
+  HREF="node221.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3364"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3366"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3368"
+  HREF="node223.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

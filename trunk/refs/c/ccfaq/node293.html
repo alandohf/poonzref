@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>19.6 难道&nbsp;ANSI&nbsp;函数原型说明没有使&nbsp;lint&nbsp;过时吗？</TITLE>
+<META NAME="description" CONTENT="19.6 难道&nbsp;ANSI&nbsp;函数原型说明没有使&nbsp;lint&nbsp;过时吗？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node294.html">
+<LINK REL="previous" HREF="node292.html">
+<LINK REL="up" HREF="node287.html">
+<LINK REL="next" HREF="node294.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4278"
+  HREF="node292.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4284"
+  HREF="node287.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4286"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4288"
+  HREF="node294.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION002060000000000000000"></A>
+<A NAME="q:18.8"></A>
+<BR>
+<SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">6</SPAN> 难道&nbsp;ANSI&nbsp;函数原型说明没有使&nbsp;lint&nbsp;过时吗？
+</H1>
+实际上不是。首先, 原型说明只有在它们存在和正确的情况下才工作。一个
+无心的错误原型说明比没有更糟。其次, lint&nbsp;会检查多个源程序
+文档的一致性, 以及数据和函数的说明。最后, 像&nbsp;lint&nbsp;这样独立
+的程序在加强兼容的、可移植的代码惯例上会比任何特定的、
+特殊实现的、充满特性和扩展功能的编译器更加谨慎。
+
+<P>
+如果你确实要用函数原型说明而不是&nbsp;lint&nbsp;来作多文件一致性检查, 
+务必保证原型说明在头文件中的正确性。
+参见问题&nbsp;<A HREF="node6.html#q:1.7">1.3</A>&nbsp;和&nbsp;<A HREF="node136.html#q:10.6">10.4</A>。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html4278"
+  HREF="node292.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html4284"
+  HREF="node287.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html4286"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html4288"
+  HREF="node294.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

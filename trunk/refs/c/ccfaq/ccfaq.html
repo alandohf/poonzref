@@ -1,0 +1,1130 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>C 语言常见问题集</TITLE>
+<META NAME="description" CONTENT="C 语言常见问题集">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node1.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev_g.png"></td><td align=center>
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_g.png"></td><td align=center>&nbsp;
+<A NAME="tex2html110"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html112"
+  HREF="node1.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<P>
+
+<P>
+
+<H1 ALIGN="CENTER"><BIG CLASS="XHUGE">C&nbsp;语言常见问题集</BIG></H1>
+<DIV CLASS="author_info">
+
+<P ALIGN="CENTER"><STRONG>原著：Steve Summit</STRONG></P>
+<P ALIGN="CENTER"><I>翻译：朱群英, 孙 云
+</I></P>
+<P ALIGN="CENTER"><STRONG>
+修订版&nbsp;0.9.4, 2005年6月23日
+<BR>
+版权所有&nbsp;&#169;&nbsp;2005
+</STRONG></P>
+</DIV>
+
+<P>
+
+<BR><HR>
+<!--Table of Child-Links-->
+<A NAME="CHILD_LINKS"></A>
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html114"
+  HREF="node1.html">目录</A>
+<LI><A NAME="tex2html115"
+  HREF="node2.html"><SPAN CLASS="arabic">1</SPAN>. 前言</A>
+<LI><A NAME="tex2html116"
+  HREF="node3.html"><SPAN CLASS="arabic">2</SPAN>. 声明和初始化</A>
+<UL>
+<LI><A NAME="tex2html117"
+  HREF="node4.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">1</SPAN> 我如何决定使用那种整数类型？</A>
+<LI><A NAME="tex2html118"
+  HREF="node5.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">2</SPAN> 64&nbsp;位机上的&nbsp;64&nbsp;位类型是什么样的？</A>
+<LI><A NAME="tex2html119"
+  HREF="node6.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">3</SPAN> 怎样定义和声明全局变量和函数最好？</A>
+<LI><A NAME="tex2html120"
+  HREF="node7.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">4</SPAN> extern&nbsp;在函数声明中是什么意思？</A>
+<LI><A NAME="tex2html121"
+  HREF="node8.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">5</SPAN> 关键字&nbsp;auto&nbsp;到底有什么用途？</A>
+<LI><A NAME="tex2html122"
+  HREF="node9.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">6</SPAN> 我似乎不能成功定义一个链表。我试过
+&nbsp;typedef struct {
+	char *item;
+	NODEPTR next;
+} *NODEPTR;&nbsp;但是编译器报了错误信息。难道在C语言中一个
+结构不能包含指向自己的指针吗？</A>
+<LI><A NAME="tex2html123"
+  HREF="node10.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">7</SPAN> 怎样建立和理解非常复杂的声明？例如定义一个包含&nbsp;N&nbsp;个指向返
+回指向字符的指针的函数的指针的数组？</A>
+<LI><A NAME="tex2html124"
+  HREF="node11.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">8</SPAN> 函数只定义了一次, 调用了一次, 但编译器提示非法重定义了。</A>
+<LI><A NAME="tex2html125"
+  HREF="node12.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">9</SPAN> main()&nbsp;的正确定义是什么？
+&nbsp;void main()&nbsp;正确吗？</A>
+<LI><A NAME="tex2html126"
+  HREF="node13.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">10</SPAN> 对于没有初始化的变量的初始值可以作怎样的假定？
+如果一个全局变量初始值为&nbsp;``零", 它可否作为空指针或浮点零？</A>
+<LI><A NAME="tex2html127"
+  HREF="node14.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">11</SPAN> 代码&nbsp;int f() { char a[] = <TT>"</TT>Hello,
+world!<TT>"</TT>;}&nbsp;不能编译。</A>
+<LI><A NAME="tex2html128"
+  HREF="node15.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">12</SPAN> 这样的初始化有什么问题？char *p = malloc(10);&nbsp;
+编译器提示&nbsp;``非法初始式"&nbsp;云云。</A>
+<LI><A NAME="tex2html129"
+  HREF="node16.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">13</SPAN> 以下的初始化有什么区别？char a[] = <TT>"</TT>string
+literal<TT>"</TT>; char *p  = <TT>"</TT>string
+literal<TT>"</TT>; 当我向&nbsp;p[i]&nbsp;赋值的时候, 我的
+程序崩溃了。</A>
+<LI><A NAME="tex2html130"
+  HREF="node17.html"><SPAN CLASS="arabic">2</SPAN>.<SPAN CLASS="arabic">14</SPAN> 我总算弄清除函数指针的声明方法了, 但怎样才能初始化呢？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html131"
+  HREF="node18.html"><SPAN CLASS="arabic">3</SPAN>. 结构、联合和枚举</A>
+<UL>
+<LI><A NAME="tex2html132"
+  HREF="node19.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">1</SPAN> 声明&nbsp;struct x1 { ...};&nbsp;和&nbsp;typedef struct { ...} x2;
+有什么不同？</A>
+<LI><A NAME="tex2html133"
+  HREF="node20.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">2</SPAN> 为什么&nbsp;struct x { ...}; x thestruct;&nbsp;不对？</A>
+<LI><A NAME="tex2html134"
+  HREF="node21.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">3</SPAN> 一个结构可以包含指向自己的指针吗？</A>
+<LI><A NAME="tex2html135"
+  HREF="node22.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">4</SPAN> 在&nbsp;C&nbsp;语言中实现抽象数据类型什么方法最好?</A>
+<LI><A NAME="tex2html136"
+  HREF="node23.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">5</SPAN> 在&nbsp;C&nbsp;中是否有模拟继承等面向对象程序设计特性的好方法？</A>
+<LI><A NAME="tex2html137"
+  HREF="node24.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">6</SPAN> 我遇到这样声明结构的代码: struct name {
+int namelen; char
+namestr[1];};&nbsp;然后又使用一些内存分配技巧使&nbsp;namestr&nbsp;
+数组用起来好像有多个元素。这样合法和可移植吗？</A>
+<LI><A NAME="tex2html138"
+  HREF="node25.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">7</SPAN> 是否有自动比较结构的方法？</A>
+<LI><A NAME="tex2html139"
+  HREF="node26.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">8</SPAN> 如何向接受结构参数的函数传入常数值？</A>
+<LI><A NAME="tex2html140"
+  HREF="node27.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">9</SPAN> 怎样从/向数据文件读/写结构？</A>
+<LI><A NAME="tex2html141"
+  HREF="node28.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">10</SPAN> 我的编译器在结构中留下了空洞, 这导致空间浪费而且无法
+与外部数据文件进行&nbsp;"二进制"&nbsp;读写。能否关掉填充, 或者控制结构域的
+对齐方式?</A>
+<LI><A NAME="tex2html142"
+  HREF="node29.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">11</SPAN> 为什么&nbsp;sizeof&nbsp;返回的值大于结构的期望值,
+是不是尾部有填充?</A>
+<LI><A NAME="tex2html143"
+  HREF="node30.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">12</SPAN> 如何确定域在结构中的字节偏移？</A>
+<LI><A NAME="tex2html144"
+  HREF="node31.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">13</SPAN> 怎样在运行时用名字访问结构中的域？</A>
+<LI><A NAME="tex2html145"
+  HREF="node32.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">14</SPAN> 程序运行正确, 但退出时却&nbsp;``core dump''了，怎么回事？</A>
+<LI><A NAME="tex2html146"
+  HREF="node33.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">15</SPAN> 可以初始化一个联合吗？</A>
+<LI><A NAME="tex2html147"
+  HREF="node34.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">16</SPAN> 枚举和一组预处理的&nbsp;#define&nbsp;有什么不同？</A>
+<LI><A NAME="tex2html148"
+  HREF="node35.html"><SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">17</SPAN> 有什么容易的显示枚举值符号的方法？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html149"
+  HREF="node36.html"><SPAN CLASS="arabic">4</SPAN>. 表达式</A>
+<UL>
+<LI><A NAME="tex2html150"
+  HREF="node37.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">1</SPAN> 为什么这样的代码:
+&nbsp;a[i] = i++;&nbsp;不能工作？</A>
+<LI><A NAME="tex2html151"
+  HREF="node38.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">2</SPAN> 使用我的编译器,下面的代码
+&nbsp;int i=7; printf(<TT>"</TT>%d&#92;n<TT>"</TT>,
+i++ * i++);&nbsp;返回&nbsp;49？不管按什么顺序计算, 难道不该打印出56吗？</A>
+<LI><A NAME="tex2html152"
+  HREF="node39.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">3</SPAN> 对于代码
+&nbsp;int i = 3; i = i++;&nbsp;不同编译器给出不同的结果, 有的为&nbsp;3, 有的为&nbsp;4,
+哪个是正确的？</A>
+<LI><A NAME="tex2html153"
+  HREF="node40.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">4</SPAN> 这是个巧妙的表达式:
+&nbsp;a ^= b ^= a ^= b&nbsp;
+它不需要临时变量就可以交换&nbsp;a&nbsp;和&nbsp;b&nbsp;的值。</A>
+<LI><A NAME="tex2html154"
+  HREF="node41.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">5</SPAN> 我可否用括号来强制执行我所需要的计算顺序？</A>
+<LI><A NAME="tex2html155"
+  HREF="node42.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">6</SPAN> 可是&nbsp;&amp;&amp;&nbsp;和&nbsp;<TT>||</TT>&nbsp;运算符呢？
+我看到过类似
+&nbsp;while((c = getchar()) != EOF &amp;&amp;
+c != <TT>'</TT>&#92;n<TT>'</TT>)&nbsp;
+的代码&nbsp;……</A>
+<LI><A NAME="tex2html156"
+  HREF="node43.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">7</SPAN> 我怎样才能理解复杂表达式？``序列点"&nbsp;是什么？</A>
+<LI><A NAME="tex2html157"
+  HREF="node44.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">8</SPAN> 那么, 对于&nbsp;a[i] = i++;&nbsp;我们不知道&nbsp;a[]&nbsp;的哪
+一个分量会被改写,但&nbsp;i&nbsp;的确会增加&nbsp;1, 对吗？</A>
+<LI><A NAME="tex2html158"
+  HREF="node45.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">9</SPAN> ++i&nbsp;和&nbsp;i++&nbsp;有什么区别？</A>
+<LI><A NAME="tex2html159"
+  HREF="node46.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">10</SPAN> 如果我不使用表达式的值, 我应该用&nbsp;++i&nbsp;或&nbsp;i++&nbsp;
+来自增一个变量吗？</A>
+<LI><A NAME="tex2html160"
+  HREF="node47.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">11</SPAN> 为什么如下的代码&nbsp;
+int a = 100, b = 100; 
+long int c = a * b;&nbsp;不能工作？</A>
+<LI><A NAME="tex2html161"
+  HREF="node48.html"><SPAN CLASS="arabic">4</SPAN>.<SPAN CLASS="arabic">12</SPAN> 我需要根据条件把一个复杂的表达式赋值给两个变量中的
+一个。可以用下边这样的代码吗？&nbsp;
+((condition) ? a : b) = complicated_expression;</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html162"
+  HREF="node49.html"><SPAN CLASS="arabic">5</SPAN>. 指针</A>
+<UL>
+<LI><A NAME="tex2html163"
+  HREF="node50.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">1</SPAN> 我想声明一个指针并为它分配一些空间, 但却不行。这些代码有什么问题？
+char *p; *p = malloc(10);</A>
+<LI><A NAME="tex2html164"
+  HREF="node51.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">2</SPAN>&nbsp;*p++&nbsp;自增&nbsp;p&nbsp;还是&nbsp;p&nbsp;所指向的变量？</A>
+<LI><A NAME="tex2html165"
+  HREF="node52.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">3</SPAN> 我有一个&nbsp;char *&nbsp;型指针正巧指向一些&nbsp;int&nbsp;型变
+量, 我想跳过它们。为什么如下的代码 ((int *)p)++; 不行？</A>
+<LI><A NAME="tex2html166"
+  HREF="node53.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">4</SPAN> 我有个函数,它应该接受并初始化一个指针
+&nbsp;void f(int *ip) { static int dummy = 5; ip = &amp;dummy;}
+但是当我如下调用时: int *ip; f(ip); 调用者的指针却没有任何变化。</A>
+<LI><A NAME="tex2html167"
+  HREF="node54.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">5</SPAN> 我能否用&nbsp;void**&nbsp;指针作为参数, 使函数按引用接受一
+般指针？</A>
+<LI><A NAME="tex2html168"
+  HREF="node55.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">6</SPAN> 我有一个函数&nbsp;extern int f(int *);&nbsp;它接受指向
+&nbsp;int&nbsp;型的指针。我怎样用引用方式传入一个常数？下面这样的
+调用&nbsp;f(&amp;5);&nbsp;似乎不行。</A>
+<LI><A NAME="tex2html169"
+  HREF="node56.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">7</SPAN> C&nbsp;有&nbsp;``按引用传递"&nbsp;吗？</A>
+<LI><A NAME="tex2html170"
+  HREF="node57.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">8</SPAN> 我看到了用指针调用函数的不同语法形式。到底怎么回事？</A>
+<LI><A NAME="tex2html171"
+  HREF="node58.html"><SPAN CLASS="arabic">5</SPAN>.<SPAN CLASS="arabic">9</SPAN> 我怎样把一个&nbsp;int&nbsp;变量转换为&nbsp;char *&nbsp;型？
+我试了类型转换, 但是不行。</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html172"
+  HREF="node59.html"><SPAN CLASS="arabic">6</SPAN>. 空&nbsp;(null)&nbsp;指针</A>
+<UL>
+<LI><A NAME="tex2html173"
+  HREF="node60.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN> 臭名昭著的空指针到底是什么？</A>
+<LI><A NAME="tex2html174"
+  HREF="node61.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">2</SPAN> 怎样在程序里获得一个空指针？</A>
+<LI><A NAME="tex2html175"
+  HREF="node62.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">3</SPAN> 用缩写的指针比较&nbsp;``if(p)"&nbsp;检查空指针是否可靠？
+如果空指针的内部表达不是&nbsp;0&nbsp;会怎么样？</A>
+<LI><A NAME="tex2html176"
+  HREF="node63.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">4</SPAN> NULL&nbsp;是什么, 它是怎么定义的？</A>
+<LI><A NAME="tex2html177"
+  HREF="node64.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">5</SPAN> 在使用非全零作为空指针内部表达的机器上, NULL&nbsp;是如何定义的？</A>
+<LI><A NAME="tex2html178"
+  HREF="node65.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">6</SPAN> 如果&nbsp;NULL&nbsp;定义成&nbsp;#define NULL ((char *)0)&nbsp;
+难道不就可以向函数传入不加转换的&nbsp;NULL&nbsp;了吗？</A>
+<LI><A NAME="tex2html179"
+  HREF="node66.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">7</SPAN> 如果&nbsp;NULL&nbsp;和&nbsp;0&nbsp;作为空指针常数是等价的, 那我到底该用哪一个呢？</A>
+<LI><A NAME="tex2html180"
+  HREF="node67.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">8</SPAN> 但是如果&nbsp;NULL&nbsp;的值改变了, 比如在使用非零内部空指针的机器上,
+难道用&nbsp;NULL (而不是&nbsp;0)&nbsp;不是更好吗？</A>
+<LI><A NAME="tex2html181"
+  HREF="node68.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">9</SPAN> 用预定义宏&nbsp;#define Nullptr(type) (type *)0&nbsp;帮助创建正确
+类型的空指针。</A>
+<LI><A NAME="tex2html182"
+  HREF="node69.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">10</SPAN> 这有点奇怪。NULL&nbsp;可以确保是&nbsp;0, 但空&nbsp;(null)&nbsp;指针却不一定？</A>
+<LI><A NAME="tex2html183"
+  HREF="node70.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">11</SPAN> 为什么有那么多关于空指针的疑惑？为什么这些问题如此经常地出现？</A>
+<LI><A NAME="tex2html184"
+  HREF="node71.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">12</SPAN> 我很困惑。我就是不能理解这些空指针一类的东西。</A>
+<LI><A NAME="tex2html185"
+  HREF="node72.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">13</SPAN> 考虑到有关空指针的所有这些困惑, 难道把要求它们内部表达都必须
+为&nbsp;0&nbsp;不是更简单吗？</A>
+<LI><A NAME="tex2html186"
+  HREF="node73.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">14</SPAN> 说真的, 真有机器用非零空指针吗, 或者不同类型用不同的表达？</A>
+<LI><A NAME="tex2html187"
+  HREF="node74.html"><SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">15</SPAN> 运行时的&nbsp;``空指针赋值"&nbsp;错误是什么意思？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html188"
+  HREF="node75.html"><SPAN CLASS="arabic">7</SPAN>. 数组和指针</A>
+<UL>
+<LI><A NAME="tex2html189"
+  HREF="node76.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN> 我在一个源文件中定义了&nbsp;char a[6], 在另一个中声明了
+&nbsp;extern char *a&nbsp;。为什么不行 ？</A>
+<LI><A NAME="tex2html190"
+  HREF="node77.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">2</SPAN> 可是我听说&nbsp;char a[ ]&nbsp;和&nbsp;char *a&nbsp;是一样的。</A>
+<LI><A NAME="tex2html191"
+  HREF="node78.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">3</SPAN> 那么, 在&nbsp;C&nbsp;语言中&nbsp;``指针和数组等价"&nbsp;到底是什么意思 ？</A>
+<LI><A NAME="tex2html192"
+  HREF="node79.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">4</SPAN> 那么为什么作为函数形参的数组和指针申明可以互换呢 ？</A>
+<LI><A NAME="tex2html193"
+  HREF="node80.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">5</SPAN> 如果你不能给它赋值, 那么数组如何能成为左值呢 ？</A>
+<LI><A NAME="tex2html194"
+  HREF="node81.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">6</SPAN> 现实地讲, 数组和指针地区别是什么 ？</A>
+<LI><A NAME="tex2html195"
+  HREF="node82.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">7</SPAN> 有人跟我讲, 数组不过是常指针。</A>
+<LI><A NAME="tex2html196"
+  HREF="node83.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">8</SPAN> 我遇到一些&nbsp;``搞笑"&nbsp;的代码, 包含&nbsp;5[<TT>"</TT>abcdef<TT>"</TT>]
+&nbsp;这样的&nbsp;``表达式"。 这为什么是合法的&nbsp;C&nbsp;表达式呢 ？</A>
+<LI><A NAME="tex2html197"
+  HREF="node84.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">9</SPAN> 既然数组引用会蜕化为指针, 如果&nbsp;arr&nbsp;是数组, 那么&nbsp;arr&nbsp;和&nbsp;&amp;arr&nbsp;
+又有什么区别呢 ？</A>
+<LI><A NAME="tex2html198"
+  HREF="node85.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">10</SPAN> 我如何声明一个数组指针 ？</A>
+<LI><A NAME="tex2html199"
+  HREF="node86.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">11</SPAN> 我如何在运行期设定数组的大小 ？ 我怎样才能避免固定大小的数组 ？</A>
+<LI><A NAME="tex2html200"
+  HREF="node87.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">12</SPAN> 我如何声明大小和传入的数组一样的局部数组 ？</A>
+<LI><A NAME="tex2html201"
+  HREF="node88.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">13</SPAN> 我该如何动态分配多维数组 ？</A>
+<LI><A NAME="tex2html202"
+  HREF="node89.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">14</SPAN> 有个灵巧的窍门: 如果我这样写
+&nbsp;int realarray[10];
+int *array = &amp;realarray[-1];&nbsp;
+我就可以把&nbsp;``array"&nbsp;当作下标从&nbsp;1&nbsp;开始的数组。</A>
+<LI><A NAME="tex2html203"
+  HREF="node90.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">15</SPAN> 当我向一个接受指针的指针的函数传入二维数组的时候,
+编译器报错了。</A>
+<LI><A NAME="tex2html204"
+  HREF="node91.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">16</SPAN> 我怎样编写接受编译时宽度未知的二维数组的函数 ？</A>
+<LI><A NAME="tex2html205"
+  HREF="node92.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">17</SPAN> 我怎样在函数参数传递时混用静态和动态多维数组 ？</A>
+<LI><A NAME="tex2html206"
+  HREF="node93.html"><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">18</SPAN> 当数组是函数的参数时, 为什么&nbsp;sizeof&nbsp;不能正确报告数组的大小 ？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html207"
+  HREF="node94.html"><SPAN CLASS="arabic">8</SPAN>. 内存分配</A>
+<UL>
+<LI><A NAME="tex2html208"
+  HREF="node95.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN> 为什么这段代码不行？char *answer;
+printf(<TT>"</TT>Type something:&#92;n<TT>"</TT>);
+gets(answer);
+printf(<TT>"</TT>You typed
+&#92;<TT>"</TT>%s&#92;<TT>"</TT>&#92;n<TT>"</TT>,
+answer);</A>
+<LI><A NAME="tex2html209"
+  HREF="node96.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">2</SPAN> 我的&nbsp;strcat()&nbsp;不行.我试了
+&nbsp;char *s1 = <TT>"</TT>Hello, <TT>"</TT>; char *s2 =
+<TT>"</TT>world!<TT>"</TT>; char *s3 = strcat(s1, s2);&nbsp;
+但是我得到了奇怪的结果。</A>
+<LI><A NAME="tex2html210"
+  HREF="node97.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">3</SPAN> 但是&nbsp;strcat&nbsp;的手册页说它接受两个&nbsp;char *&nbsp;型参数。
+我怎么知道&nbsp;(空间)&nbsp;分配的事情呢？</A>
+<LI><A NAME="tex2html211"
+  HREF="node98.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">4</SPAN> 我刚才试了这样的代码&nbsp;
+char *p;
+strcpy(p, <TT>"</TT>abc<TT>"</TT>);&nbsp;而它运行正常？怎么回事？
+为什么它没有崩溃？</A>
+<LI><A NAME="tex2html212"
+  HREF="node99.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">5</SPAN> 一个指针变量分配多少内存？</A>
+<LI><A NAME="tex2html213"
+  HREF="node100.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">6</SPAN> 我有个函数, 本该返回一个字符串, 但当它返回调用者的时候,
+返回串却是垃圾信息。</A>
+<LI><A NAME="tex2html214"
+  HREF="node101.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">7</SPAN> 那么返回字符串或其它集合的争取方法是什么呢？</A>
+<LI><A NAME="tex2html215"
+  HREF="node102.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">8</SPAN> 为什么在调用&nbsp;malloc()&nbsp;时, 我得到&nbsp;``警告:
+整数赋向指针需要类型转换"？</A>
+<LI><A NAME="tex2html216"
+  HREF="node103.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">9</SPAN> 为什么有些代码小心地把&nbsp;malloc&nbsp;返回的值转换为分配的指针类型。</A>
+<LI><A NAME="tex2html217"
+  HREF="node104.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">10</SPAN> 在调用&nbsp;malloc()&nbsp;的时候, 错误&nbsp;``不能把&nbsp;void *&nbsp;转换为&nbsp;int *"&nbsp;
+是什么意思？</A>
+<LI><A NAME="tex2html218"
+  HREF="node105.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">11</SPAN> 我见到了这样的代码
+&nbsp;char *p = malloc(strlen(s) + 1);
+strcpy(p, s);&nbsp;
+难道不应该是&nbsp;malloc((strlen(s) + 1) * sizeof(char))？</A>
+<LI><A NAME="tex2html219"
+  HREF="node106.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">12</SPAN> 我如何动态分配数组？</A>
+<LI><A NAME="tex2html220"
+  HREF="node107.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">13</SPAN> 我听说有的操作系统程序使用的时候才真正分配&nbsp;malloc&nbsp;申请
+的内存。这合法吗？</A>
+<LI><A NAME="tex2html221"
+  HREF="node108.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">14</SPAN> 我用一行这样的代码分配一个巨大的数组, 用于数字运算:
+&nbsp;double *array = malloc(300 * 300 * sizeof( double ));&nbsp;
+malloc()&nbsp;并没有返回&nbsp;null, 但是程序运行得有些奇怪, 好像改写了某些内存,
+或者&nbsp;malloc()&nbsp;并没有分配我申请的那么多内存, 云云。</A>
+<LI><A NAME="tex2html222"
+  HREF="node109.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">15</SPAN> 我的&nbsp;PC&nbsp;有&nbsp;8&nbsp;兆内存。为什么我只能分配&nbsp;640K&nbsp;左右的内存？</A>
+<LI><A NAME="tex2html223"
+  HREF="node110.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">16</SPAN> 我的程序总是崩溃, 显然在&nbsp;malloc&nbsp;内部的某个地方。 但是我看不出
+哪里有问题。是&nbsp;malloc()&nbsp;有&nbsp;bug&nbsp;吗？</A>
+<LI><A NAME="tex2html224"
+  HREF="node111.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">17</SPAN> 动态分配的内存一旦释放之后你就不能再使用, 是吧？</A>
+<LI><A NAME="tex2html225"
+  HREF="node112.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">18</SPAN> 为什么在调用&nbsp;free()&nbsp;之后指针没有变空？使用&nbsp;(赋值, 比较)&nbsp;
+释放之后的指针有多么不安全？</A>
+<LI><A NAME="tex2html226"
+  HREF="node113.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">19</SPAN> 当我&nbsp;malloc()&nbsp;为一个函数的局部指针分配内存时, 我还需要用
+&nbsp;free()&nbsp;明确的释放吗？</A>
+<LI><A NAME="tex2html227"
+  HREF="node114.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">20</SPAN> 我在分配一些结构, 它们包含指向其它动态分配的对象的指针。
+我在释放结构的时候, 还需要释放每一个下级指针吗？</A>
+<LI><A NAME="tex2html228"
+  HREF="node115.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">21</SPAN> 我必须在程序退出之前释放分配的所有内存吗？</A>
+<LI><A NAME="tex2html229"
+  HREF="node116.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">22</SPAN> 我有个程序分配了大量的内存, 然后又释放了。但是从操作系统看,
+内存的占用率却并没有回去。</A>
+<LI><A NAME="tex2html230"
+  HREF="node117.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">23</SPAN> free()&nbsp;怎么知道有多少字节需要释放？</A>
+<LI><A NAME="tex2html231"
+  HREF="node118.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">24</SPAN> 那么我能否查询&nbsp;malloc&nbsp;包, 可分配的最大块是多大？</A>
+<LI><A NAME="tex2html232"
+  HREF="node119.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">25</SPAN> 向&nbsp;realloc()&nbsp;的第一个参数传入空指针合法吗？你为什么要这样做？</A>
+<LI><A NAME="tex2html233"
+  HREF="node120.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">26</SPAN> calloc()&nbsp;和&nbsp;malloc()&nbsp;有什么区别？利用&nbsp;calloc&nbsp;的零填充功能安全吗？
+free()&nbsp;可以释放&nbsp;calloc()&nbsp;分配的内存吗, 还是需要一个&nbsp;cfree()？</A>
+<LI><A NAME="tex2html234"
+  HREF="node121.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">27</SPAN> alloca()&nbsp;是什么？为什么不提倡使用它？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html235"
+  HREF="node122.html"><SPAN CLASS="arabic">9</SPAN>. 字符和字符串</A>
+<UL>
+<LI><A NAME="tex2html236"
+  HREF="node123.html"><SPAN CLASS="arabic">9</SPAN>.<SPAN CLASS="arabic">1</SPAN> 为什么&nbsp;strcat(string, <TT>'!'</TT>);&nbsp;不行？</A>
+<LI><A NAME="tex2html237"
+  HREF="node124.html"><SPAN CLASS="arabic">9</SPAN>.<SPAN CLASS="arabic">2</SPAN> 我在检查一个字符串是否跟某个值匹配。 为什么这样不行？
+char *string;
+...
+if(string == <TT>"</TT>value<TT>"</TT>) {
+/* string matches "value" */
+...
+}</A>
+<LI><A NAME="tex2html238"
+  HREF="node125.html"><SPAN CLASS="arabic">9</SPAN>.<SPAN CLASS="arabic">3</SPAN> 如果我可以写
+&nbsp;char a[] = <TT>"</TT>Hello, world!<TT>"</TT>;&nbsp;
+为什么我不能写
+&nbsp;char a[14];
+a = <TT>"</TT>Hello, world!<TT>"</TT>;</A>
+<LI><A NAME="tex2html239"
+  HREF="node126.html"><SPAN CLASS="arabic">9</SPAN>.<SPAN CLASS="arabic">4</SPAN> 我怎么得到对应字符的数字&nbsp;(字符集)&nbsp;值, 或者相反？</A>
+<LI><A NAME="tex2html240"
+  HREF="node127.html"><SPAN CLASS="arabic">9</SPAN>.<SPAN CLASS="arabic">5</SPAN> 我认为我的编译器有问题: 我注意到&nbsp;sizeof('a')&nbsp;是&nbsp;2&nbsp;而不是
+&nbsp;1&nbsp;(即, 不是&nbsp;sizeof(char))。</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html241"
+  HREF="node128.html"><SPAN CLASS="arabic">10</SPAN>. 布尔表达式和变量</A>
+<UL>
+<LI><A NAME="tex2html242"
+  HREF="node129.html"><SPAN CLASS="arabic">10</SPAN>.<SPAN CLASS="arabic">1</SPAN> C&nbsp;语言中布尔值的候选类型是什么？为什么它不是一个
+标准类型？我应该用&nbsp;#define&nbsp;或&nbsp;enum&nbsp;定义&nbsp;true&nbsp;和&nbsp;false&nbsp;值吗？</A>
+<LI><A NAME="tex2html243"
+  HREF="node130.html"><SPAN CLASS="arabic">10</SPAN>.<SPAN CLASS="arabic">2</SPAN> 因为在&nbsp;C&nbsp;语言中所有的非零值都被看作&nbsp;``真", 是不是把&nbsp;TRUE&nbsp;
+定义为&nbsp;1&nbsp;很危险？如果某个内置的函数或关系操作符&nbsp;``返回"&nbsp;不是&nbsp;1&nbsp;的
+其它值怎么办？</A>
+<LI><A NAME="tex2html244"
+  HREF="node131.html"><SPAN CLASS="arabic">10</SPAN>.<SPAN CLASS="arabic">3</SPAN> 当&nbsp;p&nbsp;是指针时,&nbsp;if(p)&nbsp;是合法的表达式吗？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html245"
+  HREF="node132.html"><SPAN CLASS="arabic">11</SPAN>. C&nbsp;预处理器</A>
+<UL>
+<LI><A NAME="tex2html246"
+  HREF="node133.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">1</SPAN> 这些机巧的预处理宏:&nbsp;
+#define begin  {&nbsp;
+#define end	}&nbsp;
+你觉得怎么样？</A>
+<LI><A NAME="tex2html247"
+  HREF="node134.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">2</SPAN> 怎么写一个一般用途的宏交换两个值？</A>
+<LI><A NAME="tex2html248"
+  HREF="node135.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">3</SPAN> 书写多语句宏的最好方法是什么？</A>
+<LI><A NAME="tex2html249"
+  HREF="node136.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">4</SPAN> 我第一次把一个程序分成多个源文件, 我不知道该把什么放到&nbsp;.c&nbsp;文件,
+把什么放到&nbsp;.h&nbsp;文件。(``.h"&nbsp;到底是什么意思？)</A>
+<LI><A NAME="tex2html250"
+  HREF="node137.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">5</SPAN> 一个头文件可以包含另一头文件吗？</A>
+<LI><A NAME="tex2html251"
+  HREF="node138.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">6</SPAN> #include &lt;&gt;&nbsp;和&nbsp;#include 
+有什么区别？</A>
+<LI><A NAME="tex2html252"
+  HREF="node139.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">7</SPAN> 完整的头文件搜索规则是怎样的？</A>
+<LI><A NAME="tex2html253"
+  HREF="node140.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">8</SPAN> 我在文件的第一个声明就遇到奇怪的语法错误, 但是看上去没什么问题。</A>
+<LI><A NAME="tex2html254"
+  HREF="node141.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">9</SPAN> 我包含了我使用的库函数的正确头文件, 可是连接器还是说它没有定义。</A>
+<LI><A NAME="tex2html255"
+  HREF="node142.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">10</SPAN> 我在编译一个程序, 看起来我好像缺少需要的一个或多个头文件。
+谁能发给我一份？</A>
+<LI><A NAME="tex2html256"
+  HREF="node143.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">11</SPAN> 我怎样构造比较字符串的&nbsp;#if&nbsp;预处理表达式？</A>
+<LI><A NAME="tex2html257"
+  HREF="node144.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">12</SPAN> sizeof&nbsp;操作符可以用于&nbsp;#if&nbsp;预编译指令中吗？</A>
+<LI><A NAME="tex2html258"
+  HREF="node145.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">13</SPAN> 我可以在&nbsp;#include&nbsp;行里使用&nbsp;#ifdef&nbsp;来定义两个不同的东西吗？</A>
+<LI><A NAME="tex2html259"
+  HREF="node146.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">14</SPAN> 对&nbsp;typdef&nbsp;的类型定义有没有类似&nbsp;#ifdef的东西？</A>
+<LI><A NAME="tex2html260"
+  HREF="node147.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">15</SPAN> 我如何用&nbsp;#if&nbsp;表达式来判断机器是高字节在前还是低字节在前？</A>
+<LI><A NAME="tex2html261"
+  HREF="node148.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">16</SPAN> 我得到了一些代码, 里边有太多的&nbsp;#ifdef。 我不想使用预处理器
+把所有的&nbsp;#include&nbsp;和&nbsp;#ifdef&nbsp;都扩展开, 有什么办法只保留一种条件的
+代码呢？</A>
+<LI><A NAME="tex2html262"
+  HREF="node149.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">17</SPAN> 如何列出所有的预定义标识符？</A>
+<LI><A NAME="tex2html263"
+  HREF="node150.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">18</SPAN> 我有些旧代码, 试图用这样的宏来构造标识符&nbsp;
+#define Paste(a, b) a/**/b&nbsp;但是现在不行了。</A>
+<LI><A NAME="tex2html264"
+  HREF="node151.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">19</SPAN> 为什么宏&nbsp;
+#define TRACE(n) printf(<TT>"</TT>TRACE: %d&#92;n<TT>"</TT>, n)&nbsp;
+报出警告&nbsp;``用字符串常量代替宏"？它似乎应该把&nbsp;
+TRACE(count);
+&nbsp;扩展为&nbsp;
+printf(<TT>"</TT>TRACE: %d&#92;count<TT>"</TT>, count);</A>
+<LI><A NAME="tex2html265"
+  HREF="node152.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">20</SPAN> 使用&nbsp;#&nbsp;操作符时, 我在字符串常量内使用宏参数有问题。</A>
+<LI><A NAME="tex2html266"
+  HREF="node153.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">21</SPAN> 我想用预处理做某件事情, 但却不知道如何下手。</A>
+<LI><A NAME="tex2html267"
+  HREF="node154.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">22</SPAN> 怎样写参数个数可变的宏？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html268"
+  HREF="node155.html"><SPAN CLASS="arabic">12</SPAN>. ANSI/ISO&nbsp;标准&nbsp;C</A>
+<UL>
+<LI><A NAME="tex2html269"
+  HREF="node156.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">1</SPAN> 什么是&nbsp;``ANSI C&nbsp;标准"？</A>
+<LI><A NAME="tex2html270"
+  HREF="node157.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">2</SPAN> 我如何得到一份标准的副本？</A>
+<LI><A NAME="tex2html271"
+  HREF="node158.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">3</SPAN> 我在哪里可以找到标准的更新？</A>
+<LI><A NAME="tex2html272"
+  HREF="node159.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">4</SPAN> 很多&nbsp;ANSI&nbsp;编译器在遇到以下代码时都会警告类型不匹配。
+&nbsp;extern int func(float);
+int func(x)
+float x;
+{ ...</A>
+<LI><A NAME="tex2html273"
+  HREF="node160.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">5</SPAN> 能否混用旧式的和新型的函数语法？</A>
+<LI><A NAME="tex2html274"
+  HREF="node161.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">6</SPAN> 为什么声明&nbsp;
+extern int f(struct x *p);
+&nbsp;报出了一个奇怪的警告信息&nbsp;``结构&nbsp;x&nbsp;在参数列表中声明"？</A>
+<LI><A NAME="tex2html275"
+  HREF="node162.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">7</SPAN> 我不明白为什么我不能象这样在初始化和数组维度中使用常量:
+const int n = 5;
+int a[n];</A>
+<LI><A NAME="tex2html276"
+  HREF="node163.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">8</SPAN> 既然不能修改字符串常量, 为什么不把它们定义为字符常量的数组？</A>
+<LI><A NAME="tex2html277"
+  HREF="node164.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">9</SPAN> ``const char *p"&nbsp;和&nbsp;``char * const p"&nbsp;有何区别？</A>
+<LI><A NAME="tex2html278"
+  HREF="node165.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">10</SPAN> 为什么我不能向接受&nbsp;const char **&nbsp;的函数传入&nbsp;char **？</A>
+<LI><A NAME="tex2html279"
+  HREF="node166.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">11</SPAN> 怎样正确声明&nbsp;main()？</A>
+<LI><A NAME="tex2html280"
+  HREF="node167.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">12</SPAN> 我能否把&nbsp;main()&nbsp;定义为&nbsp;void, 以避免扰人的&nbsp;``main无返回值"&nbsp;警告？</A>
+<LI><A NAME="tex2html281"
+  HREF="node168.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">13</SPAN> 可&nbsp;main()&nbsp;的第三个参数&nbsp;envp&nbsp;是怎么回事？</A>
+<LI><A NAME="tex2html282"
+  HREF="node169.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">14</SPAN> 我觉得把&nbsp;main()&nbsp;声明为&nbsp;void&nbsp;不会失败, 因为我调用了&nbsp;exit()&nbsp;
+而不是&nbsp;return&nbsp;, 况且我的操作系统也忽略了程序的退出/返回状态。</A>
+<LI><A NAME="tex2html283"
+  HREF="node170.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">15</SPAN> 那么到底会出什么问题？真的有什么系统不支持&nbsp;void main()&nbsp;吗？</A>
+<LI><A NAME="tex2html284"
+  HREF="node171.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">16</SPAN> 我一直用的那本书《熟练傻瓜C语言》总是使用&nbsp;void main()。</A>
+<LI><A NAME="tex2html285"
+  HREF="node172.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">17</SPAN> 从&nbsp;main()&nbsp;中, exit(status)&nbsp;和返回同样的&nbsp;status&nbsp;真的等价吗？</A>
+<LI><A NAME="tex2html286"
+  HREF="node173.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">18</SPAN> 我试图用&nbsp;ANSI ``字符串化"&nbsp;预处理操作符&nbsp;#&nbsp;向信息中插入符号
+常量的值, 但它字符串化的总是宏的名字而不是它的值。</A>
+<LI><A NAME="tex2html287"
+  HREF="node174.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">19</SPAN> 警告信息&nbsp;``warning: macro replacement within a
+string literal"&nbsp;是什么意思？</A>
+<LI><A NAME="tex2html288"
+  HREF="node175.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">20</SPAN> 在我用&nbsp;#ifdef&nbsp;去掉的代码里出现了奇怪的语法错误。</A>
+<LI><A NAME="tex2html289"
+  HREF="node176.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">21</SPAN> #pragma&nbsp;是什么, 有什么用？</A>
+<LI><A NAME="tex2html290"
+  HREF="node177.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">22</SPAN> ``#pragma once"&nbsp;是什么意思？我在一些头文件中看到了它。</A>
+<LI><A NAME="tex2html291"
+  HREF="node178.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">23</SPAN> a[3] = <TT>"</TT>abc<TT>"</TT>;&nbsp;合法吗？它是什么意思？</A>
+<LI><A NAME="tex2html292"
+  HREF="node179.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">24</SPAN> 为什么我不能对&nbsp;void*&nbsp;指针进行运算？</A>
+<LI><A NAME="tex2html293"
+  HREF="node180.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">25</SPAN> memcpy()&nbsp;和&nbsp;memmove()&nbsp;有什么区别？</A>
+<LI><A NAME="tex2html294"
+  HREF="node181.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">26</SPAN> malloc(0)&nbsp;有什么用？返回一个控指针还是指向&nbsp;0&nbsp;
+字节的指针？</A>
+<LI><A NAME="tex2html295"
+  HREF="node182.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">27</SPAN> 为什么&nbsp;ANSI&nbsp;标准规定了外部标示符的长度和大小写限制？</A>
+<LI><A NAME="tex2html296"
+  HREF="node183.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">28</SPAN> 我的编译对最简单的测试程序报出了一大堆的语法错误。</A>
+<LI><A NAME="tex2html297"
+  HREF="node184.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">29</SPAN> 为什么有些&nbsp;ASNI/ISO&nbsp;标准库函数未定义？我明明使用
+的就是&nbsp;ANSI&nbsp;编译器。</A>
+<LI><A NAME="tex2html298"
+  HREF="node185.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">30</SPAN> 谁有把旧的&nbsp;C&nbsp;程序转化为&nbsp;ANSI C&nbsp;或相反的工具,
+或者自动生成原型的工具？</A>
+<LI><A NAME="tex2html299"
+  HREF="node186.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">31</SPAN> 为什么声称兼容&nbsp;ANSI&nbsp;的&nbsp;Frobozz Magic C&nbsp;编译器不能
+编译这些代码？我知道这些代码是&nbsp;ANSI&nbsp;的, 因为&nbsp;gcc&nbsp;可以编译。</A>
+<LI><A NAME="tex2html300"
+  HREF="node187.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">32</SPAN> 人们好像有些在意实现定义&nbsp;(implementation-defin-ed)、未明确
+&nbsp;(unspecified)&nbsp;和无定义&nbsp;(undefined)&nbsp;行为的区别。它们的区别到底在哪里？</A>
+<LI><A NAME="tex2html301"
+  HREF="node188.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">33</SPAN> 一个程序的&nbsp;``合法", ``有效"&nbsp;或&nbsp;``符合"&nbsp;到底是什么意思？</A>
+<LI><A NAME="tex2html302"
+  HREF="node189.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">34</SPAN> 我很吃惊, ANSI&nbsp;标准竟然有那么多没有定义的东西。
+标准的唯一任务不就是让这些东西标准化吗？</A>
+<LI><A NAME="tex2html303"
+  HREF="node190.html"><SPAN CLASS="arabic">12</SPAN>.<SPAN CLASS="arabic">35</SPAN> 有人说&nbsp;i = i++&nbsp;的行为是未定义的, 但是我刚在一个兼容&nbsp;ANSI&nbsp;
+的编译器上测试, 得到了我希望的结果。</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html304"
+  HREF="node191.html"><SPAN CLASS="arabic">13</SPAN>. 标准输入输出库</A>
+<UL>
+<LI><A NAME="tex2html305"
+  HREF="node192.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">1</SPAN> 这样的代码有什么问题？
+char c;
+while((c = getchar()) != EOF) ...</A>
+<LI><A NAME="tex2html306"
+  HREF="node193.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">2</SPAN> 我有个读取直到&nbsp;EOF&nbsp;的简单程序, 但是我如何才能在键盘上输入那个
+&nbsp;``EOF"&nbsp;呢？</A>
+<LI><A NAME="tex2html307"
+  HREF="node194.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">3</SPAN> 为什么这些代码&nbsp;
+while(!feof(infp)) {
+    fgets(buf, MAXLINE, infp);
+    fputs(buf, outfp);
+}&nbsp;
+把最后一行复制了两遍？</A>
+<LI><A NAME="tex2html308"
+  HREF="node195.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">4</SPAN> 我的程序的屏幕提示和中间输出有时显示在屏幕上, 尤其是当我用管道向
+另一个程序输出的时候。</A>
+<LI><A NAME="tex2html309"
+  HREF="node196.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">5</SPAN> 我怎样不等待回车键一次输入一个字符？</A>
+<LI><A NAME="tex2html310"
+  HREF="node197.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">6</SPAN> 我如何在&nbsp;printf&nbsp;的格式串中输出一个&nbsp;<TT>'</TT>%<TT>'</TT>？
+我试过&nbsp;&#92;%, 但是不行。</A>
+<LI><A NAME="tex2html311"
+  HREF="node198.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">7</SPAN> 有人告诉我在&nbsp;printf&nbsp;中使用&nbsp;%lf&nbsp;不正确。那么, 如果&nbsp;scanf()&nbsp;
+需要&nbsp;%lf, 怎么可以用在&nbsp;printf()&nbsp;中用&nbsp;%f&nbsp;输出双精度数呢？</A>
+<LI><A NAME="tex2html312"
+  HREF="node199.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">8</SPAN> 对于&nbsp;size_t&nbsp;那样的类型定义, 当我不知道它到底是&nbsp;long&nbsp;
+还是其它类型的时候, 我应该使用什么样的&nbsp;printf&nbsp;格式呢？</A>
+<LI><A NAME="tex2html313"
+  HREF="node200.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">9</SPAN> 我如何用&nbsp;printf&nbsp;实现可变的域宽度？就是说, 我想在运行时确定宽度
+而不是使用&nbsp;%8d？</A>
+<LI><A NAME="tex2html314"
+  HREF="node201.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">10</SPAN> 如何输出在千位上用逗号隔开的数字？金额数字呢？</A>
+<LI><A NAME="tex2html315"
+  HREF="node202.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">11</SPAN> 为什么&nbsp;scanf(<TT>"</TT>%d<TT>"</TT>, i)&nbsp;调用不行？</A>
+<LI><A NAME="tex2html316"
+  HREF="node203.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">12</SPAN> 为什么&nbsp;
+char s[30];
+scanf(<TT>"</TT>%s<TT>"</TT>, s);&nbsp;
+不用&nbsp;&amp;&nbsp;也可以？</A>
+<LI><A NAME="tex2html317"
+  HREF="node204.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">13</SPAN> 为什么这些代码&nbsp;
+double d;
+scanf(<TT>"</TT>%f<TT>"</TT>, &amp;d);
+&nbsp;不行？</A>
+<LI><A NAME="tex2html318"
+  HREF="node205.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">14</SPAN> 怎样在&nbsp;scanf()&nbsp;格式串中指定可变的宽度？</A>
+<LI><A NAME="tex2html319"
+  HREF="node206.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">15</SPAN> 当我用&nbsp;``%d&#92;n"&nbsp;调用&nbsp;scanf&nbsp;从键盘读取数字
+的时候, 好像要多输入一行函数才返回。</A>
+<LI><A NAME="tex2html320"
+  HREF="node207.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">16</SPAN> 我用&nbsp;scanf %d&nbsp;读取一个数字, 然后再用&nbsp;gets()&nbsp;读取字符串, 但是
+编译器好像跳过了&nbsp;gets()&nbsp;调用！</A>
+<LI><A NAME="tex2html321"
+  HREF="node208.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">17</SPAN> 我发现如果坚持检查返回值以确保用户输入的是我期待的数值,
+则&nbsp;scanf()&nbsp;的使用会安全很多, 但有的时候好像会陷入无限循环。</A>
+<LI><A NAME="tex2html322"
+  HREF="node209.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">18</SPAN> 为什么大家都说不要使用&nbsp;scanf()？那我该用什么来代替呢？</A>
+<LI><A NAME="tex2html323"
+  HREF="node210.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">19</SPAN> 我怎样才知道对于任意的&nbsp;sprintf&nbsp;调用需要多大的目标缓冲区？
+怎样才能避免&nbsp;sprintf()&nbsp;目标缓冲区溢出？</A>
+<LI><A NAME="tex2html324"
+  HREF="node211.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">20</SPAN> 为什么大家都说不要使用&nbsp;gets()？</A>
+<LI><A NAME="tex2html325"
+  HREF="node212.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">21</SPAN> 为什么调用&nbsp;printf()&nbsp;之后&nbsp;errno&nbsp;内有&nbsp;ENOTTY？</A>
+<LI><A NAME="tex2html326"
+  HREF="node213.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">22</SPAN> fgetops/fsetops&nbsp;和&nbsp;ftell/fseek&nbsp;之间有什么区别？&nbsp;fgetops()&nbsp;
+和&nbsp;fsetops()&nbsp;到底有什么用处？</A>
+<LI><A NAME="tex2html327"
+  HREF="node214.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">23</SPAN> 如何清除多余的输入, 以防止在下一个提示符下读入？
+fflush(stdin)&nbsp;可以吗？</A>
+<LI><A NAME="tex2html328"
+  HREF="node215.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">24</SPAN> 既然&nbsp;fflush()&nbsp;不能, 那么怎样才能清除输入呢？</A>
+<LI><A NAME="tex2html329"
+  HREF="node216.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">25</SPAN> 对某些路径文件名调用&nbsp;fopen()&nbsp;总是失败。</A>
+<LI><A NAME="tex2html330"
+  HREF="node217.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">26</SPAN> 我想用&nbsp;``r+"&nbsp;打开一个文件, 读出一个字符串, 修改之后再写入,
+从而就地更新一个文件。可是这样不行。</A>
+<LI><A NAME="tex2html331"
+  HREF="node218.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">27</SPAN> 怎样在程序里把&nbsp;stdin&nbsp;或&nbsp;stdout&nbsp;重定向到文件？</A>
+<LI><A NAME="tex2html332"
+  HREF="node219.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">28</SPAN> 一旦使用&nbsp;freopen()&nbsp;之后, 怎样才能恢复原来的&nbsp;stdout
+(或&nbsp;stdin)？</A>
+<LI><A NAME="tex2html333"
+  HREF="node220.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">29</SPAN> 怎样同时向两个地方输出, 如同时输出到屏幕和文件？</A>
+<LI><A NAME="tex2html334"
+  HREF="node221.html"><SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">30</SPAN> 怎样正确的读取二进制文件？我有时看到&nbsp;0x0a&nbsp;和&nbsp;0x0d&nbsp;混淆了,
+而且如果数据中包含&nbsp;0x1a&nbsp;的话, 我好像会提前遇到&nbsp;EOF。</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html335"
+  HREF="node222.html"><SPAN CLASS="arabic">14</SPAN>. 库函数</A>
+<UL>
+<LI><A NAME="tex2html336"
+  HREF="node223.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">1</SPAN> 怎样把数字转为字符串&nbsp;(与&nbsp;atoi&nbsp;相反)？有&nbsp;itoa()&nbsp;函数吗？</A>
+<LI><A NAME="tex2html337"
+  HREF="node224.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">2</SPAN> 为什么&nbsp;strncpy()&nbsp;不能总在目标串放上终止符
+&nbsp;<TT>'</TT>&#92;0<TT>'</TT>？</A>
+<LI><A NAME="tex2html338"
+  HREF="node225.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">3</SPAN> 为什么有些版本的&nbsp;toupper()&nbsp;对大写字符会有奇怪的反应？
+为什么有的代码在调用&nbsp;toupper()&nbsp;前先调用&nbsp;tolower()？</A>
+<LI><A NAME="tex2html339"
+  HREF="node226.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">4</SPAN> 怎样把字符串分隔成用空白作间隔符的段？怎样实现类似传递给
+&nbsp;main()&nbsp;的&nbsp;argc&nbsp;和&nbsp;argv？</A>
+<LI><A NAME="tex2html340"
+  HREF="node227.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">5</SPAN> 我需要一些处理正则表达式或通配符匹配的代码。</A>
+<LI><A NAME="tex2html341"
+  HREF="node228.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">6</SPAN> 我想用&nbsp;strcmp()&nbsp;作为比较函数, 调用&nbsp;qsort()&nbsp;对一个字符串数组
+排序, 但是不行。</A>
+<LI><A NAME="tex2html342"
+  HREF="node229.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">7</SPAN> 我想用&nbsp;qsort()&nbsp;对一个结构数组排序。我的比较函数接受结构指针,
+但是编译器认为这个函数对于&nbsp;qsort()&nbsp;是错误类型。我要怎样转换这个函数指针
+才能避免这样的警告？</A>
+<LI><A NAME="tex2html343"
+  HREF="node230.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">8</SPAN> 怎样对一个链表排序？</A>
+<LI><A NAME="tex2html344"
+  HREF="node231.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">9</SPAN> 怎样对多于内存的数据排序？</A>
+<LI><A NAME="tex2html345"
+  HREF="node232.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">10</SPAN> 怎样在&nbsp;C&nbsp;程序中取得当前日期或时间？</A>
+<LI><A NAME="tex2html346"
+  HREF="node233.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">11</SPAN> 我知道库函数&nbsp;localtime()&nbsp;可以把&nbsp;time_t&nbsp;转换成结构
+&nbsp;struct tm, 而&nbsp;ctime()&nbsp;可以把&nbsp;time_t&nbsp;转换成为可打印的字符串。
+怎样才能进行反向操作, 把&nbsp;struct tm&nbsp;或一个字符串转换成&nbsp;time_t？</A>
+<LI><A NAME="tex2html347"
+  HREF="node234.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">12</SPAN> 怎样在日期上加&nbsp;N&nbsp;天？怎样取得两个日期的时间间隔？</A>
+<LI><A NAME="tex2html348"
+  HREF="node235.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">13</SPAN> 我需要一个随机数生成器。</A>
+<LI><A NAME="tex2html349"
+  HREF="node236.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">14</SPAN> 怎样获得在一定范围内的随机数？</A>
+<LI><A NAME="tex2html350"
+  HREF="node237.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">15</SPAN> 每次执行程序,&nbsp;rand()&nbsp;都返回相同顺序的数字。</A>
+<LI><A NAME="tex2html351"
+  HREF="node238.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">16</SPAN> 我需要随机的真/假值, 所以我用直接用&nbsp;rand() % 2, 可是我得到
+交替的&nbsp;0, 1, 0, 1, 0 ……</A>
+<LI><A NAME="tex2html352"
+  HREF="node239.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">17</SPAN> 怎样产生标准分布或高斯分布的随机数？</A>
+<LI><A NAME="tex2html353"
+  HREF="node240.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">18</SPAN> 我不断得到库函数未定义错误, 但是我已经&nbsp;#inlude&nbsp;了所有用到的头文件了。</A>
+<LI><A NAME="tex2html354"
+  HREF="node241.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">19</SPAN> 虽然我在连接时明确地指定了正确的函数库, 我还是得到库函数未定义错误。</A>
+<LI><A NAME="tex2html355"
+  HREF="node242.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">20</SPAN> 连接器说&nbsp;_end&nbsp;未定义代表什么意思？</A>
+<LI><A NAME="tex2html356"
+  HREF="node243.html"><SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">21</SPAN> 我的编译器提示&nbsp;printf&nbsp;未定义！这怎么可能？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html357"
+  HREF="node244.html"><SPAN CLASS="arabic">15</SPAN>. 浮点运算</A>
+<UL>
+<LI><A NAME="tex2html358"
+  HREF="node245.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">1</SPAN> 一个&nbsp;float&nbsp;变量赋值为&nbsp;3.1&nbsp;时,
+为什么&nbsp;printf&nbsp;输出的值为&nbsp;3.0999999？</A>
+<LI><A NAME="tex2html359"
+  HREF="node246.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">2</SPAN> 执行一些开方根运算, 可是得到一些疯狂的数字。</A>
+<LI><A NAME="tex2html360"
+  HREF="node247.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">3</SPAN> 做一些简单的三角函数运算, 也引用了&nbsp;#include
+&lt;math.h&gt;, 可是一直得到编译错误&nbsp;``undefined:
+sin"&nbsp;(函数&nbsp;sin 未定义)。</A>
+<LI><A NAME="tex2html361"
+  HREF="node248.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">4</SPAN> 浮点计算程序表现奇怪, 在不同的机器上给出不同的结果。</A>
+<LI><A NAME="tex2html362"
+  HREF="node249.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">5</SPAN> 有什么好的方法来验对浮点数在&nbsp;``足够接近"&nbsp;情况下的等值？</A>
+<LI><A NAME="tex2html363"
+  HREF="node250.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">6</SPAN> 怎样取整数？</A>
+<LI><A NAME="tex2html364"
+  HREF="node251.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">7</SPAN> 为什么&nbsp;C&nbsp;不提供乘幂的运算符？</A>
+<LI><A NAME="tex2html365"
+  HREF="node252.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">8</SPAN> 为什么我机器上的&nbsp;&lt;math.h&gt;&nbsp;没有预定
+义常数&nbsp;M_PI？</A>
+<LI><A NAME="tex2html366"
+  HREF="node253.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">9</SPAN> 怎样测试&nbsp;IEEE NaN&nbsp;以及其它特殊值？</A>
+<LI><A NAME="tex2html367"
+  HREF="node254.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">10</SPAN> 在&nbsp;C&nbsp;中如何很好的实现复数？</A>
+<LI><A NAME="tex2html368"
+  HREF="node255.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">11</SPAN> 我要寻找一些实现以下功能的程序源代码：
+快速傅立叶变换&nbsp;(FFT)、矩阵算术&nbsp;(乘法、倒置等函数)、
+复数算术。</A>
+<LI><A NAME="tex2html369"
+  HREF="node256.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">12</SPAN> Turbo C&nbsp;的程序崩溃, 显示错误为&nbsp;``floating point formats
+not linked" (浮点格式未连接)。</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html370"
+  HREF="node257.html"><SPAN CLASS="arabic">16</SPAN>. 可变参数</A>
+<UL>
+<LI><A NAME="tex2html371"
+  HREF="node258.html"><SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">1</SPAN> 为什么调用&nbsp;printf()&nbsp;前, 必须要用&nbsp;#include
+ &lt;stdio.h&gt;？</A>
+<LI><A NAME="tex2html372"
+  HREF="node259.html"><SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">2</SPAN> 为什么&nbsp;%f&nbsp;可以在&nbsp;printf()&nbsp;参数中, 同时表示&nbsp;float&nbsp;和
+&nbsp;double？他们难道不是不同类型吗？</A>
+<LI><A NAME="tex2html373"
+  HREF="node260.html"><SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">3</SPAN> 为什么当&nbsp;n&nbsp;为&nbsp;long int, printf(<TT>"</TT>%d<TT>"</TT>, n);&nbsp;
+编译时没有匹配警告？我以为&nbsp;ANSI&nbsp;函数原型可以防止这样的类型不匹配。</A>
+<LI><A NAME="tex2html374"
+  HREF="node261.html"><SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">4</SPAN> 怎样写一个有可变参数的函数？</A>
+<LI><A NAME="tex2html375"
+  HREF="node262.html"><SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">5</SPAN> 怎样写类似&nbsp;printf()&nbsp;的函数, 再把参数转传给&nbsp;printf()&nbsp;去
+完成大部分工作？</A>
+<LI><A NAME="tex2html376"
+  HREF="node263.html"><SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">6</SPAN> 怎样写类似&nbsp;scanf()&nbsp;的函数, 再把参数转传给&nbsp;scanf()&nbsp;去
+完成大部分工作？</A>
+<LI><A NAME="tex2html377"
+  HREF="node264.html"><SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">7</SPAN> 怎样知道实际上有多少个参数传入函数？</A>
+<LI><A NAME="tex2html378"
+  HREF="node265.html"><SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">8</SPAN> 为什么编译器不让我定义一个没有固定参数项的可变参数函数？</A>
+<LI><A NAME="tex2html379"
+  HREF="node266.html"><SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">9</SPAN> 我有个接受&nbsp;float&nbsp;的可变参函数, 为什么
+&nbsp;va_arg(argp, float)&nbsp;不工作？</A>
+<LI><A NAME="tex2html380"
+  HREF="node267.html"><SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">10</SPAN> va_arg()&nbsp;不能得到类型为函数指针的参数。</A>
+<LI><A NAME="tex2html381"
+  HREF="node268.html"><SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">11</SPAN> 怎样实现一个可变参数函数, 它把参数再传给另一个可变参数函数？</A>
+<LI><A NAME="tex2html382"
+  HREF="node269.html"><SPAN CLASS="arabic">16</SPAN>.<SPAN CLASS="arabic">12</SPAN> 怎样调用一个参数在执行是才建立的函数？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html383"
+  HREF="node270.html"><SPAN CLASS="arabic">17</SPAN>. 奇怪的问题</A>
+<UL>
+<LI><A NAME="tex2html384"
+  HREF="node271.html"><SPAN CLASS="arabic">17</SPAN>.<SPAN CLASS="arabic">1</SPAN> 遇到不可理解的不合理语法错误, 似乎大段的程序没有编译。</A>
+<LI><A NAME="tex2html385"
+  HREF="node272.html"><SPAN CLASS="arabic">17</SPAN>.<SPAN CLASS="arabic">2</SPAN> 为什么过程调用不工作？编译器似乎直接跳过去了。</A>
+<LI><A NAME="tex2html386"
+  HREF="node273.html"><SPAN CLASS="arabic">17</SPAN>.<SPAN CLASS="arabic">3</SPAN> 程序在执行用之前就崩溃了, 用调试器单步跟进, 在&nbsp;main()&nbsp;
+之前就死了。</A>
+<LI><A NAME="tex2html387"
+  HREF="node274.html"><SPAN CLASS="arabic">17</SPAN>.<SPAN CLASS="arabic">4</SPAN> 程序执行正确, 但退出时崩溃在&nbsp;main()&nbsp;最后一个语句之后。
+为什么会这样？</A>
+<LI><A NAME="tex2html388"
+  HREF="node275.html"><SPAN CLASS="arabic">17</SPAN>.<SPAN CLASS="arabic">5</SPAN> 程序在一台机器上执行完美, 但在另一台上却得到怪异的结果。更奇怪的是, 
+增加或去除调试的打印语句, 就改变了症状……</A>
+<LI><A NAME="tex2html389"
+  HREF="node276.html"><SPAN CLASS="arabic">17</SPAN>.<SPAN CLASS="arabic">6</SPAN> 为什么代码: char *p = <TT>"</TT>hello, worl!<TT>"</TT>;
+p[0] = <TT>'</TT>H<TT>'</TT>; 会崩溃？</A>
+<LI><A NAME="tex2html390"
+  HREF="node277.html"><SPAN CLASS="arabic">17</SPAN>.<SPAN CLASS="arabic">7</SPAN> ``Segmentation violation", 
+``Bus error"&nbsp;和&nbsp;
+``General protection fault"&nbsp;
+意味着什么？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html391"
+  HREF="node278.html"><SPAN CLASS="arabic">18</SPAN>. 风格</A>
+<UL>
+<LI><A NAME="tex2html392"
+  HREF="node279.html"><SPAN CLASS="arabic">18</SPAN>.<SPAN CLASS="arabic">1</SPAN> 什么是&nbsp;C&nbsp;最好的代码布局风格？</A>
+<LI><A NAME="tex2html393"
+  HREF="node280.html"><SPAN CLASS="arabic">18</SPAN>.<SPAN CLASS="arabic">2</SPAN> 用&nbsp;if(!strcmp(s1, s2))&nbsp;比较两个字符串等值,是否是个好风格？</A>
+<LI><A NAME="tex2html394"
+  HREF="node281.html"><SPAN CLASS="arabic">18</SPAN>.<SPAN CLASS="arabic">3</SPAN> 为什么有的人用&nbsp;if (0 == x)&nbsp;而不是&nbsp;if (x == 0)？</A>
+<LI><A NAME="tex2html395"
+  HREF="node282.html"><SPAN CLASS="arabic">18</SPAN>.<SPAN CLASS="arabic">4</SPAN> 原型说明&nbsp;extern int func __((int, int));&nbsp;中, 
+那些多出来的括号和下划线代表了什么？</A>
+<LI><A NAME="tex2html396"
+  HREF="node283.html"><SPAN CLASS="arabic">18</SPAN>.<SPAN CLASS="arabic">5</SPAN> 为什么有些代码在每次调用&nbsp;printf()&nbsp;前, 加了类型转换&nbsp;(void)？</A>
+<LI><A NAME="tex2html397"
+  HREF="node284.html"><SPAN CLASS="arabic">18</SPAN>.<SPAN CLASS="arabic">6</SPAN> 什么是&nbsp;``匈牙利标志法" (Hungarian Notation)？是否值得用？</A>
+<LI><A NAME="tex2html398"
+  HREF="node285.html"><SPAN CLASS="arabic">18</SPAN>.<SPAN CLASS="arabic">7</SPAN> 哪里可以找到&nbsp;``印第安山风格指南" (Indian Hill Style Guide)
+及其它编码标准？</A>
+<LI><A NAME="tex2html399"
+  HREF="node286.html"><SPAN CLASS="arabic">18</SPAN>.<SPAN CLASS="arabic">8</SPAN> 有些人说&nbsp;goto&nbsp;是邪恶的, 我应该永不用它。那是否太极端了？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html400"
+  HREF="node287.html"><SPAN CLASS="arabic">19</SPAN>. 工具和资源</A>
+<UL>
+<LI><A NAME="tex2html401"
+  HREF="node288.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">1</SPAN> 常用工具列表。</A>
+<LI><A NAME="tex2html402"
+  HREF="node289.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">2</SPAN> 怎样抓捕棘手的&nbsp;malloc&nbsp;问题？</A>
+<LI><A NAME="tex2html403"
+  HREF="node290.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">3</SPAN> 有什么免费或便宜的编译器可以使用？</A>
+<LI><A NAME="tex2html404"
+  HREF="node291.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">4</SPAN> 刚刚输入完一个程序, 但它表现的很奇怪。你可以发现有什么错误的地方吗？</A>
+<LI><A NAME="tex2html405"
+  HREF="node292.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">5</SPAN> 哪里可以找到兼容&nbsp;ANSI&nbsp;的&nbsp;lint？</A>
+<LI><A NAME="tex2html406"
+  HREF="node293.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">6</SPAN> 难道&nbsp;ANSI&nbsp;函数原型说明没有使&nbsp;lint&nbsp;过时吗？</A>
+<LI><A NAME="tex2html407"
+  HREF="node294.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">7</SPAN> 网上有哪些&nbsp;C&nbsp;的教程或其它资源？</A>
+<LI><A NAME="tex2html408"
+  HREF="node295.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">8</SPAN> 哪里可以找到好的源代码实例, 以供研究和学习？</A>
+<LI><A NAME="tex2html409"
+  HREF="node296.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">9</SPAN> 有什么好的学习&nbsp;C&nbsp;的书？有哪些高级的书和参考？</A>
+<LI><A NAME="tex2html410"
+  HREF="node297.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">10</SPAN> 哪里可以找到标准&nbsp;C&nbsp;函数库的源代码？</A>
+<LI><A NAME="tex2html411"
+  HREF="node298.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">11</SPAN> 是否有一个在线的&nbsp;C&nbsp;参考指南？</A>
+<LI><A NAME="tex2html412"
+  HREF="node299.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">12</SPAN> 哪里可以得到&nbsp;ANSI/ISO C&nbsp;标准？</A>
+<LI><A NAME="tex2html413"
+  HREF="node300.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">13</SPAN> 我需要分析和评估表达式的代码。</A>
+<LI><A NAME="tex2html414"
+  HREF="node301.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">14</SPAN> 哪里可以找到&nbsp;C&nbsp;的&nbsp;BNF&nbsp;或&nbsp;YACC&nbsp;语法？</A>
+<LI><A NAME="tex2html415"
+  HREF="node302.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">15</SPAN> 谁有&nbsp;C&nbsp;编译器的测试套件？</A>
+<LI><A NAME="tex2html416"
+  HREF="node303.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">16</SPAN> 哪里有一些有用的源代码片段和例子的收集？</A>
+<LI><A NAME="tex2html417"
+  HREF="node304.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">17</SPAN> 我需要执行多精度算术的代码。</A>
+<LI><A NAME="tex2html418"
+  HREF="node305.html"><SPAN CLASS="arabic">19</SPAN>.<SPAN CLASS="arabic">18</SPAN> 在哪里和怎样取得这些可自由发布的程序？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html419"
+  HREF="node306.html"><SPAN CLASS="arabic">20</SPAN>. 系统依赖</A>
+<UL>
+<LI><A NAME="tex2html420"
+  HREF="node307.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">1</SPAN> 怎样从键盘直接读入字符而不用等&nbsp;RETURN&nbsp;键？怎样
+防止字符输入时的回显？</A>
+<LI><A NAME="tex2html421"
+  HREF="node308.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">2</SPAN> 怎样知道有未读的字符, 如果有, 有多少？如果没有字符,
+怎样使读入不阻断？</A>
+<LI><A NAME="tex2html422"
+  HREF="node309.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">3</SPAN> 怎样显示一个百分比或&nbsp;``转动的短棒"&nbsp;的进展表示器？</A>
+<LI><A NAME="tex2html423"
+  HREF="node310.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">4</SPAN> 怎样清屏？怎样输出彩色文本？怎样移动光标到指定位置？</A>
+<LI><A NAME="tex2html424"
+  HREF="node311.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">5</SPAN> 怎样读入方向键, 功能键？</A>
+<LI><A NAME="tex2html425"
+  HREF="node312.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">6</SPAN> 怎样读入鼠标输入？</A>
+<LI><A NAME="tex2html426"
+  HREF="node313.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">7</SPAN> 怎样做串口&nbsp;(``comm")&nbsp;的输入输出？</A>
+<LI><A NAME="tex2html427"
+  HREF="node314.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">8</SPAN> 怎样直接输出到打印机？</A>
+<LI><A NAME="tex2html428"
+  HREF="node315.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">9</SPAN> 怎样发送控制终端或其它设备的逃逸指令序列？</A>
+<LI><A NAME="tex2html429"
+  HREF="node316.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">10</SPAN> 怎样直接访问输入输出板？</A>
+<LI><A NAME="tex2html430"
+  HREF="node317.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">11</SPAN> 怎样做图形？</A>
+<LI><A NAME="tex2html431"
+  HREF="node318.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">12</SPAN> 怎样显示&nbsp;GIF&nbsp;和&nbsp;JPEG&nbsp;图象？</A>
+<LI><A NAME="tex2html432"
+  HREF="node319.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">13</SPAN> 怎样检验一个文件是否存在？</A>
+<LI><A NAME="tex2html433"
+  HREF="node320.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">14</SPAN> 怎样在读入文件前, 知道文件大小？</A>
+<LI><A NAME="tex2html434"
+  HREF="node321.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">15</SPAN> 怎样得到文件的修改日期和时间？</A>
+<LI><A NAME="tex2html435"
+  HREF="node322.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">16</SPAN> 怎样缩短一个文件而不用清除或重写？</A>
+<LI><A NAME="tex2html436"
+  HREF="node323.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">17</SPAN> 怎样在文件中插入或删除一行&nbsp;(或记录)？</A>
+<LI><A NAME="tex2html437"
+  HREF="node324.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">18</SPAN> 怎样从一个打开的流或文件描述符得到文件名？</A>
+<LI><A NAME="tex2html438"
+  HREF="node325.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">19</SPAN> 怎样删除一个文件？</A>
+<LI><A NAME="tex2html439"
+  HREF="node326.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">20</SPAN> 怎样复制一个文件？</A>
+<LI><A NAME="tex2html440"
+  HREF="node327.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">21</SPAN> 为什么用了详尽的路径还不能打开文件？
+&nbsp;fopen(<TT>"</TT>c:&#92;&nbsp;newdir&nbsp;&#92;file.dat<TT>"</TT>,
+<TT>"</TT>r<TT>"</TT>)&nbsp;
+返回错误。</A>
+<LI><A NAME="tex2html441"
+  HREF="node328.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">22</SPAN> fopen()&nbsp;不让我打开文件: <TT>"</TT>$HOME/.profile<TT>"</TT>&nbsp;
+和&nbsp;<TT>"</TT>~/&nbsp;.myrcfile<TT>"</TT>。</A>
+<LI><A NAME="tex2html442"
+  HREF="node329.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">23</SPAN> 怎样制止&nbsp;MS-DOS&nbsp;下令人担忧的&nbsp;``Abort, Retry, Ignore?"&nbsp;信息？</A>
+<LI><A NAME="tex2html443"
+  HREF="node330.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">24</SPAN> 遇到&nbsp;``Too many open files (打开文件太多）"&nbsp;的错误, 
+怎样增加同时打开文件的允许数目？</A>
+<LI><A NAME="tex2html444"
+  HREF="node331.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">25</SPAN> 怎样在&nbsp;C&nbsp;中读入目录？</A>
+<LI><A NAME="tex2html445"
+  HREF="node332.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">26</SPAN> 怎样找出系统还有多少内存可用？</A>
+<LI><A NAME="tex2html446"
+  HREF="node333.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">27</SPAN> 怎样分配大于&nbsp;64K&nbsp;的数组或结构？</A>
+<LI><A NAME="tex2html447"
+  HREF="node334.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">28</SPAN> 错误信息&nbsp;``DGROUP data allocation exceeds 64K (DGROUP
+数据分配内存超过&nbsp;64K)"&nbsp;说明什么？我应该
+怎么做？我以为使用了大内存模型, 那我就可以使用多于&nbsp;64K&nbsp;的数据！</A>
+<LI><A NAME="tex2html448"
+  HREF="node335.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">29</SPAN> 怎样访问位于某的特定地址的内存&nbsp;(内存映射的设备或图显内存)？</A>
+<LI><A NAME="tex2html449"
+  HREF="node336.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">30</SPAN> 怎样在一个&nbsp;C&nbsp;程序中调用另一个程序&nbsp;(独立可执行的程序,
+或系统命令)？</A>
+<LI><A NAME="tex2html450"
+  HREF="node337.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">31</SPAN> 怎样调用另一个程序或命令, 同时收集它的输出？</A>
+<LI><A NAME="tex2html451"
+  HREF="node338.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">32</SPAN> 怎样才能发现程序自己的执行文件的全路径？</A>
+<LI><A NAME="tex2html452"
+  HREF="node339.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">33</SPAN> 怎样找出和执行文件在同一目录的配置文件？</A>
+<LI><A NAME="tex2html453"
+  HREF="node340.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">34</SPAN> 一个进程如何改变它的调用者的环境变量？</A>
+<LI><A NAME="tex2html454"
+  HREF="node341.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">35</SPAN> 怎样读入一个对象文件并跳跃到其中的地址？</A>
+<LI><A NAME="tex2html455"
+  HREF="node342.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">36</SPAN> 怎样实现精度小于秒的延时或记录用户回应的时间？</A>
+<LI><A NAME="tex2html456"
+  HREF="node343.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">37</SPAN> 怎样抓获或忽略像&nbsp;control-C&nbsp;这样的键盘中断？</A>
+<LI><A NAME="tex2html457"
+  HREF="node344.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">38</SPAN> 怎样很好地处理浮点异常？</A>
+<LI><A NAME="tex2html458"
+  HREF="node345.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">39</SPAN> 怎样使用&nbsp;socket？ 网络化？ 写客户/服务器程序？</A>
+<LI><A NAME="tex2html459"
+  HREF="node346.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">40</SPAN> 怎样调用&nbsp;BIOS&nbsp;函数？写&nbsp;ISR？创建&nbsp;TSR？</A>
+<LI><A NAME="tex2html460"
+  HREF="node347.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">41</SPAN> 编译程序, 编译器出示&nbsp;``union REGS"&nbsp;未定义错误信息,
+连接器出示&nbsp;``int86()"&nbsp;的未定义错误信息。</A>
+<LI><A NAME="tex2html461"
+  HREF="node348.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">42</SPAN> 什么是&nbsp;``near"&nbsp;和&nbsp;``far"&nbsp;指针？</A>
+<LI><A NAME="tex2html462"
+  HREF="node349.html"><SPAN CLASS="arabic">20</SPAN>.<SPAN CLASS="arabic">43</SPAN> 我不能使用这些非标准、依赖系统的函数, 程序需要兼容&nbsp;ANSI!</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html463"
+  HREF="node350.html"><SPAN CLASS="arabic">21</SPAN>. 杂项</A>
+<UL>
+<LI><A NAME="tex2html464"
+  HREF="node351.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">1</SPAN> 怎样从一个函数返回多个值？</A>
+<LI><A NAME="tex2html465"
+  HREF="node352.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">2</SPAN> 怎样访问命令行参数？</A>
+<LI><A NAME="tex2html466"
+  HREF="node353.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">3</SPAN> 怎样写数据文件, 使之可以在不同字大小、字节顺序或浮点
+格式的机器上读入？</A>
+<LI><A NAME="tex2html467"
+  HREF="node354.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">4</SPAN> 怎样调用一个由&nbsp;char *&nbsp;指针指向函数名的函数？</A>
+<LI><A NAME="tex2html468"
+  HREF="node355.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">5</SPAN> 怎样实现比特数组或集合？</A>
+<LI><A NAME="tex2html469"
+  HREF="node356.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">6</SPAN> 怎样判断机器的字节顺序是高字节在前还是低字节在前？</A>
+<LI><A NAME="tex2html470"
+  HREF="node357.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">7</SPAN> 怎样掉换字节？</A>
+<LI><A NAME="tex2html471"
+  HREF="node358.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">8</SPAN> 怎样转换整数到二进制或十六进制？</A>
+<LI><A NAME="tex2html472"
+  HREF="node359.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">9</SPAN> 我可以使用二进制常数吗？有&nbsp;printf()&nbsp;的二
+进制的格式符吗？</A>
+<LI><A NAME="tex2html473"
+  HREF="node360.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">10</SPAN> 什么是计算整数中比特为&nbsp;1&nbsp;的个数的最有效的方法？</A>
+<LI><A NAME="tex2html474"
+  HREF="node361.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">11</SPAN> 什么是提高程序效率的最好方法？</A>
+<LI><A NAME="tex2html475"
+  HREF="node362.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">12</SPAN> 指针真得比数组快吗？函数调用会拖慢程序多少？
+&nbsp;++i&nbsp;比&nbsp;i = i +1&nbsp;快吗？</A>
+<LI><A NAME="tex2html476"
+  HREF="node363.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">13</SPAN> 人们说编译器优化的很好, 我们不在
+需要为速度而写汇编了, 但我的编译器连用移位代替
+&nbsp;i/=2&nbsp;都做不到。</A>
+<LI><A NAME="tex2html477"
+  HREF="node364.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">14</SPAN> 怎样不用临时变量而交换两个值？</A>
+<LI><A NAME="tex2html478"
+  HREF="node365.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">15</SPAN> 是否有根据字符串做切换的方法？</A>
+<LI><A NAME="tex2html479"
+  HREF="node366.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">16</SPAN> 是否有使用非常量&nbsp;case&nbsp;标志的方法
+&nbsp;(例如范围或任意的表达式)？</A>
+<LI><A NAME="tex2html480"
+  HREF="node367.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">17</SPAN> return&nbsp;语句外层的括号是否真的可选择？</A>
+<LI><A NAME="tex2html481"
+  HREF="node368.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">18</SPAN> 为什么&nbsp;C&nbsp;注释不能嵌套？怎样注释掉含有注释的代码？引用字符串
+内的注释是否合法？</A>
+<LI><A NAME="tex2html482"
+  HREF="node369.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">19</SPAN>&nbsp;C&nbsp;是个伟大的语言还是别的？哪个其它语言可以写象
+&nbsp;a+++++b&nbsp;这样的代码？</A>
+<LI><A NAME="tex2html483"
+  HREF="node370.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">20</SPAN> 为什么&nbsp;C&nbsp;没有嵌套函数？</A>
+<LI><A NAME="tex2html484"
+  HREF="node371.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">21</SPAN> assert()&nbsp;是什么？怎样用它？</A>
+<LI><A NAME="tex2html485"
+  HREF="node372.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">22</SPAN> 怎样从&nbsp;C&nbsp;中调用&nbsp;FORTRAN (C++, BASIC, Pascal, Ada, LISP)
+的函数？反之亦然？</A>
+<LI><A NAME="tex2html486"
+  HREF="node373.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">23</SPAN> 有什么程序可以做从&nbsp;Pascal&nbsp;或&nbsp;Fortran&nbsp;(或&nbsp;LISP, Ada, awk,
+``老" C)&nbsp;到&nbsp;C&nbsp;的转换？</A>
+<LI><A NAME="tex2html487"
+  HREF="node374.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">24</SPAN> C++&nbsp;是&nbsp;C&nbsp;的超集吗？可以用&nbsp;C++&nbsp;编译器来编译&nbsp;C&nbsp;代码吗？</A>
+<LI><A NAME="tex2html488"
+  HREF="node375.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">25</SPAN> 需要用到&nbsp;``近似"&nbsp;的&nbsp;strcmp, 比较两个字符串的近似度,
+并不需要完全一样。</A>
+<LI><A NAME="tex2html489"
+  HREF="node376.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">26</SPAN> 什么是散列法？</A>
+<LI><A NAME="tex2html490"
+  HREF="node377.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">27</SPAN> 由一个日期, 怎样知道是星期几？</A>
+<LI><A NAME="tex2html491"
+  HREF="node378.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">28</SPAN> (year%4 == 0)&nbsp;是否足够判断润年？2000&nbsp;年是闰年吗？</A>
+<LI><A NAME="tex2html492"
+  HREF="node379.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">29</SPAN> 一个难题: 怎样写一个输出自己源代码的程序？</A>
+<LI><A NAME="tex2html493"
+  HREF="node380.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">30</SPAN> 什么是&nbsp;``达夫设备" (Duff's Device)？</A>
+<LI><A NAME="tex2html494"
+  HREF="node381.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">31</SPAN> 下届国际&nbsp;C&nbsp;混乱代码竞赛&nbsp;(IOCCC)&nbsp;什么时候进行？哪里可以找到当前和
+以前的获胜代码？</A>
+<LI><A NAME="tex2html495"
+  HREF="node382.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">32</SPAN> [K&amp;R1]&nbsp; 提到的关健字&nbsp;entry&nbsp;是什么？</A>
+<LI><A NAME="tex2html496"
+  HREF="node383.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">33</SPAN> C&nbsp;的名字从何而来？</A>
+<LI><A NAME="tex2html497"
+  HREF="node384.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">34</SPAN> ``char"&nbsp;如何发音？</A>
+<LI><A NAME="tex2html498"
+  HREF="node385.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">35</SPAN> ``lvalue"&nbsp;和&nbsp;``rvalue"&nbsp;代表什么意思？</A>
+<LI><A NAME="tex2html499"
+  HREF="node386.html"><SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">36</SPAN> 哪里可以取得本&nbsp;FAQ (英文版)&nbsp;的额外副本？</A>
+</UL>
+<BR>
+<LI><A NAME="tex2html500"
+  HREF="node387.html"><SPAN CLASS="arabic">22</SPAN>. 感谢</A>
+<LI><A NAME="tex2html501"
+  HREF="node388.html">文献</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev_g.png"></td><td align=center>
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up_g.png"></td><td align=center>&nbsp;
+<A NAME="tex2html110"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html112"
+  HREF="node1.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

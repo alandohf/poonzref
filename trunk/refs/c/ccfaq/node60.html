@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>6.1 臭名昭著的空指针到底是什么？</TITLE>
+<META NAME="description" CONTENT="6.1 臭名昭著的空指针到底是什么？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node61.html">
+<LINK REL="previous" HREF="node59.html">
+<LINK REL="up" HREF="node59.html">
+<LINK REL="next" HREF="node61.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1290"
+  HREF="node59.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1296"
+  HREF="node59.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1298"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1300"
+  HREF="node61.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00710000000000000000"></A>
+<A NAME="q:5.1"></A>
+<BR>
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">1</SPAN> 臭名昭著的空指针到底是什么？
+</H1>
+语言定义中说明, 每一种指针类型都有一个特殊值&nbsp;---&nbsp;``空指针"&nbsp;---&nbsp;
+它与同类型的其它所有指针值都不相同, 它&nbsp;``与任何对象或函数的指针值都不相等"。
+也就是说, 取地址操作符&nbsp;&amp;&nbsp;永远也不能得到空指针, 同样对&nbsp;malloc()&nbsp;的成功调用
+也不会返回空指针, 如果失败, malloc()&nbsp;的确返回空指针, 这是空指针的典型用法:
+表示&nbsp;``未分配"&nbsp;或者&nbsp;``尚未指向任何地方"&nbsp;的指针。
+
+<P>
+空指针在概念上不同于未初始化的指针。空指针可以确保不指向任何对象或函数;
+而未初始化指针则可能指向任何地方。参见问题&nbsp;<A HREF="node13.html#q:1.30">1.10</A>、&nbsp;<A HREF="node95.html#q:7.1">7.1</A>&nbsp;和
+&nbsp;<A HREF="node120.html#q:7.31">7.26</A>。
+
+<P>
+如上文所述, 每种指针类型都有一个空指针, 而不同类型的空指针的内部表示可能
+不尽相同。尽管程序员不必知道内部值, 但编译器必须时刻明确需要那种空指针,
+以便在需要的时候加以区分&nbsp;(参见问题&nbsp;<A HREF="node61.html#q:5.2">5.2</A>、&nbsp;<A HREF="node64.html#q:5.5">5.5</A>&nbsp;和&nbsp;
+&nbsp;<A HREF="node65.html#q:5.6">5.6</A>)。
+
+<P>
+参考资料：&nbsp;[<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. 5.4 pp. 97-8]; [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 5.4 p. 102];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.2.2.3]; [<A
+ HREF="node388.html#rationale">Rationale</A>, Sec. 3.2.2.3];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 5.3.2 pp. 121-3]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1290"
+  HREF="node59.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1296"
+  HREF="node59.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1298"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1300"
+  HREF="node61.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

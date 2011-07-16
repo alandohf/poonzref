@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>11.18 我有些旧代码, 试图用这样的宏来构造标识符&nbsp;
+#define Paste(a, b) a/**/b&nbsp;但是现在不行了。</TITLE>
+<META NAME="description" CONTENT="11.18 我有些旧代码, 试图用这样的宏来构造标识符&nbsp;
+#define Paste(a, b) a/**/b&nbsp;但是现在不行了。">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node151.html">
+<LINK REL="previous" HREF="node149.html">
+<LINK REL="up" HREF="node132.html">
+<LINK REL="next" HREF="node151.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2435"
+  HREF="node149.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2441"
+  HREF="node132.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2443"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2445"
+  HREF="node151.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0012180000000000000000"></A>
+<A NAME="q:10.20"></A>
+<BR>
+<SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">18</SPAN> 我有些旧代码, 试图用这样的宏来构造标识符&nbsp;
+#define Paste(a, b) a/**/b&nbsp;但是现在不行了。
+</H1>
+这是有些早期预处理器实现&nbsp;(如&nbsp;Reiser)&nbsp;的未公开的功能, 注释完全消失, 因而
+可以用来粘结标识符。 但&nbsp;ANSI&nbsp;确认&nbsp;(如&nbsp;K&amp;R所言)&nbsp;注释用空白代替。然而对
+粘结标识符的需求却十分自然和广泛, 因此&nbsp;ANSI&nbsp;引入了一个明确定义的标识符
+粘结操作符&nbsp;---&nbsp;##, 它可以象这样使用 
+<PRE>
+    #define Paste(a, b) a##b
+</PRE>
+
+<P>
+参见问题&nbsp;<A HREF="node173.html#q:11.17">11.18</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.8.3.3]; [<A
+ HREF="node388.html#rationale">Rationale</A>, Sec. 3.8.3.3];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 3.3.9 p. 52]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2435"
+  HREF="node149.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2441"
+  HREF="node132.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2443"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2445"
+  HREF="node151.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

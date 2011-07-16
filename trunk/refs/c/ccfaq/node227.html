@@ -1,0 +1,95 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>14.5 我需要一些处理正则表达式或通配符匹配的代码。</TITLE>
+<META NAME="description" CONTENT="14.5 我需要一些处理正则表达式或通配符匹配的代码。">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node228.html">
+<LINK REL="previous" HREF="node226.html">
+<LINK REL="up" HREF="node222.html">
+<LINK REL="next" HREF="node228.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3439"
+  HREF="node226.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3445"
+  HREF="node222.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3447"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3449"
+  HREF="node228.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001550000000000000000"></A>
+<A NAME="q:13.7"></A>
+<BR>
+<SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">5</SPAN> 我需要一些处理正则表达式或通配符匹配的代码。
+</H1>
+确保你知道经典的正则表达式和文件名通配符的不同。
+前者的变体在&nbsp;Unix&nbsp;工具&nbsp;ed&nbsp;和&nbsp;grep&nbsp;等中使用, 后者的
+变体在多数操作系统中使用。
+
+<P>
+有许多匹配正则表达式的包可以利用。很多包都是用成对的函数, 一个&nbsp;``编译"&nbsp;正
+则表达式, 另一个&nbsp;``执行"&nbsp;它, 即用它比较字符串。查查头文件
+&nbsp;&lt;regex.h&gt;&nbsp;或&nbsp;&lt;regexp.h&gt;&nbsp;和
+函数&nbsp;regcmp/regex, regcomp/regexec, 或&nbsp;re_comp/re_exec。这些函数
+可能在一个单独的&nbsp;regexp&nbsp;库中。在
+&nbsp;<TT><A NAME="tex2html17"
+  HREF="ftp://ftp.cs.toronto.edu/pub/regexp.shar.Z">ftp://ftp.cs.toronto.edu/pub/regexp.shar.Z</A></TT>&nbsp;或其它地方可以找到一个
+&nbsp;Henry Spencer&nbsp;开发的广受欢迎的&nbsp;regexp&nbsp;包, 这个包也可自由再发布。
+GNU&nbsp;工程有一个叫做&nbsp;rx&nbsp;的包。参见问题&nbsp;<A HREF="node305.html#q:18.16">18.18</A>。
+
+<P>
+文件名通配符匹配&nbsp;(有时称之为&nbsp;``globbing")&nbsp;在不同的系统上有不同的实现。
+在&nbsp;Unix&nbsp;上, shell&nbsp;会在进程调用之前自动扩展通配符, 因此, 程序几乎从
+不需要专门考虑它们。在&nbsp;MS-DOS&nbsp;下的编译器中, 通常都可以在建立&nbsp;argv&nbsp;的时候
+连接一个用来扩展通配符的特殊目标文件。有些系统&nbsp;(包括&nbsp;MS-DOS&nbsp;和&nbsp;VMS)&nbsp;
+会提供通配符指定文件的列表和打开的系统服务。参见问题&nbsp;<A HREF="node331.html#q:19.20">19.25</A>&nbsp;
+和&nbsp;<A HREF="node352.html#q:20.3">20.2</A>。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3439"
+  HREF="node226.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3445"
+  HREF="node222.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3447"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3449"
+  HREF="node228.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

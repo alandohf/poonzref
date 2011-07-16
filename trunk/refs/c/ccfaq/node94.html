@@ -1,0 +1,162 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>8. 内存分配</TITLE>
+<META NAME="description" CONTENT="8. 内存分配">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node122.html">
+<LINK REL="previous" HREF="node75.html">
+<LINK REL="up" HREF="ccfaq.html">
+<LINK REL="next" HREF="node95.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1712"
+  HREF="node93.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1718"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1720"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1722"
+  HREF="node95.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00900000000000000000"></A>
+<A NAME="s:7"></A>
+<BR>
+<SPAN CLASS="arabic">8</SPAN>. 内存分配
+</H1>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html1724"
+  HREF="node95.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">1</SPAN> 为什么这段代码不行？char *answer;
+printf(<TT>"</TT>Type something:&#92;n<TT>"</TT>);
+gets(answer);
+printf(<TT>"</TT>You typed
+&#92;<TT>"</TT>%s&#92;<TT>"</TT>&#92;n<TT>"</TT>,
+answer);</A>
+<LI><A NAME="tex2html1725"
+  HREF="node96.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">2</SPAN> 我的&nbsp;strcat()&nbsp;不行.我试了
+&nbsp;char *s1 = <TT>"</TT>Hello, <TT>"</TT>; char *s2 =
+<TT>"</TT>world!<TT>"</TT>; char *s3 = strcat(s1, s2);&nbsp;
+但是我得到了奇怪的结果。</A>
+<LI><A NAME="tex2html1726"
+  HREF="node97.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">3</SPAN> 但是&nbsp;strcat&nbsp;的手册页说它接受两个&nbsp;char *&nbsp;型参数。
+我怎么知道&nbsp;(空间)&nbsp;分配的事情呢？</A>
+<LI><A NAME="tex2html1727"
+  HREF="node98.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">4</SPAN> 我刚才试了这样的代码&nbsp;
+char *p;
+strcpy(p, <TT>"</TT>abc<TT>"</TT>);&nbsp;而它运行正常？怎么回事？
+为什么它没有崩溃？</A>
+<LI><A NAME="tex2html1728"
+  HREF="node99.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">5</SPAN> 一个指针变量分配多少内存？</A>
+<LI><A NAME="tex2html1729"
+  HREF="node100.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">6</SPAN> 我有个函数, 本该返回一个字符串, 但当它返回调用者的时候,
+返回串却是垃圾信息。</A>
+<LI><A NAME="tex2html1730"
+  HREF="node101.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">7</SPAN> 那么返回字符串或其它集合的争取方法是什么呢？</A>
+<LI><A NAME="tex2html1731"
+  HREF="node102.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">8</SPAN> 为什么在调用&nbsp;malloc()&nbsp;时, 我得到&nbsp;``警告:
+整数赋向指针需要类型转换"？</A>
+<LI><A NAME="tex2html1732"
+  HREF="node103.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">9</SPAN> 为什么有些代码小心地把&nbsp;malloc&nbsp;返回的值转换为分配的指针类型。</A>
+<LI><A NAME="tex2html1733"
+  HREF="node104.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">10</SPAN> 在调用&nbsp;malloc()&nbsp;的时候, 错误&nbsp;``不能把&nbsp;void *&nbsp;转换为&nbsp;int *"&nbsp;
+是什么意思？</A>
+<LI><A NAME="tex2html1734"
+  HREF="node105.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">11</SPAN> 我见到了这样的代码
+&nbsp;char *p = malloc(strlen(s) + 1);
+strcpy(p, s);&nbsp;
+难道不应该是&nbsp;malloc((strlen(s) + 1) * sizeof(char))？</A>
+<LI><A NAME="tex2html1735"
+  HREF="node106.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">12</SPAN> 我如何动态分配数组？</A>
+<LI><A NAME="tex2html1736"
+  HREF="node107.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">13</SPAN> 我听说有的操作系统程序使用的时候才真正分配&nbsp;malloc&nbsp;申请
+的内存。这合法吗？</A>
+<LI><A NAME="tex2html1737"
+  HREF="node108.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">14</SPAN> 我用一行这样的代码分配一个巨大的数组, 用于数字运算:
+&nbsp;double *array = malloc(300 * 300 * sizeof( double ));&nbsp;
+malloc()&nbsp;并没有返回&nbsp;null, 但是程序运行得有些奇怪, 好像改写了某些内存,
+或者&nbsp;malloc()&nbsp;并没有分配我申请的那么多内存, 云云。</A>
+<LI><A NAME="tex2html1738"
+  HREF="node109.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">15</SPAN> 我的&nbsp;PC&nbsp;有&nbsp;8&nbsp;兆内存。为什么我只能分配&nbsp;640K&nbsp;左右的内存？</A>
+<LI><A NAME="tex2html1739"
+  HREF="node110.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">16</SPAN> 我的程序总是崩溃, 显然在&nbsp;malloc&nbsp;内部的某个地方。 但是我看不出
+哪里有问题。是&nbsp;malloc()&nbsp;有&nbsp;bug&nbsp;吗？</A>
+<LI><A NAME="tex2html1740"
+  HREF="node111.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">17</SPAN> 动态分配的内存一旦释放之后你就不能再使用, 是吧？</A>
+<LI><A NAME="tex2html1741"
+  HREF="node112.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">18</SPAN> 为什么在调用&nbsp;free()&nbsp;之后指针没有变空？使用&nbsp;(赋值, 比较)&nbsp;
+释放之后的指针有多么不安全？</A>
+<LI><A NAME="tex2html1742"
+  HREF="node113.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">19</SPAN> 当我&nbsp;malloc()&nbsp;为一个函数的局部指针分配内存时, 我还需要用
+&nbsp;free()&nbsp;明确的释放吗？</A>
+<LI><A NAME="tex2html1743"
+  HREF="node114.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">20</SPAN> 我在分配一些结构, 它们包含指向其它动态分配的对象的指针。
+我在释放结构的时候, 还需要释放每一个下级指针吗？</A>
+<LI><A NAME="tex2html1744"
+  HREF="node115.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">21</SPAN> 我必须在程序退出之前释放分配的所有内存吗？</A>
+<LI><A NAME="tex2html1745"
+  HREF="node116.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">22</SPAN> 我有个程序分配了大量的内存, 然后又释放了。但是从操作系统看,
+内存的占用率却并没有回去。</A>
+<LI><A NAME="tex2html1746"
+  HREF="node117.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">23</SPAN> free()&nbsp;怎么知道有多少字节需要释放？</A>
+<LI><A NAME="tex2html1747"
+  HREF="node118.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">24</SPAN> 那么我能否查询&nbsp;malloc&nbsp;包, 可分配的最大块是多大？</A>
+<LI><A NAME="tex2html1748"
+  HREF="node119.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">25</SPAN> 向&nbsp;realloc()&nbsp;的第一个参数传入空指针合法吗？你为什么要这样做？</A>
+<LI><A NAME="tex2html1749"
+  HREF="node120.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">26</SPAN> calloc()&nbsp;和&nbsp;malloc()&nbsp;有什么区别？利用&nbsp;calloc&nbsp;的零填充功能安全吗？
+free()&nbsp;可以释放&nbsp;calloc()&nbsp;分配的内存吗, 还是需要一个&nbsp;cfree()？</A>
+<LI><A NAME="tex2html1750"
+  HREF="node121.html"><SPAN CLASS="arabic">8</SPAN>.<SPAN CLASS="arabic">27</SPAN> alloca()&nbsp;是什么？为什么不提倡使用它？</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1712"
+  HREF="node93.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1718"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1720"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1722"
+  HREF="node95.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

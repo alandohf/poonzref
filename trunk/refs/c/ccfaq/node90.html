@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7.15 当我向一个接受指针的指针的函数传入二维数组的时候,
+编译器报错了。</TITLE>
+<META NAME="description" CONTENT="7.15 当我向一个接受指针的指针的函数传入二维数组的时候,
+编译器报错了。">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node91.html">
+<LINK REL="previous" HREF="node89.html">
+<LINK REL="up" HREF="node75.html">
+<LINK REL="next" HREF="node91.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1666"
+  HREF="node89.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1672"
+  HREF="node75.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1674"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1676"
+  HREF="node91.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION008150000000000000000"></A>
+<A NAME="q:6.18"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">15</SPAN> 当我向一个接受指针的指针的函数传入二维数组的时候,
+编译器报错了。
+</H1>
+数组蜕化为指针的规则&nbsp;(参见问题&nbsp;<A HREF="node78.html#q:6.3">6.3</A>)&nbsp;<SPAN  CLASS="textbf">不能</SPAN>递归应用。
+数组的数组&nbsp;(即&nbsp;C&nbsp;语言中的二维数组)&nbsp;蜕化为数组的指针, 而不是指针的指针。
+数组指针常常令人困惑, 需要小心对待; 参见问题&nbsp;<A HREF="node85.html#q:6.13">6.10</A>。
+
+<P>
+如果你向函数传递二位数组:
+<PRE>
+    int array[NROWS][NCOLUMNS];
+    f(array);
+</PRE>
+那么函数的声明必须匹配:
+<PRE>
+    void f(int a[][NCOLUMNS])
+    { ... }
+</PRE>
+或者
+<PRE>
+    void f(int (*ap)[NCOLUMNS]) /* ap 是个数组指针 */
+    { ... }
+</PRE>
+
+<P>
+在第一个声明中, 编译器进行了通常的从&nbsp;``数组的数组"&nbsp;到&nbsp;``数组的指针"&nbsp;
+的隐式转换&nbsp;(参见问题&nbsp;<A HREF="node78.html#q:6.3">6.3</A>&nbsp;和 <A HREF="node79.html#q:6.4">6.4</A>); 第二种形式中的指针
+定义显而易见。因为被调函数并不为数组分配地址, 所以它并不需要知道总的
+大小, 所以行数&nbsp;NROWS&nbsp;可以省略。但数组的宽度依然重要, 所以列维度
+&nbsp;NCOLUMNS (对于三维或多维数组, 相关的维度) 必须保留。
+
+<P>
+如果一个函数已经定义为接受指针的指针, 那么几乎可以肯定直接向它传入
+二维数组毫无意义。
+
+<P>
+参见问题&nbsp;<A HREF="node84.html#q:6.12">6.9</A>&nbsp;和&nbsp;<A HREF="node87.html#q:6.15">6.12</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr1">K&amp;R1</A>, Sec. 5.10 p. 110]; [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 5.9 p. 113];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 5.4.3 p. 126]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1666"
+  HREF="node89.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1672"
+  HREF="node75.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1674"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1676"
+  HREF="node91.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,93 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>13.24 既然&nbsp;fflush()&nbsp;不能, 那么怎样才能清除输入呢？</TITLE>
+<META NAME="description" CONTENT="13.24 既然&nbsp;fflush()&nbsp;不能, 那么怎样才能清除输入呢？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node216.html">
+<LINK REL="previous" HREF="node214.html">
+<LINK REL="up" HREF="node191.html">
+<LINK REL="next" HREF="node216.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3276"
+  HREF="node214.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3282"
+  HREF="node191.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3284"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3286"
+  HREF="node216.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0014240000000000000000"></A>
+<A NAME="q:12.26b"></A>
+<BR>
+<SPAN CLASS="arabic">13</SPAN>.<SPAN CLASS="arabic">24</SPAN> 既然&nbsp;fflush()&nbsp;不能, 那么怎样才能清除输入呢？
+</H1>
+这取决于你要做什么。如果你希望丢掉调用&nbsp;scanf()&nbsp;(参见问题&nbsp;<A HREF="node207.html#q:12.18a">12.16</A>
+- <A HREF="node208.html#q:12.19">12.17</A>)&nbsp;之后所剩下的换行符和未预知的输入, 你可能需要重写你的
+&nbsp;scanf()&nbsp;或者换掉它, 参见问题&nbsp;<A HREF="node209.html#q:12.20">12.18</A>。或者你可以用下边这样
+的代码吃掉一行中多余的字符
+<PRE>
+	while((c = getchar()) != '\n' &amp;&amp; c != EOF)
+		/* 丢弃 */ ;
+</PRE>
+你也可以使用&nbsp;curses&nbsp;的&nbsp;flushinp()&nbsp;函数。
+
+<P>
+没有什么标准的办法可以丢弃标准输入流的未读取字符, 即使有, 那也不够,
+因为未读取字符也可能来自其它的操作系统级的输入缓冲区。如果你希望严格
+丢弃多输入的字符&nbsp;(可能是预测发出临界提示), 你可能需要使用系统相关的
+技术; 参加问题&nbsp;<A HREF="node307.html#q:19.1">19.1</A>&nbsp;和&nbsp;<A HREF="node308.html#q:19.2">19.2</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 7.9.5.2]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 15.2]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3276"
+  HREF="node214.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3282"
+  HREF="node191.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3284"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3286"
+  HREF="node216.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

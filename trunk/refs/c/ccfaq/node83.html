@@ -1,0 +1,105 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7.8 我遇到一些&nbsp;``搞笑"&nbsp;的代码, 包含&nbsp;5["abcdef"]
+&nbsp;这样的&nbsp;``表达式"。 这为什么是合法的&nbsp;C&nbsp;表达式呢 ？</TITLE>
+<META NAME="description" CONTENT="7.8 我遇到一些&nbsp;``搞笑"&nbsp;的代码, 包含&nbsp;5["abcdef"]
+&nbsp;这样的&nbsp;``表达式"。 这为什么是合法的&nbsp;C&nbsp;表达式呢 ？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node84.html">
+<LINK REL="previous" HREF="node82.html">
+<LINK REL="up" HREF="node75.html">
+<LINK REL="next" HREF="node84.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1582"
+  HREF="node82.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1588"
+  HREF="node75.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1590"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1592"
+  HREF="node84.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00880000000000000000"></A>
+<A NAME="q:6.11"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">8</SPAN> 我遇到一些&nbsp;``搞笑"&nbsp;的代码, 包含&nbsp;5[<TT>"</TT>abcdef<TT>"</TT>]
+&nbsp;这样的&nbsp;``表达式"。 这为什么是合法的&nbsp;C&nbsp;表达式呢 ？
+</H1>
+
+<P>
+是的, 弗吉尼亚<A NAME="tex2html6"
+  HREF="#foot1150"><SUP><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN></SUP></A>,
+数组和下标在&nbsp;C&nbsp;语言中可以互换。这个奇怪的事实来自数组
+下标的指针定义, 即对于<SPAN  CLASS="textbf">任何</SPAN>两个表达式&nbsp;a&nbsp;和&nbsp;e, 只要其中一个是
+指针表达式而另一个为整数, 则&nbsp;a[e]&nbsp;和&nbsp;*((a)+(e))&nbsp;完全一样。这种交换性
+在许多&nbsp;C&nbsp;语言的书中被看作值得骄傲的东西, 但是它除了在混乱&nbsp;C&nbsp;语言竞赛
+之外, 其实鲜有用武之地。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#rationale">Rationale</A>, Sec. 3.3.2.1]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 5.4.1 p. 124,
+Sec. 7.4.1 pp. 186-7]。
+
+<P>
+<BR><HR><H4>脚注</H4>
+<DL>
+<DT><A NAME="foot1150">... 弗吉尼亚</A><A
+ HREF="node83.html#tex2html6"><SUP><SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">1</SPAN></SUP></A></DT>
+<DD>这里有个美国典故, 在&nbsp;1897&nbsp;年, 有个叫
+弗吉尼亚&nbsp;(Virginia)&nbsp;的八岁小女孩, 她对圣诞老人是否存在感到困惑,
+因而写了封寻问信给《纽约太阳报》, 
+于是就有了&nbsp;``Yes, Virginia, there is a Santa Claus"&nbsp;这篇评论,
+有兴趣的朋友可以在&nbsp;
+<TT><A NAME="tex2html7"
+  HREF="http://www.hymnsandcarolsofchristmas.com/santa/virginia's_question.htm">http://www.hymnsandcarolsofchristmas.com/santa/virginia's_question.htm</A></TT>
+找到相关资料。
+
+</DD>
+</DL>
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1582"
+  HREF="node82.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1588"
+  HREF="node75.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1590"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1592"
+  HREF="node84.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

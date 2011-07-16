@@ -1,0 +1,138 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>11. C&nbsp;预处理器</TITLE>
+<META NAME="description" CONTENT="11. C&nbsp;预处理器">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node155.html">
+<LINK REL="previous" HREF="node128.html">
+<LINK REL="up" HREF="ccfaq.html">
+<LINK REL="next" HREF="node133.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2197"
+  HREF="node131.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2203"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2205"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2207"
+  HREF="node133.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001200000000000000000"></A>
+<A NAME="s:10"></A>
+<BR>
+<SPAN CLASS="arabic">11</SPAN>. C&nbsp;预处理器
+</H1>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html2209"
+  HREF="node133.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">1</SPAN> 这些机巧的预处理宏:&nbsp;
+#define begin  {&nbsp;
+#define end	}&nbsp;
+你觉得怎么样？</A>
+<LI><A NAME="tex2html2210"
+  HREF="node134.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">2</SPAN> 怎么写一个一般用途的宏交换两个值？</A>
+<LI><A NAME="tex2html2211"
+  HREF="node135.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">3</SPAN> 书写多语句宏的最好方法是什么？</A>
+<LI><A NAME="tex2html2212"
+  HREF="node136.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">4</SPAN> 我第一次把一个程序分成多个源文件, 我不知道该把什么放到&nbsp;.c&nbsp;文件,
+把什么放到&nbsp;.h&nbsp;文件。(``.h"&nbsp;到底是什么意思？)</A>
+<LI><A NAME="tex2html2213"
+  HREF="node137.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">5</SPAN> 一个头文件可以包含另一头文件吗？</A>
+<LI><A NAME="tex2html2214"
+  HREF="node138.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">6</SPAN> #include &lt;&gt;&nbsp;和&nbsp;#include 
+有什么区别？</A>
+<LI><A NAME="tex2html2215"
+  HREF="node139.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">7</SPAN> 完整的头文件搜索规则是怎样的？</A>
+<LI><A NAME="tex2html2216"
+  HREF="node140.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">8</SPAN> 我在文件的第一个声明就遇到奇怪的语法错误, 但是看上去没什么问题。</A>
+<LI><A NAME="tex2html2217"
+  HREF="node141.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">9</SPAN> 我包含了我使用的库函数的正确头文件, 可是连接器还是说它没有定义。</A>
+<LI><A NAME="tex2html2218"
+  HREF="node142.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">10</SPAN> 我在编译一个程序, 看起来我好像缺少需要的一个或多个头文件。
+谁能发给我一份？</A>
+<LI><A NAME="tex2html2219"
+  HREF="node143.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">11</SPAN> 我怎样构造比较字符串的&nbsp;#if&nbsp;预处理表达式？</A>
+<LI><A NAME="tex2html2220"
+  HREF="node144.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">12</SPAN> sizeof&nbsp;操作符可以用于&nbsp;#if&nbsp;预编译指令中吗？</A>
+<LI><A NAME="tex2html2221"
+  HREF="node145.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">13</SPAN> 我可以在&nbsp;#include&nbsp;行里使用&nbsp;#ifdef&nbsp;来定义两个不同的东西吗？</A>
+<LI><A NAME="tex2html2222"
+  HREF="node146.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">14</SPAN> 对&nbsp;typdef&nbsp;的类型定义有没有类似&nbsp;#ifdef的东西？</A>
+<LI><A NAME="tex2html2223"
+  HREF="node147.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">15</SPAN> 我如何用&nbsp;#if&nbsp;表达式来判断机器是高字节在前还是低字节在前？</A>
+<LI><A NAME="tex2html2224"
+  HREF="node148.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">16</SPAN> 我得到了一些代码, 里边有太多的&nbsp;#ifdef。 我不想使用预处理器
+把所有的&nbsp;#include&nbsp;和&nbsp;#ifdef&nbsp;都扩展开, 有什么办法只保留一种条件的
+代码呢？</A>
+<LI><A NAME="tex2html2225"
+  HREF="node149.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">17</SPAN> 如何列出所有的预定义标识符？</A>
+<LI><A NAME="tex2html2226"
+  HREF="node150.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">18</SPAN> 我有些旧代码, 试图用这样的宏来构造标识符&nbsp;
+#define Paste(a, b) a/**/b&nbsp;但是现在不行了。</A>
+<LI><A NAME="tex2html2227"
+  HREF="node151.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">19</SPAN> 为什么宏&nbsp;
+#define TRACE(n) printf(<TT>"</TT>TRACE: %d&#92;n<TT>"</TT>, n)&nbsp;
+报出警告&nbsp;``用字符串常量代替宏"？它似乎应该把&nbsp;
+TRACE(count);
+&nbsp;扩展为&nbsp;
+printf(<TT>"</TT>TRACE: %d&#92;count<TT>"</TT>, count);</A>
+<LI><A NAME="tex2html2228"
+  HREF="node152.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">20</SPAN> 使用&nbsp;#&nbsp;操作符时, 我在字符串常量内使用宏参数有问题。</A>
+<LI><A NAME="tex2html2229"
+  HREF="node153.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">21</SPAN> 我想用预处理做某件事情, 但却不知道如何下手。</A>
+<LI><A NAME="tex2html2230"
+  HREF="node154.html"><SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">22</SPAN> 怎样写参数个数可变的宏？</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2197"
+  HREF="node131.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2203"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2205"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2207"
+  HREF="node133.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

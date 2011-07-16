@@ -1,0 +1,91 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>3.16 枚举和一组预处理的&nbsp;#define&nbsp;有什么不同？</TITLE>
+<META NAME="description" CONTENT="3.16 枚举和一组预处理的&nbsp;#define&nbsp;有什么不同？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node35.html">
+<LINK REL="previous" HREF="node33.html">
+<LINK REL="up" HREF="node18.html">
+<LINK REL="next" HREF="node35.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html948"
+  HREF="node33.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html954"
+  HREF="node18.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html956"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html958"
+  HREF="node35.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION004160000000000000000"></A>
+<A NAME="q:2.22"></A>
+<BR>
+<SPAN CLASS="arabic">3</SPAN>.<SPAN CLASS="arabic">16</SPAN> 枚举和一组预处理的&nbsp;#define&nbsp;有什么不同？
+</H1>
+只有很小的区别。&nbsp;C&nbsp;标准中允许枚举和其它整形类别自由混用而不会出错。
+（但是, 假如编译器不允许在未经明确类型转换的情况下混用这些类型，则
+聪明地使用枚举可以捕捉到某些程序错误。）
+
+<P>
+枚举的一些优点: 自动赋值; 调试器在检验枚举变量时, 可以显示符号值;
+它们服从数据块作用域规则。（编译器也可以对在枚举变量被任意地和其它
+类型混用时, 产生非重要的警告信息, 因为这被认为是坏风格。）
+一个缺点是程序员不能控制这些对非重要的警告; 有些程序员则反感于无法
+控制枚举变量的大小。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 2.3 p. 39, Sec. A4.2 p. 196];
+[<A
+ HREF="node388.html#iso">ISO</A>, Sec. 6.1.2.5, Sec. 6.5.2, Sec. 6.5.2.2, Annex F];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 5.5 pp. 127-9, Sec. 5.11.2 p. 153]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html948"
+  HREF="node33.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html954"
+  HREF="node18.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html956"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html958"
+  HREF="node35.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>11.4 我第一次把一个程序分成多个源文件, 我不知道该把什么放到&nbsp;.c&nbsp;文件,
+把什么放到&nbsp;.h&nbsp;文件。(``.h"&nbsp;到底是什么意思？)</TITLE>
+<META NAME="description" CONTENT="11.4 我第一次把一个程序分成多个源文件, 我不知道该把什么放到&nbsp;.c&nbsp;文件,
+把什么放到&nbsp;.h&nbsp;文件。(``.h"&nbsp;到底是什么意思？)">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node137.html">
+<LINK REL="previous" HREF="node135.html">
+<LINK REL="up" HREF="node132.html">
+<LINK REL="next" HREF="node137.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2267"
+  HREF="node135.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2273"
+  HREF="node132.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2275"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2277"
+  HREF="node137.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001240000000000000000"></A>
+<A NAME="q:10.6"></A>
+<BR>
+<SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">4</SPAN> 我第一次把一个程序分成多个源文件, 我不知道该把什么放到&nbsp;.c&nbsp;文件,
+把什么放到&nbsp;.h&nbsp;文件。(``.h"&nbsp;到底是什么意思？)
+</H1>
+作为一般规则, 你应该把这些东西放入头&nbsp;(.h)&nbsp;文件中:
+
+<UL>
+<LI>宏定义&nbsp;(预处理&nbsp;#defines)
+</LI>
+<LI>结构、联合和枚举声明
+</LI>
+<LI>typedef&nbsp;声明
+</LI>
+<LI>外部函数声明(参见问题&nbsp;<A HREF="node7.html#q:1.11">1.4</A>)
+</LI>
+<LI>全局变量声明
+</LI>
+</UL>
+
+<P>
+当声明或定义需要在多个文件中共享时, 尤其需要把它们放入头文件中。
+特别是, 永远不要把外部函数原型放到&nbsp;.c&nbsp;文件中。 参见问题&nbsp;<A HREF="node6.html#q:1.7">1.3</A>。
+
+<P>
+另一方面, 如果定义或声明为一个&nbsp;.c&nbsp;文件私有, 则最好留在&nbsp;.c&nbsp;文件中。
+
+<P>
+参见问题&nbsp;<A HREF="node6.html#q:1.7">1.3</A>&nbsp;和&nbsp;<A HREF="node137.html#q:10.7">10.5</A>。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 4.5 pp. 81-2]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 9.2.3 p. 267];
+[<A
+ HREF="node388.html#ctp">CT&amp;P</A>, Sec. 4.6 pp. 66-7]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2267"
+  HREF="node135.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2273"
+  HREF="node132.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2275"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2277"
+  HREF="node137.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

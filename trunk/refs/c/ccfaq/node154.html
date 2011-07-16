@@ -1,0 +1,107 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>11.22 怎样写参数个数可变的宏？</TITLE>
+<META NAME="description" CONTENT="11.22 怎样写参数个数可变的宏？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="previous" HREF="node153.html">
+<LINK REL="up" HREF="node132.html">
+<LINK REL="next" HREF="node155.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2483"
+  HREF="node153.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2487"
+  HREF="node132.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2489"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2491"
+  HREF="node155.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0012220000000000000000"></A>
+<A NAME="q:10.26"></A>
+<BR>
+<SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">22</SPAN> 怎样写参数个数可变的宏？
+</H1>
+一种流行的技巧是用一个单独的用括弧括起来的的&nbsp;``参数"&nbsp;定义和调用宏, 参数在
+宏扩展的时候成为类似&nbsp;printf()&nbsp;那样的函数的整个参数列表。
+<PRE>
+    #define DEBUG(args) (printf("DEBUG: "), printf args)
+
+    if(n != 0) DEBUG(("n is %d\n", n));
+</PRE>
+
+<P>
+明显的缺陷是调用者必须记住使用一对额外的括弧。
+
+<P>
+gcc&nbsp;有一个扩展可以让函数式的宏接受可变个数的参数。 但这不是标准。另一种
+可能的解决方案是根据参数个数使用多个宏&nbsp;(DEBUG1, DEBUG2, 等等), 或者用
+逗号玩个这样的花招:
+<PRE>
+    #define DEBUG(args) (printf("DEBUG: "), printf(args))
+    #define _ ,
+
+    DEBUG("i = %d" _ i);
+</PRE>
+
+<P>
+C99&nbsp;引入了对参数个数可变的函数式宏的正式支持。在宏&nbsp;``原型"&nbsp;的末尾加上符号&nbsp;...
+(就像在参数可变的函数定义中), 宏定义中的伪宏&nbsp;__VA_ARGS__&nbsp;就会在调用是
+替换成可变参数。
+
+<P>
+最后, 你总是可以使用真实的函数, 接受明确定义的可变参数。
+参见问题&nbsp;<A HREF="node261.html#q:15.4">15.4</A>&nbsp;和&nbsp;<A HREF="node262.html#q:15.5">15.5</A>。如果你需要替换宏, 使用一个
+函数和一个非函数式宏, 如&nbsp;#define printf myprintf。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#c9x">C9X</A>, Sec. 6.8.3, Sec. 6.8.3.1]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2483"
+  HREF="node153.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2487"
+  HREF="node132.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2489"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2491"
+  HREF="node155.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

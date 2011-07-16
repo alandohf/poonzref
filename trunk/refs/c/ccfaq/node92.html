@@ -1,0 +1,128 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>7.17 我怎样在函数参数传递时混用静态和动态多维数组 ？</TITLE>
+<META NAME="description" CONTENT="7.17 我怎样在函数参数传递时混用静态和动态多维数组 ？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node93.html">
+<LINK REL="previous" HREF="node91.html">
+<LINK REL="up" HREF="node75.html">
+<LINK REL="next" HREF="node93.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1690"
+  HREF="node91.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1696"
+  HREF="node75.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1698"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1700"
+  HREF="node93.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION008170000000000000000"></A>
+<A NAME="q:6.20"></A>
+<BR>
+<SPAN CLASS="arabic">7</SPAN>.<SPAN CLASS="arabic">17</SPAN> 我怎样在函数参数传递时混用静态和动态多维数组 ？
+</H1>
+没有完美的方法。假设有如下声明
+<PRE>
+	int array[NROWS][NCOLUMNS];
+	int **array1;		/* 不齐的   */
+	int **array2;		/* 连续的   */
+	int *array3;		 /* "变平的" */
+	int (*array4)[NCOLUMNS];
+</PRE>
+指针的初始值如问题&nbsp;<A HREF="node88.html#q:6.16">6.13</A> 的程序片段, 函数声明如下
+<PRE>
+    void f1a(int a[][NCOLUMNS], int nrows, int ncolumns);
+    void f1b(int (*a)[NCOLUMNS], int nrows, int ncolumns);
+    void f2(int *aryp, int nrows, int ncolumns);
+    void f3(int **pp, int nrows, int ncolumns);
+</PRE>
+其中&nbsp;f1a()&nbsp;和&nbsp;f1b()&nbsp;接受传统的二维数组, f2()&nbsp;接受&nbsp;``扁平的"&nbsp;二维数组,
+f3()&nbsp;接受指针的指针模拟的数组&nbsp;(参见问题&nbsp;<A HREF="node90.html#q:6.18">6.15</A> 和&nbsp;<A HREF="node91.html#q:6.19">6.16</A>),
+下面的调用应该可以如愿运行:
+<PRE>
+    f1a(array, NROWS, NCOLUMNS);
+    f1b(array, NROWS, NCOLUMNS);
+    f1a(array4, nrows, NCOLUMNS);
+    f1b(array4, nrows, NCOLUMNS);
+    f2(&amp;array[0][0], NROWS, NCOLUMNS);
+    f2(*array, NROWS, NCOLUMNS);
+    f2(*array2, nrows, ncolumns);
+    f2(array3, nrows, ncolumns);
+    f2(*array4, nrows, NCOLUMNS);
+    f3(array1, nrows, ncolumns);
+    f3(array2, nrows, ncolumns);
+</PRE>
+
+<P>
+下面的调用在大多数系统上可能可行, 但是有可疑的类型转换, 而且只有动态
+&nbsp;ncolumns&nbsp;和静态&nbsp;NCOLUMNS&nbsp;匹配才行:
+<PRE>
+    f1a((int (*)[NCOLUMNS])(*array2), nrows, ncolumns);
+    f1a((int (*)[NCOLUMNS])(*array2), nrows, ncolumns);
+    f1b((int (*)[NCOLUMNS])array3, nrows, ncolumns);
+    f1b((int (*)[NCOLUMNS])array3, nrows, ncolumns);
+</PRE>
+
+<P>
+同时必须注意向&nbsp;f2()&nbsp;传递&nbsp;&amp;array[0][0]&nbsp;(或者等价的&nbsp;*array)&nbsp;并不完全符合标准;
+参见问题&nbsp;<A HREF="node91.html#q:6.19">6.16</A>。
+
+<P>
+如果你能理解为何上述调用可行且必须这样书写, 而未列出的组合不行, 那么你对&nbsp;C&nbsp;
+语言中的数组和指针就有了<SPAN  CLASS="textbf">很</SPAN>好的理解了。
+
+<P>
+为免受这些东西的困惑, 一种使用各种大小的多维数组的办法是令它们&nbsp;``全部"&nbsp;动态
+分配, 如问题&nbsp;<A HREF="node88.html#q:6.16">6.13</A>&nbsp;所述。如果没有静态多维数组&nbsp;---&nbsp;如果所有的数组都
+按问题&nbsp;<A HREF="node88.html#q:6.16">6.13</A>&nbsp;的&nbsp;array1&nbsp;和&nbsp;array2&nbsp;分配&nbsp;---&nbsp;那么所有的函数都可以写成
+&nbsp;f3()&nbsp;的形式。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1690"
+  HREF="node91.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1696"
+  HREF="node75.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1698"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1700"
+  HREF="node93.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>11.3 书写多语句宏的最好方法是什么？</TITLE>
+<META NAME="description" CONTENT="11.3 书写多语句宏的最好方法是什么？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node136.html">
+<LINK REL="previous" HREF="node134.html">
+<LINK REL="up" HREF="node132.html">
+<LINK REL="next" HREF="node136.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2255"
+  HREF="node134.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2261"
+  HREF="node132.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2263"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2265"
+  HREF="node136.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001230000000000000000"></A>
+<A NAME="q:10.4"></A>
+<BR>
+<SPAN CLASS="arabic">11</SPAN>.<SPAN CLASS="arabic">3</SPAN> 书写多语句宏的最好方法是什么？
+</H1>
+通常的目标是书写一个象包含一个单独的函数调用语句的宏。这意味着
+&nbsp;``调用者"&nbsp;需要提供最终的分号, 而宏体则不需要。因此宏体不能为简单
+的括弧包围的复合语句, 因为如果这样, 调用的时候就会发生语法错&nbsp;(明显是
+一个单独语句, 但却多了一个额外的分号), 就像在&nbsp;if/else&nbsp;语句的&nbsp;if&nbsp;分支
+中多了一个&nbsp;else&nbsp;分句一样。
+
+<P>
+所以, 传统的结局方案就是这样使用:
+<PRE>
+	#define MACRO(arg1, arg2) do {  \
+		/* declarations */      \
+		stmt1;		   \
+		stmt2;		   \
+		/* ... */	        \
+		} while(0)	/* 没有结尾的 ; */
+</PRE>
+
+<P>
+当调用者加上分号后, 宏在任何情况下都会扩展为一个单独的语句。 优化的
+编译器会去掉条件为&nbsp;0&nbsp;的&nbsp;``无效"&nbsp;测试或分支, 尽管&nbsp;lint&nbsp;可能会警告。
+
+<P>
+如果宏体内的语句都是简单语句, 没有声明或循环, 那么还有一种技术,
+就是写一个单独的, 用一个或多个逗号操作符分隔的表达式。
+例如, 问题&nbsp;<A HREF="node154.html#q:10.26">10.22</A>&nbsp;的第一个&nbsp;DEBUG()&nbsp;宏。这种技术还可以
+&nbsp;``返回"&nbsp;一个值。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 3.3.2 p. 45]; [<A
+ HREF="node388.html#ctp">CT&amp;P</A>, Sec. 6.3 pp. 82-3]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html2255"
+  HREF="node134.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html2261"
+  HREF="node132.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html2263"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html2265"
+  HREF="node136.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

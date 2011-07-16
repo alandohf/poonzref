@@ -1,0 +1,102 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>14.6 我想用&nbsp;strcmp()&nbsp;作为比较函数, 调用&nbsp;qsort()&nbsp;对一个字符串数组
+排序, 但是不行。</TITLE>
+<META NAME="description" CONTENT="14.6 我想用&nbsp;strcmp()&nbsp;作为比较函数, 调用&nbsp;qsort()&nbsp;对一个字符串数组
+排序, 但是不行。">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node229.html">
+<LINK REL="previous" HREF="node227.html">
+<LINK REL="up" HREF="node222.html">
+<LINK REL="next" HREF="node229.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3451"
+  HREF="node227.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3457"
+  HREF="node222.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3459"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3461"
+  HREF="node229.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001560000000000000000"></A>
+<A NAME="q:13.8"></A>
+<BR>
+<SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">6</SPAN> 我想用&nbsp;strcmp()&nbsp;作为比较函数, 调用&nbsp;qsort()&nbsp;对一个字符串数组
+排序, 但是不行。
+</H1>
+你说的&nbsp;``字符串数组"&nbsp;实际上是&nbsp;``字符指针数组"。qsort&nbsp;比较函数
+的参数是被排序对象的指针, 在这里, 也就是字符指针的指针。
+然而&nbsp;strcmp()&nbsp;只接受字符指针。因此, 不能直接使用
+&nbsp;strcmp()。写一个下边这样的间接比较函数:
+<PRE>
+       /* 通过指针比较字符串 */
+       int pstrcmp(const void *p1, const void *p2)
+       {
+	   return strcmp(*(char * const *)p1, *(char * const *)p2);
+       }
+</PRE>
+
+<P>
+比较函数的参数表示为&nbsp;``一般指针" const void *。然后, 它们被转换回
+本来表示的类型&nbsp;(指向字符指针的指针), 再复引用, 生成可以传入&nbsp;strcmp()&nbsp;的
+&nbsp;char*。
+
+<P>
+不要被&nbsp;[<A
+ HREF="node388.html#kr2">K&amp;R2</A>] 5.11&nbsp;节&nbsp;119-20页的讨论所误导, 那里讨论的不是标准库中
+的&nbsp;qsort。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 7.10.5.2]; [<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 20.5 p. 419]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3451"
+  HREF="node227.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3457"
+  HREF="node222.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3459"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3461"
+  HREF="node229.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>15. 浮点运算</TITLE>
+<META NAME="description" CONTENT="15. 浮点运算">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node257.html">
+<LINK REL="previous" HREF="node222.html">
+<LINK REL="up" HREF="ccfaq.html">
+<LINK REL="next" HREF="node245.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3641"
+  HREF="node243.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3647"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3649"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3651"
+  HREF="node245.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION001600000000000000000"></A>
+<A NAME="s:14"></A>
+<BR>
+<SPAN CLASS="arabic">15</SPAN>. 浮点运算
+</H1>
+
+<P>
+<BR><HR>
+<!--Table of Child-Links-->
+
+
+<UL CLASS="ChildLinks">
+<LI><A NAME="tex2html3653"
+  HREF="node245.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">1</SPAN> 一个&nbsp;float&nbsp;变量赋值为&nbsp;3.1&nbsp;时,
+为什么&nbsp;printf&nbsp;输出的值为&nbsp;3.0999999？</A>
+<LI><A NAME="tex2html3654"
+  HREF="node246.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">2</SPAN> 执行一些开方根运算, 可是得到一些疯狂的数字。</A>
+<LI><A NAME="tex2html3655"
+  HREF="node247.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">3</SPAN> 做一些简单的三角函数运算, 也引用了&nbsp;#include
+&lt;math.h&gt;, 可是一直得到编译错误&nbsp;``undefined:
+sin"&nbsp;(函数&nbsp;sin 未定义)。</A>
+<LI><A NAME="tex2html3656"
+  HREF="node248.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">4</SPAN> 浮点计算程序表现奇怪, 在不同的机器上给出不同的结果。</A>
+<LI><A NAME="tex2html3657"
+  HREF="node249.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">5</SPAN> 有什么好的方法来验对浮点数在&nbsp;``足够接近"&nbsp;情况下的等值？</A>
+<LI><A NAME="tex2html3658"
+  HREF="node250.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">6</SPAN> 怎样取整数？</A>
+<LI><A NAME="tex2html3659"
+  HREF="node251.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">7</SPAN> 为什么&nbsp;C&nbsp;不提供乘幂的运算符？</A>
+<LI><A NAME="tex2html3660"
+  HREF="node252.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">8</SPAN> 为什么我机器上的&nbsp;&lt;math.h&gt;&nbsp;没有预定
+义常数&nbsp;M_PI？</A>
+<LI><A NAME="tex2html3661"
+  HREF="node253.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">9</SPAN> 怎样测试&nbsp;IEEE NaN&nbsp;以及其它特殊值？</A>
+<LI><A NAME="tex2html3662"
+  HREF="node254.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">10</SPAN> 在&nbsp;C&nbsp;中如何很好的实现复数？</A>
+<LI><A NAME="tex2html3663"
+  HREF="node255.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">11</SPAN> 我要寻找一些实现以下功能的程序源代码：
+快速傅立叶变换&nbsp;(FFT)、矩阵算术&nbsp;(乘法、倒置等函数)、
+复数算术。</A>
+<LI><A NAME="tex2html3664"
+  HREF="node256.html"><SPAN CLASS="arabic">15</SPAN>.<SPAN CLASS="arabic">12</SPAN> Turbo C&nbsp;的程序崩溃, 显示错误为&nbsp;``floating point formats
+not linked" (浮点格式未连接)。</A>
+</UL>
+<!--End of Table of Child-Links-->
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3641"
+  HREF="node243.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3647"
+  HREF="ccfaq.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3649"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3651"
+  HREF="node245.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

@@ -1,0 +1,98 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>21.30 什么是&nbsp;``达夫设备" (Duff's Device)？</TITLE>
+<META NAME="description" CONTENT="21.30 什么是&nbsp;``达夫设备" (Duff's Device)？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node381.html">
+<LINK REL="previous" HREF="node379.html">
+<LINK REL="up" HREF="node350.html">
+<LINK REL="next" HREF="node381.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5397"
+  HREF="node379.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5403"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5405"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5407"
+  HREF="node381.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0022300000000000000000"></A>
+<A NAME="q:20.35"></A>
+<BR>
+<SPAN CLASS="arabic">21</SPAN>.<SPAN CLASS="arabic">30</SPAN> 什么是&nbsp;``达夫设备" (Duff's Device)？
+</H1>
+这是个很棒的迂回循环展开法, 由&nbsp;Tom Duff&nbsp;在&nbsp;Lucasfilm&nbsp;时所设计。
+它的&nbsp;``传统"&nbsp;形态, 是用来复制多个字节:
+<PRE>
+    register n = (count + 7) / 8;   /* count &gt; 0 assumed */
+    switch (count % 8)
+    {
+    case 0:    do { *to = *from++;
+    case 7:     *to = *from++;
+    case 6:     *to = *from++;
+    case 5:     *to = *from++;
+    case 4:     *to = *from++;
+    case 3:     *to = *from++;
+    case 2:     *to = *from++;
+    case 1:     *to = *from++;
+          } while (--n &gt; 0);
+    }
+</PRE>
+这里&nbsp;count&nbsp;个字节从&nbsp;from&nbsp;指向的数组复制到&nbsp;to&nbsp;指向的
+内存地址&nbsp;(这是个内存映射的输出寄存器, 这也是为什么它没有被增加)。它把
+&nbsp;swtich&nbsp;语句和复制&nbsp;8&nbsp;个字节的循环交织在一起, 从而解决了剩余字节的
+处理问题&nbsp;(当&nbsp;count&nbsp;不是&nbsp;8&nbsp;的倍数时)。相信不相信, 象这样的把
+&nbsp;case&nbsp;标志放在嵌套在&nbsp;swtich&nbsp;语句内的模块中是合法的。
+当他公布这个技巧给&nbsp;C&nbsp;的开发者和世界时,&nbsp;Duff&nbsp;注意到&nbsp;C&nbsp;的&nbsp;swtich&nbsp;
+语法, 特别是&nbsp;``跌落"&nbsp;行为, 一直是被争议的, 而&nbsp;``这段代码在争论中形成了某种
+论据, 但我不清楚是赞成还是反对"。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html5397"
+  HREF="node379.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html5403"
+  HREF="node350.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html5405"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html5407"
+  HREF="node381.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

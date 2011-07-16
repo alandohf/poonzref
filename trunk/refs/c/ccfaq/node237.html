@@ -1,0 +1,96 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>14.15 每次执行程序,&nbsp;rand()&nbsp;都返回相同顺序的数字。</TITLE>
+<META NAME="description" CONTENT="14.15 每次执行程序,&nbsp;rand()&nbsp;都返回相同顺序的数字。">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node238.html">
+<LINK REL="previous" HREF="node236.html">
+<LINK REL="up" HREF="node222.html">
+<LINK REL="next" HREF="node238.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3559"
+  HREF="node236.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3565"
+  HREF="node222.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3567"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3569"
+  HREF="node238.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION0015150000000000000000"></A>
+<A NAME="q:13.17"></A>
+<BR>
+<SPAN CLASS="arabic">14</SPAN>.<SPAN CLASS="arabic">15</SPAN> 每次执行程序,&nbsp;rand()&nbsp;都返回相同顺序的数字。
+</H1>
+你可以调用&nbsp;srand()&nbsp;来初始化模拟随机数发生器的种子, 用的值可以是
+真正随机数或至少是个变量, 例如当前时间。这儿有个例子:
+<PRE>
+    #include &lt;stdlib.h&gt;
+    #include &lt;time.h&gt;
+
+    srand((unsigned int)time((time_t *)NULL));
+</PRE>
+不幸的是, 这个代码并不完美---其中, time()&nbsp;返回的&nbsp;time_t&nbsp;可能是
+浮点值, 转换到无符号整数时有可能上溢, 这造成不可移植。
+参见问题: <A HREF="node342.html#q:19.37">19.36</A>。
+
+<P>
+还要注意到, 在一个程序执行中多次调用&nbsp;srand()&nbsp;并不见得有帮助;
+特别是不要为了试图取得&nbsp;``真随机数"&nbsp;而在每次调用&nbsp;rand()&nbsp;前都调用
+&nbsp;srand()。
+
+<P>
+参考资料: [<A
+ HREF="node388.html#kr2">K&amp;R2</A>, Sec. 7.8.7 p. 168]; [<A
+ HREF="node388.html#iso">ISO</A>, Sec. 7.10.2.2];
+[<A
+ HREF="node388.html#hs">H&amp;S</A>, Sec. 17.7 p. 393]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html3559"
+  HREF="node236.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html3565"
+  HREF="node222.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html3567"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html3569"
+  HREF="node238.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>

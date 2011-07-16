@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<!--Converted with LaTeX2HTML 2002-2-1 (1.71)
+original version by:  Nikos Drakos, CBLU, University of Leeds
+* revised and updated by:  Marcus Hennecke, Ross Moore, Herb Swan
+* with significant contributions from:
+  Jens Lippmann, Marek Rouchal, Martin Wilck and others -->
+<HTML>
+<HEAD>
+<TITLE>6.6 如果&nbsp;NULL&nbsp;定义成&nbsp;#define NULL ((char *)0)&nbsp;
+难道不就可以向函数传入不加转换的&nbsp;NULL&nbsp;了吗？</TITLE>
+<META NAME="description" CONTENT="6.6 如果&nbsp;NULL&nbsp;定义成&nbsp;#define NULL ((char *)0)&nbsp;
+难道不就可以向函数传入不加转换的&nbsp;NULL&nbsp;了吗？">
+<META NAME="keywords" CONTENT="ccfaq">
+<META NAME="resource-type" CONTENT="document">
+<META NAME="distribution" CONTENT="global">
+
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GBK">
+<META NAME="Generator" CONTENT="LaTeX2HTML v2002-2-1">
+<META HTTP-EQUIV="Content-Style-Type" CONTENT="text/css">
+
+<LINK REL="STYLESHEET" HREF="ccfaq.css">
+
+<LINK REL="next" HREF="node66.html">
+<LINK REL="previous" HREF="node64.html">
+<LINK REL="up" HREF="node59.html">
+<LINK REL="next" HREF="node66.html">
+</HEAD>
+
+<BODY >
+
+<DIV CLASS="navigation"><table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1350"
+  HREF="node64.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1356"
+  HREF="node59.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1358"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1360"
+  HREF="node66.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+
+<H1><A NAME="SECTION00760000000000000000"></A>
+<A NAME="q:5.6"></A>
+<BR>
+<SPAN CLASS="arabic">6</SPAN>.<SPAN CLASS="arabic">6</SPAN> 如果&nbsp;NULL&nbsp;定义成&nbsp;#define NULL ((char *)0)&nbsp;
+难道不就可以向函数传入不加转换的&nbsp;NULL&nbsp;了吗？
+</H1>
+一般情况下, 不行。复杂之处在于, 有的机器不同类型数据的指针有不同的内部
+表达。这样的&nbsp;NULL&nbsp;定义对于接受字符指针的的函数没有问题, 但对于其它类型
+的指针参数仍然有问题&nbsp;(在缺少原型的情况下), 而合法的构造如
+<PRE>
+    FILE *fp = NULL;
+</PRE>
+则会失败。
+
+<P>
+不过, ANSI C&nbsp;允许&nbsp;NULL&nbsp;的可选定义
+<PRE>
+    #define NULL ((void *)0)
+</PRE>
+除了潜在地帮助错误程序运行&nbsp;(仅限于使用同样类型指针的机器, 因此帮助有限)&nbsp;以外, 
+这样的定义还可以发现错误使用&nbsp;NULL&nbsp;的程序&nbsp;(例如, 在实际需要使用&nbsp;ASCII NUL&nbsp;字符
+的地方; 参见问题&nbsp;<A HREF="node66.html#q:5.9">5.7</A>)。
+
+<P>
+无论如何, ANSI&nbsp;函数原型确保大多数&nbsp;(尽管不是全部;
+参见问题&nbsp;<A HREF="node61.html#q:5.2">5.2</A>)指针参 数在传入函数时正确转换。 因此,
+这个问题有些多余。
+
+<P>
+参考资料：&nbsp;[<A
+ HREF="node388.html#rationale">Rationale</A>, Sec. 4.1.5]。
+
+<P>
+
+<DIV CLASS="navigation"><HR> <table width=100%> <COLGROUP><COL width="25%"><COL width="25%"><col width="25%"><col width="25%"></colgroup><tr><td align=left>
+<A NAME="tex2html1350"
+  HREF="node64.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="previous" SRC="prev.png"></A></td><td align=center>
+<A NAME="tex2html1356"
+  HREF="node59.html">
+<IMG WIDTH="61" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="up" SRC="up.png"></A></td><td align=center>&nbsp;
+<A NAME="tex2html1358"
+  HREF="node1.html">
+<IMG WIDTH="63" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="contents" SRC="contents.png"></A>&nbsp;</td><td align=right>
+<A NAME="tex2html1360"
+  HREF="node66.html">
+<IMG WIDTH="62" HEIGHT="25" ALIGN="BOTTOM" BORDER="0" ALT="next" SRC="next.png"></A></td></tr></table>
+</DIV>
+<!--End of Navigation Panel-->
+<ADDRESS>
+<small>翻译朱群英、孙云, LaTeX2HTML 编译 朱群英 (2005-06-23)</small>
+</ADDRESS>
+</BODY>
+</HTML>
