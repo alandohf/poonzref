@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "test.h"
-
+//#include <unistd.h>
 
 int t1();
 int t2(int *arr);
@@ -21,62 +21,142 @@ int t_of_fp();
 int
 main ( int argc, char *argv[] )
 {
+//t7.4 
+	char linebuf[80];
+	char *lines[100];
+	int i;
+//printf("start..\n");
+	FILE *fp;
+	if((fp= fopen("file.dat", "r"))==NULL){
+		fprintf(stderr, " %s\n", strerror(errno));
+		exit(1);
+	}	
+//printf("trace..\n");
+	for(i = 0; i < 100; i++) {
+		char *p = fgets(linebuf, 40, fp);
+		if(p == NULL) break;
+printf("trace..\n");		
+		lines[i] = p;
+		printf("%s\n",&lines);
+	}
+	fclose(fp);
+
+// t2.7 strcpy()
+// char *p ; // crash 	
+//char *p="1"; // not crash
+//char p[1];	// crash
+//char p[10];	// not crash
+//char a[100];p=a;	
+//strcpy(p, "abc");
+//printf("%s\n",p);	// if no (char a[100];p=a;	) , the program crash!
+// t2.6 test strcat()
+//char a[100]="abcd";
+//char b[10]="1234";
+/**	
+char *a = "abcdefg";
+char *b = "1234";	
+printf("%d\n",sizeof a );
+printf("%d\n",sizeof b );
+//printf("%s\t%d\n",strcat(a,b),sizeof (strcat(a,b)));
+	char *a = "Hello, ";
+	char *b = "world!";	
+char *c=strcat(a,b);
+printf("%s\t%d\n",c,sizeof c);
+printf("%s\t\n",a);
+**/	
+//This function has undefined results if the strings overlap.
 	
-//t2.1 test 2d array 
-int *p = NULL;
-int (*ap)[3][4]; //数组指针	
-//int  ap[x][y] 指针数组
-int **pp= NULL;	
-int a[3][4]={{1,2,3,4},{5,6,7,8},{9,10,11,12}};
-int i , j;
-for (i = 0 ; i <3; i++)
-{
-	for(j = 0 ; j <4 ; j++)
-	printf("%p\t%d\n",&a[i][j],a[i][j]);
-}
-
-printf("p\ta\t&a\n");	
-printf("%p\t%p\t%p\n", p,a,&a);	
-p=a;	// deffernt type
-printf("%d\n",*p);
-// turn to 
-p=a[0];	// the same type
-printf("%d\n",*p);
-//or 
-ap=&a;
-printf("%d\t%d\t%d\n", ap,ap+1,ap+2);	
-
-printf("%p\t%p\t%p\n", p,a,&a);	
-p=&a;	// deffernt type
-printf("%p\t%p\t%p\n", p,a,&a);	
-// ==>>
-p=&a[0][0]; //same type
-printf("%p\t%p\t%p\n", p,a,&a);	
-
-//p=&a[0]; // deffernt type
-//printf("%p\t%p\t%p\n", p,a,&a);	
-//p=&a[0][0]; //same type
-//printf("%p\t%p\t%p\n", p,a,&a);	
-//p=a[0];	    //same type	
-//printf("%p\t%p\t%p\n", p,a,&a);	
-
-
-//
-printf("pp\ta\t&a\n");	
-printf("%p\t%p\t%p\n", pp,a,&a);	
-pp=a;	// deffernt type
-printf("%p\t%p\t%p\n", pp,a,&a);
-pp=a[0];	// deffernt type
-printf("%p\t%p\t%p\n", pp,a,&a);
-
-pp=&a[0]; // deffernt type
-printf("%p\t%p\t%p\n", pp,a,&a);
-*pp=&a[0][0]; //same type
-printf("%p\t%p\t%p\n", pp,a,&a);	
-*pp=a[0];	    //same type	
-printf("%p\t%p\t%p\n", pp,a,&a);		
+// t2.5 test gets()
+/**	
+char answer[10]	;
+gets(answer);
+printf("\nyou type:%s\n",answer);	
+// gets will get crash if input greater than (sizeof answer)
+**/
 	
+//t.2.4 test fgets()
+//char answer[100], *p;
+//printf("Type something:\n");
+//fgets(answer, sizeof answer, stdin);
+//if((p = strchr(answer, '\n')) != NULL)
+//	*p = '\0';
+//printf("You typed \"%s\"\n", answer);
+/**
+char answer[10],*p;
+fgets(answer,sizeof answer,stdin);	
+printf("\n");
+if( (p=strchr(answer,'\n')) != NULL ){
+	*p='\0';
+}	
+printf("%s\n",answer); //  *answer is not correct!
+printf("%d\n",*answer); 
+**/	
+// fgets will get only (sizeof answer) when stdin is greater than (sizeof answer)
 
+//t2.3 test array bound 
+
+//int a[4]={1,2,3,4};
+//f_t_a(a);
+
+//t2.2
+	
+// printf("%d\n",sizeof(int ***));	
+	
+// //t2.1 test 2d array 
+// int *p = NULL;
+// int (*ap)[3][4]; //数组指针	
+// //int  ap[x][y] 指针数组
+// int **pp= NULL;	
+// int a[3][4]={{1,2,3,4},{5,6,7,8},{9,10,11,12}};
+// int i , j;
+// for (i = 0 ; i <3; i++)
+// {
+// 	for(j = 0 ; j <4 ; j++)
+// 	printf("%p\t%d\n",&a[i][j],a[i][j]);
+// }
+// 
+// printf("p\ta\t&a\n");	
+// printf("%p\t%p\t%p\n", p,a,&a);	
+// p=a;	// deffernt type
+// printf("%d\n",*p);
+// // turn to 
+// p=a[0];	// the same type
+// printf("%d\n",*p);
+// //or 
+// ap=&a;
+// printf("%d\t%d\t%d\n", ap,ap+1,ap+2);	
+// 
+// printf("%p\t%p\t%p\n", p,a,&a);	
+// p=&a;	// deffernt type
+// printf("%p\t%p\t%p\n", p,a,&a);	
+// // ==>>
+// p=&a[0][0]; //same type
+// printf("%p\t%p\t%p\n", p,a,&a);	
+// 
+// //p=&a[0]; // deffernt type
+// //printf("%p\t%p\t%p\n", p,a,&a);	
+// //p=&a[0][0]; //same type
+// //printf("%p\t%p\t%p\n", p,a,&a);	
+// //p=a[0];	    //same type	
+// //printf("%p\t%p\t%p\n", p,a,&a);	
+// 
+// 
+// //
+// printf("pp\ta\t&a\n");	
+// printf("%p\t%p\t%p\n", pp,a,&a);	
+// pp=a;	// deffernt type
+// printf("%p\t%p\t%p\n", pp,a,&a);
+// pp=a[0];	// deffernt type
+// printf("%p\t%p\t%p\n", pp,a,&a);
+// 
+// pp=&a[0]; // deffernt type
+// printf("%p\t%p\t%p\n", pp,a,&a);
+// *pp=&a[0][0]; //same type
+// printf("%p\t%p\t%p\n", pp,a,&a);	
+// *pp=a[0];	    //same type	
+// printf("%p\t%p\t%p\n", pp,a,&a);		
+// 	
+// 
 	
 //t1.9 test array & pointer	
 //char a[] = "abcdefg";

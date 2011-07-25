@@ -1,0 +1,8 @@
+For easier understanding we will break the order of each setup task into a list:
+1.	Window-class setup
+2.	Window-class registration
+3.	Window Creation
+4.	Message loop with event handler
+
+
+

@@ -1,0 +1,5 @@
+[menu_one.rc]
+resource.h
+d:\program\lcc\include\windows.h
+[menu_one.c]
+resource.h
