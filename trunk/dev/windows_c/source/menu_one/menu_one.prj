@@ -1,0 +1,5 @@
+; Wedit project file. Syntax: Name = value
+[menu_one]
+PrjFiles=1
+File1=D:\pzw\prj\poonzref\dev\windows_c\source\menu_one\menu_one.c
+ProjectFlags=0

@@ -243,3 +243,11 @@ printf("argc:%d\t argv:%s\t%s\t%s\n",argc,argv[0],argv[1],argv[2]);
 int t_of_fp(){
 return 64;
 	}    
+
+int f_t_a(int a[4]){
+int i ;
+for(i = 0 ; i < 10 ; i++){	
+printf("%d\t%d\n",a[i],*(a+i));	
+}
+return 0 ;
+}	

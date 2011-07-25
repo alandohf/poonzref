@@ -1,0 +1,7 @@
+; Wedit project file. Syntax: Name = value
+[menu1]
+PrjFiles=3
+File1=resource.h
+File2=menu.rc
+File3=menu.c
+ProjectFlags=0
