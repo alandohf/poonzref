@@ -69,7 +69,7 @@ LRESULT CALLBACK PanelProc( HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam )
   {
     case WM_LBUTTONUP:
     {
-        Beep(10, 40);
+        Beep(50, 50);
         break;
     }
   }
