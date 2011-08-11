@@ -2,8 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include "test.h"
-//#include <unistd.h>
-
+#include <unistd.h>
+//#include <windows.h>
+//#include <direct.h>
+//#include <stdio.h>
+//#include <tchar.h>
 int t1();
 int t2(int *arr);
 int t3();
@@ -21,6 +24,12 @@ int t_of_fp();
 int
 main ( int argc, char *argv[] )
 {
+   char *p = '\0';	
+   ULONG DriveMask = _getdrives();	
+  printf("aaa%x\n",DriveMask);	
+	
+  sprintf(p,"%s",DriveMask);
+  printf("%s",p);	
 //t7.4 
 //	char linebuf[80];
 //	char *lines[100];
@@ -99,7 +108,7 @@ printf("%d\n",*answer);
 //f_t_a(a);
 
 //t2.2
-	
+/**	
 // printf("%d\n",sizeof(int ***));	
 	
  //t2.1 test 2d array 
@@ -180,7 +189,7 @@ printf("addr of &a[0]:%p\n",(&a[0]));
  *pp=a[0];	    //same type	
  printf("%p\t%p\t%p\n", pp,a,&a);		
  	
- 
+ **/
 	
 //t1.9 test array & pointer	
 //char a[] = "abcdefg";
