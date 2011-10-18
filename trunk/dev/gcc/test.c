@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "test.h"
-#include <unistd.h>
+//#include <unistd.h>
 //#include <windows.h>
 //#include <direct.h>
 //#include <stdio.h>
@@ -24,12 +24,54 @@ int t_of_fp();
 int
 main ( int argc, char *argv[] )
 {
+
+// t11.9
+      int	const *p ;
+	int i1 = 111;
+	int i2 = 222;
+	p=&i1;
+	printf("%d\t%p\n",*p,p);
+	*p=333;
+	printf("%d\t%p\n",*p,p);
+	p=&i2;
+	printf("%d\t%p\n",*p,p);
+
+//const   int   *   p   内容一定，地址不定  ==  int const *p
+//int   *   const   p   内容不定，地址一定 
+//const   int   *   const   p   haha,you   should   know!
+
+/**
+	p="aaa";
+	printf("%p\t%p\n",p,&p);
+	p="bbb";	
+	printf("%p\t%p\n",p,&p);
+	char *pa, *pb;
+	printf("%s\t%p\n",p,p);	
+	p= pb;
+	printf("%s\t%p\n",p,p);
+	char const *p1 = "ccc";
+	printf("%s\t%p\n",p1,p1);
+	p1= "bbb";
+	printf("%s\t%p\n",p1,p1);
+	char * const p2 = "ccc";
+	printf("%s\n",p2);
+	p2= "bbb";
+	printf("%s\n",p2);
+**/	
+	
+	
+/**
+// 	
    char *p = '\0';	
    ULONG DriveMask = _getdrives();	
   printf("aaa%x\n",DriveMask);	
 	
   sprintf(p,"%s",DriveMask);
   printf("%s",p);	
+	
+**/
+
+	
 //t7.4 
 //	char linebuf[80];
 //	char *lines[100];
