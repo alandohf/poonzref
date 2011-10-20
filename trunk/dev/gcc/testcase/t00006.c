@@ -60,22 +60,16 @@ typedef struct table_column
     char column_type[200];        //列的数据类型 
 }COLUMN; 
  
-void db_create(sqlite3 * db, char * pTable_name, int column_num
-, COLUMN column[], int * create_flag); 
-int rscallback(void * p, int column, char ** column_val
-,char ** column_name); 
+void db_create(sqlite3 * db, char * pTable_name, int column_num, COLUMN column[], int * create_flag); 
+int rscallback(void * p, int column, char ** column_val,char ** column_name); 
 void db_show(sqlite3 * db, char * pTable_name); 
-void db_insert(sqlite3 * db, char * pTable_name, int column_num
-, COLUMN column[], int * test_flag, int * create_flag); 
-void db_update(sqlite3 * db, char * pTable_name, int column_Num
-, COLUMN column[], int * test_flag, int * create_flag); 
+void db_insert(sqlite3 * db, char * pTable_name, int column_num, COLUMN column[], int * test_flag, int * create_flag); 
+void db_update(sqlite3 * db, char * pTable_name, int column_Num, COLUMN column[], int * test_flag, int * create_flag); 
 void db_delete(sqlite3 * db, char * pTable_name); 
 void db_empty(sqlite3 * db, char * pTable_name); 
-void db_drop(sqlite3 * db, char *pTable_name, int * test_flag
-, int * create_flag); 
+void db_drop(sqlite3 * db, char *pTable_name, int * test_flag, int * create_flag); 
 void db_test(sqlite3 * db, char * pTable_name, int ** test_flag); 
-void db_flag(sqlite3 * db, int * create_flag, int * test_flag
-, char * pTable_name); 
+void db_flag(sqlite3 * db, int * create_flag, int * test_flag, char * pTable_name); 
 void db_reset_table_name(sqlite3 * db, char * pTable_name); 
  
 int main(int argc, char* argv[]) 
@@ -106,16 +100,16 @@ int main(int argc, char* argv[])
  
     while(choice != 0) 
     { 
-printf("please input your choise:/n"); 
-printf("-------------------------------------/n"); 
-printf("|0.exit|1.create|2.show|3.insert|4.update|5.delete|6.empty|7.drop|/n"); 
-printf("-------------------------------------/n"); 
+	printf("please input your choise:\n"); 
+	printf("-------------------------------------\n"); 
+	printf("|0.exit|1.create|2.show|3.insert|4.update|5.delete|6.empty|7.drop|\n"); 
+	printf("-------------------------------------\n"); 
         scanf("%d", &choice); 
         
         switch(choice) 
         { 
             case 0: 
-printf("you choise leave, y or n?/n"); 
+	printf("you choise leave, y or n?\n"); 
                     setbuf(stdin, NULL); 
                     scanf("%c", &c); 
                     setbuf(stdin, NULL); 
@@ -123,10 +117,10 @@ printf("you choise leave, y or n?/n");
                     { 
                         if(test_flag == 0) 
                         { 
-db_drop(db, "test_table", &test_flag, &create_flag); 
+	db_drop(db, "test_table", &test_flag, &create_flag); 
                         } 
                         
-                        printf("goodbye!/n"); 
+                        printf("goodbye!\n"); 
  
                         sqlite3_close(db); 
  
@@ -140,30 +134,30 @@ db_drop(db, "test_table", &test_flag, &create_flag);
                     break; 
                     
             case 1: 
-printf("we will create a table for you, please input the name of your table:/n"); 
-scanf("%s",pTable_name); 
-printf("please input the number of column:/n"); 
-scanf("%d", &column_num); 
-printf("please input column_name column_type:/n"); 
+		printf("we will create a table for you, please input the name of your table:\n"); 
+		scanf("%s",pTable_name); 
+		printf("please input the number of column:\n"); 
+		scanf("%d", &column_num); 
+		printf("please input column_name column_type:\n"); 
  
-for(i = 0; i < column_num; i++)
-  scanf("%s %s", column[i].column_name, column[i].column_type);                        
- 
-db_create(db, table_name, column_num, column, &create_flag); 
-                    break; 
+		for(i = 0; i < column_num; i++)
+		  scanf("%s %s", column[i].column_name, column[i].column_type);                        
+		 
+		db_create(db, table_name, column_num, column, &create_flag); 
+				    break; 
             case 2: 
-db_flag(db, &create_flag, &test_flag, table_name); 
-db_show(db, table_name); 
-                    break; 
+		db_flag(db, &create_flag, &test_flag, table_name); 
+		db_show(db, table_name); 
+				    break; 
                    
             case 3: 
-db_flag(db, &create_flag, &test_flag, table_name); 
-db_insert(db, table_name, column_num, column, &test_flag, &create_flag); 
-                    break; 
+		db_flag(db, &create_flag, &test_flag, table_name); 
+		db_insert(db, table_name, column_num, column, &test_flag, &create_flag); 
+				    break; 
             case 4: 
-db_flag(db, &create_flag, &test_flag, table_name); 
-db_update(db, table_name, column_num, column, &test_flag, &create_flag); 
-                    break; 
+		db_flag(db, &create_flag, &test_flag, table_name); 
+		db_update(db, table_name, column_num, column, &test_flag, &create_flag); 
+				    break; 
             case 5: 
                     db_flag(db, &create_flag, &test_flag, table_name); 
                     db_delete(db, table_name); 
@@ -177,15 +171,14 @@ db_update(db, table_name, column_num, column, &test_flag, &create_flag);
                     db_drop(db, table_name, &test_flag, &create_flag); 
                     break; 
             default: 
-                    printf("your choice is not exist!/n"); 
+                    printf("your choice is not exist!\n"); 
                     break; 
     
         } 
         
     } 
  
-    sqlite3_close(db); 
- 
+	sqlite3_close(db); 
     return 0; 
 } 
  
@@ -211,20 +204,20 @@ void db_test(sqlite3 * db, char * pTable_name, int ** test_flag)
  
     **test_flag = 0; 
  
-    printf("because you have not create a table,so we create　\
-a test_table table for you!/n"); 
+    printf("because you have not create any table,so we create　\
+the 'test_table' table for you!\n"); 
     ret = sqlite3_exec(db, "create table test_table (id integer primary key \
 autoincrement, name text, sex text, age integer);", NULL, NULL, &errmsg); 
     if(ret != SQLITE_OK) 
     { 
-        printf("error:%d:%s/n", ret, errmsg); 
+        printf("error:%d:%s\n", ret, errmsg); 
         exit(1); 
     } 
     ret = sqlite3_exec(db, "insert into test_table (name, sex, age) values \
 ('zsx', 'm', 23);",NULL ,NULL, &errmsg); 
     if(ret != SQLITE_OK) 
     { 
-        printf("error:%d:%s/n", ret, errmsg); 
+        printf("error:%d:%s\n", ret, errmsg); 
         exit(1); 
     } 
  
@@ -268,12 +261,12 @@ void db_create(sqlite3 * db, char * pTable_name, int column_num
     strcat(pSql, column[column_num-1].column_type); 
     strcat(pSql, ");"); 
  
-    printf("/nsqlite > %s/n/n",pSql); 
+    printf("\nsqlite > %s\n\n",pSql); 
  
     ret = sqlite3_exec(db, pSql, NULL, NULL, &errmsg); 
     if(ret != SQLITE_OK) 
     { 
-         printf("error:%d:%s/n", ret, errmsg); 
+         printf("error:%d:%s\n", ret, errmsg); 
          exit(1); 
     } 
     
@@ -287,9 +280,9 @@ int rscallback(void * p, int column, char ** column_val,char ** column_name)
  
     for(i = 0; i < column; i++) 
     { 
-        printf("%s > %s/t/t",column_name[i], column_val[i]); 
+        printf("%s = %s\t",column_name[i], column_val[i]); 
     } 
-    printf("/n"); 
+    printf("\n"); 
     return 0; 
 } 
  
@@ -306,21 +299,21 @@ void db_show(sqlite3 * db, char * pTable_name)
     strcpy(pSql, "select * from "); 
     strcat(pSql, pTable_name); 
     strcat(pSql, ";"); 
-    printf("/nsqlite > %s/n/n", pSql); 
+    printf("\nsqlite > %s\n\n", pSql); 
  
     ret = sqlite3_exec(db, pSql, rscallback, &empty, &errmsg); 
     if(ret != SQLITE_OK) 
     { 
-        printf("error:%d:%s/n", ret, errmsg); 
+        printf("error:%d:%s\n", ret, errmsg); 
         exit(1); 
     } 
  
     if(empty) 
     { 
-        printf("the table is empty!/n"); 
+        printf("the table is empty!\n"); 
     } 
  
-    printf("/n"); 
+    printf("\n"); 
     return; 
 } 
  
@@ -347,17 +340,17 @@ void db_insert(sqlite3 * db, char * pTable_name, int column_num
         strcat(pSql, "age ) "); 
         strcat(pSql, "values ("); 
  
-        printf("please input name:/n"); 
+        printf("please input name:\n"); 
         scanf("%s", test_val); 
         strcat(pSql, " /'"); 
         strcat(pSql, test_val); 
         strcat(pSql, "/', "); 
-        printf("please input sex:/n"); 
+        printf("please input sex:\n"); 
         scanf("%s", test_val); 
         strcat(pSql, "/'"); 
         strcat(pSql, test_val); 
         strcat(pSql,"/', "); 
-        printf("please input age:/n"); 
+        printf("please input age:\n"); 
         scanf("%s",test_val); 
         strcat(pSql,test_val); 
         strcat(pSql, ");"); 
@@ -375,7 +368,7 @@ void db_insert(sqlite3 * db, char * pTable_name, int column_num
         strcat(pSql, "values("); 
         for(i = 1; i < column_num-1; i++) 
         { 
-            printf("please input %s/n",column[i].column_name); 
+            printf("please input %s\n",column[i].column_name); 
             if(strcmp(column[i].column_type,"text") == 0) 
             { 
                 strcat(pSql, "/'"); 
@@ -394,7 +387,7 @@ void db_insert(sqlite3 * db, char * pTable_name, int column_num
                 strcat(pSql," "); 
             } 
         } 
-        printf("please input %s/n",column[column_num-1].column_name); 
+        printf("please input %s\n",column[column_num-1].column_name); 
         if(strcmp(column[column_num-1].column_type, "text") == 0) 
         { 
             scanf("%s",tmp); 
@@ -410,12 +403,12 @@ void db_insert(sqlite3 * db, char * pTable_name, int column_num
             strcat(pSql, ");"); 
         } 
     } 
-    printf("/nsqlite > %s/n/n", pSql); 
+    printf("\nsqlite > %s\n\n", pSql); 
   
     ret = sqlite3_exec(db, pSql, NULL, NULL, &errmsg); 
     if(ret != SQLITE_OK) 
     { 
-        printf("error:%d:%s/n", ret, errmsg); 
+        printf("error:%d:%s\n", ret, errmsg); 
         exit(1); 
     } 
  
@@ -443,21 +436,21 @@ void db_update(sqlite3 * db, char * pTable_name, int column_num
     if((*test_flag == 0) && (*create_flag)) 
     { 
         strcat(pSql, "name = "); 
-        printf("please input a new name:/n"); 
+        printf("please input a new name:\n"); 
         scanf("%s",test_val); 
         strcat(pSql,"/'"); 
         strcat(pSql,test_val); 
         strcat(pSql, "/', sex = "); 
-        printf("please input a new sex: /n"); 
+        printf("please input a new sex: \n"); 
         scanf("%s", test_val); 
         strcat(pSql, "/'"); 
         strcat(pSql, test_val); 
         strcat(pSql, "/', age = "); 
-        printf("please input a new age:/n"); 
+        printf("please input a new age:\n"); 
         scanf("%s",test_val); 
         strcat(pSql,test_val); 
         strcat(pSql, " where id = "); 
-        printf("please input a id that you want to change:/n"); 
+        printf("please input a id that you want to change:\n"); 
         scanf("%s",test_val); 
         strcat(pSql, test_val); 
         strcat(pSql, ";");    
@@ -472,7 +465,7 @@ void db_update(sqlite3 * db, char * pTable_name, int column_num
             { 
                 strcat(pSql, "/'"); 
                 memset(new_val, 0, sizeof(new_val)); 
-                printf("please input a new %s/n", column[i].column_name); 
+                printf("please input a new %s\n", column[i].column_name); 
                 scanf("%s",new_val); 
                 strcat(pSql, new_val); 
                 strcat(pSql, "/'"); 
@@ -481,7 +474,7 @@ void db_update(sqlite3 * db, char * pTable_name, int column_num
             else 
             { 
                 memset(new_val, 0, sizeof(new_val)); 
-                printf("please input a new %s/n", column[i].column_name); 
+                printf("please input a new %s\n", column[i].column_name); 
                 scanf("%s",new_val); 
                 strcat(pSql, new_val); 
                 strcat(pSql, " , "); 
@@ -495,7 +488,7 @@ void db_update(sqlite3 * db, char * pTable_name, int column_num
         { 
             strcat(pSql, "/'"); 
             memset(new_val, 0, sizeof(new_val)); 
-            printf("please input a new %s/n", column[i].column_name); 
+            printf("please input a new %s\n", column[i].column_name); 
             scanf("%s",new_val); 
             strcat(pSql, new_val); 
             strcat(pSql, "/'"); 
@@ -504,24 +497,24 @@ void db_update(sqlite3 * db, char * pTable_name, int column_num
         else 
         { 
             memset(new_val, 0, sizeof(new_val)); 
-            printf("please input a new %s/n", column[i].column_name); 
+            printf("please input a new %s\n", column[i].column_name); 
             scanf("%s",new_val); 
             strcat(pSql, new_val); 
             strcat(pSql, " "); 
         } 
  
         strcat(pSql, "where id = "); 
-        printf("please input the id that you want to change its value:/n"); 
+        printf("please input the id that you want to change its value:\n"); 
         scanf("%s",new_id); 
         strcat(pSql, new_id); 
         strcat(pSql, ";"); 
     } 
-    printf("sqlite > %s/n/n",pSql); 
+    printf("sqlite > %s\n\n",pSql); 
       
     ret = sqlite3_exec(db, pSql, NULL, NULL, &errmsg); 
     if(ret != SQLITE_OK) 
     { 
-        printf("error:%d:%s/n", ret, errmsg); 
+        printf("error:%d:%s\n", ret, errmsg); 
         exit(1); 
     } 
  
@@ -543,17 +536,17 @@ void db_delete(sqlite3 * db, char * pTable_name)
     strcpy(pSql, "delete from "); 
     strcat(pSql, pTable_name); 
     strcat(pSql, " where id = "); 
-    printf("please input a id that you want to delete:/n"); 
+    printf("please input a id that you want to delete:\n"); 
     scanf("%s",tmp_id); 
     strcat(pSql, tmp_id); 
     strcat(pSql, ";"); 
  
-    printf("/nsqlite > %s/n/n",pSql); 
+    printf("\nsqlite > %s\n\n",pSql); 
       
     ret = sqlite3_exec(db, pSql, NULL, NULL, &errmsg); 
     if(ret != SQLITE_OK) 
     { 
-        printf("error:%d:%s/n", ret, errmsg); 
+        printf("error:%d:%s\n", ret, errmsg); 
         exit(1); 
     } 
  
@@ -573,12 +566,12 @@ void db_empty(sqlite3 * db, char * pTable_name)
     strcat(pSql, pTable_name); 
     strcat(pSql,";"); 
  
-    printf("/nsqlite > %s/n/n",pSql); 
+    printf("\nsqlite > %s\n\n",pSql); 
  
     ret = sqlite3_exec(db, pSql, NULL, NULL, &errmsg); 
     if(ret != SQLITE_OK) 
     { 
-        printf("error:%d:%s/n", ret, errmsg); 
+        printf("error:%d:%s\n", ret, errmsg); 
         exit(1); 
     } 
  
@@ -601,18 +594,18 @@ void db_drop(sqlite3 * db, char * pTable_name, int * test_flag
  
     if(*test_flag) 
     { 
-        printf("/nsqlite > %s/n/n",pSql); 
+        printf("\nsqlite > %s\n\n",pSql); 
     } 
  
     if(*create_flag == 0) 
     { 
-        printf("/nsqlite > %s/n/n",pSql); 
+        printf("\nsqlite > %s\n\n",pSql); 
     } 
  
     ret = sqlite3_exec(db, pSql, NULL, NULL, &errmsg); 
     if(ret != SQLITE_OK) 
     { 
-        printf("error:%d:%s/n", ret, errmsg); 
+        printf("error:%d:%s\n", ret, errmsg); 
         exit(1); 
     } 
  
