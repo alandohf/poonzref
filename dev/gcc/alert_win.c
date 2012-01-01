@@ -12,6 +12,21 @@
 *tcc alert_win.c -o alert.exe && time 9:30 && date 2011-05-10 &&  alert.exe
 *net start w32time
 *w32tm /resync /nowait
+
+*2012-01-01 using gcc to compile:
+*** C:\Dev-Cpp\bin\gcc.exe -pedantic -Os -c alert_win.c -o alert_win.o -std=c99
+*** alert_win.c: In function `main':
+*** alert_win.c:196: warning: implicit declaration of function `sleep'
+-->
+//use windows Sleep()
+#include <windows.h>
+#define sleep(n) Sleep(n)
+
+*** >C:\Dev-Cpp\bin\gcc.exe -pedantic -Os alert_win.c -o alert_win.exe
+*** alert_win.c:29:1: warning: C++ style comments are not allowed in ISO C90
+*** -->
+*** >C:\Dev-Cpp\bin\gcc.exe -pedantic -Os alert_win.c -o alert_win.exe -std=c99
+
 **************************************************
 */
 
@@ -20,6 +35,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+
+//use windows Sleep()
+#include <windows.h>
+#define sleep(n) Sleep(n)
+
 //daily alert intervals 
 #define SIZE 256
 #define BADKEY -1
@@ -32,6 +52,7 @@
 #define C2300 7
 #define C0000 8
 #define C0930 9
+#define C1730 10
 //monthly alert intervals 
 #define D01 1
 #define D02 2
@@ -67,6 +88,7 @@ static t_symstruct lookuptable_d[] = {
 	,{ "23:00", C2300 }
 	,{ "00:00", C0000 }
 	,{ "09:30", C0930 }
+	,{ "17:30", C1730 }
 };
 
 static t_symstruct lookuptable_m[] = {
@@ -108,28 +130,33 @@ int alert(char msg[]);
 int keyfromstring(char *key,t_symstruct lookuptable[],int NKEYS );
 
  int main(){
-	 
 	while(1){ 
 		   strftime(tm_buffer, SIZE, "%H:%M", alert_time());
 		   //printf(tm_buffer);
 	   switch (keyfromstring(tm_buffer,lookuptable_d,NKEYS_D)) {
 		    case C0700: 
-			alert("same_chk/day_interface/kpi_ring");    	
+			alert("same_chk/day_interface");    	
 			break;
 		    case C0800: 
-			alert("is it still early? ");
+			alert("time ");
 			break;
 		    case C0830: 
-			alert("work work! ");
+			alert("wrkwrk");
 			break;
 		    case C1200: 
-			alert("wave/same/interfaces_report.except/holidays!");
+			alert("218report");
 			break;
 		    case C1228: 
-			alert("hungry!");
+			alert("lunch time!");
+			break;
+		    case C1730: 						
+			// day 4 of week report
+			if((*loctime).tm_wday == 4 ){
+			   alert("week report");
+			}
 			break;
 		    case C1900: 
-			alert("hungry!");
+			alert("dinner time!");
 			break; 	     	     	    
 		    case C2300: 
 			alert("rest time!");
@@ -139,6 +166,7 @@ int keyfromstring(char *key,t_symstruct lookuptable[],int NKEYS );
 			break; 	     	     	    
 		    case C0930: 
 						strftime(tm_buffer, SIZE, "%d", alert_time());	
+						// alert depend on date 
 						switch (keyfromstring(tm_buffer,lookuptable_m,NKEYS_M)) {
 						    case D01: 
 							alert("#1.load_sample/bass1_lst#2.R107/108");    	
@@ -187,7 +215,7 @@ int keyfromstring(char *key,t_symstruct lookuptable[],int NKEYS );
 							//do nothing 
 							;
 						} //inner switch end 
-			break; 	     	     	    
+			break; 
 		    case BADKEY: 
 			//do nothing 
 			; 
@@ -220,7 +248,7 @@ int alert(char msg[1000]){
 	strftime(tm_buffer, SIZE, "%c", alert_time());
 	sprintf(cmd,"wscript ./alert.vbs %s %s",tm_buffer,msg);
 	//change the path if necessory
-	if((fp=fopen("E:/bass1/alert_log.out","a"))==NULL){
+	if((fp=fopen("d:/bass1/alert_log.out","a"))==NULL){
 		fprintf(stderr, " %s\n", strerror(errno));
 		exit(1);
 	}
