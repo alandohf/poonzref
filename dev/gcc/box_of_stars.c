@@ -14,4 +14,14 @@ main()
 
     printf("\n"); // and a newline at the end of each row
   }
+  
+  int ii,jj;
+  for(ii=0;ii<10;++ii){
+    printf("ii=%d\n",ii);
+  }
+
+  for(jj=0;jj<10;jj++){
+    printf("jj=%d\n",jj);
+  }
+  
 }

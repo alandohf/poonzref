@@ -7,9 +7,9 @@ main()
 {
   int i;
 
-  for(i = 0; i < 10; i++)
-    printf("%6d\n", get_next_square());
-
+  for(i = 0; i < 10; i++){
+    printf("i: %6d\n", get_next_square());
+  }
   printf("and %6d\n", get_next_square());
 
   return 0;

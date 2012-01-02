@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+//指定第N个元素值。其余默认初始化为0？
 int
 main()
 {

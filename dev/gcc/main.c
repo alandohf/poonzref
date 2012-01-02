@@ -3,7 +3,7 @@
 //#include "prices.h"
 //#include "bubbleSort.h"
 #include	"myh.h"
-
+// main.c 包含头文件，*.c与main 一起编译
 int
 main()
 {
