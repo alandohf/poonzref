@@ -6,13 +6,15 @@
 *v0.2 month alert 
 *v0.3 suspend for n mins
 *v0.4 week alert
+1.
 *compile methods:
 *cmd>time 9:30 && date 2011-05-10
 *D:\pzw\prj\poonzref\dev\gcc>\
 *tcc alert_win.c -o alert.exe && time 9:30 && date 2011-05-10 &&  alert.exe
+2.
 *net start w32time
 *w32tm /resync /nowait
-
+3.
 *2012-01-01 using gcc to compile:
 *** C:\Dev-Cpp\bin\gcc.exe -pedantic -Os -c alert_win.c -o alert_win.o -std=c99
 *** alert_win.c: In function `main':
@@ -21,11 +23,13 @@
 //use windows Sleep()
 #include <windows.h>
 #define sleep(n) Sleep(n)
-
+4.
 *** >C:\Dev-Cpp\bin\gcc.exe -pedantic -Os alert_win.c -o alert_win.exe
 *** alert_win.c:29:1: warning: C++ style comments are not allowed in ISO C90
 *** -->
 *** >C:\Dev-Cpp\bin\gcc.exe -pedantic -Os alert_win.c -o alert_win.exe -std=c99
+5.
+rename alert_win.exe to alert.exe
 
 **************************************************
 */

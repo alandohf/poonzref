@@ -1,8 +1,0 @@
-Exception: STATUS_ACCESS_VIOLATION at eip=610F4F1C
-eax=00000001 ebx=0022D008 ecx=00000000 edx=611011D0 esi=00000001 edi=00000001
-ebp=0022B028 esp=0022AFD0 program=d:\pzw\prj\poonzref\dev\gcc\a.exe, pid 3532, thread main
-cs=001B ds=0023 es=0023 fs=003B gs=0000 ss=0023
-Stack trace:
-Frame     Function  Args
-0022B028  610F4F1C  (0022D008, 0022B5CE, 00000001, 00000001)
-0022CC48  610E16B9  (0022D008, 611010E8

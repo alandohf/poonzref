@@ -1,3 +1,7 @@
+/**
+本质上C只有传值，没有传址。按值的类型，分为传址和传值！
+**/
+
 #include <stdio.h>
 
 int copyval(int a );
