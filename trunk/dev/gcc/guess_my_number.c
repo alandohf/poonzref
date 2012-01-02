@@ -26,7 +26,7 @@ main()
     }
 
   printf("you win.\n");
-
+    system("PAUSE");
   return 0;
 }
     
@@ -53,5 +53,7 @@ my_guessed()
         clean_stdin();
     }
     while (rv != 1);
+ //   　如果只有a被成功读入，返回值为1
+//　　如果a和b都未被成功读入，返回值为0
     return n;
 }
