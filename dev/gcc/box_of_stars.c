@@ -1,4 +1,4 @@
-#define SIZE_OF_SQUARE 4
+	#define SIZE_OF_SQUARE 4
 #include <stdio.h>
 int
 main()
