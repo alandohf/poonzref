@@ -2,7 +2,7 @@
 int main(){
 char c1 = 'h';
 char c2 = 'e';
-char c3 = 'l';
+char c3 = 'l';	
 char c4 = 'l';
 char c5 = 'o';
 char name[6] = "";
