@@ -1,13 +1,13 @@
-#include	<stdio.h>
+#include <stdlib.h>
 //#include "display.h"
 //#include "prices.h"
-//#include "bubbleSort.h"
-#include	"myh.h"
+#include "bubbleSort.h"
+//#include	"myh.h"
 // main.c 包含头文件，*.c与main 一起编译
 int
 main()
 {
-
+/**
 //printf("i1 = %ld\n",mypow10(10));
 long res = 0 ;
 int i ;	
@@ -17,7 +17,7 @@ printf("i%d = %ld\n",i,t_math_pow(1,i));
 }
 printf("res = %ld\n",res);
 //printf("i1 = %ld\n",t_solution());
-  return 0;
+**/
  
 /*   ptr_array();
   return 0;
@@ -57,12 +57,12 @@ printf("i4 = %ld\n",9223372036854775807);
   display_price();
 */
 
-/*  
- * // test  bubbleSort
+
+ // test  bubbleSort
 int array[10] = {10,9,8,7,6,5,4,3,2,1};
     bubbleSort( array, 10);
     printArray( array, 10);
-*/
+
 
 /* 
 //test array type//05/27/2010 10:52:36 AM (EDT)  
@@ -73,4 +73,6 @@ int array[10] = {10,9,8,7,6,5,4,3,2,1};
     I_printArray( array1, 15);
     C_printArray( array2, 15);
 */ 
+system("PAUSE");
+return 0;
 }
