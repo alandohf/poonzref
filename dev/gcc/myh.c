@@ -39,7 +39,8 @@ int bubbleSort(int a[], int array_size)
 }
 
 int    I_printArray( int array[], int array_size){
-	for (int i = 0 ; i < array_size ; i++)
+	int i;
+	for (i = 0 ; i < array_size ; i++)
 		printf("%d ",array[i]);
 //		printf("%c ",array[i]);
 		printf("\n");
@@ -47,7 +48,8 @@ int    I_printArray( int array[], int array_size){
 
 }
 int    C_printArray( char array[], int array_size){
-	for (int i = 0 ; i < array_size ; i++)
+	int i;	
+	for (i = 0 ; i < array_size ; i++)
 		printf("%c ",array[i]);
 		printf("\n");
 		return 0;
@@ -101,7 +103,8 @@ long int mypow10(int n){
 
 long int t_math_pow(int inum,int ibit ){
 	long int lresult = 0;
-        for (int i = 0 ; i < ibit ; i++)
+	int i;
+        for (i = 0 ; i < ibit ; i++)
 	lresult  += mypow10(i);
 	return inum*lresult;
 }
@@ -110,7 +113,8 @@ long int t_solution(){
 int num = 1, count = 5 ;
 long e = num;
 long result = 1;
-for(int i = 1; i < count; i++) {
+int i;
+for( i = 1; i < count; i++) {
   result = result + result * 10 + num;
 	
 
