@@ -9,13 +9,13 @@ main()
   printf("sizeof(short) == %d\n", sizeof(short));
   printf("sizeof(int) == %d\n", sizeof(int));
   printf("sizeof(long) == %d\n", sizeof(long));
-  printf("sizeof(long long) == %d\n", sizeof(long long));
+ // printf("sizeof(long long) == %d\n", sizeof(long long));
 //	
   printf("sizeof(int*) == %d\n", sizeof(int*));
 //	
   printf("sizeof(pa) == %d\n", sizeof(pa));
   printf("sizeof(&pa) == %d\n", sizeof(&pa));
-printf("%d\n",&pa);	
+printf("%p\n",&pa);	
   printf("sizeof(*pa) == %d\n", sizeof(*pa));
 //	
   printf("sizeof(pb) == %d\n", sizeof(pb));
