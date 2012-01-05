@@ -25,6 +25,6 @@ int main(void)
     while (rv != 1);
 
     printf("this is the number %d\n", n);
-
+system("PAUSE");
     return 0;
 }

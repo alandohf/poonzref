@@ -6,6 +6,7 @@ const int num_columns = 5;
 int
 main()
 {
+	/**
   int box[num_rows][num_columns];
   int row, column;
 
@@ -23,5 +24,13 @@ main()
         }
       printf("\n");
     }
+    **/
+int col,row;
+for(row = 1;col <= 9;row++){
+	for(col=1;col<= row ; col++){
+		printf("%d*%d=%-3d",col,row,col*row);
+	}
+    printf("\n");
+}
   return 0;
 }
