@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 int main()
 {
     int v;  // value read from scanf
@@ -11,6 +12,7 @@ int main()
         if (!r) e++;        // if error, count it
         printf("        %3d Read, return %d \n", v, r);
     } while ((v != 0) && (e < 4));
+    system("PAUSE");
     return 0;
 }
 

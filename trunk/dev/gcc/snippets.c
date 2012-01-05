@@ -147,4 +147,4 @@ if (sqlca.sqlcode < 0)                             \
 /* function used in EMB_SQL_CHECK macro */
 void TransRollback(void);
 
-           
+
