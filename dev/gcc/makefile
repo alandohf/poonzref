@@ -30,6 +30,7 @@
 
 #third version of makefile
 #CC is one of several implicit variables automatically defined in a make session
+#CC是内置变量，默认值是cc，这里改变CC的取值
 CC=C:\Dev-Cpp\bin\gcc.exe
 RM=C:\Dev-Cpp\bin\rm.exe
 OUTPUTDIR=C:\ccoutput

@@ -1,18 +1,8 @@
 #include <stdio.h>
-
+  int swap (int *a, int *b);
 int
 main()
 {
-  int swap (int *a, int *b)
-    {
-      int c;
-
-      c = *a;
-      *a = *b;
-      *b = c;
-
-      return 0;
-    }
 
   int first = 12, second = 34;
 
@@ -25,3 +15,13 @@ main()
   return 0;
 }
      
+  int swap (int *a, int *b)
+    {
+      int c;
+
+      c = *a;
+      *a = *b; //a地址上的值被改变
+      *b = c;  //b地址上的值被改变
+
+      return 0;
+    }

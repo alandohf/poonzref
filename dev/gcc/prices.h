@@ -1,1 +1,0 @@
-int calculate_price();
