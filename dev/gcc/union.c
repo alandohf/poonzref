@@ -14,13 +14,16 @@ union int_or_float
 {
   int int_member;
   float float_member;
+  char char_member;
 };
 
-union int_or_float my_union1, my_union2;
+union int_or_float my_union1, my_union2,my_union3;
 
 my_union1.int_member = 5;
 my_union2.float_member = 5.6;
-printf("int:%d\n",my_union1.int_member);
-printf("float:%f\n",my_union2.float_member);
+my_union3.char_member = 'a';
+printf("int:%d\t sizeof:%d\n",my_union1.int_member,sizeof(my_union1.int_member));
+printf("float:%f\t sizeof:%d\n",my_union2.float_member,sizeof(my_union2.float_member));
+printf("char:%d\t sizeof:%d\n",my_union3.char_member,sizeof(my_union3.char_member));
 return 0;
 }
