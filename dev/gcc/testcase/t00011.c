@@ -20,7 +20,7 @@ ps. const  ¿ÉÒÔĞŞÊÎºÜ¶à¶«Î÷ £¬ ÈçÊı×é£¬Ö¸Õë£¬º¯Êı£¬²ÎÊı£¬µÈ¡£¼û 1.11.5  cÉî¶ÈÆÊÎ
 int main(int argc,char *argv[]){
 const int a = 9;
 int const b = 9;
-const int c ;
+const int c ; //t00010_1.o(.data+0x0):t00010_1.c: multiple definition of `a'
 a++; //t00011.c:11: warning: assignment of read-only location
 b++;
 c++;

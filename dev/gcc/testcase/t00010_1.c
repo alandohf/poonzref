@@ -1,3 +1,4 @@
+int a = 123;
 int extvar = 1000;
 void extfn(void);
 void extfn(void){

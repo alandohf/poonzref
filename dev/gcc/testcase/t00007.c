@@ -6,8 +6,9 @@ test perror()
 
 
 **/
-#include <stdio.h>
-
+#include <stdio.h> 
+#include <stdlib.h> 
+#include <string.h>
 
 int main(int argc,char *argv[]){
 //char * p;strcpy(p,"def"); // illegal
@@ -15,15 +16,17 @@ FILE *fp;
 fp = fopen( "/root/noexitfile", "r+" );
 if ( NULL == fp )
 {
-perror("/root/noexitfile");
+	perror("/root/noexitfile");
 }
-extern error ;
-error = -100;
-while ( error < 100)
-{
-perror("test");
-error++;
-}
+
+//	extern int error ;
+//	error = -100;
+//	while ( error < 100)
+//	{
+//		perror("test");
+//		error++;
+//	}
+
 return 0;
 
 }

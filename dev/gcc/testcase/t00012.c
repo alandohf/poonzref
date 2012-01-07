@@ -16,29 +16,33 @@ ps. const  ¿ÉÒÔĞŞÊÎºÜ¶à¶«Î÷ £¬ ÈçÊı×é£¬Ö¸Õë£¬º¯Êı£¬²ÎÊı£¬µÈ¡£¼û 1.11.5  cÉî¶ÈÆÊÎ
 **/
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 void alter1(void);
 void alter2(void);
 void alter3(void);
 int main(int argc,char *argv[]){
-alter1();
-alter2();
-	
+	alter1();
+	alter2();
+	alter3();	
 return 0;
 }
 
 void alter1(void){
+printf("alter1: \n");
+
 //p:ËùÖ¸µÄ¶ÔÏóµÄÖµ²»ÄÜ¸Ä±ä£¬¿ÉÒÔ¸ü»»ËùÖ¸µÄ¶ÔÏó¡£
 char *p1= "abc";
 char *p2= "def";
-const char *p;
+const char *p; //¿ÉÒÔÀí½âÎª ¶ÔÄ³¿éÀàĞÍÎªcharµÄÄÚ´æ ÏŞÖÆÎªconst,Õâ¿éÄÚ´æ½«»áÓÉpÖ¸Ïò¡£Í¨¹ıp²Ù×÷Õâ¿éÄÚ´æÊ±£¬²»¿É¸Ä±äÄÚ´æ¶ÔÏóµÄÖµ¡£ ¼´location read-only
 p=p1;
 printf("p=%s \n",p);
 p=p2;
 printf("p=%s \n",p);
 //*p=*p1;
 printf("p=%s \n",p);
-//*p=*p2;
+//*p=*p2; //error: assignment of read-only location
 printf("p=%s \n",p);
 
 }
@@ -46,19 +50,22 @@ printf("p=%s \n",p);
 
 
 void alter2(void){
+printf("alter2: \n");
+
 //p:²»¿ÉÒÔ¸ü»»ËùÖ¸µÄ¶ÔÏó£¬¿ÉÒÔĞŞ¸ÄËùÖ¸¶ÔÏóµÄÖµ¡£	
 char *p1= "abc";
 char *p2= "def";
-char * const p;
+//char * const p; // error: uninitialized const `p'
+char * const p = p1; // correct ¿ÉÒÔÀí½âÎª ¶¨ÒåÁËÒ»¸öÖ¸Õë£¬Õâ¸öÖ¸ÕëËùÖ¸ÏòµÄµØÖ·£¨¶ÔÏóµÄÎ»ÖÃ£©ÊÇ²»¿É¸Ä±äµÄ£¬µ±È»£¬¶ÔÏóµÄÖµµÄ¿ÉÒÔ¸Ä±äµÄ¡£¼´variable p read-only
 //p=p1;
 printf("p=%s \n",p);
-//p=p2;
+//p=p2; //error: assignment of read-only variable `p'
 printf("p=%s \n",p);
 *p=*p1;
 *(p+1)=*(p1+1);
 *(p+2)=*(p1+2);
 printf("p=%s \n",p);
-strcpy(p,p1);
+//strcpy(p,p1);  // illegal usage , becasue p has not allocated memory space 
 //*p=*p2;
 printf("p=%s \n",p);
 
@@ -67,10 +74,13 @@ printf("p=%s \n",p);
 
 
 void alter3(void){
+printf("alter3: \n");
+	
 //p:¼È²»¿ÉÒÔ¸ü»»ËùÖ¸µÄ¶ÔÏó£¬Ò²²»¿ÉÒÔĞŞ¸ÄËùÖ¸¶ÔÏóµÄÖµ¡£	
 char *p1= "abc";
 char *p2= "def";
-const char * const p;
+//const char * const p; //error: uninitialized const `p'
+const char * const p=p2; // both location & variable p are read-only
 //p=p1;
 printf("p=%s \n",p);
 //p=p2;

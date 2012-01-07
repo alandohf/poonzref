@@ -1,3 +1,9 @@
+/**
+程序怎么判断数组越界:
+程序判断不了。
+得程序员自己判断。
+**/
+
 #include <stdio.h>
 int main(void)
 {
@@ -17,7 +23,9 @@ int main(void)
 	  p=ivar_a;
           printf("%p\t%d\t%p\n",&iVar1,*(&iVar1),&(*(&iVar1)));
           printf("%p\t%d\t%p\n",&iVar2,*(&iVar2),&(*(&iVar2)));
-          int i ;
+	  printf("\n\n");
+
+	  int i ;
           for(i=0;i<10;i++)
 	  {
           *(p+i)=i;
@@ -25,7 +33,7 @@ int main(void)
 		  ,p
 		  ,p+i
 		  ,sizeof (p+i)
-		  ,sizeof (void *)
+		  ,sizeof (void *) /*size of void pointer*/
 		  ,sizeof (char *) /*size of pointer*/
 		  ,*p  /*value of p*/
 		  ,&p  /*address of p*/

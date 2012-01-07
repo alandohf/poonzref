@@ -14,8 +14,8 @@ p=p1;
 
 int main(int argc,char *argv[]){
 float * p;
-void * p1;
-p=p1;
-//p1=p;
+void * vp; //error: invalid conversion from `void*' to `float*'
+//p=vp; //error: invalid conversion from `void*' to `float*'
+vp=p;
 return 0;
 }
