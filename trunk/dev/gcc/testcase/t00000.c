@@ -1,5 +1,5 @@
 /**
-name:  test strings 
+name:  test strings functons
 purpose: 
 dependence: 
 compiler: tcc/dev-cpp
