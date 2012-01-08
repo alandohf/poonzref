@@ -9,11 +9,11 @@ static 的三个作用：
 */
 #include <stdio.h>
 //static int j;
- int j ;
- j = 0 ;
+ int j = 0;
 
 int fun1();
 int fun2();
+int fun3();
 
 
 int main(){
@@ -22,14 +22,16 @@ int main(){
 	for ( k=0;k<10;k++ ){
 		fun1();
 		fun2();
+		fun3();
+	//printf("%d\n",i+1000);  i 不可见
 	}
 //	printf("end\n");	
   return 0;
 }
 
 int fun1(){
-//	static int i = 0;
-	 int i = 0;
+	static int i = 0;
+//	 int i = 0;
 	i++;
 	printf("fun1:%d\n",i);
 	return 0;
@@ -41,3 +43,9 @@ int fun2(){
 	return 0;
 	}
 
+	
+int fun3(){
+	k=k+100; // k 作用于main 且对fun3不可见,fun3不能访问K
+	printf("fun3:%d\n",k);
+	return 0;
+	}

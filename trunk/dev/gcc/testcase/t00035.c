@@ -14,13 +14,13 @@ refs: 4.2.3 c in deep
 
 int main(int argc,char *argv[]){
 
-int i=0;
-int *a[10]; //指针数组
-int (*p)[10]; // 数组指针
-a[0] = &i;
+	int i=0;
+	int *a[10]; //指针数组  [] 的优先级比*高，所以 * 修饰 [];
+	int (*p)[10]; // 数组指针--指向数组的指针 ; ( ) 的优先级高，所以 [] 修饰 (*p)
+	a[0] = &i;
 
-int b[10];
-p=&b; // not b 
+	int b[10];
+	p=&b; // not b 
 return 0;
 }
 

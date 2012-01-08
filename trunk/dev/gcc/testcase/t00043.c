@@ -38,9 +38,9 @@ return 0;
 
 
 
-void fun(int *p)
+void fun(int *p) //无返回值
 {
-p=NULL;
+p=NULL; // 置成空指针;p为局部指针变量
 printf("%p\n",p);
 }
 
@@ -48,22 +48,22 @@ printf("%p\n",p);
 int* fun2(int *p)
 {
 p=NULL;
-printf("%p\n",p);
-return p;
+printf("%p\n",p); 
+return p; //返回指针变量
 }
 
 
 
-int* fun3(int **p)
+int* fun3(int **p) //指针的指针
 {
-*p=NULL;
+*p=NULL; 
 printf("%p\n",*p);
 return *p;
 }
 
 
 
-void fun4(int **p)
+void fun4(int **p) //指针的指针
 {
 *p=NULL;
 printf("%p\n",*p);

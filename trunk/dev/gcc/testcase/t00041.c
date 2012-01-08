@@ -42,5 +42,6 @@ void fun(char a[10])
 int i = sizeof(a);
 char c = a[3];
 printf("%c\n",c);
-printf("sizeof:%d\n",i);
+printf("sizeof:%d\n",i); // 因为a是指针，而所有指针类型的大小都是4，所以结果为4.
 }
+

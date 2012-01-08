@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdlib.h>
  int main(){
  	int a,b;
  	a=2*2/3;
@@ -5,5 +7,8 @@
  	printf("%d",a);
  	printf("\n");
  	printf("%d",b);
- 	return 0;
+
+ 	printf("\n");
+	 return 0;
  	}
+	
