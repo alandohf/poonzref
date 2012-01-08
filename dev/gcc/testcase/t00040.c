@@ -1,6 +1,6 @@
 /**
 name: test ptr & array
-purpose: 
+purpose: 数组作为函数参数
 dependence: 
 compiler: tcc/dev-cpp
 summary:
