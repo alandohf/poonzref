@@ -6,8 +6,7 @@ struct x1 { ... }; --> struct x1 a;
 typedef struct { ... } x2;  --> x2 b;
 equal to : typedef struct  struct_tag { ... } x2;  --> x2 b;
 
-3. C is not C++. Typedef names are not automatically generated for structure tags.
-
+3. C is not C++. Typedef names are not automatically generated for structure tags. to explain:
 Why doesn't
 
 struct x { ... };
@@ -46,10 +45,16 @@ char c;
 } stu;
 
 printf(" size: %d \n", sizeof(stu));
-struct stu s1;
+//struct stu s1; //error: using typedef-name `stu' after `struct'
+struct student s1; //error: using typedef-name `stu' after `struct'
+stu s2;
 }
 
 
-
+/**
+result:
+ size: 1 
+ size: 8 
+**/
 
 
