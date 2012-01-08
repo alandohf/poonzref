@@ -92,14 +92,12 @@ int main(int argc, char* argv[])
     strcpy(pTable_name, "test_table"); 
  
     ret = sqlite3_open("student.db", &db); 
-    if(ret != SQLITE_OK) 
-    { 
+    if(ret != SQLITE_OK) { 
         perror("slqite3_open"); 
         exit(1); 
     } 
  
-    while(choice != 0) 
-    { 
+    while(choice != 0) { 
 	printf("please input your choise:\n"); 
 	printf("-------------------------------------\n"); 
 	printf("|0.exit|1.create|2.show|3.insert|4.update|5.delete|6.empty|7.drop|\n"); 
