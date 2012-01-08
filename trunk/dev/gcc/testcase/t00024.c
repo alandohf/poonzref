@@ -10,6 +10,7 @@ http://baike.baidu.com/view/1756792.htm
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 int main(int argc,char *argv[]){
 char location[100] = "/path/to/dir/program";
 char *path;

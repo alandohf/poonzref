@@ -10,6 +10,7 @@ refs:
 **/
 
 #include <stdio.h>
+#include <stdlib.h>
 #ifndef _ABC_
 #pragma message("hello , guy!")
 #endif
@@ -37,6 +38,7 @@ printf("%p\n",&x);
 printf("%p\n",&y);
 printf("%p\n",&z);
 printf("%p\n",p);
+system("PAUSE");
 return 0;
 }
 
