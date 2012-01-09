@@ -1,8 +1,13 @@
+/** 
+1.use dev-c++ as the compiler 
+2.should have a sqlite3 lib
+
+**/
+
 #include <stdio.h> 
 #include <stdlib.h> 
 #include <string.h> 
 #include "sqlite3.h" 
- 
  
 typedef struct table_column 
 { 

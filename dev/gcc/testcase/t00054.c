@@ -4,6 +4,10 @@ purpose:
 dependence: 
 compiler: tcc/dev-cpp
 summary:
+refs:
+1.
+http://en.wikibooks.org/wiki/C_Programming/Pointers_and_arrays
+
 Examples of pointer constructs
 Below are some example constructs which may aid in creating your pointer.
 int i;         // integer variable 'i'
@@ -24,8 +28,10 @@ int **app[];   // array of pointers 'app' that point to pointers to integer valu
 int (*apa[])[];// array of pointers 'apa' to arrays of integers
 int (*apf[])();// array of pointers 'apf' to functions with return values of type integer
 int ***fpp();  // function 'fpp' which returns a pointer to a pointer to a pointer to an int
-int (*fpa())[];// function 'fpa' with return value of a pointer to array of integers
+int (*fpa())[];// function 'fpa' with return value of a pointer to array of integers 
+** !!
 int (*fpf())();// function 'fpf' with return value of a pointer to function which returns an integer
+** !!
 **/
 
 #include <stdio.h> 

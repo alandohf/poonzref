@@ -4,6 +4,7 @@ purpose:  test heap size
 dependence: 
 compiler: tcc/dev-cpp
 summary:
+valgrind , gdb
 
 2.申请效率的比较
 　　栈由系统自动分配，速度较快。但程序员是无法控制的。  
@@ -17,12 +18,15 @@ refs:
 http://topic.csdn.net/u/20090922/10/dbf7a5b7-f426-4d89-a3e9-38d843cca94a.html
 http://wenku.baidu.com/view/a943ebc589eb172ded63b76e.html
 http://c.group.iteye.com/group/wiki/784-c-exception-handling-mechanism
+example:
+http://topic.csdn.net/u/20071229/15/54aa6ae5-0527-4809-9f56-177768e0f5b3.html 
+
 **/
 
 #include <stdio.h>
 #include <stdlib.h>
 #define I 1024
-#define J 2030
+#define J 2070 // adj this value
 char* heapsize();
 
 int 
@@ -38,7 +42,7 @@ main(int argc,char *argv[]){
 	free(p2);
 	
 **/
-//////???????????????
+
 char  c_a[I][J]={'a'};
 
 int i=0 , j=0;

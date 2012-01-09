@@ -1,10 +1,10 @@
 /**
 name:  test null pointer
-purpose:  test heap size
+purpose:  
 dependence: 
 compiler: tcc/dev-cpp
-summary:
-
+summary: char *p=0; same as : char *p1=NULL; 
+1. 
 
 refs: 
 **/
