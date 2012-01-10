@@ -23,6 +23,18 @@ int stat(const char *restrict path, struct stat *restrict buf);
 *5.time_t time(time_t *timer); // time_t -> long int 
 *6.struct tm *localtime(const time_t *timer);
 *7. time_t (time())-> struct tm (localtime())-> str (strftime())
+
+
+¡ª Data Type: struct utimbuf
+The utimbuf structure is used with the utime function to specify new access and modification times for a file. It contains the following members:
+
+time_t actime
+This is the access time for the file. 
+time_t modtime
+This is the modification time for the file.
+
+http://www.gnu.org/software/libc/manual/html_node/File-Times.html
+
 **/
 
 #include <sys/stat.h>
@@ -33,27 +45,30 @@ int stat(const char *restrict path, struct stat *restrict buf);
 const char *filename = "t00000.t";
  
 int main() {
-  struct stat foo;
-  time_t mtime;
-  struct utimbuf new_times;
- char strTime[20];
-  if (stat(filename, &foo) < 0) {
-    perror(filename);
-    return 1;
-  }
-  mtime = foo.st_mtime; /* seconds since the epoch */
- 
-  new_times.actime = foo.st_atime; /* keep atime unchanged */
-  new_times.modtime = foo.st_mtime;    /* set mtime to current time */
-  strftime(strTime, 30, "%Y%m%d %H:%M:%S", localtime (&(new_times.actime)));
-  printf("file modtime: %s\n",strTime);
-  strftime(strTime, 30, "%Y%m%d %H:%M:%S", localtime (&(new_times.modtime)));
-  printf("file modtime: %s\n",strTime);
- //	
- //	if (utime(filename, &new_times) < 0) { // utime() --> update time 
- //	  perror(filename);
- //	  return 1;
- //	}
- //	
+		  struct stat foo;
+		  time_t mtime;
+	
+		  struct utimbuf new_times;
+		  char strTime[20];
+	
+		  if (stat(filename, &foo) < 0) {
+			perror(filename);
+			return 1;
+		  }
+		  
+		  mtime = foo.st_mtime; /* seconds since the epoch */
+		 
+		  new_times.actime = foo.st_atime; /* keep atime unchanged */
+		  new_times.modtime = foo.st_mtime;    /* set mtime to current time */
+		  strftime(strTime, 30, "%Y%m%d %H:%M:%S", localtime (&(new_times.actime)));
+		  printf("file  actime: %s\n",strTime);
+		  strftime(strTime, 30, "%Y%m%d %H:%M:%S", localtime (&(new_times.modtime)));
+		  printf("file modtime: %s\n",strTime);
+		 //	
+		 //	if (utime(filename, &new_times) < 0) { // utime() --> update time 
+		 //	  perror(filename);
+		 //	  return 1;
+		 //	}
+		 //	
   return 0;
 }

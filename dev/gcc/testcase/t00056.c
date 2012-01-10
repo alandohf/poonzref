@@ -17,7 +17,7 @@ int main(int argc, char* argv[])
 { 
 char *strA="abcdef";
 char *strB="abcdee";
-char strC[2];
+char strC[2]={0};
 //char *strD=(char*)malloc(100);
 char strD[100]="xxxx";
 //strchr 
@@ -27,7 +27,7 @@ printf("%s\n",strchr(strA,'d'));
 printf("%d\n",strcmp(strA,strB));
 
 
-printf("%s\n",strC);	
+printf("%s\n",strC);
 //strcpy
 strcpy(strC,strA);
 printf("%s\n",strC);  // why  can print all the "abcdef" when strC[2]; ??
