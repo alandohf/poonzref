@@ -1,10 +1,12 @@
 /**
 name:  test strings  
-purpose:  cmpare  0056&& 0059  : char strC[2];
+purpose:  strncmp() vs strcmp()
 dependence: 
 compiler: tcc/dev-cpp
 summary:
-
+1.转化成ascii 的差值
+2.改变strA,strB的值观察输出
+3.改变strncmp的参数3观察输出
 refs:
 http://en.wikibooks.org/wiki/C_Programming/Strings
 
@@ -17,7 +19,7 @@ int main(int argc, char* argv[])
 { 
 char *strA="abcdef";
 char *strB="abcdef";
-printf("%i\n",strncmp(strA,strB,6));
+printf("%i\n",strncmp(strA,strB,4));
 return 0;
 
 } 

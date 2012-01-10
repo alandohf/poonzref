@@ -1,6 +1,6 @@
 /**
-name:  test strings 
-purpose: 
+name:  test strings  : test strcat
+purpose: test strcat()
 dependence: 
 compiler: tcc/dev-cpp
 summary:
@@ -28,15 +28,20 @@ int main(int argc, char* argv[])
 char *strA="abcdef";
 char *strB="123456";
 char *strC=NULL;
-strC=malloc(100);
+strC=(char *)malloc(100);
+
 if( NULL == strC ){
 printf("error\n");
 exit(1);
 }
+
+printf("%p\n",strC);
+
 //printf("%s\n",strcat(strA,strB));	
 strcpy(strC,strA);
 strC=strcat(strC,strB);
-printf("%s\n",strC);	
+printf("%s\n",strC);
+printf("%p\n",strC);
 free(strC);
     return 0; 
 } 

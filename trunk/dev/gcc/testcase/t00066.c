@@ -1,9 +1,16 @@
+/**
 // crt_getdrives.c
 // This program retrives and lists out
 // all the logical drives that are 
 // currently mounted on the machine.
 //http://msdn.microsoft.com/en-US/library/xdhk0xd2(v=VS.80).aspx
 
+1._getdrives ∑µªÿ÷µ£∫
+If the function succeeds, the return value is a bitmask representing the currently available disk drives. Bit position 0 (the least-significant bit) is drive A, bit position 1 is drive B, bit position 2 is drive C, and so on. If the function fails, the return value is zero. To get extended error information, call GetLastError.
+
+
+
+**/
 #include <windows.h>
 #include <direct.h>
 #include <stdio.h>
