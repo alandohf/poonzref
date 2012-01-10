@@ -1,6 +1,6 @@
 /**
 name:  test strings  
-purpose:  cmpare  0056&& 0059  : char strC[2];
+purpose:  test strrchr()
 dependence: 
 compiler: tcc/dev-cpp
 summary:

@@ -45,16 +45,16 @@ int main( void )
 { 
 
    // Create or append to a file. 
-   system( "echo first > crt_chmod.c_input" );
+   system( "echo first > c:\\ccoutput\\crt_chmod.c_input" );
 
    // Set file mode to read-only: 
-   set_mode_and_report("crt_chmod.c_input ", _S_IREAD );
+   set_mode_and_report("c:\\ccoutput\\crt_chmod.c_input ", _S_IREAD );
    
-   system( "echo second >> crt_chmod.c_input " );
+   system( "echo second >> c:\\ccoutput\\crt_chmod.c_input " );
 
    // Change back to read/write: 
-   set_mode_and_report("crt_chmod.c_input ", _S_IWRITE );
+   set_mode_and_report("c:\\ccoutput\\crt_chmod.c_input ", _S_IWRITE );
  
-   system( "echo third >> crt_chmod.c_input " ); 
-   system("PAUSE");
+   system( "echo third >> c:\\ccoutput\\crt_chmod.c_input " ); 
+   //system("PAUSE");
 } 
