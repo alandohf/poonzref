@@ -2,20 +2,25 @@
 1.选择排序
 http://en.wikipedia.org/wiki/Selection_sort
 http://stackoverflow.com/questions/4601057/why-is-selection-sort-not-stable
+http://bytes.com/topic/c/answers/221638-using-clock-measure-run-time
+http://apps.hi.baidu.com/share/detail/8540616
+
+!!!
+http://baike.baidu.com/view/1516611.htm
+!!!
+
 **/
 
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <io.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <errno.h>
-
+#include <windows.h>
+#include <time.h>
+#include       <dos.h>    
 
 void selection_sort (int *a, int n) {
     int i, j, m, t;
     for (i = 0; i < n; i++) {
-        for (j = i, m = i; j < n; j++) {
+        for (j = i+1, m = i; j < n; j++) {
             if (a[j] < a[m])
                 m = j;
         }
@@ -25,12 +30,46 @@ void selection_sort (int *a, int n) {
     }
 }
  
+
+void selection_sort_desc (int *a, int n) {
+    int i, j, m, t;
+    for (i = 0; i < n; i++) {
+        for (j = i+1, m = i; j < n; j++) {
+            if (a[j] > a[m]) // a[j] 索引第i+1个元素
+                m = j;
+        }
+        t = a[i];
+        a[i] = a[m];
+        a[m] = t;
+    }
+}
+
 int main () {
+	clock_t start,end;
     int a[] = {4, 65, 2, -31, 0, 99, 2, 83, 782, 1};
     int n = sizeof a / sizeof a[0];
     selection_sort(a, n);
+	int i ;
+	for ( i = 0 ; i < n ; i++){
+		printf("a[%d]:%d\n",i,*(a+i));
+	}
+
+		start=clock();
+
+    selection_sort_desc(a, n);
+	for ( i = 0 ; i < n ; i++){
+		printf("a[%d]:%d\n",i,*(a+i));
+	}
+
+	Sleep(150);
+	end=clock();
+		printf("The time was: %u\n", start);     
+		printf("The time was: %u\n", end);     
+		printf("The time was: %f\n", (double)(end - start) );     
+		//printf("Elapsed time:%f secs.\n",(double)clock()/CLOCKS_PER_SEC);
     return 0;
 }
+
  
 
 
@@ -68,3 +107,5 @@ int main () {
  //// 	return 0;
  //// }
  //// 
+
+
