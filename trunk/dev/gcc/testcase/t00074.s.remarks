@@ -2,6 +2,7 @@
 	.def	___main;	.scl	2;	.type	32;	.endef
 	// .scl : Storage CLass
 	// .type:the c compiler type
+	//C:\poon\wcwp\wcwp\doc\Assembly-HOWTO\gas.html
 	.text
 .globl _main
 	.def	_main;	.scl	2;	.type	32;	.endef

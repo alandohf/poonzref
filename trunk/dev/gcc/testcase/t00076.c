@@ -15,14 +15,11 @@ c:\Dev-Cpp\bin\gcc.exe -o my.exe  t00073.o
 
 
 #include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <windows.h>
 
 int 
 main(void)
 {
-printf("hello world\n");
+	char *p=NULL;
 	return 0;
 }
 
