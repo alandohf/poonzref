@@ -1,8 +1,5 @@
-	.file	"t00074.c"
+	.file	"t00076.c"
 	.def	___main;	.scl	2;	.type	32;	.endef
-	.section .rdata,"dr"
-LC0:
-	.ascii "hello world\12\0"
 	.text
 .globl _main
 	.def	_main;	.scl	2;	.type	32;	.endef
@@ -16,13 +13,11 @@ _main:
 	addl	$15, %eax
 	shrl	$4, %eax
 	sall	$4, %eax
-	movl	%eax, -4(%ebp)
-	movl	-4(%ebp), %eax
+	movl	%eax, -8(%ebp)
+	movl	-8(%ebp), %eax
 	call	__alloca
 	call	___main
-	movl	$LC0, (%esp)
-	call	_printf
+	movl	$0, -4(%ebp)
 	movl	$0, %eax
 	leave
 	ret
-	.def	_printf;	.scl	3;	.type	32;	.endef
