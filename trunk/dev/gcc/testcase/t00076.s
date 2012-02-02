@@ -17,7 +17,6 @@ _main:
 	movl	-8(%ebp), %eax
 	call	__alloca
 	call	___main
-	movl	$0, -4(%ebp)
 	movl	$0, %eax
 	leave
 	ret
