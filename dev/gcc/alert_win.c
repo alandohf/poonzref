@@ -134,6 +134,8 @@ int alert(char msg[]);
 int keyfromstring(char *key,t_symstruct lookuptable[],int NKEYS );
 
  int main(){
+	alert("program start...");
+
 	while(1){ 
 		   strftime(tm_buffer, SIZE, "%H:%M", alert_time());
 		   //printf(tm_buffer);
@@ -252,7 +254,7 @@ int alert(char msg[1000]){
 	strftime(tm_buffer, SIZE, "%c", alert_time());
 	sprintf(cmd,"wscript ./alert.vbs %s %s",tm_buffer,msg);
 	//change the path if necessory
-	if((fp=fopen("d:/bass1/alert_log.out","a"))==NULL){
+	if((fp=fopen("c:/Windows/Logs/alert.out","a"))==NULL){
 		fprintf(stderr, " %s\n", strerror(errno));
 		exit(1);
 	}

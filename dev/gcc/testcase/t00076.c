@@ -19,7 +19,7 @@ c:\Dev-Cpp\bin\gcc.exe -o my.exe  t00073.o
 int 
 main(void)
 {
-	char *p=NULL;
+	int i;
 	return 0;
 }
 
