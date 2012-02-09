@@ -1,0 +1,35 @@
+; int 
+; main(void)
+; {
+	; int i;
+	; return 0;
+;}
+
+#http://stackoverflow.com/questions/823138/understanding-empty-mains-translation-into-assembly
+.file	"t00076.c"
+	.def	___main;	.scl	2;	.type	32;	.endef
+	.text
+.globl _main
+	.def	_main;	.scl	2;	.type	32;	.endef
+_main:
+#http://www.moon-soft.com/doc/32699.htm
+#压栈
+	pushl	%ebp 
+#保存esp
+	movl	%esp, %ebp 
+#设置栈顶
+	subl	$8, %esp
+#我觉的是对齐操作,然后还有防止缓冲区溢出的作用:http://www.linuxsir.org/bbs/thread322569.html
+	andl	$-16, %esp #-16 = ffff fff0
+	movl	$0, %eax
+	addl	$15, %eax
+	addl	$15, %eax
+	shrl	$4, %eax
+	sall	$4, %eax	#eax = 10h
+	movl	%eax, -8(%ebp) #movl %eax,ss:[ebp-8]
+	movl	-8(%ebp), %eax
+	call	__alloca
+	call	___main
+	movl	$0, %eax
+	leave
+	ret
