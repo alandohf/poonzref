@@ -16,10 +16,10 @@ c:\Dev-Cpp\bin\gcc.exe -o my.exe  t00073.o
 
 #include <stdio.h>
 
-int 
-main(void)
+int main(void)
 {
-	int i;
-	return 0;
+	char a[8]="abcdefgh";
+	a[0]=a[0]&0xdf;
+	return -1;
 }
 
