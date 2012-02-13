@@ -1,24 +1,24 @@
-# Microsoft Developer Studio Project File - Name="t00036" - Package Owner=<4>
+# Microsoft Developer Studio Project File - Name="t00000simple_test" - Package Owner=<4>
 # Microsoft Developer Studio Generated Build File, Format Version 6.00
 # ** DO NOT EDIT **
 
 # TARGTYPE "Win32 (x86) Console Application" 0x0103
 
-CFG=t00036 - Win32 Debug
+CFG=t00000simple_test - Win32 Debug
 !MESSAGE This is not a valid makefile. To build this project using NMAKE,
 !MESSAGE use the Export Makefile command and run
 !MESSAGE 
-!MESSAGE NMAKE /f "t00036.mak".
+!MESSAGE NMAKE /f "t00000simple_test.mak".
 !MESSAGE 
 !MESSAGE You can specify a configuration when running NMAKE
 !MESSAGE by defining the macro CFG on the command line. For example:
 !MESSAGE 
-!MESSAGE NMAKE /f "t00036.mak" CFG="t00036 - Win32 Debug"
+!MESSAGE NMAKE /f "t00000simple_test.mak" CFG="t00000simple_test - Win32 Debug"
 !MESSAGE 
 !MESSAGE Possible choices for configuration are:
 !MESSAGE 
-!MESSAGE "t00036 - Win32 Release" (based on "Win32 (x86) Console Application")
-!MESSAGE "t00036 - Win32 Debug" (based on "Win32 (x86) Console Application")
+!MESSAGE "t00000simple_test - Win32 Release" (based on "Win32 (x86) Console Application")
+!MESSAGE "t00000simple_test - Win32 Debug" (based on "Win32 (x86) Console Application")
 !MESSAGE 
 
 # Begin Project
@@ -28,7 +28,7 @@ CFG=t00036 - Win32 Debug
 CPP=cl.exe
 RSC=rc.exe
 
-!IF  "$(CFG)" == "t00036 - Win32 Release"
+!IF  "$(CFG)" == "t00000simple_test - Win32 Release"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 0
@@ -51,7 +51,7 @@ LINK32=link.exe
 # ADD BASE LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 # ADD LINK32 kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /machine:I386
 
-!ELSEIF  "$(CFG)" == "t00036 - Win32 Debug"
+!ELSEIF  "$(CFG)" == "t00000simple_test - Win32 Debug"
 
 # PROP BASE Use_MFC 0
 # PROP BASE Use_Debug_Libraries 1
@@ -62,12 +62,11 @@ LINK32=link.exe
 # PROP Use_Debug_Libraries 1
 # PROP Output_Dir "Debug"
 # PROP Intermediate_Dir "Debug"
-# PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
 # ADD BASE CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
 # ADD CPP /nologo /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_CONSOLE" /D "_MBCS" /YX /FD /GZ /c
 # ADD BASE RSC /l 0x804 /d "_DEBUG"
-# ADD RSC /l 0x409 /d "_DEBUG"
+# ADD RSC /l 0x804 /d "_DEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo
@@ -79,8 +78,8 @@ LINK32=link.exe
 
 # Begin Target
 
-# Name "t00036 - Win32 Release"
-# Name "t00036 - Win32 Debug"
+# Name "t00000simple_test - Win32 Release"
+# Name "t00000simple_test - Win32 Debug"
 # Begin Source File
 
 SOURCE=.\t00000simple_test.c
