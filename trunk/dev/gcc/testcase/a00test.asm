@@ -1,10 +1,10 @@
 ;the source file for code test
 ;cf 对于无符号数才有意义
 ;of 对于符号数才有意义
-assume cs:code
+assume cs:code,ds:data
 
 data segment
-dw 8 dup(0)
+dw 'AB'
 data ends
 
 code segment
@@ -56,7 +56,12 @@ start:
 		;int 0
 		
 		;test int 7ch a00064
-		int 7ch
+		;int 7ch
+		;test assume ds:data
+		; mov ax,data
+		; mov ds,ax
+		mov ax,ds:[0]
+		
 		
 retp:
 		mov ax,4c00h
