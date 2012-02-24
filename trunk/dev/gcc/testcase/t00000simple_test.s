@@ -13,17 +13,11 @@ _main:
 	addl	$15, %eax
 	shrl	$4, %eax
 	sall	$4, %eax
-	movl	%eax, -4(%ebp)
-	movl	-4(%ebp), %eax
+	movl	%eax, -8(%ebp)
+	movl	-8(%ebp), %eax
 	call	__alloca
 	call	___main
-	leave
-	ret
-.globl _f
-	.def	_f;	.scl	2;	.type	32;	.endef
-_f:
-	pushl	%ebp
-	movl	%esp, %ebp
+	movl	$0, -4(%ebp)
 	movl	$0, %eax
-	popl	%ebp
+	leave
 	ret
