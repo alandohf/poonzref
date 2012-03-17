@@ -3,14 +3,25 @@
 #include <string.h>
 //~ int f();
 
+int caller();
+int bycall(int a,int b , int c);
+int recusive(int);
+int dead_recusive(int a);
+int run_cnt=0;
 int main()
 {
-	int a=0;
-	int b=1;
-	int c=2;
-	int d=9;
+	//~ int a=0;
+	//~ int b=1;
+	//~ int c=2;
+	//~ int d=9;
+	//caller();	
+	//recusive( 5 );
+	printf("%p\n",dead_recusive);
+	dead_recusive(1); //129975 //64876
+//	printf("run_cnt : %d\n",run_cnt);
+	//printf("%d\n",recusive( 5 ));
 //	a|b=b?c:d;
-	printf("addr:%p\n%p\n%p\n",&a,&b,&c);
+	//printf("addr:%p\n%p\n%p\n",&a,&b,&c);
 	//~ int ovar=34;
 	//~ asm("movl %0, %%ebx\n\t":"+b"(ovar):"g"(100));
 	//char b[3][5];
@@ -70,3 +81,26 @@ int main()
 
 //~ 由于sizeof 是关键字，而非函数，所以汇编直接给出的是立即数，没有函数调用。
 //~ 关键字是由编译器处理的。
+
+int caller(){
+	int a = 1,b=2,c=3;
+	bycall(a,b,c);
+	return 0;
+	}
+	
+int bycall(int a,int b , int c){
+ return a+b+c;	
+}
+
+int recusive(int n){
+	if ( 1 ==  n )
+		return 1;
+	else 
+		return recusive( n -1 ) * n;
+}
+
+int dead_recusive(int a){
+			printf("%p\n",&a);
+			dead_recusive(a);
+	return 0;
+	}

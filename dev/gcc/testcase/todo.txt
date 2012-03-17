@@ -1,0 +1,14 @@
+1.
+disassembly : 
+f(int[] array)
+done!
+2.
+cin cout 方法逐个测
+
+3.
+disassembly : 
+(void * ) 0
+转换测试
+
+
+4. 马士兵 - 进度：

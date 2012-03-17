@@ -1,7 +1,26 @@
+#include <stdio.h>
 int addtwo(int,int);
 int main(){
 int c  = 0;
 	c = addtwo(2,3);
+	
+	char a[]={'a','b','c','d'};
+	char b[]="cdef";
+	printf("%d\t%d\n",sizeof(a),sizeof(b));
+	printf("%c\n",*a);
+	printf("%c\n",*(a+1));
+	
+		int ia[]={1,2,3,4,5,6,7,8};
+		int i[] = {ia[0],ia[1],ia[2],ia[3]};
+	printf("%d\n",sizeof(i));
+	printf("%d\n",*(&i[8]));
+	printf("%d\n",*(&i));
+	printf("%p\t%p\t%p\n",&i[0],&i[0]+1,&i[1]);
+	printf("%p\t%p\n",&i,&i+1);
+	printf("%p\t%p\t%p\n",i,i+1,i+2);
+		
+		
+	
 		return 0;
 }
 

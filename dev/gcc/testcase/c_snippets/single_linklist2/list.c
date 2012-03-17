@@ -27,6 +27,7 @@ stLinkList* initLinkList(){
 	//linklist->last = NULL;
 	//linklist->length = 0;
 	memset(linklist,0,sizeof(stLinkList));
+	
 	return linklist;
 }
 
@@ -56,6 +57,7 @@ int insertLinkList (stLinkList * l,void * data,int dataSize) {
 		l->last->next = n;
 	} 
 		l->last = n;
+		l->last->next = NULL; // 把尾节点的下一个指向空！非常重要，可作为判断链表是否遍历的依据！
 		l->length++;
 	return 0;
 }
@@ -99,27 +101,25 @@ NODE * findNodeByKey(stLinkList * l,void *key ,int (*compare) ( void * dataBeing
 	return NULL;
 }
 
-int freeStuNodeData(void * data){
-	stElemType * pdata = (stElemType *)data;
+int freeStuNodeData(void ** data){
+	stElemType * pdata = (stElemType *)(*data);
 	free(pdata);
-	pdata=NULL;
+	*data=NULL;
 	return 0;
 }
 
 // 释放单向链表的内存
-void freeLinkList(stLinkList * l,int (*freeNodeData)(void *data)){
+//本函数按数据->节点->链表的顺序 来释放内存,从head节点开始释放，直到最后一个节点
+void freeLinkList(stLinkList ** l,int (*freeNodeData)(void **data)){
 	NODE *tmpNode=NULL;
 	NODE *pNode  =NULL;
-	pNode=l->head;
+	pNode=(*l)->head;
 	do{
-	freeNodeData(pNode->data);
-	pNode->data = NULL;
-	tmpNode=pNode;
+	freeNodeData(&(pNode->data));
+	tmpNode=pNode;  
 	pNode=pNode->next;
-	free(tmpNode);
-	tmpNode = NULL;
+	free(tmpNode); // 释放节点占用的内存 tmpNode->data; tmpNode->next 同时失效！
 	} while(pNode);
-
-	free(l);
-	l = NULL;
+	free(*l);
+	*l = NULL;
 }

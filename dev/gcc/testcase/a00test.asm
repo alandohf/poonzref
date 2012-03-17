@@ -10,13 +10,13 @@ data ends
 code segment
 start:
 		;mov ax,00020h
-		;mov cx,00002h
+		; mov cx,00002h
 		;div cx
 		
 		;mov ax,1234h
 		;mov al,ah
-		;nop
-		;进位
+		; nop
+		; 进位
 		;mov al,98h
 		;add al,al
 		;借位
