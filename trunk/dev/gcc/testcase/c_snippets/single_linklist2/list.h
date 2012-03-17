@@ -24,7 +24,7 @@ int insertLinkList (stLinkList * l,void * data,int dataSize);
 int compareBySno(void * dataOfNode,void * keyWord);
 int compareBySname(void * dataOfNode,void * keyWord);
 NODE * findNodeByKey(stLinkList * l,void *key ,int (*compare) ( void * dataBeingSearch,void * keyWord ));
-int freeStuNodeData(void * data);
-void freeLinkList(stLinkList * l,int (*freeNodeData)(void *data));
+int freeStuNodeData(void ** data);
+void freeLinkList(stLinkList ** l,int (*freeNodeData)(void **data));
 
 #endif

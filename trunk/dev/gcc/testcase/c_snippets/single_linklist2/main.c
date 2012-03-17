@@ -22,11 +22,11 @@ main(){
 	
 	//resNode=findNodeByKey(ll,"S003",compareBySno);
 	resNode=findNodeByKey(ll,"MARY",compareBySname);
-
+	
 
 	//destroyList(list);
 	//freeLinkList(ll);
-	//freeLinkList(ll,freeStuNodeData);
+	freeLinkList(&ll,freeStuNodeData);
 		;
 	return 0;
 }

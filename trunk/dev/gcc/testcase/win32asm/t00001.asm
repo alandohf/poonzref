@@ -18,8 +18,8 @@ szResult db 'a',0
 ;	.data?
 ;szBuffer db 1024*1024 dup(?)
 	.code
-mov bl,sizeof szResult
-add byte ptr [szResult],bl
+;mov bl,sizeof szResult
+;add byte ptr [szResult],bl
 ;mov byte ptr [szResult],bl
 start:
 	invoke MessageBox,NULL,offset szHello,offset szResult,MB_YESNO
