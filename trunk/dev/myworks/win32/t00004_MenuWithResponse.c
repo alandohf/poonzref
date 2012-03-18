@@ -14,10 +14,9 @@
 */
 
 #include <Windows.h>
-//#include "StdAfx.h"
-#define IDR_MENU1  9001
-#define IDM_ABOUT1 9002
+#include "resource.h"
 
+//#include "StdAfx.h"
 
 char WinClassName[] = "MyWinClass";
 char lpWndName[] = "MyWindow(Will do Something)";
@@ -39,12 +38,18 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam)
 			AppendMenu(hmenu0, MF_STRING | MF_POPUP | MF_MENUBREAK, (UINT_PTR)hmenu0_1, ("&Help"));
 		            SetMenu(hwnd, hmenu0);
         break;
-		//~ case IDM_ABOUT1:
-			//~ MessageBox(NULL,TEXT("Menu Responed!"),TEXT("About"),MB_OK);
+		case WM_COMMAND:
+		switch( LOWORD(wParam) )
+		{
           case IDM_ABOUT1:
-               MessageBox (hwnd, TEXT ("作者：jhkdiy\nE-mail：jhkdiy_gzb@21cn.net\n日期：2005/5/24\n版本：1.0\n最后修改日期：2005/5/27"),
-                           TEXT("About"), MB_ICONINFORMATION | MB_OK) ;		
+               MessageBox (hwnd
+							,TEXT("Menu Responed!")
+							,TEXT("About")
+							, MB_ICONINFORMATION | MB_OK
+						  );
 			break;
+		}
+		break;
         case WM_CLOSE:
             DestroyWindow(hwnd);
         break;
