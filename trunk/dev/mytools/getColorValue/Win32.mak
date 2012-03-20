@@ -54,49 +54,6 @@ $(OBJECTS):
 #~ end target£ºt00003_BasicWindowWithMenu
 
 ####################################################################################
-TARGET		= 	t00004_MenuWithResponse
-OBJECTS		=	$(TARGET).obj $(TARGET).res
-PROG		= 	$(TARGET).exe
-
-$(PROG):$(OBJECTS)
-	$(LINK) $(LNK_FLAGS) $(OBJECTS)
-	@COPY $(@F) $(OUTPUTDIR)\$(@F)
-	$(DEL) $(CLEANS)
-$(OBJECTS):
-####################################################################################
-#t00005_BasicDlgBaseApp.c
-TARGET		= 	t00005_BasicDlgBaseApp
-OBJECTS		=	$(TARGET).obj $(TARGET).res
-PROG		= 	$(TARGET).exe
-
-$(PROG):$(OBJECTS)
-	$(LINK) $(LNK_FLAGS) $(OBJECTS)
-	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
-	-@$(DEL) $(CLEANS)
-$(OBJECTS):
-####################################################################################
-#t00006_DlgBaseAppWithMenu.c
-TARGET		= 	t00006_DlgBaseAppWithMenu
-OBJECTS		=	$(TARGET).obj $(TARGET).res
-PROG		= 	$(TARGET).exe
-
-$(PROG):$(OBJECTS)
-	$(LINK) $(LNK_FLAGS) $(OBJECTS)
-	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
-	-@$(DEL) $(CLEANS)
-$(OBJECTS):
-####################################################################################
-
-#t00007_DlaBaseAppWithRespone.c
-TARGET		= 	t00007_DlaBaseAppWithRespone
-OBJECTS		=	$(TARGET).obj $(TARGET).res
-PROG		= 	$(TARGET).exe
-
-$(PROG):$(OBJECTS)
-	$(LINK) $(LNK_FLAGS) $(OBJECTS)
-	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
-	-@$(DEL) $(CLEANS)
-$(OBJECTS):
 ####################################################################################
 
 #t00008_DAPcolorPanel.c
@@ -109,8 +66,8 @@ $(PROG):$(OBJECTS)
 	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
 	-@$(DEL) $(CLEANS)
 $(OBJECTS):
+
 ####################################################################################
 clean:
 	-@$(DEL) $(CLEANS)
 #~ end target£ºt00003_BasicWindowWithMenu
-
