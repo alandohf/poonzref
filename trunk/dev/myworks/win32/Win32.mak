@@ -12,7 +12,7 @@ PATH		=	$(ROOT)\bin;$(PATH)
 LIB			=	$(LIBPATH);$(LIB)
 INCLUDE		=	$(INCLUDEDIR);$(INCLUDE)
 #
-LIBS		=	kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib winmm.lib wininet.lib MSWSOCK.LIB /nologo /subsystem:windows /incremental:no /machine:I386
+LIBS		=	kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib winmm.lib wininet.lib MSWSOCK.LIB
 
 #define THE TOOLS
 #~ CC   RC IS PREDEFINED
@@ -22,7 +22,7 @@ LINK		=	link.exe
 
 #~ CFLAGS		=	/c /I$(INCLUDEDIR) /Fo$(OBJECTS) 
 CFLAGS		=	/c /I$(INCLUDEDIR)
-LNK_FLAGS   =   /DEFAULTLIB:$(LIBS) /SUBSYSTEM:WINDOWS /OUT:$(PROG)
+LNK_FLAGS   =   /DEFAULTLIB:$(LIBS) /OUT:$(PROG)  /nologo /subsystem:windows /incremental:no /machine:I386
 CLEANS		=	*.obj  *.res *.exe
 
 ######################################COMMON SETTINGS END ##################################
@@ -71,6 +71,30 @@ $(OBJECTS):
 ####################################################################################
 #t00006_DlgBaseAppWithMenu.c
 TARGET		= 	t00006_DlgBaseAppWithMenu
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
+####################################################################################
+
+#t00007_DlaBaseAppWithRespone.c
+TARGET		= 	t00007_DlaBaseAppWithRespone
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
+####################################################################################
+
+#t00008_DAPcolorPanel.c
+TARGET		= 	t00008_DAPcolorPanel
 OBJECTS		=	$(TARGET).obj $(TARGET).res
 PROG		= 	$(TARGET).exe
 
