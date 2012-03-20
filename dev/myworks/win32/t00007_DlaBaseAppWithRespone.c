@@ -21,7 +21,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 int APIENTRY  WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nCmdShow)
 {
 	//Create and display dialog box
-		//~ InitCommonControls();
+		InitCommonControls();
  	DialogBox(hInstance, (LPCTSTR)IDD_DIALOG1, 0, (DLGPROC)DlgProc);
 	//Exit  
 	return 0;
@@ -42,6 +42,20 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			//Must return true for keyboard focus 
 			return true;
 		}
+		break;
+	case WM_COMMAND:// 
+		{	
+			switch(wParam)
+			{
+				case IDC_BTN_CLK:
+					MessageBox(hwndDlg,TEXT("Message Content"),TEXT("MessageTitle"),MB_OK);
+					break;
+				default:
+					break;
+			}
+			return true;
+		}
+		break;
 	case WM_CLOSE://Massage for terminate/exit (may close button clicked on title bar)
 		{
 			//Close dialog
