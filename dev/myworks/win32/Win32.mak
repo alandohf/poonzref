@@ -110,7 +110,24 @@ $(PROG):$(OBJECTS)
 	-@$(DEL) $(CLEANS)
 $(OBJECTS):
 ####################################################################################
+#~ t00009_DAPcolorPanelEx.c
+TARGET		= 	t00009_DAPcolorPanelEx
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
+####################################################################################
+
+
+
+
+
+
+#~ ADD BUILD TARGET ABOVE
+####################################################################################
 clean:
 	-@$(DEL) $(CLEANS)
-#~ end target£ºt00003_BasicWindowWithMenu
-
