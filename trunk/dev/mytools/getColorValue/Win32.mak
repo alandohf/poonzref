@@ -29,7 +29,7 @@ CFLAGS		=	/c /I$(INCLUDEDIR)
 LNK_FLAGS   =   /DEFAULTLIB:$(LIBS) /OUT:$(PROG)  /nologo /subsystem:windows /incremental:no /machine:I386
 RLS_FLAGS   =   /DEFAULTLIB:$(LIBS) /OUT:$(PROG)  /nologo /subsystem:windows /incremental:no /machine:I386 /RELEASE
 DBG_FLAGS   =   /DEFAULTLIB:$(LIBS) /OUT:$(PROG)  /nologo /subsystem:windows /incremental:no /machine:I386 /DEBUG
-CLEANS		=	*.obj  *.res *.aps *.exe
+CLEANS		=	*.obj  *.res *.aps *.pdb *.exe
 
 ######################################COMMON SETTINGS END ##################################
 TARGET		= 	t00003_BasicWindowWithMenu
