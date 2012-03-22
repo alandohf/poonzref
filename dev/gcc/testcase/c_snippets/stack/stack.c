@@ -1,42 +1,57 @@
-//http://blog.csdn.net/astropeak/article/details/6653048
 
+/*
+*---------------------------------------------------------------------------
+;program name  : 通用栈实现
+;author		   : panzhiwei
+;date		   : 2012-03-22
+;function desc : 可以对任意类型的数据进行入栈出栈等操作
+;compiler      : vc6 enterprise 
+;notes		   :
+;1.指针转换成结构体指针要用struct tag *
+;2.操作顺序：确定数据类型->初始化->出入栈
+;3.
+;revision log  :
+;1.	
+;2.
+;3.
+;ref		   :
+;1.http://blog.csdn.net/genaman/article/details/4336483
+;2.http://stackoverflow.com/questions/3848236/managing-an-array-of-indeterminate-type-with-void-pointers
+;3.
+*/
+
+//http://blog.csdn.net/astropeak/article/details/6653048
+//空指针自增要先把它转成char*型，再加上增量
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-// 定义一个栈结构来描述栈的信息：栈的元素个数，栈的起始地址。其实这个结构可以描述任何一种栈，包括数组栈和单链表栈。
-/**
-typedef struct _stack {
-		int ActSize;
-		int * pStack; //  array pointer 's should change as it's needed
-} iSTACK, * iPSTACK;
-**/
+
 // 更通用一点：
 typedef struct _stack {
 		int		count;			// 栈中实际有效元素个数
+		int 	SizeOfType;
 		void *	base; 		// 当数组元素类型为char时，改为 char * pStack; 
 		void *	top; 		// 当数组元素类型为char时，改为 char * pStack; 
 } STACK, * PSTACK;
 
 
-
-void exitm(char a[] ){
+int exitm(char a[] ){
 	printf("%s\n",a);
-	exit(1);
+	return 1;
 }
 
-/**
-PSTACK  InitStack(int DataSize,int StackSize)
-{
-	STACK * pS = NULL;
-	memset(pS,0,sizeof(STACK));
-	pS->base = malloc(DataSize*StackSize);
-	if ( NULL == pS->base ) exitm("OutOfMemory!");
-	return pS;
-}
-**/
+/************************************************************************************/
+typedef struct Stu {
+	char cStuNo[5] ;
+	char cStuName[16];
+	char cSex[4];
+	int  iAge;
+	int  iScore;
+} ElemType, * pElemType;
 
-//初始化栈，实际是为栈按指定的类型来动态分配内存！如果是静态数组，就不用这个函数了。
+
+//初始化栈结构体，实际是为栈按指定的类型来动态分配内存并初始化栈的描述参数！如果是静态数组，就不用这个函数了。
 void  InitStack(PSTACK ps, int DataSize,int StackSize)
 {
 	ps->base  = malloc(DataSize*StackSize);
@@ -47,37 +62,81 @@ void  InitStack(PSTACK ps, int DataSize,int StackSize)
 
 int isEmpty(PSTACK ps)
 {   
-	if ( NULL == ps ) exitm("OutOfMemory!");
 	return ( ps->top == ps->base) ? 1 : 0;
 }
 
-int push(PSTACK ps)
+int push(PSTACK ps,void * data)
 {
+
+	//*(ps->top) = *data;//空指针不能这样赋值,用memcpy
+	memcpy(ps->top,data,ps->SizeOfType);
+	(int*)ps->count++;
+	 ps->top=(char*)ps->top+ps->SizeOfType*ps->count;
 	return 0;
 }
+
+
+int pop(PSTACK ps)
+{
+	if ( 1 == isEmpty(ps) ) 
+	{
+		exitm("StackIsEmpty!");
+		return 1;
+	};
+	 ps->top=(char*)ps->top-ps->SizeOfType*ps->count;
+	(int*)ps->count--;
+	return 0;
+}
+
+
 
 int main(int argc, char *argv[]) {
-	// 若要一个大小为SIZE,存放type型数据的栈：
-	// 1. 整型，大小为10
-	//~ STACK is = {0,0};
-	//~ PSTACK ps = &is;
-	//~ // 2. char 型，大小为10
-	//~ STACK cs = {0,0};
-	//~ PSTACK pcs = &cs;
+	// test int type
+	STACK is = {0,sizeof(int),0,0};
+	PSTACK pis = &is;
+	int i = 119;
+	// test char type
+	STACK cs = {0,sizeof(char),0,0};
+	PSTACK pcs = &cs;
+	int c = 'A';
 
-// 其实不需要另外定义一个特定类型的结构体，只要另外定义一个特定类型的指针 type * p 就可以引用数组栈了。
-	/**
-	typedef struct _mystack {
-		int		count;			// 栈中实际有效元素个数
-		int	 *	base; 		// 当数组元素类型为char时，改为 char * pStack; 
-		int  *	top; 		// 当数组元素类型为char时，改为 char * pStack; 
-	} MYSTACK, * PMYSTACK;
-	**/
-	STACK is = {0,0,0};
-	PSTACK ps = &is;
-	int * p = NULL;
-	InitStack(ps,sizeof(int),10);
-	p = (int*)ps->base;
-	//~ pcs->base =  (char*) InitStack(sizeof(char),10);
+	// test ElemType type
+	ElemType stu[10] = {
+		 { "S000","NAME0"  ,"男",10,81 }
+		,{ "S001","NAME1"  ,"男",11,92 }
+		,{ "S002","NAME2"  ,"女",12,73 }
+		,{ "S003","NAME3"  ,"男",10,84 }
+		,{ "S004","NAME4"  ,"男",10,85 }
+		,{ "S005","NAME5"  ,"男",10,86 }
+		,{ "S006","NAME6"  ,"男",10,87 }
+		,{ "S007","NAME7"  ,"男",10,88 }
+		,{ "S008","NAME8"  ,"男",10,89 }
+		,{ "S009","NAME9"  ,"男",10,76 }
+	};
+	STACK stuS = {0,sizeof(ElemType),0,0};
+	PSTACK pstuS = &stuS;
+	ElemType *p=NULL;
+	// test int type	
+	InitStack(pis,sizeof(int),10);
+	push(pis,&i);
+	i = 121;
+	push(pis,&i);
+	pop(pis);
+	pop(pis);
+	pop(pis);
+	// test char type
+	InitStack(pcs,sizeof(char),10);
+	c = 'B';
+	push(pcs,&c);
+	push(pcs,&c);
+	// test ElemType type
+	InitStack(pstuS,sizeof(ElemType),10);
+	push(pstuS,&stu[0]);
+	push(pstuS,&stu[1]);
+	p=pstuS->base;
+	// (struct Stu *)(pstuS->base) // true!
+	// (ElemType *)(pstuS->base) // wrong!
+	// (pElemType )(pstuS->base) // wrong!
 	return 0;
 }
+
