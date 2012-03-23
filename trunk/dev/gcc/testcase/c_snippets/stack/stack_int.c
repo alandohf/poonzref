@@ -33,7 +33,7 @@
 // 更通用一点：
 typedef struct _stack {
 		int		count;
-		int 	a[STACK_INIT_SIZE-1]
+		int 	a[STACK_INIT_SIZE-1];
 	} STACK, * PSTACK;
 
 
@@ -51,14 +51,17 @@ int exitm(char a[] ){
 
 int isEmpty(PSTACK ps)
 {   
-	return ( 0 == PSTACK->count ) ? 1 : 0;
+	return ( 0 == ps->count ) ? 1 : 0;
 }
 
 int push(PSTACK ps,int * data)
 {
 	if ( ps->count == STACK_INIT_SIZE ) exitm("StackOverflow!");
-	ps->a[ps->count+1] = *data;
-	ps->count++;
+	//~ ps->a[ps->count+1] = *data;
+	//~ ps->count++;
+	//~ 优化：
+	ps->a[ps->count++] = *data;
+	
 	return 0;
 }
 
@@ -70,8 +73,10 @@ int pop(PSTACK ps,int * data)
 		exitm("StackIsEmpty!");
 		return 1;
 	};
-	*data=ps->a[ps->count-1]
-	ps->count--;
+	//~ 优化：
+	//~ *data=ps->a[ps->count-1]
+	//~ ps->count--;
+	*data=ps->a[--ps->count];
 	return 0;
 }
 
@@ -90,7 +95,8 @@ int main(int argc, char *argv[]) {
 	push(ps,&a);
 	push(ps,&b);
 	push(ps,&c);
-	push(ps,&out);
-	push(ps,&out);
+	pop(ps,&out);
+	pop(ps,&out);
+	pop(ps,&out);
 	return 0;
 }
