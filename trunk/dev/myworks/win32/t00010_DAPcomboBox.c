@@ -73,7 +73,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{	
 			switch(wParam)
 			{
-				case IDC_BUTTON1:
+				case IDC_BTN_CBX:
 					 curSel=ComboBox_GetCurSel(hCBox);
 					//ComboBox_DeleteString(hCBox,curSel);
 					cnt=ComboBox_GetCount(hCBox);
