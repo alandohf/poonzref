@@ -121,6 +121,18 @@ $(PROG):$(OBJECTS)
 	-@$(DEL) $(CLEANS)
 $(OBJECTS):
 ####################################################################################
+#~ t00010_DAPcomboBox.c
+TARGET		= 	t00010_DAPcomboBox
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
+####################################################################################
+
 
 
 

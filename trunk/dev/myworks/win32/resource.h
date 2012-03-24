@@ -24,6 +24,11 @@
 #define IDC_BTN_QUIT                    1004
 
 
+//~ t00010_DAPcomboBox.c
+#define IDC_COMBO1                      1000
+#define IDC_BTN_CBX                     1005
+
+
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
@@ -34,4 +39,3 @@
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
-
