@@ -16,7 +16,7 @@ PATH		=	$(ROOT)\bin;$(PATH)
 LIB			=	$(LIBPATH);$(LIB)
 INCLUDE		=	$(INCLUDEDIR);$(INCLUDE)
 #
-LIBS		=	kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib winmm.lib wininet.lib MSWSOCK.LIB
+LIBS		=	kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib winmm.lib wininet.lib MSWSOCK.LIB ws2_32.lib
 
 #define THE TOOLS
 #~ CC   RC IS PREDEFINED
