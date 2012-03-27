@@ -27,7 +27,9 @@
 //~ t00010_DAPcomboBox.c
 #define IDC_COMBO1                      1000
 #define IDC_BTN_CBX                     1005
-
+//~ t00011_DAPsockSMTP.c
+#define IDC_BTN_RECV                            1007
+#define IDC_BTN_SEND                            1008
 
 // Next default values for new objects
 // 
