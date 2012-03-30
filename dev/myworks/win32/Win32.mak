@@ -32,6 +32,17 @@ DBG_FLAGS   =   /DEFAULTLIB:$(LIBS) /OUT:$(PROG)  /nologo /subsystem:windows /in
 CLEANS		=	*.obj  *.res *.aps *.exe
 
 ######################################COMMON SETTINGS END ##################################
+#~ t00000_DlgTemplate.c
+TARGET		= 	t00000_DlgTemplate
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
+####################################################################################
 TARGET		= 	t00003_BasicWindowWithMenu
 OBJECTS		=	$(TARGET).obj
 PROG		= 	$(TARGET).exe
@@ -143,6 +154,17 @@ $(PROG):$(OBJECTS)
 	-@$(DEL) $(CLEANS)
 $(OBJECTS):
 
+####################################################################################
+#~ t00012_DlgConnectDB2_A.c
+TARGET		= 	t00012_DlgConnectDB2_A
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
 
 
 #~ ADD BUILD TARGET ABOVE
