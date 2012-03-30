@@ -1,6 +1,6 @@
 //~ t00004_MenuWithResponse.rc
 
-//~ #define IDR_MENU1  9001
+#define IDR_MENU1  9001
 #define IDM_ABOUT1 9002
 
 //~ t00005_BasicDlgBaseApp.rc
@@ -10,7 +10,7 @@
 
 //~ t00006_DlgBaseAppWithMenu.c
 #define IDC_BUTTON1                     1002
-#define IDR_MENU1                       108
+//~ #define IDR_MENU1                       108
 #define ID_MENUITEM40001                40001
 #define ID_MENUITEM40002                40002
 #define ID_MENUITEM40003                40003
