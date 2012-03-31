@@ -166,6 +166,30 @@ $(PROG):$(OBJECTS)
 	-@$(DEL) $(CLEANS)
 $(OBJECTS):
 
+####################################################################################
+#~ t00012_DlgConnectDB2_B.c
+TARGET		= 	t00012_DlgConnectDB2_B
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
+
+
+####################################################################################
+#~ t00012_DlgConnectDB2_C.c
+TARGET		= 	t00012_DlgConnectDB2_C
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
 
 #~ ADD BUILD TARGET ABOVE
 ####################################################################################

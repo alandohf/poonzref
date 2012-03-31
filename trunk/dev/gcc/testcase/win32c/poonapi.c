@@ -7,6 +7,9 @@
 #include <tchar.h>     
 #include <stdio.h>     
 
+/*-----------------------------------------------------
+   use messagebox like printf !
+  -----------------------------------------------------*/
 int CDECL MessageBoxPrintf (TCHAR * szCaption, TCHAR * szFormat, ...)
 {
      TCHAR   szBuffer [1024] ;
@@ -41,7 +44,33 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
      return 0 ;
 }
 
+
+/*-----------------------------------------------------
+   exit program with a message! 
+  -----------------------------------------------------*/
+
 void exitm(char a[] ){
 printf("%s\n",a);
-	exit(1);
+	exit(0);
 }
+
+
+
+
+/*-----------------------------------------------------
+  win32 c  : GetLastError 的封装！
+  -----------------------------------------------------*/
+
+void ShowError()
+{
+    TCHAR* lpMsgBuf;
+    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER| //自动分配消息缓冲区
+    FORMAT_MESSAGE_FROM_SYSTEM, //从系统获取信息
+    NULL,GetLastError(), //获取错误信息标识
+    MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT),//使用系统缺省语言
+    (LPTSTR)&lpMsgBuf, //消息缓冲区
+    0,
+    NULL);
+    MessageBox(NULL,lpMsgBuf,"",MB_ICONERROR);
+}
+
