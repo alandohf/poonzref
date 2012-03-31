@@ -50,8 +50,14 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			switch(wParam)
 			{
 				case IDC_BTN_RECV:
+					{
+						
+					}
 					break;
 				case IDC_BTN_SEND:
+					{
+						
+					}					
 					break;
 				default:
 					break;
