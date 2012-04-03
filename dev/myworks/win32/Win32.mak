@@ -227,6 +227,17 @@ $(PROG):$(OBJECTS)
 $(OBJECTS):
 
 
+####################################################################################
+#~ t00014_DlgDescTableSimplfied
+TARGET		= 	t00014_DlgDescTableSimplfied
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
 
 
 
