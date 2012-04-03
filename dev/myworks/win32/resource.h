@@ -20,7 +20,7 @@
 #define IDC_BUTTON3                     1002
 
 #define IDC_EDIT1               		2001
-#define IDC_EDIT2                		2003
+#define IDC_EDIT2                		2002
 #define IDC_COMBO1                      3000
 
 

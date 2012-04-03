@@ -91,7 +91,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 							SetDlgItemText(hwndDlg,IDC_EDIT2,cRgbValD);
 						    RedrawFlag = 1;
 							//强制重绘客户区
-							InvalidateRect(hwndDlg,&rect,TRUE);	//获取颜色后强制重绘客户区
+							InvalidateRect(hwndDlg,&rect,TRUE);	//获取颜色后强制重绘客户区 InvalidateRgn
 						}
 					}
 					break;
