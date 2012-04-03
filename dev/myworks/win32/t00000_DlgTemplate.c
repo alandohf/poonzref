@@ -49,12 +49,12 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			switch(wParam)
 			{
-				case IDC_BTN_RECV:
+				case IDC_BUTTON1:
 					{
 						
 					}
 					break;
-				case IDC_BTN_SEND:
+				case IDC_BUTTON2:
 					{
 						
 					}					

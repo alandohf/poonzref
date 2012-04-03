@@ -68,7 +68,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			switch(wParam)
 			{
-				case IDC_BTN_RECV:
+				case IDC_BUTTON1:
                     sock=socket(AF_INET,SOCK_STREAM,IPPROTO_TCP);
                     if(sock == INVALID_SOCKET )
                         ShowError();
@@ -82,7 +82,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
                         ShowError();
                     MessageBox(hwndDlg,buffer,"the Server say:",0);
 					break;
-				case IDC_BTN_SEND:
+				case IDC_BUTTON2:
                     // send quit
                     ret = send(sock,cQuit,lstrlen(cQuit),0);
                     printf("%d\n",ret);

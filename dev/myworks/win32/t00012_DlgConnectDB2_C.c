@@ -9,6 +9,7 @@
 					 2.
 					 3.
   *  notes		   : 1.注意对不同HANDLE 的 SQLGetDiagRec参数的使用!
+  *  notes		   : 2.hostname can be 127.0.0.1 ; ip ; host name : poon-pc ; localhost
   *  				 2.使用本例中字串来连接数据库的时候，在安装DB2时要设置好TCPIP的支持。最好把命名管道、DB2C_DB2服务名也设置了。
   *  				 3.<sql.h> 的使用
   *  revision log  : 1.成功连接DB2 EXP-C 数据库。关键点是数据库正确安装！并支持TCPIP访问功能！
@@ -70,7 +71,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			switch(wParam)
 			{
-				case IDC_BTN_RECV:
+				case IDC_BUTTON1:
 				{
 					SQLHENV henv = NULL;
 					SQLHDBC hdbc = NULL;
@@ -80,7 +81,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					//~ SQLCHAR ConnStrIn[MAXBUFLEN]=
 					//~ "driver={IBM DB2 ODBC DRIVER};Database=BASSDB;hostname=172.16.9.27;port=50000;protocol=TCPIP;uid=bass2; pwd=bass2";//ok
 					SQLCHAR ConnStrIn[MAXBUFLEN]=
-					"driver={IBM DB2 ODBC DRIVER};Database=SAMPLE;hostname=localhost;port=50000;protocol=TCPIP;uid=poon; pwd=pzw@@Inn";
+					"driver={IBM DB2 ODBC DRIVER};Database=SAMPLE;hostname=poon-pc;port=50000;protocol=TCPIP;uid=poon; pwd=pzw@@Inn";
 					//~ SQLCHAR ConnStrIn[MAXBUFLEN]="Dsn=db2;Uid=;Pwd=";
 					SQLCHAR ConnStrOut[MAXBUFLEN];
 					//分配环境句柄

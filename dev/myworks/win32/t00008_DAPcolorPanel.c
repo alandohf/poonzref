@@ -79,7 +79,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{	
 			switch(wParam)
 			{
-				case IDC_BTN_CLK:
+				case IDC_BUTTON2:
 					{
 						// Initialize CHOOSECOLOR 
 						ZeroMemory(&cc, sizeof(cc));
@@ -95,15 +95,15 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 							//%[-][#][0][width][.precision]type
 							wsprintf(cRgbValH,"0x%02X%02X%02X",GetRValue(rgbCurrent),GetGValue(rgbCurrent),GetBValue(rgbCurrent)); //0x00bbggrr 
 							wsprintf(cRgbValD,"%hu,%hu,%hu",GetRValue(rgbCurrent),GetGValue(rgbCurrent),GetBValue(rgbCurrent)); //0x00bbggrr 
-							SetDlgItemText(hwndDlg,IDC_EDIT_COLORVAL,cRgbValH);
-							SetDlgItemText(hwndDlg,IDC_EDIT_COLORVAL2,cRgbValD);
+							SetDlgItemText(hwndDlg,IDC_EDIT1,cRgbValH);
+							SetDlgItemText(hwndDlg,IDC_EDIT2,cRgbValD);
 						    RedrawFlag = 1;
 							//强制重绘客户区
 							InvalidateRect(hwndDlg,NULL,TRUE);	//获取颜色后强制重绘客户区
 						}
 					}
 					break;
-				case IDC_BTN_QUIT:
+				case IDC_BUTTON3:
 					{
 						EndDialog(hwndDlg,0);
 					}
