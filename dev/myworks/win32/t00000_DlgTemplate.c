@@ -65,27 +65,29 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		}
 		break;
-	case WM_CTLCOLORDLG: //set its text and background colors using the specified display device context handle.
-		{
-		}
-		break;
-	case WM_PAINT:
-		{
-
-		}
-		break;
-	case WM_CTLCOLORSTATIC: //可以控制静态控件的颜色
-		{
-
-		}
-		break;
 	case WM_CLOSE://Massage for terminate/exit (may close button clicked on title bar)
 		{
 			//Close dialog
 		EndDialog(hwndDlg,0);
 			break;
 		}
-
+	case WM_CTLCOLORDLG: //set its text and background colors using the specified display device context handle.
+		{
+		
+		 break;			
+		}
+	case WM_PAINT:
+		{
+			
+		break;
+		}
+	case WM_CTLCOLORSTATIC: //可以控制静态控件的颜色
+		{
+			
+		break;
+		}
+	default:
+		break;			
 
 	}
 	return FALSE;
