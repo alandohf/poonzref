@@ -70,7 +70,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			switch(wParam)
 			{
-				case IDC_BTN_RECV:
+				case IDC_BUTTON1:
 				{
 					SQLHENV henv = NULL;
 					SQLHDBC hdbc = NULL;

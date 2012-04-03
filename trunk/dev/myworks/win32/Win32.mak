@@ -191,6 +191,57 @@ $(PROG):$(OBJECTS)
 	-@$(DEL) $(CLEANS)
 $(OBJECTS):
 
+####################################################################################
+#~ t00013_DlgDBOperation.c
+TARGET		= 	t00013_DlgDBOperation
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
+####################################################################################
+#~ t00013_DlgDBOperation2.c
+TARGET		= 	t00013_DlgDBOperation2
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #~ ADD BUILD TARGET ABOVE
 ####################################################################################
 clean:

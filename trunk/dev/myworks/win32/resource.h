@@ -1,35 +1,52 @@
-//~ t00004_MenuWithResponse.rc
+#ifndef IDC_STATIC
+#define IDC_STATIC (-1)
+#endif
+
+
+#define IDD_DIALOG1                     101
 
 #define IDR_MENU1  9001
 #define IDM_ABOUT1 9002
 
-//~ t00005_BasicDlgBaseApp.rc
-#define IDD_DIALOG1                     101
 
-
-
-//~ t00006_DlgBaseAppWithMenu.c
-#define IDC_BUTTON1                     1002
-//~ #define IDR_MENU1                       108
 #define ID_MENUITEM40001                40001
 #define ID_MENUITEM40002                40002
 #define ID_MENUITEM40003                40003
 #define ID_MENUITEM40005                40005
 
-//~ t00008_DAPcolorPanel.c
-//~ #define IDD_DIALOG1                     101
-#define IDC_BTN_CLK                     1000
-#define IDC_EDIT_COLORVAL               1001
-#define IDC_EDIT_COLORVAL2              1003
-#define IDC_BTN_QUIT                    1004
+
+#define IDC_BUTTON1                     1000
+#define IDC_BUTTON2                     1001
+#define IDC_BUTTON3                     1002
+
+#define IDC_EDIT1               		2001
+#define IDC_EDIT2                		2003
+#define IDC_COMBO1                      3000
 
 
-//~ t00010_DAPcomboBox.c
-#define IDC_COMBO1                      1000
-#define IDC_BTN_CBX                     1005
-//~ t00011_DAPsockSMTP.c
-#define IDC_BTN_RECV                            1007
-#define IDC_BTN_SEND                            1008
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Next default values for new objects
 // 

@@ -66,7 +66,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{
 			switch(wParam)
 			{
-				case IDC_BTN_RECV:
+				case IDC_BUTTON1:
 				{
 				   // Allocate environment handle
 				   retcode = SQLAllocHandle(SQL_HANDLE_ENV, SQL_NULL_HANDLE, &henv);

@@ -63,7 +63,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		{	
 			switch(wParam)
 			{
-				case IDC_BTN_CLK:
+				case IDC_BUTTON2:
 					MessageBox(hwndDlg,TEXT("Message Content"),TEXT("MessageTitle"),MB_OK);
 					break;
 				default:
