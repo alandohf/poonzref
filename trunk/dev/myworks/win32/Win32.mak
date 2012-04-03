@@ -214,6 +214,17 @@ $(PROG):$(OBJECTS)
 	-@$(DEL) $(CLEANS)
 $(OBJECTS):
 
+####################################################################################
+#~ t00013_DlgDescTable.c
+TARGET		= 	t00013_DlgDescTable
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
 
 
 

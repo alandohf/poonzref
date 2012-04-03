@@ -58,6 +58,8 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
    static SQLHSTMT hstmt;
    static int ifconnect=0;
    static SQLCHAR server[32];
+   static char Content[10240] ;
+	SQLCHAR sqlstr[1024];	
    SQLRETURN retcode;
    //~ SQLCHAR server[32] = "db2";
    //~ SQLCHAR * OutConnStr = (SQLCHAR * )malloc(255);
@@ -72,7 +74,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	SQLRETURN ret;
 	HWND hCBox = GetDlgItem(hwndDlg,IDC_COMBO1);
 	int curSel;
-
+	char szTable[256]; // receives name of item to delete. 
 	
 	switch (uMsg)
 	{
@@ -171,19 +173,30 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					//初始化语句句柄
 					retcode = SQLAllocHandle(SQL_HANDLE_STMT, hdbc, &hstmt);
 					//SQL_NTS telling the function the previous parameter is Null-Terminated String, 
-					//please alculate the string length for me   
-					retcode = SQLPrepare(hstmt,(SQLCHAR*)"select count(0) from syscat.tables with ur",SQL_NTS);
+					//please alculate the string length for me
+                    if (!GetDlgItemText(hwndDlg, IDC_EDIT1, szTable, sizeof(szTable)/sizeof(SQLCHAR))) 
+					{
+						*szTable=0;
+						MessageBoxPrintf("","%s\n",sqlstr);
+					}
+					wsprintf(sqlstr,"select COLNAME from syscat.columns where tabname = upper('%s') ORDER BY COLNO ASC",szTable);
+					retcode = SQLPrepare(hstmt,(SQLCHAR*)sqlstr,SQL_NTS);
 					CHECKDBSTMTERROR(hwndDlg,retcode,hstmt);
 					retcode =SQLExecute(hstmt);
 					CHECKDBSTMTERROR(hwndDlg,retcode,hstmt);
-					
+					ZeroMemory(Content,sizeof(Content)/sizeof(char));
+						SetDlgItemText(hwndDlg,IDC_EDIT2,Content);					
 					while ( SQLFetch(hstmt) != SQL_NO_DATA_FOUND ){
-						SQLINTEGER id=0;
-						//~ SQLCHAR name[32];
-						//SQLGetData(hstmt,2,SQL_C_CHAR,name,32,(SQLINTEGER*)NULL);
-						SQLGetData(hstmt,1,SQL_C_ULONG,&id,sizeof(SQLINTEGER),(SQLINTEGER*)NULL);
-						//~ SQLGetData(hstmt,2,SQL_C_CHAR,name,sizeof(name)/sizeof(SQLCHAR),(SQLINTEGER*)NULL);
-						MessageBoxPrintf("Result","%d\n",id);
+						//~ SQLINTEGER id=0;
+						char name[32];
+						ZeroMemory(name,sizeof(name)/sizeof(char));
+						//~ SQLGetData(hstmt,1,SQL_C_ULONG,&id,sizeof(SQLINTEGER),(SQLINTEGER*)NULL);
+						SQLGetData(hstmt,1,SQL_C_CHAR,name,sizeof(name)/sizeof(SQLCHAR),(SQLINTEGER*)NULL);
+						//~ MessageBoxPrintf("Result","%s",name);
+						strncat(Content,name,32);
+						strncat(Content,"\r\n,",32);
+						SetDlgItemText(hwndDlg,IDC_EDIT2,Content);
+						//~ InvalidateRect(hwndDlg,&rect,TRUE);	//获取颜色后强制重绘客户区		I			
 					}
 					
 					SQLFreeStmt(hstmt,SQL_CLOSE);
