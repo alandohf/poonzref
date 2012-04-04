@@ -10,14 +10,17 @@
 					 3.
   *  notes		   : 1.注意对不同HANDLE 的 SQLGetDiagRec参数的使用!
   *  notes		   : 2.hostname can be 127.0.0.1 ; ip ; host name : poon-pc ; localhost
+  *  notes		   : 3.只要添加 WS_HSCROLL|WS_VSCROLL 就能上下左右滚动！
   *  				 2.使用本例中字串来连接数据库的时候，在安装DB2时要设置好TCPIP的支持。最好把命名管道、DB2C_DB2服务名也设置了。
   *  				 3.<sql.h> 的使用
   *  revision log  : 1.成功连接DB2 EXP-C 数据库。关键点是数据库正确安装！并支持TCPIP访问功能！
 					 2.
 					 3.
-  *  reference	   : 1.
-					 2.
-					 3.
+  *  reference	   : 1.http://social.msdn.microsoft.com/Forums/nb-NO/vcgeneral/thread/62b20011-829c-4d18-9332-f640c552b5e4
+					 2.http://www.codeproject.com/Articles/227831/A-dialog-based-Win32-C-program
+					 3.http://cboard.cprogramming.com/windows-programming/20424-api-func-select-text-edit-control.html
+					 4.http://msdn.microsoft.com/en-us/library/windows/desktop/bb849143(v=vs.85).aspx
+					 
 *****************************************************************************/
 
 #include <windows.h>
@@ -43,11 +46,47 @@ void ShowDBConnError(HWND hwnd,SQLHDBC hdbc);
 void ShowDBStmtError(HWND hwnd,SQLHSTMT hstmt);
 
 void ShowError();
+
+HANDLE hinstAcc;    // handle to application instance 
+
 LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 int APIENTRY  WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nCmdShow)
 {
-//		InitCommonControls();
- 	DialogBox(hInstance, (LPCTSTR)IDD_DIALOG1, 0, (DLGPROC)DlgProc);
+	HWND hDlg;	
+	BOOL ret;
+	MSG Msg;
+	
+	HACCEL hAccel;      // handle to accelerator table 
+	hinstAcc = GetModuleHandle(NULL);	
+    hAccel = LoadAccelerators(hinstAcc, MAKEINTRESOURCE(IDR_ACCELERATOR1)); 
+    if (hAccel == NULL) 
+       MessageBoxPrintf("error","error loading Accelerators"); //HandleAccelErr(ERR_LOADING);     // application defined 
+	
+ 	//~ DialogBox(hInstance, (LPCTSTR)IDD_DIALOG1, 0, (DLGPROC)DlgProc);
+	
+ //~ ACCEL dlgacc[] =
+ //~ { 
+  //~ {FVIRTKEY,     VK_F1,       IDHELP},
+        //~ };
+ //~ hAccel = CreateAcceleratorTable(dlgacc,sizeof(dlgacc)/sizeof(dlgacc[0]));
+//~ SendDlgItemMessage 
+
+	hDlg = CreateDialogParam(hInstance,MAKEINTRESOURCE(IDD_DIALOG1),0,(DLGPROC)DlgProc,(LPARAM)0);
+ShowWindow(hDlg, nCmdShow);
+	
+while((ret = GetMessage(&Msg, 0, 0, 0)) != 0) 
+ {
+		if(ret == -1) /* error found */
+			return -1;
+
+		if (TranslateAccelerator(hDlg, hAccel,&Msg))
+			continue;
+		if(!IsDialogMessage(hDlg, &Msg))
+		{
+			TranslateMessage(&Msg);
+			DispatchMessage(&Msg);
+		}
+ }	
 	return 0;
 }
 
@@ -59,6 +98,7 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
    static int ifconnect=0;
    static SQLCHAR server[32];
    static char Content[10240] ;
+char Content2[10240] ;
 	SQLCHAR sqlstr[1024];	
    SQLRETURN retcode;
    //~ SQLCHAR server[32] = "db2";
@@ -72,6 +112,8 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	SQLSMALLINT desc_ret;
 	SQLUSMALLINT direction;
 	SQLRETURN ret;
+	HWND hEditTN = GetDlgItem(hwndDlg, IDC_EDIT1);
+	HWND hEdit = GetDlgItem(hwndDlg, IDC_EDIT2);
 	HWND hCBox = GetDlgItem(hwndDlg,IDC_COMBO1);
 	int curSel;
 	char szTable[256]; // receives name of item to delete. 
@@ -108,6 +150,17 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_COMMAND://
 		{
+			switch (LOWORD(wParam)) 
+            { 
+                // Process the accelerator and menu commands. 
+ 
+                case ID_ACCELERATOR1: 
+				//~ MessageBoxPrintf("hi","hello");
+				//~ GetModuleHandle()
+				SendMessage(hEdit, EM_SETSEL,(WPARAM)0,(LPARAM) sizeof(Content)/sizeof(char));
+			return TRUE;
+			}
+			
 			switch(wParam)
 			{
 				case IDC_BUTTON1:
@@ -140,6 +193,10 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 					  }
 
 					// Connect to data source
+						if(!ComboBox_GetTextLength(hCBox)){
+							MessageBoxPrintf("ERROR","Please Select an Item!");
+							return FALSE;
+						}
 						curSel=ComboBox_GetCurSel(hCBox);
 						ComboBox_GetLBText(hCBox,curSel,server);
 						retcode = SQLConnect(
@@ -165,6 +222,12 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 				
 				case IDC_BUTTON3:
 				{
+					//~ MessageBoxPrintf("INFO","length:%d\n",Edit_GetTextLength(hEdit));
+					if(!Edit_GetTextLength(hEditTN)){
+						MessageBoxPrintf("Error","[SKM.]TABNAME");
+						return FALSE;
+					}
+					
 					ZeroMemory(Content,sizeof(Content)/sizeof(char));
 					SetDlgItemText(hwndDlg,IDC_EDIT2,Content);										
 					if (!ifconnect) {
@@ -180,6 +243,24 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 						*szTable=0;
 						MessageBoxPrintf("","%s\n",sqlstr);
 					}
+					
+					// 判断表是否存在
+					wsprintf(sqlstr,"select count(0) from syscat.columns where tabname = upper('%s')",szTable);
+					retcode = SQLPrepare(hstmt,(SQLCHAR*)sqlstr,SQL_NTS);
+					CHECKDBSTMTERROR(hwndDlg,retcode,hstmt);
+					retcode =SQLExecute(hstmt);
+					CHECKDBSTMTERROR(hwndDlg,retcode,hstmt);
+					while ( SQLFetch(hstmt) != SQL_NO_DATA_FOUND ){
+						SQLINTEGER id=0;
+						SQLGetData(hstmt,1,SQL_C_ULONG,&id,sizeof(SQLINTEGER),(SQLINTEGER*)NULL);
+						if(0==id){
+						MessageBoxPrintf("ERROR","TABLE <%s> does not exists!",szTable);
+							return FALSE;
+						}
+					}
+					SQLFreeStmt(hstmt,SQL_CLOSE);
+
+					// do the job
 					wsprintf(sqlstr,"select COLNAME from syscat.columns where tabname = upper('%s') ORDER BY COLNO ASC",szTable);
 					retcode = SQLPrepare(hstmt,(SQLCHAR*)sqlstr,SQL_NTS);
 					CHECKDBSTMTERROR(hwndDlg,retcode,hstmt);
@@ -194,10 +275,11 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 						//~ MessageBoxPrintf("Result","%s",name);
 						strncat(Content,name,32);
 						strncat(Content,"\r\n,",32);
-						SetDlgItemText(hwndDlg,IDC_EDIT2,Content);
-						//~ InvalidateRect(hwndDlg,&rect,TRUE);	//获取颜色后强制重绘客户区		I			
 					}
-					
+					*(Content+strlen(Content)-1)=0;
+					//~ strncpy(Content2,Content,strlen(Content)-2);
+					SetDlgItemText(hwndDlg,IDC_EDIT2,Content);
+					//~ SendMessage(hEdit, EM_LINESCROLL, 0, 80);//WS_VSCROLL
 					SQLFreeStmt(hstmt,SQL_CLOSE);
 				}				
 				default:
@@ -213,8 +295,14 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			SQLDisconnect(hdbc);	
 			SQLFreeHandle(SQL_HANDLE_DBC, hdbc);  
 			SQLFreeHandle(SQL_HANDLE_ENV, henv);					
-			EndDialog(hwndDlg,0);
+			//~ EndDialog(hwndDlg,0);
+			DestroyWindow(hwndDlg);			
 			break;
+		}
+	case WM_DESTROY:
+		{
+			PostQuitMessage(0); 
+			return TRUE;
 		}
 	case WM_CTLCOLORDLG: //set its text and background colors using the specified display device context handle.
 		{
@@ -254,7 +342,7 @@ void ShowError()
 void ShowDBError(HWND hwnd,SQLSMALLINT type,SQLHANDLE sqlHandle)
 {
     SQLCHAR pStatus[100]={0}, pMsg[1000]={0};
-    SQLSMALLINT SQLmsglen;
+    SQLSMALLINT SQLMsglen;
     char error[2000] = {0};
     SQLINTEGER SQLerr;
     long erg2 = SQLGetDiagRec(
@@ -265,7 +353,7 @@ void ShowDBError(HWND hwnd,SQLSMALLINT type,SQLHANDLE sqlHandle)
                               ,&SQLerr
                               ,(SQLCHAR *)pMsg
                               ,1000
-                              ,&SQLmsglen
+                              ,&SQLMsglen
                 );
     wsprintf(error,"ERROR  MSG:%s \nSQL   CODE: %ld\nGetDiagRec:%ld\n",pMsg,(long)SQLerr,erg2);
     MessageBox(hwnd,error,TEXT("error"),MB_OK);
