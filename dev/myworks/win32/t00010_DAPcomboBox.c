@@ -9,6 +9,7 @@
 ;notes		   :t00008_DAPcolorPanel提取颜色值
 ;				2.http://blog.csdn.net/genaman/article/details/4336483
 ;revision log  :
+;ref  :http://msdn.microsoft.com/en-us/library/windows/desktop/bb856484(v=vs.85).aspx
 ;1.	cl /c /IC:\poon\wcwp\wcwp\bin\VC6CMD\INCLUDE;C:\poon\wcwp\wcwp\bin\VC6CMD\MFC\INCLUDE;C:\poon\wcwp\wcwp\bin\VC6CMD\MFC\ATL\INCLUDE /c t00008_DAPcolorPanel.c
 ;2.	rc  /r t00008_DAPcolorPanel
 ;3.	link.exe /DEFAULTLIB:kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib comctl32.lib winmm.lib wininet.lib MSWSOCK.LIB /OUT:t00008_DAPcolorPanel.exe  /nologo /subsystem:windows /incremental:no /machine:I386 t00008_DAPcolorPanel.obj t00008_DAPcolorPanel.res

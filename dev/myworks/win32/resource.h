@@ -4,11 +4,12 @@
 
 
 #define IDD_DIALOG1                     101
+#define IDR_ACCELERATOR1                102
 
 #define IDR_MENU1  9001
 #define IDM_ABOUT1 9002
 
-
+#define ID_ACCELERATOR1                 40000
 #define ID_MENUITEM40001                40001
 #define ID_MENUITEM40002                40002
 #define ID_MENUITEM40003                40003
