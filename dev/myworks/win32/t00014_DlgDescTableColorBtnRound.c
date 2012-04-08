@@ -26,15 +26,27 @@
 
 #include <windows.h>
 #include <Windowsx.h> //Core header file for win32 based Applictions
+#include <CommCtrl.h>
+#include "resource.h"
 
+#include <sqlext.h>
 #include <tchar.h>     // for _vsntprintf
+#include <sqltypes.h>
+#include <sql.h>
 #define LOGIN_TIMEOUT 30
 #define MAXBUFLEN 255
 #define CHECKDBSTMTERROR(hwnd,result,hstmt) if(SQL_ERROR==result){ShowDBStmtError(hwnd,hstmt);return 0;}
 
-// self-define headers
-#include "resource.h"
-#include "poonapi.h"
+int CDECL MessageBoxPrintf (TCHAR * szCaption, TCHAR * szFormat, ...);
+void HandleDiagnosticRecord (SQLHANDLE      hHandle,
+                             SQLSMALLINT    hType,
+                             RETCODE        RetCode);
+
+void ShowDBError(HWND hwnd,SQLSMALLINT type,SQLHANDLE sqlHandle);
+void ShowDBConnError(HWND hwnd,SQLHDBC hdbc);
+void ShowDBStmtError(HWND hwnd,SQLHSTMT hstmt);
+
+void ShowError();
 
 HANDLE hinstAcc;    // handle to application instance 
 
@@ -84,16 +96,20 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
    static RECT rect;
    static PAINTSTRUCT ps;
    static HBRUSH hbrush;	
+		   HBRUSH hB;                  // brush handle
    static HDC hDC ;
 	static RedrawFlag = 0;
+	static DWORD rgbCurrent;        // initial color selection
+
 	LPDRAWITEMSTRUCT pdis;
-	//~ char Content2[10240] ;
+	char Content2[10240] ;
 	SQLCHAR sqlstr[1024];	
 	SQLRETURN retcode;
  
-	//~ SQLHENV env;
+	SQLHENV env;
 	char dsn[256];
 	char desc[256];
+	char szCaption[20]={0};
 	SQLSMALLINT dsn_ret;
 	SQLSMALLINT desc_ret;
 	SQLUSMALLINT direction;
@@ -105,7 +121,6 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	int curSel;
 	char szTable[256]; // receives name of item to delete. 
     GetWindowRect(hBTN1,&rect);
-	
 	switch (uMsg)
 	{
 
@@ -132,12 +147,20 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			ComboBox_InsertString(hCBox,0,dsn);								   
 			if (ret == SQL_SUCCESS_WITH_INFO) printf("\tdata truncation\n");
 		  }
-			
+
+          //~ hBTN1 = CreateWindow (TEXT ("button"), TEXT (""),
+                                      //~ WS_CHILD | WS_VISIBLE | BS_OWNERDRAW,
+                                      //~ 144, 3, 41, 14,
+                                      //~ hwndDlg, NULL, NULL, NULL) ;		  
 			return TRUE;
 		}
 		break;
 	case WM_COMMAND://
 		{
+
+			    //~ SendMessage((HWND) hBTN1, BM_SETSTYLE, 
+				//~ (WPARAM) LOWORD(BS_DEFPUSHBUTTON), 
+				//~ MAKELPARAM(TRUE, 0));			
 			switch (LOWORD(wParam)) 
             { 
                 // Process the accelerator and menu commands. 
@@ -160,6 +183,10 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 							SetWindowText(GetDlgItem(hwndDlg, IDC_BUTTON1), (LPCTSTR )"Connect");				   
 							//~ MessageBoxPrintf("Prompt","Disconnected from %s!\n",server);
 							ifconnect = 0;
+							RedrawFlag = 0;
+							SendDlgItemMessage(hwndDlg,IDC_BUTTON1
+							,WM_CTLCOLORBTN,(WPARAM)GetWindowDC(hBTN1), (LPARAM)hBTN1);
+							InvalidateRect(GetDlgItem(hwndDlg, IDC_BUTTON1),NULL, TRUE); 
 							return 0;
 					   }
 					   //~ else
@@ -200,11 +227,16 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 						ifconnect=1;
 						SetWindowText(GetDlgItem(hwndDlg, IDC_BUTTON1), (LPCTSTR )"Connected");
 						RedrawFlag=1;
+						//~ GetWindowText(hBTN1,szCaption,sizeof(szCaption)/sizeof(char));						
+						//~ MessageBoxPrintf("test","%s",szCaption);
+
+						TextOut(GetWindowDC(hBTN1),2,5,szCaption,sizeof(szCaption)/sizeof(char));
+
 						//~ SendMessage(hBTN1, WM_CTLCOLORBTN, (WPARAM)GetWindowDC(hBTN1), (LPARAM)hBTN1);
-						//~ SendDlgItemMessage(hwndDlg,IDC_BUTTON1
-						//~ ,WM_CTLCOLORBTN,(WPARAM)GetWindowDC(hBTN1), (LPARAM)hBTN1);
+						SendDlgItemMessage(hwndDlg,IDC_BUTTON1
+						,WM_CTLCOLORBTN,(WPARAM)GetWindowDC(hBTN1), (LPARAM)hBTN1);
 						InvalidateRect(GetDlgItem(hwndDlg, IDC_BUTTON1),NULL, TRUE);  
-						UpdateWindow(GetDlgItem(hwndDlg, IDC_BUTTON1));
+						//~ UpdateWindow(GetDlgItem(hwndDlg, IDC_BUTTON1));
 						//~ InvalidateRect(hwndDlg,NULL,TRUE);
 						//~ MessageBoxPrintf("Prompt","Connected to %s!\n" ,server);							
 					}
@@ -285,6 +317,25 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		break;
 		
 	case WM_CTLCOLORBTN:
+		{
+			if ( 1 == RedrawFlag ){
+				//~ SetTextColor((HDC)wParam,RGB(255,0,60));
+				//~ SetBkColor((HDC)wParam,RGB(100,100,100));
+				//~ SetWindowText(GetDlgItem(hwndDlg, IDC_BUTTON1), (LPCTSTR )"Connect");
+				//~ strcpy(szCaption,"Connected");
+				//~ GetWindowText(hBTN1,szCaption,sizeof(szCaption)/sizeof(char));
+				//~ MessageBoxPrintf("test","%s",szCaption);
+				//~ TextOut((HDC)wParam,0,0,szCaption,sizeof(szCaption)/sizeof(char));
+				//~ DrawText((HDC)wParam,szCaption,sizeof(szCaption)/sizeof(char),&rect,DT_LEFT);
+				hB = CreateSolidBrush(RGB(255,0,0));
+			return (LONG)hB;
+			}
+			else
+			{
+			hB = CreateSolidBrush(RGB(255,0,0));
+			return (LONG)hB;
+			}
+		}
 			//~ hDC = BeginPaint((HWND)wParam, &ps);
 			//~ FillRect(hDC, &rect, hbrush);
 			//~ EndPaint((HWND)wParam, &ps);		
@@ -356,3 +407,101 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 
 
+void ShowError()
+{
+    TCHAR* lpMsgBuf;
+    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER| //自动分配消息缓冲区
+    FORMAT_MESSAGE_FROM_SYSTEM, //从系统获取信息
+    NULL,GetLastError(), //获取错误信息标识
+    MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT),//使用系统缺省语言
+    (LPTSTR)&lpMsgBuf, //消息缓冲区
+    0,
+    NULL);
+    MessageBox(NULL,lpMsgBuf,"",MB_ICONERROR);
+}
+
+
+void ShowDBError(HWND hwnd,SQLSMALLINT type,SQLHANDLE sqlHandle)
+{
+    SQLCHAR pStatus[100]={0}, pMsg[1000]={0};
+    SQLSMALLINT SQLMsglen;
+    char error[2000] = {0};
+    SQLINTEGER SQLerr;
+    long erg2 = SQLGetDiagRec(
+                              type
+                              , sqlHandle
+                              ,1
+                              ,(SQLCHAR *)pStatus
+                              ,&SQLerr
+                              ,(SQLCHAR *)pMsg
+                              ,1000
+                              ,&SQLMsglen
+                );
+    wsprintf(error,"ERROR  MSG:%s \nSQL   CODE: %ld\nGetDiagRec:%ld\n",pMsg,(long)SQLerr,erg2);
+    MessageBox(hwnd,error,TEXT("error"),MB_OK);
+}
+
+
+void ShowDBConnError(HWND hwnd,SQLHDBC hdbc)
+{
+	ShowDBError(hwnd,SQL_HANDLE_DBC,hdbc);
+}
+
+
+void ShowDBStmtError(HWND hwnd,SQLHSTMT hstmt)
+{
+	ShowDBError(hwnd,SQL_HANDLE_STMT,hstmt);
+}
+
+/*-----------------------------------------------------
+   use messagebox like printf !
+  -----------------------------------------------------*/
+int CDECL MessageBoxPrintf (TCHAR * szCaption, TCHAR * szFormat, ...)
+{
+     TCHAR   szBuffer [1024] ;
+     va_list pArgList ;
+
+          // The va_start macro (defined in STDARG.H) is usually equivalent to:
+          // pArgList = (char *) &szFormat + sizeof (szFormat) ;
+
+     va_start (pArgList, szFormat) ;
+
+          // The last argument to wvsprintf points to the arguments
+
+     _vsntprintf (szBuffer, sizeof (szBuffer) / sizeof (TCHAR), 
+                  szFormat, pArgList) ;
+	// The va_end macro just zeroes out pArgList for no good reason
+     va_end (pArgList) ;
+
+     return MessageBox (NULL, szBuffer, szCaption, 0) ;
+}
+
+
+//~ http://stackoverflow.com/questions/5869489/how-to-set-button-backcolor
+//~ HBRUSH CYourDialogClass::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
+//~ {
+    //~ HBRUSH hbr = CDialog::OnCtlColor(pDC, pWnd, nCtlColor);
+
+    //~ if (pWnd->GetDlgCtrlID() == IDC_OF_YOUR_BUTTON)
+    //~ {
+        //~ pDC->SetBkColor (RGB(0, 0, 255)); // BLUE color for background
+        //~ pDC->SetTextColor (RGB(255, 0, 0)); // RED color for text
+    //~ }
+
+    //~ return hbr;
+//~ }
+
+
+
+//~ GetClientRect(hwnd,&rectButton); 
+//~ hDC = BeginPaint(hwnd,&ps); 
+//~ GetWindowText(hwnd,szBuf,iBufLen); 
+//~ SetBkColor(hDC,GetSysColor(COLOR_3DFACE)); // if you want it grey 
+//~ SetTextColor(hDC,/** some RGB **/); 
+//~ SetBkMode(hDC,TRANSPARENT); 
+//~ DrawEdge(hDC,&bRect,EDGE_RAISED,BF_RECT); 
+//~ GetTextExtentPoint32(hDC,szBuf,strlen(szBuf),&tSize); 
+//~ iTextPos = max(0,((rectButton.right - rectButton.left - tSize.cx)/2)); 
+//~ TextOut(hDC,iTextPos,0,szBuf,strlen(szBuf)); 
+//~ EndPaint(hwnd,&ps); 
+ 

@@ -27,10 +27,10 @@ LINK		=	link.exe
 #~ CFLAGS		=	/c /I$(INCLUDEDIR) /Fo$(OBJECTS) 
 CFLAGS		=	/c /I$(INCLUDEDIR)
 LNK_FLAGS   =   /DEFAULTLIB:$(LIBS) /OUT:$(PROG)  /nologo /subsystem:windows /incremental:no /machine:I386
+LF_CONSOLE  =   /DEFAULTLIB:$(LIBS) /OUT:$(PROG)  /nologo /subsystem:console /incremental:no /machine:I386
 RLS_FLAGS   =   /DEFAULTLIB:$(LIBS) /OUT:$(PROG)  /nologo /subsystem:windows /incremental:no /machine:I386 /RELEASE
 DBG_FLAGS   =   /DEFAULTLIB:$(LIBS) /OUT:$(PROG)  /nologo /subsystem:windows /incremental:no /machine:I386 /DEBUG
-CLEANS		=	*.obj  *.res *.aps *.exe
-
+CLEANS		=	*.obj *.res *.aps *.exe *.idb *.pdb
 ######################################COMMON SETTINGS END ##################################
 #~ t00000_DlgTemplate.c
 TARGET		= 	t00000_DlgTemplate
@@ -230,6 +230,19 @@ $(OBJECTS):
 ####################################################################################
 #~ t00014_DlgDescTableSimplfied
 TARGET		= 	t00014_DlgDescTableSimplfied
+OBJECTS		=	$(TARGET).obj  poonapi.obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+CPP=cl.exe
+INTDIR=.
+CPP_PROJ=/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_MBCS" /Fo"$(INTDIR)\\" /Fd"$(INTDIR)\\" /FD /GZ /c 
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
+####################################################################################
+#~ t00015_DlgTestBgd
+TARGET		= 	t00015_DlgTestBgd
 OBJECTS		=	$(TARGET).obj $(TARGET).res
 PROG		= 	$(TARGET).exe
 
@@ -239,19 +252,52 @@ $(PROG):$(OBJECTS)
 	-@$(DEL) $(CLEANS)
 $(OBJECTS):
 
+####################################################################################
+#~ t00014_DlgDescTableColorBtn
+TARGET		= 	t00014_DlgDescTableColorBtn
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
 
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
 
+####################################################################################
+#~ t00014_DlgDescTableColorBtnRound
+TARGET		= 	t00014_DlgDescTableColorBtnRound
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
 
+$(PROG):$(OBJECTS)
+	$(LINK) $(LNK_FLAGS) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
 
+####################################################################################
+#~ t00016_DlgInvokeByConsole
+TARGET		= 	t00016_DlgInvokeByConsole
+OBJECTS		=	$(TARGET).obj $(TARGET).res
+PROG		= 	$(TARGET).exe
 
+$(PROG):$(OBJECTS)
+	$(LINK) $(LF_CONSOLE) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
 
-
-
-
-
-
-
-
+####################################################################################
+#~ t00000_ConsoleInvokeTemplate
+TARGET		= 	t00000_ConsoleInvokeTemplate
+OBJECTS		=	$(TARGET).obj  poonapi.obj $(TARGET).res
+PROG		= 	$(TARGET).exe
+$(PROG):$(OBJECTS)
+	$(LINK) $(LF_CONSOLE) $(OBJECTS)
+	-@COPY $(@F) $(OUTPUTDIR)\$(@F)
+	-@$(DEL) $(CLEANS)
+$(OBJECTS):
 
 
 

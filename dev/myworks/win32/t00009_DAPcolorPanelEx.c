@@ -1,7 +1,7 @@
 
 /*
 *---------------------------------------------------------------------------
-;program name  : 基于对话框的应用程序_颜色值提取工具
+;program name  : 基于对话框的应用程序_颜色值提取工具(在一个矩形区域绘制颜色)
 ;author		   : panzhiwei
 ;date		   : 2012-03-20
 ;function desc : 通过调色板选择颜色并输出颜色值(10进制和16进制)
@@ -106,7 +106,8 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 		break;
 	case WM_CTLCOLORDLG: //set its text and background colors using the specified display device context handle. 
-		{	
+		{
+				
 		}
 		break;
 
