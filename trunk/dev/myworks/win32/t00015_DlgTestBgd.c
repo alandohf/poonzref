@@ -21,9 +21,12 @@
 
 //~ #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
-#include "poonapi.h"
+//~ #include <winsock2.h>
+//~ #include <ws2tcpip.h>
 #include "resource.h"
 
+void ShowError();
+LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam);
 int APIENTRY  WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nCmdShow)
 {
 //		InitCommonControls();
@@ -33,7 +36,11 @@ int APIENTRY  WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLin
 
 LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
-
+static HBRUSH hbrWhite;
+static HBRUSH hbrGray; 
+    static HDC hdc ;
+   static RECT rc;
+	int i , x, y;
 	switch (uMsg)
 	{
 
@@ -83,6 +90,31 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			
 		break;
 		}
+
+
+case WM_CREATE: 
+    hbrWhite = GetStockObject(BLACK_BRUSH); 
+    hbrGray  = GetStockObject(BLACK_BRUSH); 
+    return 0L; 
+ 
+case WM_ERASEBKGND:
+	//~ {
+		//~ hdc = (HDC) wParam; 
+		//~ GetClientRect(hwndDlg, &rc); 
+		//~ SetMapMode(hdc, MM_ANISOTROPIC); 
+		//~ SetWindowExtEx(hdc, 100, 100, NULL); 
+		//~ SetViewportExtEx(hdc, rc.right, rc.bottom, NULL); 
+		//~ FillRect(hdc, &rc, hbrWhite); 
+	 
+		//~ for (i = 0; i < 13; i++) 
+		//~ { 
+			//~ x = (i * 40) % 100; 
+			//~ y = ((i * 40) / 100) * 20; 
+			//~ SetRect(&rc, x, y, x + 20, y + 20); 
+			//~ FillRect(hdc, &rc, hbrGray); 
+		//~ } 
+	  //~ return 1L; 
+	//~ }
 	default:
 		break;			
 
@@ -92,4 +124,17 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 
 
+
+void ShowError()
+{
+    TCHAR* lpMsgBuf;
+    FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER| //自动分配消息缓冲区
+    FORMAT_MESSAGE_FROM_SYSTEM, //从系统获取信息
+    NULL,GetLastError(), //获取错误信息标识
+    MAKELANGID(LANG_NEUTRAL,SUBLANG_DEFAULT),//使用系统缺省语言
+    (LPTSTR)&lpMsgBuf, //消息缓冲区
+    0,
+    NULL);
+    MessageBox(NULL,lpMsgBuf,"",MB_ICONERROR);
+}
 

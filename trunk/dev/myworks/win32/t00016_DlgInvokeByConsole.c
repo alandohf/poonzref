@@ -22,6 +22,7 @@
 //~ #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include "poonapi.h"
+//~ #include <ws2tcpip.h>
 #include "resource.h"
 
 int APIENTRY  WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLine,int nCmdShow)
@@ -31,6 +32,12 @@ int APIENTRY  WinMain(HINSTANCE hInstance,HINSTANCE hPrevInstance,LPSTR lpCmdLin
 	return 0;
 }
 
+int main(int argc, char *argv[]) {
+	//~ LPSTR lpCmdLine ;
+	//~ lpCmdLine = GetCommandLine();
+	WinMain(NULL,NULL,argv[1],SW_SHOWNORMAL);
+	return 0;
+}
 LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 
@@ -65,6 +72,8 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	case WM_CLOSE://Massage for terminate/exit (may close button clicked on title bar)
 		{
 			//Close dialog
+		printf("Dialog box is going to close!");
+		Sleep(2000);
 		EndDialog(hwndDlg,0);
 			break;
 		}
