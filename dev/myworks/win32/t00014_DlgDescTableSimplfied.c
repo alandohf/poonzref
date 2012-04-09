@@ -104,7 +104,12 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	HWND hBTN1 = GetDlgItem(hwndDlg,IDC_BUTTON1);
 	int curSel;
 	char szTable[256]; // receives name of item to delete. 
-    GetWindowRect(hBTN1,&rect);
+	LPDRAWITEMSTRUCT dItem;
+	char text[20];
+	int len;
+	SIZE sz;
+
+	GetWindowRect(hBTN1,&rect);
 	
 	switch (uMsg)
 	{
@@ -160,6 +165,8 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 							SetWindowText(GetDlgItem(hwndDlg, IDC_BUTTON1), (LPCTSTR )"Connect");				   
 							//~ MessageBoxPrintf("Prompt","Disconnected from %s!\n",server);
 							ifconnect = 0;
+						InvalidateRect(GetDlgItem(hwndDlg, IDC_BUTTON1),NULL, TRUE);  
+						UpdateWindow(GetDlgItem(hwndDlg, IDC_BUTTON1));						   
 							return 0;
 					   }
 					   //~ else
@@ -336,12 +343,32 @@ LRESULT CALLBACK DlgProc(HWND hwndDlg, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		}
 	case WM_DRAWITEM:
 	{
-		if ( 1== RedrawFlag ){
-		pdis = (LPDRAWITEMSTRUCT)lParam;                          //获取需重绘的按钮的信息  
-		FillRect(pdis->hDC, &pdis->rcItem, CreateSolidBrush(RGB(0,255,0)));          //用已选的颜色rgbCurrent填充按钮  
-		return TRUE;
-		}
-		break;  
+				dItem = (DRAWITEMSTRUCT*)lParam;
+				if (ifconnect){
+				SetBkColor(dItem->hDC, RGB(0,255,0));				
+					}
+					else
+					{
+				SetBkColor(dItem->hDC, RGB(255,0,0));						
+					}
+                //~ SetTextColor(dItem->hDC, RGB(0,0,0xFF));
+				memset(text, '\0', 20);
+
+				GetWindowText(dItem->hwndItem, text, 20);
+				len=lstrlen(text);
+
+				GetTextExtentPoint32(dItem->hDC, text, len, &sz);
+
+				ExtTextOut( dItem->hDC
+							, ((dItem->rcItem.right - dItem->rcItem.left) / 2) + dItem->rcItem.left - (sz.cx / 2)
+							, ((dItem->rcItem.bottom - dItem->rcItem.top) / 2) + dItem->rcItem.top - (sz.cy / 2)
+							, ETO_OPAQUE | ETO_CLIPPED, &dItem->rcItem, text, len, NULL);
+
+				DrawEdge( dItem->hDC, &dItem->rcItem
+						, (dItem->itemState & ODS_SELECTED ? BDR_SUNKENOUTER : BDR_RAISEDOUTER), BF_RECT);
+                return DefWindowProc(hwndDlg, uMsg, wParam, lParam);
+break;			
+		
 	}
 	case WM_CTLCOLORSTATIC: //可以控制静态控件的颜色
 		{

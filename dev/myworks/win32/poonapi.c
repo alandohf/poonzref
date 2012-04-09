@@ -93,6 +93,39 @@ void ShowDBStmtError(HWND hwnd,SQLHSTMT hstmt)
 	ShowDBError(hwnd,SQL_HANDLE_STMT,hstmt);
 }
 
+/************************************
+* To write a string into a log file *
+* with current date and time        *
+************************************/
+int myWriteToLog(TCHAR* s) {
+	long nTime;
+	struct tm *tmDateTime;
+	TCHAR sDateTime[6][16];
+	FILE *f;
+	
+	if (NULL == s) return(0);
+	time(&nTime);
+	tmDateTime = (struct tm*) localtime(&nTime);
+	f = _tfopen(sLogFileName, _T("a+"));
+	if (!f) return(0);
+	
+	_tcsftime(sDateTime[0], 16, _T("%B"), tmDateTime);
+	_tcsftime(sDateTime[1], 16, _T("%d"), tmDateTime);
+	_tcsftime(sDateTime[2], 16, _T("%Y"), tmDateTime);
+	_tcsftime(sDateTime[3], 16, _T("%H"), tmDateTime);
+	_tcsftime(sDateTime[4], 16, _T("%M"), tmDateTime);
+	_tcsftime(sDateTime[5], 16, _T("%S"), tmDateTime);
+	
+	// Write string to log file with current date & time info:
+	_ftprintf(f, _T("%s (%s %s, %s @ %s:%s:%s)\n"), s, sDateTime[0], sDateTime[1], sDateTime[2], sDateTime[3], sDateTime[4], sDateTime[5]);
+	
+	if (f) fclose(f);
+	return(1);
+}
+
+
+
+
 //~ http://stackoverflow.com/questions/5869489/how-to-set-button-backcolor
 //~ HBRUSH CYourDialogClass::OnCtlColor(CDC* pDC, CWnd* pWnd, UINT nCtlColor)
 //~ {
