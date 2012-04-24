@@ -30,21 +30,6 @@ int CDECL MessageBoxPrintf (TCHAR * szCaption, TCHAR * szFormat, ...)
      return MessageBox (NULL, szBuffer, szCaption, 0) ;
 }
 
-int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance,
-                    PSTR szCmdLine, int iCmdShow) 
-{
-     int cxScreen, cyScreen ;
-
-     cxScreen = GetSystemMetrics (SM_CXSCREEN) ;
-     cyScreen = GetSystemMetrics (SM_CYSCREEN) ;
-
-     MessageBoxPrintf (TEXT ("ScrnSize"), 
-                       TEXT ("The screen is %i pixels wide by %i pixels high."),
-                       cxScreen, cyScreen) ;
-     return 0 ;
-}
-
-
 /*-----------------------------------------------------
    exit program with a message! 
   -----------------------------------------------------*/
